@@ -22,4 +22,8 @@ class User extends Model
         "payment_address"
     ];
 
+    protected  $hidden = [
+        "password",
+        "remember_token"
+    ];
 }
