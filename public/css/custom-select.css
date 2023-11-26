@@ -1,0 +1,90 @@
+.itc-select {
+  position: relative;
+  width: 100%;
+}
+
+.itc-select__toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  background-color: #fff;
+  border: none;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.itc-select__toggle::after {
+  flex-shrink: 0;
+  width: 8px;
+  height: 4px;
+  margin-left: 1rem;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOCIgaGVpZ2h0PSI0IiB2aWV3Qm94PSIwIDAgOCA0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNNC4yMTIxMyAzLjc4Nzg3QzQuMDk0OTcgMy45MDUwMyAzLjkwNTAzIDMuOTA1MDMgMy43ODc4NyAzLjc4Nzg3TDAuNTEyMTMxIDAuNTEyMTMxQzAuMzIzMTQyIDAuMzIzMTQyIDAuNDU2OTkzIDAgMC43MjQyNjQgMEg3LjI3NTc0QzcuNTQzMDEgMCA3LjY3Njg2IDAuMzIzMTQzIDcuNDg3ODcgMC41MTIxMzJMNC4yMTIxMyAzLjc4Nzg3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==');
+  background-size: cover;
+  content: "";
+}
+
+.itc-select__toggle:focus {
+  outline: none;
+}
+
+.itc-select_show .itc-select__toggle::after {
+  transform: rotate(180deg);
+}
+
+.itc-select__dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+  max-height: 360px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid var(--Dark_3, #1D323E);
+  background: var(--Dark_2, #0A1F2B);
+  min-width: 400px;
+}
+
+.itc-select_show .itc-select__dropdown {
+  display: block;
+}
+
+.itc-select_show .itc-select__backdrop {
+  display: block;
+}
+
+.itc-select__options {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.itc-select__option {
+  padding: 9px 20px;
+  color: #fff;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.itc-select__option_selected {
+  background-color: #1D323E;
+}
+
+/* .itc-select__option_selected::after {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: #1D323E;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="svg-inline--fa fa-check fa-w-16" data-icon="check" data-prefix="fas" aria-hidden="true"%3E%3Cpath d="M33.964 85.547l-32.5-32.251a4.935 4.935 0 010-7.017l7.071-7.017a5.027 5.027 0 017.071 0L37.5 60.987l46.894-46.534a5.028 5.028 0 017.07 0l7.072 7.017a4.935 4.935 0 010 7.017l-57.5 57.06a5.027 5.027 0 01-7.072 0z" fill="%230277bd"/%3E%3C/svg%3E');
+  background-size: cover;
+  content: "";
+} */
+
+.itc-select__option:hover {
+  background-color: #1D323E;
+  cursor: pointer;
+  transition: 0.2s background-color ease-in-out;
+}
