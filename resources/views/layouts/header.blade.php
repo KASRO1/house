@@ -20,10 +20,13 @@
                     </li>
                 </ul>
             </nav>
-            <div class="header-buttons not-authed d-none">
+            @if(!\Illuminate\Support\Facades\Auth::check())
+            <div class="header-buttons not-authed">
+
                 <a href="/login" class="link_15">Log in</a>
                 <a href="/signup" class="btn btn_sign link_15">Sign up</a>
             </div>
+            @else
             <div class="header-buttons authed ">
                 <a href="/assets" class="link_15">Assets</a>
                 <div class="dropdown-container">
@@ -44,10 +47,11 @@
                     </a>
                     <div class="dropdown">
                         <a href="/account" class="link_12 settings">Settings</a>
-                        <a href="#" class="link_12">Log out</a>
+                        <a href="/logout" class="link_12">Log out</a>
                     </div>
                 </div>
             </div>
+            @endif
         </div>
         <a class="header-link header_mobile" href="/">
             <img class="header-img" src="{{asset('images/logo.svg')}}" alt="" />

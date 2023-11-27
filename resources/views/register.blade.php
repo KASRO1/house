@@ -41,7 +41,7 @@
                                 name="email"
                                 placeholder="Email@email.com"
                             />
-                            <span class="form-item_sub">Wrong mail</span>
+
                         </label>
                         <label class="form-item">
                             <input
@@ -53,7 +53,7 @@
                                 placeholder="Password"
                                 title="8 to 30 lowercase letters"
                             />
-                            <span class="form-item_sub">Unknown password</span>
+
                         </label>
                         <label class="form-item">
                             <input
@@ -63,7 +63,7 @@
                                 name="password_confirmation"
                                 placeholder="Confirm password"
                             />
-                            <span class="form-item_sub">Password doesn't match</span>
+
                         </label>
                         <div class="form-check">
                             <input

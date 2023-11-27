@@ -1363,7 +1363,7 @@ section.trade {
 .login-block form {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
 }
 
 .form-item.wrong .form-item_sub {

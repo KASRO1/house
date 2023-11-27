@@ -4,6 +4,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}" />
+    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
     @yield('head')
 </head>
 <body>
@@ -29,13 +31,14 @@
                     </a>
                 </div>
                 <div class="login-block">
-                    <form action="#">
+                    <form action="#" novalidate id="login_form">
+                        @csrf
                         <label class="form-item wrong">
                             <input
                                 required
                                 class="input"
                                 type="email"
-                                name="login"
+                                name="email"
                                 placeholder="Email@email.com"
                             />
                             <span class="form-item_sub">Unknown login</span>
@@ -55,7 +58,7 @@
                             <input
                                 type="checkbox"
                                 id="remember"
-                                name="rememberme"
+                                name="remember"
                                 class="checkbox"
                             />
                             <label for="remember" class="text_small_12 color-gray2"
@@ -73,8 +76,74 @@
         </div>
     </section>
 </main>
+<script src="{{asset("js/jquery-3.7.1.min.js")}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{asset("js/app.js")}}"></script>
+<script src="{{asset("js/iziModal.min.js")}}"></script>
+<script src="{{asset("js/iziToast.min.js")}}"></script>
+<script>
+    const commonOptions = {
+        closeOnClick: true,
+        class: "toast",
+        transitionIn: "fadeInDown",
+        transitionOut: "fadeOutUp",
+        position: "topCenter",
+        iconUrl: "{{asset("images/succes.svg")}}",
+        close: false,
+    };
+    const login_form = document.getElementById("login_form");
+    login_form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log("data")
+        const formData = new FormData(login_form);
+        $.ajax({
+            url: "/login",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+               console.log(data)
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "{{asset('images/succes.svg')}}",
+                    });
+                    setTimeout(() => {
+                        window.location.href = "/assets";
+                    }, 1000);
+                }
+                else {
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "{{asset('images/fail.svg')}}",
+                    });
+                }
 
 
+            },
+            error: function (data) {
+                console.log(data)
+                const errors = data.errors;
+                Object.keys(errors).forEach((fieldName) => {
+                    const errorMessages = errors[fieldName];
+                    errorMessages.forEach((errorMessage) => {
+
+                        iziToast.show({
+                            ...commonOptions,
+                            message: errorMessage,
+                            iconUrl: "{{asset('images/fail.svg')}}",
+                        });
+
+                    });
+                });
+
+            },
+        })
+    });
+</script>
 </body>
 </html>
 

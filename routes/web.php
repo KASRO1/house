@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Middleware\Authenticate;
+use \App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +28,7 @@ Route::get('/signup', [RegisterController::class, 'create']);
 
 Route::get('/trade', function () {
     return view('trade');
-});
+})->middleware(Authenticate::class);
 
 Route::get('/assets', function () {
     return view('assets');
@@ -66,3 +68,7 @@ Route::get('/privacy', function () {
 
 
 Route::post('/signup', [RegisterController::class, 'store'])->name("register");
+
+Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
+
+Route::post('/login', [AuthController::class, 'login'])->name("login");
