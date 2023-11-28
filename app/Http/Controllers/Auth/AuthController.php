@@ -15,18 +15,19 @@ class AuthController extends Controller implements Authenticatable
         return view('login');
     }
 
-    public function login(Request $request){
+    public function store(Request $request): \Illuminate\Http\JsonResponse
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required',
             'password' => 'required|min:8',
-            'remember' => 'required'
+
 
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
         }
-        $remember = $request->remember == 'true' ? true : false;
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             return response()->json(['message' => 'User logged in successfully'], 201);
         } else {
             return response()->json(['message' => 'Invalid credentials'], 200);

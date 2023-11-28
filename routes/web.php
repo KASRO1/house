@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Middleware\Authenticate;
 use \App\Http\Controllers\Auth\AuthController;
+use \App\Http\Middleware\RedirectIfAuthenticated;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,59 +17,43 @@ use \App\Http\Controllers\Auth\AuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('main');
+
+Route::view("/", "main");
+Route::view("/faq", "faq");
+Route::view("/terms", "terms");
+Route::view("/security", "security");
+Route::view("/risk", "risk");
+Route::view("/referral", "referral");
+Route::view("/privacy", "privacy");
+Route::view("/about", "about");
+
+
+Route::middleware("auth")->group(function (){
+
+    Route::get('/trade', function () {
+        return view('trade');
+    });
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
+
+    Route::get('/assets', function () {
+        return view('assets');
+    });
+
+    Route::get('/account', function () {
+        return view('account');
+    });
+
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::middleware("guest")->group(function (){
 
-Route::get('/signup', [RegisterController::class, 'create']);
+    Route::get('/login', [AuthController::class, 'index']);
+    Route::get('/signup', [RegisterController::class, 'index']);
 
-Route::get('/trade', function () {
-    return view('trade');
-})->middleware(Authenticate::class);
-
-Route::get('/assets', function () {
-    return view('assets');
-});
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/account', function () {
-    return view('account');
-});
-
-Route::get('/faq', function () {
-    return view('faq');
-});
-
-Route::get('/terms', function () {
-    return view('terms');
-});
-
-Route::get('/security', function () {
-    return view('security');
-});
-
-Route::get('/risk', function () {
-    return view('risk');
-});
-
-Route::get('/referral', function () {
-    return view('referral');
-});
-
-Route::get('/privacy', function () {
-    return view('privacy');
+    Route::post('/login', [AuthController::class, 'store'])->name("login");
+    Route::post('/signup', [RegisterController::class, 'store'])->name("register");
 });
 
 
-Route::post('/signup', [RegisterController::class, 'store'])->name("register");
 
-Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
-
-Route::post('/login', [AuthController::class, 'login'])->name("login");

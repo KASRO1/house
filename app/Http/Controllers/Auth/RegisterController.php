@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    public function create()
+    public function index()
     {
         return view('register');
     }
@@ -25,11 +25,11 @@ class RegisterController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 200);
         }
-        $user = User::create([
+        User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-        Auth::login($user);
+
         return response()->json(['message' => 'User created successfully'], 201);
 
 

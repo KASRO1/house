@@ -41,7 +41,7 @@
                                 name="email"
                                 placeholder="Email@email.com"
                             />
-                            <span class="form-item_sub">Unknown login</span>
+
                         </label>
                         <label class="form-item">
                             <input
@@ -52,7 +52,7 @@
                                 pattern="\w{8,30}"
                                 placeholder="Password"
                             />
-                            <span class="form-item_sub">Unknown password</span>
+
                         </label>
                         <div class="form-check">
                             <input
@@ -94,7 +94,7 @@
     const login_form = document.getElementById("login_form");
     login_form.addEventListener("submit", (e) => {
         e.preventDefault();
-        console.log("data")
+        
         const formData = new FormData(login_form);
         $.ajax({
             url: "/login",
@@ -103,7 +103,7 @@
             processData: false,
             contentType: false,
             success: function (data, status,xhr) {
-               console.log(data)
+
                 if(xhr.status === 201){
                     iziToast.show({
                         ...commonOptions,
@@ -125,21 +125,21 @@
 
             },
             error: function (data) {
-                console.log(data)
-                const errors = data.errors;
-                Object.keys(errors).forEach((fieldName) => {
-                    const errorMessages = errors[fieldName];
-                    errorMessages.forEach((errorMessage) => {
+
+                const errors = data.responseJSON.errors;
+
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
 
                         iziToast.show({
                             ...commonOptions,
-                            message: errorMessage,
+                            message: message,
                             iconUrl: "{{asset('images/fail.svg')}}",
                         });
-
                     });
                 });
-
             },
         })
     });

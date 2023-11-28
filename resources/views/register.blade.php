@@ -139,7 +139,7 @@
             processData: false,
             contentType: false,
             success: function (data, status,xhr) {
-                console.log(xhr.status)
+
                 if(xhr.status === 201){
                     iziToast.show({
                         ...commonOptions,
