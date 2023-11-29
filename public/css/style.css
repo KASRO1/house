@@ -1365,7 +1365,9 @@ section.trade {
   flex-direction: column;
   gap: 10px;
 }
-
+.text_success{
+    color: #79F995 !important;
+}
 .form-item.wrong .form-item_sub {
   visibility: visible;
 }

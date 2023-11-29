@@ -5,17 +5,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Middleware\Authenticate;
 use \App\Http\Controllers\Auth\AuthController;
 use \App\Http\Middleware\RedirectIfAuthenticated;
+use \App\Http\Controllers\UserSettingsController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 
 Route::view("/", "main");
@@ -33,18 +24,17 @@ Route::middleware("auth")->group(function (){
     Route::get('/trade', function () {
         return view('trade');
     });
-
     Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
-
     Route::get('/assets', function () {
         return view('assets');
     });
+    Route::get('/account', [UserSettingsController::class, "index"]);
+    Route::put("/account/change/password", [UserSettingsController::class, "ChangePassword"])->name("user.change.password");
 
-    Route::get('/account', function () {
-        return view('account');
-    });
 
 });
+
+
 
 Route::middleware("guest")->group(function (){
 

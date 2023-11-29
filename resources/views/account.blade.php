@@ -41,7 +41,7 @@
                             <div class="info-block">
                                 <span class="title">Status</span>
                                 <!-- class="premium verified" -->
-                                <span class="context" id="status">Unverified</span>
+                                <span class="context {{$user->kyc_step == 0 ? "" : "text_success"}}" id="status">{{$user->kyc_step_text}}</span>
                             </div>
                             <div class="info-block">
                                 <span class="title">Timezone</span>
@@ -98,7 +98,7 @@
                                 id="account-email"
                                 readonly
                                 class="clear account-email text_17"
-                                value="jamesgomeron@gmail.com"
+                                value="{{$user->email}}"
                             />
                             <button id="toggleButton" class="hidemail">
                                 <svg
@@ -406,15 +406,18 @@
             <img src="{{asset('images/modal_close.svg')}}" alt="" />
         </button>
         <h2 class="h1_25 pb15">Change password</h2>
-        <form action="#">
+        <form  id="form_changePassword">
+            @csrf
             <input
                 type="text"
                 class="input mb10"
+                name="current_password"
                 placeholder="Current password"
                 required
             />
             <input
                 type="text"
+                name="password"
                 class="input mb10"
                 placeholder="New password"
                 required
@@ -422,6 +425,7 @@
             />
             <input
                 type="text"
+                name="password_confirmation"
                 class="input mb25"
                 placeholder="Confirm new password"
                 required
@@ -610,14 +614,15 @@
         });
     });
 
-    $(".trigger-changepassword").on("click", function (event) {
-        event.preventDefault();
-        $("#changePassword").iziModal("close");
-        iziToast.show({
-            ...commonOptions,
-            message: "Password changed successfully",
-        });
-    });
+    // $(".trigger-changepassword").on("click", function (event) {
+    //     event.preventDefault();
+    //     $("#changePassword").iziModal("close");
+    //     iziToast.show({
+    //         ...commonOptions,
+    //         message: "Password changed successfully",
+    //     });
+    // });
+
     $(".trigger-disable2fa").on("click", function (event) {
         event.preventDefault();
         $("#change2fa").iziModal("close");
@@ -673,6 +678,62 @@
             emailVisible = false;
         }
     });
+</script>
+<script>
+    const form_changePassword = document.getElementById("form_changePassword");
+    form_changePassword.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form_changePassword);
+        console.log(formData)
+        $.ajax({
+            url: "/account/change/password",
+            type: "PUT",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+                console.log(data)
+                {{--if(xhr.status === 201){--}}
+                {{--    iziToast.show({--}}
+                {{--        ...commonOptions,--}}
+                {{--        message: data.message,--}}
+                {{--        iconUrl: "{{asset('images/succes.svg')}}",--}}
+                {{--    });--}}
+                {{--    setTimeout(() => {--}}
+                {{--        window.location.href = "/assets";--}}
+                {{--    }, 1000);--}}
+                {{--}--}}
+                {{--else {--}}
+                {{--    iziToast.show({--}}
+                {{--        ...commonOptions,--}}
+                {{--        message: data.message,--}}
+                {{--        iconUrl: "{{asset('images/fail.svg')}}",--}}
+                {{--    });--}}
+                {{--}--}}
+
+
+            },
+            error: function (data) {
+                console.log(data)
+                {{--const errors = data.responseJSON.errors;--}}
+
+                {{--const errorMessages = Object.values(errors);--}}
+                {{--errorMessages.forEach((errorMessage) => {--}}
+
+                {{--    errorMessage.forEach((message) => {--}}
+
+                {{--        iziToast.show({--}}
+                {{--            ...commonOptions,--}}
+                {{--            message: message,--}}
+                {{--            iconUrl: "{{asset('images/fail.svg')}}",--}}
+                {{--        });--}}
+                {{--    });--}}
+                {{--});--}}
+            },
+        })
+    })
+
 </script>
 <script src="{{asset("js/load.js")}}"></script>
 </body>
