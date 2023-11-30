@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Balance extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "id",
+        "user_id",
+        "coin_id",
+        "quantity",
+    ];
+
 }

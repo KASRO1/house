@@ -6,6 +6,7 @@ use App\Http\Middleware\Authenticate;
 use \App\Http\Controllers\Auth\AuthController;
 use \App\Http\Middleware\RedirectIfAuthenticated;
 use \App\Http\Controllers\UserSettingsController;
+use App\Http\Controllers\AssetController;
 
 
 
@@ -25,11 +26,9 @@ Route::middleware("auth")->group(function (){
         return view('trade');
     });
     Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
-    Route::get('/assets', function () {
-        return view('assets');
-    });
+    Route::get('/assets', [AssetController::class, 'index'])->name("assets");
     Route::get('/account', [UserSettingsController::class, "index"]);
-    Route::put("/account/change/password", [UserSettingsController::class, "ChangePassword"])->name("user.change.password");
+    Route::post("/account/change/password", [UserSettingsController::class, "changePassword"])->name("user.change.password");
 
 
 });

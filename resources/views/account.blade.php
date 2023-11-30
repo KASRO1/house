@@ -406,17 +406,16 @@
             <img src="{{asset('images/modal_close.svg')}}" alt="" />
         </button>
         <h2 class="h1_25 pb15">Change password</h2>
-        <form  id="form_changePassword">
-            @csrf
+        <form novalidate id="form_changePassword">
             <input
-                type="text"
+                type="password"
                 class="input mb10"
                 name="current_password"
                 placeholder="Current password"
                 required
             />
             <input
-                type="text"
+                type="password"
                 name="password"
                 class="input mb10"
                 placeholder="New password"
@@ -424,7 +423,7 @@
                 title="8 - 30 characters"
             />
             <input
-                type="text"
+                type="password"
                 name="password_confirmation"
                 class="input mb25"
                 placeholder="Confirm new password"
@@ -685,51 +684,37 @@
         e.preventDefault();
 
         const formData = new FormData(form_changePassword);
-        console.log(formData)
+
         $.ajax({
-            url: "/account/change/password",
-            type: "PUT",
+            url: "{{route("user.change.password")}}",
+            type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
             success: function (data, status,xhr) {
-                console.log(data)
-                {{--if(xhr.status === 201){--}}
-                {{--    iziToast.show({--}}
-                {{--        ...commonOptions,--}}
-                {{--        message: data.message,--}}
-                {{--        iconUrl: "{{asset('images/succes.svg')}}",--}}
-                {{--    });--}}
-                {{--    setTimeout(() => {--}}
-                {{--        window.location.href = "/assets";--}}
-                {{--    }, 1000);--}}
-                {{--}--}}
-                {{--else {--}}
-                {{--    iziToast.show({--}}
-                {{--        ...commonOptions,--}}
-                {{--        message: data.message,--}}
-                {{--        iconUrl: "{{asset('images/fail.svg')}}",--}}
-                {{--    });--}}
-                {{--}--}}
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "{{asset('images/succes.svg')}}",
+                    });
 
-
+                }
             },
             error: function (data) {
-                console.log(data)
-                {{--const errors = data.responseJSON.errors;--}}
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
 
-                {{--const errorMessages = Object.values(errors);--}}
-                {{--errorMessages.forEach((errorMessage) => {--}}
+                    errorMessage.forEach((message) => {
 
-                {{--    errorMessage.forEach((message) => {--}}
-
-                {{--        iziToast.show({--}}
-                {{--            ...commonOptions,--}}
-                {{--            message: message,--}}
-                {{--            iconUrl: "{{asset('images/fail.svg')}}",--}}
-                {{--        });--}}
-                {{--    });--}}
-                {{--});--}}
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "{{asset('images/fail.svg')}}",
+                        });
+                    });
+                });
             },
         })
     })

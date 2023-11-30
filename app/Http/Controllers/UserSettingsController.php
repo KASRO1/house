@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Cassandra\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserSettingsController extends Controller
@@ -16,20 +19,35 @@ class UserSettingsController extends Controller
         return view("account", ["user" => $user]);
     }
 
-    public function ChangePassword(Request $request){
+    public function changePassword(Request $request): \Illuminate\Http\JsonResponse
+    {
 
-        $validator =  Validator::make($request->all(), [
-            "current_password" => "current_password:api",
-            "password" => "required|confirmed|min:8"
+
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|confirmed|min:8',
+            'current_password' => 'required'
         ]);
+
+
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 200);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
-        $user = Auth::user();
-        $user->password = bcrypt($request->password);
+
+        if(!Hash::check($request->current_password, Auth::user()->password)){
+            return response()->json(['errors' => ["current_password" => ["Current password is incorrect"]]], 401);
+        }
+        if(Hash::check($request->current_password, Auth::user()->password)){
+            return response()->json(['errors' => ["current_password" => ["The password cannot be the same"]]], 401);
+        }
+        $user = $request->user();
+        $user->password = Hash::make($request->password);
         $user->save();
-        return redirect()->json(['message' => "Password changed successfully!"]);
+
+        return response()->json(['message' => 'Password changed successfully'], 201);
+
+
     }
+
     public function create()
     {
         //
@@ -56,7 +74,7 @@ class UserSettingsController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
     }
 
 

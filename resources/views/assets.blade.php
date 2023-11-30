@@ -117,13 +117,14 @@
                                     <div>On orders</div>
                                     <div>Total balance</div>
                                 </div>
+                                @foreach($coins as $coin)
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
                                             src="{{asset("images/coins/single_coin-eth.svg")}}"
                                             alt=""
                                         />
-                                        <span>ETH</span>
+                                        <span>{{$coin['simple_name']}}</span>
                                     </div>
                                     <div class="flex-column gap10">
                                         <span class="text_16">0.093842</span>
@@ -150,204 +151,7 @@
                         </span>
                                     </div>
                                 </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/single_coin-btc.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>BTC</span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                    <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
-                        </span>
-                                    </div>
-                                </div>
+                                @endforeach
                                 <p class="notfound d-none">
                                     Nothing found
                                     <img src="{{'images/modal_close.svg'}}" alt="" />
@@ -614,7 +418,8 @@
                                     <div class="flex-center gap6">
                                         <img
                                             src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
+
+                                            0.093842                alt=""
                                         />
                                         <span>ETH</span>
                                     </div>
@@ -634,126 +439,7 @@
                                         <span class="text_16">23/10/23, 15:23:57 </span>
                                     </div>
                                 </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_16 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Deposit</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Complete</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">23/10/23, 15:23:57 </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_16 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Deposit</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Complete</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">23/10/23, 15:23:57 </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_16 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Deposit</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Complete</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">23/10/23, 15:23:57 </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_16 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Deposit</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Complete</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">23/10/23, 15:23:57 </span>
-                                    </div>
-                                </div>
-                                <div class="grid-line">
-                                    <div class="flex-center gap6">
-                                        <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
-                                            alt=""
-                                        />
-                                        <span>ETH</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">0.093842</span>
-                                        <span class="text_16 color-gray2">
-                          (≈ 17493.231 USD)
-                        </span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Deposit</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">Complete</span>
-                                    </div>
-                                    <div class="">
-                                        <span class="text_16">23/10/23, 15:23:57 </span>
-                                    </div>
-                                </div>
+
                                 <p class="notfound d-none">
                                     Nothing found
                                     <img src="{{asset("images/notfound.svg")}}" alt="" />
