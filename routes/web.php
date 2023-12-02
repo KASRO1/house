@@ -7,6 +7,7 @@ use \App\Http\Controllers\Auth\AuthController;
 use \App\Http\Middleware\RedirectIfAuthenticated;
 use \App\Http\Controllers\UserSettingsController;
 use App\Http\Controllers\AssetController;
+use \App\Http\Controllers\PromoСodeController;
 
 
 
@@ -29,7 +30,7 @@ Route::middleware("auth")->group(function (){
     Route::get('/assets', [AssetController::class, 'index'])->name("assets");
     Route::get('/account', [UserSettingsController::class, "index"]);
     Route::post("/account/change/password", [UserSettingsController::class, "changePassword"])->name("user.change.password");
-
+    Route::post("/account/promocode/active", [PromoСodeController::class, "create"])->name("user.promocode.active");
 
 });
 

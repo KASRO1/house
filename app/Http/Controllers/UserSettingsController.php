@@ -48,6 +48,7 @@ class UserSettingsController extends Controller
 
     }
 
+
     public function create()
     {
         //

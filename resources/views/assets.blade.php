@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
     <link rel="stylesheet" href="{{asset("css/custom-select.css")}}" />
     @yield('head')
+
+
 </head>
 <body class="bg-black min_100vh">
 @yield('header')
@@ -76,18 +78,18 @@
                             <div class="assets-balances flex-center gap10 pt15">
                                 <div class="block text_17">
                                     <img
-                                        src="{{asset("images/balance_icon-available.svg")}}"
+                                        src="{{asset("coin_icons/balance_icon-available.svg")}}"
                                         alt=""
                                     />
                                     <p>Available balance:</p>
-                                    <span>545.93 USD</span>
-                                    <span class="color-gray2">≈ 0.018445 BTC</span>
+                                    <span>{{$totalBalance['balanceUSD']}} USD</span>
+                                    <span class="color-gray2">≈ {{$totalBalance['BalanceToBTC']}} BTC</span>
                                 </div>
                                 <div class="block text_17">
                                     <img src="{{asset("images/balance_icon-spot.svg")}}" alt="" />
                                     <p>Spot balance:</p>
-                                    <span>118.28 USD</span>
-                                    <span class="color-gray2">≈ 0.018445 BTC</span>
+                                    <span>{{$totalBalance['balanceUSDspot']}} USD</span>
+                                    <span class="color-gray2">≈ {{$totalBalance['BalanceToBTCspot']}} BTC</span>
                                 </div>
                             </div>
                             <div class="assets-search pt40">
@@ -117,37 +119,38 @@
                                     <div>On orders</div>
                                     <div>Total balance</div>
                                 </div>
-                                @foreach($coins as $coin)
+                                @foreach($Assets as $coin)
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
+                                            width="30px"
+                                            src="{{asset("images/coin_icons/".$coin['simple_name'].".svg")}}"
                                             alt=""
                                         />
                                         <span>{{$coin['simple_name']}}</span>
                                     </div>
                                     <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
+                                        <span class="text_16">{{$coin['balance']}}</span>
                                         <span class="text_small_12 color-gray2">
-                          (≈ 17493.231 USD)
+                          (≈ {{$coin['balanceUSD']}} USD)
                         </span>
                                     </div>
                                     <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
+                                        <span class="text_16">{{$coin['balanceSpot']}}</span>
                                         <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
+                          (≈ {{$coin['balanceUSDspot']}} USD)
                         </span>
                                     </div>
                                     <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
+                                        <span class="text_16">0</span>
                                         <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
+                          (≈ 0 USD)
                         </span>
                                     </div>
                                     <div class="flex-column gap10">
-                                        <span class="text_16">0.093842</span>
+                                        <span class="text_16">{{$coin['totalBalance']}}</span>
                                         <span class="text_small_12 color-gray2">
-                          (≈ 342 USD)
+                          (≈ {{$coin['totalBalanceUSD']}} USD)
                         </span>
                                     </div>
                                 </div>
@@ -798,8 +801,10 @@
             Return to wallet
         </button>
     </div>
+
     <div class="modal" id="promocode">
-        <button class="closemodal clear" data-izimodal-close="">
+        <form id="promocode_form">
+        <button type="button" class="closemodal clear" data-izimodal-close="">
             <img src="{{'images/modal_close.svg'}}" alt="" />
         </button>
         <h2 class="h1_25 pb15">Activate promocode</h2>
@@ -812,26 +817,19 @@
                 class="input promocode-input succes"
                 name="promocode"
                 placeholder="Enter promocode"
-                required
+
             />
-            <span class="promocode-input_sub"
-            >Promocode is activated. Credited to your balance: 0.142 BTC</span
-            >
+Ò
         </label>
         <!-- disabled class="process" -->
         <button
             type="submit"
-            class="btn btn_action btn_16 color-dark trigger-promocode-succes"
-        >
+            class="btn btn_action btn_16 color-dark ">
             Activate
         </button>
-        <button
-            type="submit"
-            class="btn btn_action btn_16 color-dark trigger-promocode-fail d-none"
-        >
-            Fail
-        </button>
+        </form>
     </div>
+
     <div class="modal" id="convert">
         <button class="closemodal clear" data-izimodal-close="">
             <img src="{{'images/modal_close.svg'}}" alt="" />
@@ -1567,22 +1565,22 @@
         iconUrl: "/assets/images/succes.svg",
         close: false,
     };
-    $(".trigger-promocode-succes").on("click", function (event) {
-        event.preventDefault();
-        iziToast.show({
-            ...commonOptions,
-            message:
-                "Promocode is activated. Credited to your balance: 0.142 BTC",
-        });
-    });
-    $(".trigger-promocode-fail").on("click", function (event) {
-        event.preventDefault();
-        iziToast.show({
-            ...commonOptions,
-            iconUrl: "/assets/images/fail.svg",
-            message: "This promocode does not exist",
-        });
-    });
+    // $(".trigger-promocode-succes").on("click", function (event) {
+    //     event.preventDefault();
+    //     iziToast.show({
+    //         ...commonOptions,
+    //         message:
+    //             "Promocode is activated. Credited to your balance: 0.142 BTC",
+    //     });
+    // });
+    // $(".trigger-promocode-fail").on("click", function (event) {
+    //     event.preventDefault();
+    //     iziToast.show({
+    //         ...commonOptions,
+    //         iconUrl: "/assets/images/fail.svg",
+    //         message: "This promocode does not exist",
+    //     });
+    // });
     $(".trigger-conversion").on("click", function (event) {
         event.preventDefault();
         iziToast.show({
@@ -1604,6 +1602,7 @@
             message: "Successful staking",
         });
     });
+
 </script>
 <script>
     const select2 = new ItcCustomSelect("#select-2");
@@ -1623,6 +1622,49 @@
         setTimeout(function () {
             $(".clipboard").removeClass("copied");
         }, 3000);
+    });
+</script>
+<script>
+    const promocode_form = document.getElementById("promocode_form");
+    promocode_form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(promocode_form);
+        console.log(formData.get("promocode"));
+        $.ajax({
+            url: "{{ route("user.promocode.active") }}",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data, status, xhr) {
+                console.log(data);
+                if (xhr.status === 201) {
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "{{ asset('images/succes.svg') }}",
+                    });
+                    setTimeout(() => {
+                        window.location.href = "/assets";
+                    }, 1000);
+                }
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "{{ asset('images/fail.svg') }}",
+                        });
+                    });
+                });
+            },
+        });
+
+
     });
 </script>
 <script src="{{asset("js/load.js")}}"></script>

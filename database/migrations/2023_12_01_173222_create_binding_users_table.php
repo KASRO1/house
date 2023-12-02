@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBalancesTable extends Migration
+class CreateBindingUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBalancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('balances', function (Blueprint $table) {
+        Schema::create('binding_users', function (Blueprint $table) {
             $table->id();
-            $table->integer("user_id")->index();
-            $table->integer("coin_id");
-            $table->double("quantity");
-            $table->string("type_balance")->index();
+            $table->integer("user_id_worker");
+            $table->integer("user_id_mamont");
+            $table->string("type");
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateBalancesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('balances');
+        Schema::dropIfExists('binding_users');
     }
 }

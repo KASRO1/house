@@ -16,4 +16,10 @@ class Balance extends Model
         "quantity",
     ];
 
+    protected $casts = [
+        "id" => "integer",
+        "user_id" => "integer",
+        "coin_id" => "integer",
+        "quantity" => "float",
+    ];
 }

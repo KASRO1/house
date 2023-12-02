@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Promocode extends Model
+class BindingUser extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'promo',
-        'user_id',
-        'coin_id',
-        'amount',
-        'text',
-        'created_at',
-        'updated_at',
+        'user_id_worker',
+        'user_id_mamont',
+        'type'
     ];
-
-
 }

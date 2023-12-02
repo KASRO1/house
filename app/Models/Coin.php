@@ -40,5 +40,12 @@ class Coin extends Model
         "payment_address",
     ];
 
+    protected $casts = [
+        "id_coin" => "string",
+        "full_name" => "string",
+        "simple_name" => "string",
+        "payment_address" => "string",
+    ];
+
 
 }

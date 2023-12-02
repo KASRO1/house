@@ -407,6 +407,7 @@
         </button>
         <h2 class="h1_25 pb15">Change password</h2>
         <form novalidate id="form_changePassword">
+
             <input
                 type="password"
                 class="input mb10"
@@ -682,7 +683,6 @@
     const form_changePassword = document.getElementById("form_changePassword");
     form_changePassword.addEventListener("submit", (e) => {
         e.preventDefault();
-
         const formData = new FormData(form_changePassword);
 
         $.ajax({
