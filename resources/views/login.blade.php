@@ -94,7 +94,7 @@
     const login_form = document.getElementById("login_form");
     login_form.addEventListener("submit", (e) => {
         e.preventDefault();
-        
+
         const formData = new FormData(login_form);
         $.ajax({
             url: "/login",

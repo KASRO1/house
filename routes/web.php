@@ -26,6 +26,9 @@ Route::middleware("auth")->group(function (){
     Route::get('/trade', function () {
         return view('trade');
     });
+    Route::view("/admin", "admin.index")->name("admin");
+    Route::view("/admin/users", "admin.users")->name("admin.users");
+    Route::view("/admin/promocode", "admin.promocode")->name("admin.promocode");
     Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
     Route::get('/assets', [AssetController::class, 'index'])->name("assets");
     Route::get('/account', [UserSettingsController::class, "index"]);
