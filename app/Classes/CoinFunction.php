@@ -102,7 +102,7 @@ class CoinFunction
         }
         return false;
     }
-    public function removeBalance($coin_id, $quantity, $type_balance){
+    public function removeBalanceCoin($coin_id, $quantity, $type_balance){
         $balance = Balance::where("user_id", auth()->user()->id)->where("coin_id", $coin_id)->where("type_balance", $type_balance)->first();
         if($balance && $balance->quantity >= $quantity){
             $balance->quantity -= $quantity;

@@ -1,13 +1,13 @@
-@include("admin.layouts.header")
-@include("admin.layouts.aside")
-@include("admin.layouts.head")
-@include("admin.layouts.footer")
+<?php echo $__env->make("admin.layouts.header", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.aside", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.head", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-    @yield('head')
+    <?php echo $__env->yieldContent('head'); ?>
     <title>Cryptonix | Главная</title>
 </head>
 
@@ -15,14 +15,14 @@
 
 <!-- ========== HEADER ========== -->
 
-@yield("header");
+<?php echo $__env->yieldContent("header"); ?>;
 
 <!-- ========== END HEADER ========== -->
 
 <!-- ========== MAIN CONTENT ========== -->
 <!-- Navbar Vertical -->
 
-@yield("aside")
+<?php echo $__env->yieldContent("aside"); ?>
 <!-- End Navbar Vertical -->
 
 <main id="content" role="main" class="main">
@@ -57,7 +57,7 @@
 
                         <div class="row align-items-center gx-2 mb-1">
                             <div class="col-6">
-                                <h2 class="card-title text-inherit">{{count($mamonts['data'])}}</h2>
+                                <h2 class="card-title text-inherit"><?php echo e(count($mamonts['data'])); ?></h2>
                             </div>
                             <!-- End Col -->
 
@@ -67,9 +67,9 @@
                                     <canvas class="js-chart" data-hs-chartjs-options='{
                               "type": "line",
                               "data": {
-                                 "labels": [{{$mamonts['statistic']['total_mamont']['labels']}}, "02 Dec"],
+                                 "labels": [<?php echo e($mamonts['statistic']['total_mamont']['labels']); ?>, "02 Dec"],
                                  "datasets": [{
-                                  "data": [{{$mamonts['statistic']['total_mamont']['data']}}],
+                                  "data": [<?php echo e($mamonts['statistic']['total_mamont']['data']); ?>],
                                   "backgroundColor": ["rgba(55, 125, 255, 0)", "rgba(255, 255, 255, 0)"],
                                   "borderColor": "#377dff",
                                   "borderWidth": 2,
@@ -440,7 +440,7 @@
 
                     <tbody>
 
-                    @foreach($mamonts['data'] as $mamont)
+                    <?php $__currentLoopData = $mamonts['data']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mamont): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td class="table-column-pe-0">
                                 <div class="form-check">
@@ -452,25 +452,27 @@
                                 <a class="d-flex align-items-center" href="./user-profile.html">
                                     <div class="flex-shrink-0">
                                         <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                            <span class="avatar-initials">{{$mamont['mamontProfileInfo']['email'][0]}}</span>
+                                            <span class="avatar-initials"><?php echo e($mamont['mamontProfileInfo']['email'][0]); ?></span>
                                         </div>
                                     </div>
                                     <div class="flex-grow-1 ms-3">
-                                        <h5 class="text-inherit mb-0">{{$mamont['mamontProfileInfo']['email']}}</h5>
+                                        <h5 class="text-inherit mb-0"><?php echo e($mamont['mamontProfileInfo']['email']); ?></h5>
                                     </div>
                                 </a>
                             </td>
                             <td>
-                                <span class="legend-indicator {{$mamont['mamontProfileInfo']['status_online'] ? "bg-success" : "bg-gray" }}"></span>{{$mamont['mamontProfileInfo']['status_online'] ? "Онлайн" : "Оффлайн" }}
+                                <span class="legend-indicator <?php echo e($mamont['mamontProfileInfo']['status_online'] ? "bg-success" : "bg-gray"); ?>"></span><?php echo e($mamont['mamontProfileInfo']['status_online'] ? "Онлайн" : "Оффлайн"); ?>
+
                             </td>
                             <td>
-                                {{$mamont['type']}}
+                                <?php echo e($mamont['type']); ?>
+
                             </td>
-                            <td>{{$mamont['mamontProfileInfo']['last_online']}}</td>
-                            <td>{{$mamont['mamontProfileInfo']['created_at']}}</td>
-                            <td>{{$mamont['mamontProfileInfo']['balance']}} $</td>
+                            <td><?php echo e($mamont['mamontProfileInfo']['last_online']); ?></td>
+                            <td><?php echo e($mamont['mamontProfileInfo']['created_at']); ?></td>
+                            <td><?php echo e($mamont['mamontProfileInfo']['balance']); ?> $</td>
                         </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
 
@@ -568,7 +570,7 @@
 
     <!-- Footer -->
 
-    @yield("footer")
+    <?php echo $__env->yieldContent("footer"); ?>
 
     <!-- End Footer -->
 </main>
@@ -590,7 +592,7 @@
                 <div class="mb-4">
                     <div class="input-group mb-2 mb-sm-0">
 
-                            @csrf
+                            <?php echo csrf_field(); ?>
                         <input type="text" class="form-control" name="user_id_mamont" placeholder="Найти пользователя по почте/id" aria-label="Найти пользователя по почте/id">
 
                         <div class="input-group-append input-group-append-last-sm-down-none">
@@ -717,27 +719,27 @@
 
 
 <!-- JS Global Compulsory  -->
-<script src="{{asset("assets_admin/vendor/jquery/dist/jquery.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/jquery-migrate/dist/jquery-migrate.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/bootstrap/dist/js/bootstrap.bundle.min.js")}}"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/jquery/dist/jquery.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/jquery-migrate/dist/jquery-migrate.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/bootstrap/dist/js/bootstrap.bundle.min.js")); ?>"></script>
 
 <!-- JS Implementing Plugins -->
-<script src="{{asset("assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/hs-form-search/dist/hs-form-search.min.js")}}"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/hs-form-search/dist/hs-form-search.min.js")); ?>"></script>
 
-<script src="{{asset("assets_admin/vendor/chart.js/dist/Chart.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/chartjs-chart-matrix/dist/chartjs-chart-matrix.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/daterangepicker/moment.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/daterangepicker/daterangepicker.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/tom-select/dist/js/tom-select.complete.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/clipboard/dist/clipboard.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/datatables/media/js/jquery.dataTables.min.js")}}"></script>
-<script src="{{asset("assets_admin/vendor/datatables.net.extensions/select/select.min.js")}}"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/chart.js/dist/Chart.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/chartjs-chart-matrix/dist/chartjs-chart-matrix.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/daterangepicker/moment.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/daterangepicker/daterangepicker.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/tom-select/dist/js/tom-select.complete.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/clipboard/dist/clipboard.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/datatables/media/js/jquery.dataTables.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/vendor/datatables.net.extensions/select/select.min.js")); ?>"></script>
 
 <!-- JS Front -->
-<script src="{{asset("assets_admin/js/theme.min.js")}}"></script>
-<script src="{{asset("assets_admin/js/hs.theme-appearance-charts.js")}}"></script>
+<script src="<?php echo e(asset("assets_admin/js/theme.min.js")); ?>"></script>
+<script src="<?php echo e(asset("assets_admin/js/hs.theme-appearance-charts.js")); ?>"></script>
 
 <!-- JS Plugins Init. -->
 <script>
@@ -1059,7 +1061,7 @@
 
         const formData = new FormData(BindingMamontForm);
         $.ajax({
-            url: "{{route("admin.user.binding")}}",
+            url: "<?php echo e(route("admin.user.binding")); ?>",
             type: "POST",
             data: formData,
             processData: false,
@@ -1091,3 +1093,4 @@
 <!-- End Style Switcher JS -->
 </body>
 </html>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/index.blade.php ENDPATH**/ ?>

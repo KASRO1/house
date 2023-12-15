@@ -149,7 +149,9 @@ a:focus {
 a:hover {
   text-decoration-color: inherit;
 }
-
+.fail-text{
+    color: #FF6868 !important;
+}
 .header-content {
   display: flex;
   align-items: center;
@@ -1367,6 +1369,9 @@ section.trade {
 }
 .text_success{
     color: #79F995 !important;
+}
+.text_gold{
+    color: gold;
 }
 .form-item.wrong .form-item_sub {
   visibility: visible;

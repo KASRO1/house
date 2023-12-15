@@ -14,6 +14,7 @@ mix.autoload({
     jquery: ['$', 'global.jQuery',"jQuery","global.$","jquery","global.jquery"]
 });
 mix.js('resources/js/app.js', 'public/js')
+    .version()
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);

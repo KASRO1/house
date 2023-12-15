@@ -29,4 +29,10 @@ class User extends Model implements Authenticatable
         "password",
         "remember_token"
     ];
+
+    public function hasRole($role)
+    {
+        return $this->users_status === $role;
+    }
+
 }

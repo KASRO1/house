@@ -1,22 +1,22 @@
-@include('layouts.head')
-@include('layouts.header')
-@include('layouts.footer')
-@include('layouts.selectCoin')
+<?php echo $__env->make('layouts.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.selectCoin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!doctype html>
 
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{asset("css/jquery-ui.min.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}" />
-    @yield('head')
+    <link rel="stylesheet" href="<?php echo e(asset("css/jquery-ui.min.css")); ?>" />
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziToast.css")); ?>" />
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>" />
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>" />
+    <link rel="stylesheet" href="<?php echo e(asset("css/custom-select.css")); ?>" />
+    <?php echo $__env->yieldContent('head'); ?>
 
 
 </head>
 <body class="bg-black min_100vh">
-@yield('header')
+<?php echo $__env->yieldContent('header'); ?>
 <main class="assets h100">
     <section class="assets">
         <div class="container">
@@ -37,7 +37,7 @@
                                     <button class="btn clear" title="Hide/Show balances">
                                         <!-- <img src="./assets/images/hide_balances_show.svg" alt="" /> -->
                                         <img
-                                            src="{{asset("images/hide_balances_hide.svg")}}"
+                                            src="<?php echo e(asset("images/hide_balances_hide.svg")); ?>"
                                             alt=""
                                         />
                                     </button>
@@ -67,7 +67,7 @@
                                         data-izimodal-open="#transfer"
                                     >
                                         Transfer
-                                        <img src="{{asset("images/tooltip.svg")}}" alt="" />
+                                        <img src="<?php echo e(asset("images/tooltip.svg")); ?>" alt="" />
                                     </button>
                                     <button
                                         class="btn small_btn btn_16"
@@ -80,18 +80,18 @@
                             <div class="assets-balances flex-center gap10 pt15">
                                 <div class="block text_17">
                                     <img
-                                        src="{{asset("coin_icons/balance_icon-available.svg")}}"
+                                        src="<?php echo e(asset("coin_icons/balance_icon-available.svg")); ?>"
                                         alt=""
                                     />
                                     <p>Available balance:</p>
-                                    <span>{{$totalBalance['balanceUSD']}} USD</span>
-                                    <span class="color-gray2">≈ {{$totalBalance['BalanceToBTC']}} BTC</span>
+                                    <span><?php echo e($totalBalance['balanceUSD']); ?> USD</span>
+                                    <span class="color-gray2">≈ <?php echo e($totalBalance['BalanceToBTC']); ?> BTC</span>
                                 </div>
                                 <div class="block text_17">
-                                    <img src="{{asset("images/balance_icon-spot.svg")}}" alt="" />
+                                    <img src="<?php echo e(asset("images/balance_icon-spot.svg")); ?>" alt="" />
                                     <p>Spot balance:</p>
-                                    <span>{{$totalBalance['balanceUSDspot']}} USD</span>
-                                    <span class="color-gray2">≈ {{$totalBalance['BalanceToBTCspot']}} BTC</span>
+                                    <span><?php echo e($totalBalance['balanceUSDspot']); ?> USD</span>
+                                    <span class="color-gray2">≈ <?php echo e($totalBalance['BalanceToBTCspot']); ?> BTC</span>
                                 </div>
                             </div>
                             <div class="assets-search pt40">
@@ -121,26 +121,26 @@
                                     <div>On orders</div>
                                     <div>Total balance</div>
                                 </div>
-                                @foreach($Assets as $coin)
+                                <?php $__currentLoopData = $Assets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $coin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
                                             width="30px"
-                                            src="{{asset("images/coin_icons/".$coin['simple_name'].".svg")}}"
+                                            src="<?php echo e(asset("images/coin_icons/".$coin['simple_name'].".svg")); ?>"
                                             alt=""
                                         />
-                                        <span>{{$coin['simple_name']}}</span>
+                                        <span><?php echo e($coin['simple_name']); ?></span>
                                     </div>
                                     <div class="flex-column gap10">
-                                        <span class="text_16">{{$coin['balance']}}</span>
+                                        <span class="text_16"><?php echo e($coin['balance']); ?></span>
                                         <span class="text_small_12 color-gray2">
-                          (≈ {{$coin['balanceUSD']}} USD)
+                          (≈ <?php echo e($coin['balanceUSD']); ?> USD)
                         </span>
                                     </div>
                                     <div class="flex-column gap10">
-                                        <span class="text_16">{{$coin['balanceSpot']}}</span>
+                                        <span class="text_16"><?php echo e($coin['balanceSpot']); ?></span>
                                         <span class="text_small_12 color-gray2">
-                          (≈ {{$coin['balanceUSDspot']}} USD)
+                          (≈ <?php echo e($coin['balanceUSDspot']); ?> USD)
                         </span>
                                     </div>
                                     <div class="flex-column gap10">
@@ -150,16 +150,16 @@
                         </span>
                                     </div>
                                     <div class="flex-column gap10">
-                                        <span class="text_16">{{$coin['totalBalance']}}</span>
+                                        <span class="text_16"><?php echo e($coin['totalBalance']); ?></span>
                                         <span class="text_small_12 color-gray2">
-                          (≈ {{$coin['totalBalanceUSD']}} USD)
+                          (≈ <?php echo e($coin['totalBalanceUSD']); ?> USD)
                         </span>
                                     </div>
                                 </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <p class="notfound d-none">
                                     Nothing found
-                                    <img src="{{'images/modal_close.svg'}}" alt="" />
+                                    <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
                                 </p>
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                                         data-izimodal-open="#transfer"
                                     >
                                         Transfer
-                                        <img src="{{asset("images/tooltip.svg")}}" alt="" />
+                                        <img src="<?php echo e(asset("images/tooltip.svg")); ?>" alt="" />
                                     </button>
                                     <button
                                         class="btn small_btn btn_16"
@@ -227,7 +227,7 @@
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
-                                            src="{{asset("images/single_coin-btc.svg")}}"
+                                            src="<?php echo e(asset("images/single_coin-btc.svg")); ?>"
                                             alt=""
                                         />
                                         <span>BTC</span>
@@ -248,7 +248,7 @@
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
-                                            src="{{asset("images/single_coin-btc.svg")}}"
+                                            src="<?php echo e(asset("images/single_coin-btc.svg")); ?>"
                                             alt=""
                                         />
                                         <span>BTC</span>
@@ -269,7 +269,7 @@
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
-                                            src="{{asset("images/single_coin-btc.svg")}}"
+                                            src="<?php echo e(asset("images/single_coin-btc.svg")); ?>"
                                             alt=""
                                         />
                                         <span>BTC</span>
@@ -290,7 +290,7 @@
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
-                                            src="{{asset("images/single_coin-btc.svg")}}"
+                                            src="<?php echo e(asset("images/single_coin-btc.svg")); ?>"
                                             alt=""
                                         />
                                         <span>BTC</span>
@@ -311,7 +311,7 @@
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
-                                            src="{{asset("images/single_coin-btc.svg")}}"
+                                            src="<?php echo e(asset("images/single_coin-btc.svg")); ?>"
                                             alt=""
                                         />
                                         <span>BTC</span>
@@ -332,7 +332,7 @@
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
-                                            src="{{asset("images/single_coin-btc.svg")}}"
+                                            src="<?php echo e(asset("images/single_coin-btc.svg")); ?>"
                                             alt=""
                                         />
                                         <span>BTC</span>
@@ -352,7 +352,7 @@
                                 </div>
                                 <p class="notfound d-none">
                                     Nothing found
-                                    <img src="{{asset("images/notfound.svg")}}" alt="" />
+                                    <img src="<?php echo e(asset("images/notfound.svg")); ?>" alt="" />
                                 </p>
                             </div>
                         </div>
@@ -362,7 +362,7 @@
                                     <h1 class="h1_25">Transaction history</h1>
                                     <button class="btn clear">
                                         <img
-                                            src="{{asset("images/transaction-history.svg")}}"
+                                            src="<?php echo e(asset("images/transaction-history.svg")); ?>"
                                             alt=""
                                         />
                                     </button>
@@ -392,7 +392,7 @@
                                         data-izimodal-open="#transfer"
                                     >
                                         Transfer
-                                        <img src="{{asset("images/tooltip.svg")}}" alt="" />
+                                        <img src="<?php echo e(asset("images/tooltip.svg")); ?>" alt="" />
                                     </button>
                                     <button
                                         class="btn small_btn btn_16"
@@ -422,7 +422,7 @@
                                 <div class="grid-line">
                                     <div class="flex-center gap6">
                                         <img
-                                            src="{{asset("images/coins/single_coin-eth.svg")}}"
+                                            src="<?php echo e(asset("images/coins/single_coin-eth.svg")); ?>"
 
                                             0.093842                alt=""
                                         />
@@ -447,7 +447,7 @@
 
                                 <p class="notfound d-none">
                                     Nothing found
-                                    <img src="{{asset("images/notfound.svg")}}" alt="" />
+                                    <img src="<?php echo e(asset("images/notfound.svg")); ?>" alt="" />
                                 </p>
                             </div>
                         </div>
@@ -458,7 +458,7 @@
     </section>
     <div class="modal" id="deposit">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <h2 class="h1_25 pb15">Deposit</h2>
         <p class="text_18 pb25">
@@ -481,7 +481,7 @@
             <div class="itc-select__dropdown">
                 <div class="search"><input type="text" placeholder="Search" /></div>
                 <ul class="itc-select__options">
-                    @yield("selectCoin")
+                    <?php echo $__env->yieldContent("selectCoin"); ?>
                 </ul>
             </div>
         </div>
@@ -495,7 +495,7 @@
     </div>
     <div class="modal" id="deposit2">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <h2 class="h1_25 pb15">Deposit BTC</h2>
         <p class="text_18 pb25 color-red">
@@ -546,7 +546,7 @@
         <div class="deposit-info">
             <div class="qr-container">
                 <p class="small_14 color-gray2 pb10">Or scan QR-code</p>
-                <img src="{{'images/qrsample.svg'}}"  alt="" />
+                <img src="<?php echo e('images/qrsample.svg'); ?>"  alt="" />
             </div>
             <div class="deposit-details">
                 <p class="small_14 color-gray2 pb10">Minimum Deposit Amount</p>
@@ -563,7 +563,7 @@
     </div>
     <div class="modal" id="withdraw">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <h2 class="h1_25 pb15">Withdraw</h2>
         <p class="text_18 pb25">Send your cryptocurrency to any wallets</p>
@@ -582,7 +582,7 @@
             <div class="itc-select__dropdown">
                 <div class="search"><input type="text" placeholder="Search" /></div>
                 <ul class="itc-select__options">
-                    @yield("selectCoin")
+                    <?php echo $__env->yieldContent("selectCoin"); ?>
                 </ul>
             </div>
         </div>
@@ -596,7 +596,7 @@
     </div>
     <div class="modal" id="withdraw2">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <h2 class="h1_25 pb15">Withdraw BTC</h2>
         <p class="text_16 pb25 color-red">
@@ -651,7 +651,7 @@
     </div>
     <div class="modal" id="withdraw-fail">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <div class="flex-column flex-center pb25 text-center">
             <h2 class="h1_25 color-red pb20">
@@ -688,7 +688,7 @@
     </div>
     <div class="modal" id="withdraw-succes">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <div class="flex-column flex-center pb25 text-center">
             <h2 class="h1_25 color-green2 pb20">
@@ -737,7 +737,7 @@
     <div class="modal" id="promocode">
         <form id="promocode_form">
         <button type="button" class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <h2 class="h1_25 pb15">Activate promocode</h2>
         <p class="text_18 pb25">
@@ -764,7 +764,7 @@
 
     <div class="modal" id="convert">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <h2 class="h1_25 pb15">Convert cryptocurrency</h2>
         <div class="flex gap6 pb20">
@@ -790,7 +790,7 @@
                         <input type="text" placeholder="Search" />
                     </div>
                     <ul class="itc-select__options">
-                        @yield("selectCoin")
+                        <?php echo $__env->yieldContent("selectCoin"); ?>
                     </ul>
                 </div>
             </div>
@@ -824,7 +824,7 @@
                         <input type="text" oninput="validateInput(this)" placeholder="Search" />
                     </div>
                     <ul class="itc-select__options">
-                        @yield("selectCoin")
+                        <?php echo $__env->yieldContent("selectCoin"); ?>
                     </ul>
                 </div>
             </div>
@@ -834,7 +834,7 @@
                 placeholder="0.00001 - maxbalance"
             />
             <button class="clear convert-button">
-                <img src="{{'images/convert-button.svg'}}" alt="" />
+                <img src="<?php echo e('images/convert-button.svg'); ?>" alt="" />
             </button>
         </div>
     </div>
@@ -853,7 +853,7 @@
     </div>
     <div class="modal" id="transfer">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <h2 class="h1_25 pb25">Transfer cryptocurrency</h2>
         <div id="tabs">
@@ -894,7 +894,7 @@
                                         <input type="text" placeholder="Search" />
                                     </div>
                                     <ul class="itc-select__options">
-                                        @yield("selectCoin")
+                                        <?php echo $__env->yieldContent("selectCoin"); ?>
                                     </ul>
                                 </div>
                             </div>
@@ -933,7 +933,7 @@
                                         <input type="text" placeholder="Search" />
                                     </div>
                                     <ul class="itc-select__options">
-                                        @yield("selectCoin")
+                                        <?php echo $__env->yieldContent("selectCoin"); ?>
                                     </ul>
                                 </div>
                             </div>
@@ -972,7 +972,7 @@
                                         <input type="text" placeholder="Search" />
                                     </div>
                                     <ul class="itc-select__options">
-                                        @yield("selectCoin")
+                                        <?php echo $__env->yieldContent("selectCoin"); ?>
                                     </ul>
                                 </div>
                             </div>
@@ -1017,7 +1017,7 @@
     </div>
     <div class="modal" id="stacking">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt="" />
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt="" />
         </button>
         <div class="flex gap6 pb20">
             <button class="btn small_14 assets-menu_btn active">Available</button>
@@ -1042,7 +1042,7 @@
                             <input type="text" placeholder="Search" />
                         </div>
                         <ul class="itc-select__options">
-                            @yield("selectCoin")
+                            <?php echo $__env->yieldContent("selectCoin"); ?>
                         </ul>
                     </div>
                 </div>
@@ -1128,7 +1128,7 @@
         </button>
     </div>
 </main>
-@yield('footer')
+<?php echo $__env->yieldContent('footer'); ?>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
     integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
@@ -1137,11 +1137,11 @@
 ></script>
 
 
-<script src="{{asset("js/iziToast.min.js")}}"></script>
-<script src="{{asset("js/iziModal.min.js")}}"></script>
-<script src="{{asset("js/custom-select.js")}}"></script>
-<script src="{{asset("js/tabs.js")}}"></script>
-<script src="{{asset("js/clipboard.min.js")}}"></script>
+<script src="<?php echo e(asset("js/iziToast.min.js")); ?>"></script>
+<script src="<?php echo e(asset("js/iziModal.min.js")); ?>"></script>
+<script src="<?php echo e(asset("js/custom-select.js")); ?>"></script>
+<script src="<?php echo e(asset("js/tabs.js")); ?>"></script>
+<script src="<?php echo e(asset("js/clipboard.min.js")); ?>"></script>
 
 <script>
     $(function () {
@@ -1286,7 +1286,7 @@
         const formData = new FormData(promocode_form);
         console.log(formData.get("promocode"));
         $.ajax({
-            url: "{{ route("user.promocode.active") }}",
+            url: "<?php echo e(route("user.promocode.active")); ?>",
             type: "POST",
             data: formData,
             contentType: false,
@@ -1297,7 +1297,7 @@
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
-                        iconUrl: "{{ asset('images/succes.svg') }}",
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
                     setTimeout(() => {
                         window.location.href = "/assets";
@@ -1312,7 +1312,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1322,6 +1322,7 @@
 
     });
 </script>
-<script src="{{asset("js/load.js")}}"></script>
+<script src="<?php echo e(asset("js/load.js")); ?>"></script>
 </body>
 </html>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/assets.blade.php ENDPATH**/ ?>

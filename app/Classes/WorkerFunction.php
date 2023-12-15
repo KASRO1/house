@@ -13,5 +13,11 @@ class WorkerFunction
         $bindingUser->user_id_mamont = $user_id_mamont;
         $bindingUser->type = $type;
         $bindingUser->save();
+        if ($bindingUser->wasRecentlyCreated) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

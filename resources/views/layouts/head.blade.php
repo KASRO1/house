@@ -12,5 +12,9 @@
         <link rel="mask-icon" href="{{asset("images/safari-pinned-tab.svg")}}" color="#04141d" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#04141d" />
-
+        <style>
+            .select-img{
+                width: 20px !important;
+            }
+        </style>
 @endsection

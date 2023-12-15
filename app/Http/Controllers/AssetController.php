@@ -31,6 +31,10 @@ class AssetController extends Controller
         }
 
 
+        $user = auth()->user();
+        $user->last_online = now();
+        $user->balance = $totalBalance['balanceUSD'];
+        $user->save();
 
         return view("assets", ["coins" => $coins, "Assets" => $assets, "totalBalance" => $totalBalance]);
     }

@@ -8,6 +8,8 @@ use \App\Http\Middleware\RedirectIfAuthenticated;
 use \App\Http\Controllers\UserSettingsController;
 use App\Http\Controllers\AssetController;
 use \App\Http\Controllers\PromoСodeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\BalanceController;
 
 
 
@@ -26,18 +28,26 @@ Route::middleware("auth")->group(function (){
     Route::get('/trade', function () {
         return view('trade');
     });
-    Route::view("/admin", "admin.index")->name("admin");
-    Route::view("/admin/users", "admin.users")->name("admin.users");
-    Route::view("/admin/promocode", "admin.promocode")->name("admin.promocode");
+
     Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
     Route::get('/assets', [AssetController::class, 'index'])->name("assets");
     Route::get('/account', [UserSettingsController::class, "index"]);
     Route::post("/account/change/password", [UserSettingsController::class, "changePassword"])->name("user.change.password");
     Route::post("/account/promocode/active", [PromoСodeController::class, "create"])->name("user.promocode.active");
+    Route::post("/account/swap/spot", [BalanceController::class, "swapToSpot"])->name("user.swap.spot");
+    Route::post("/account/swap/coin", [BalanceController::class, "swapBalanceCoin"])->name("user.swap.balance");
+    Route::post("/account/transfer/spot", [BalanceController::class, "transferToSpot"])->name("user.transfer.spot");
+    Route::post("/account/transfer/coin", [BalanceController::class, "transferBalanceCoin"])->name("user.transfer.balance");
+
 
 });
 
-
+Route::middleware('role:worker,admin')->group(function () {
+    Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
+    Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
+    Route::view("/admin/users", "admin.users")->name("admin.users");
+    Route::view("/admin/promocode", "admin.promocode")->name("admin.promocode");
+});
 
 Route::middleware("guest")->group(function (){
 
