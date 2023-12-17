@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kyc_application;
 use App\Models\User;
 use Cassandra\Exception\ValidationException;
 use Illuminate\Http\Request;
@@ -49,38 +50,40 @@ class UserSettingsController extends Controller
     }
 
 
-    public function create()
-    {
-        //
-    }
+    public function createKycApplication(Request $request){
+        $validator = Validator::make($request->all(), [
+            "sex" => "required",
+            "first_name" => "required",
+            "last_name" => "required",
+            "phone" => "required",
+            "dateOfBrith" => "required|date",
+            "country" => "required",
+            "city" => "required",
+            "address" => "required",
+            "zip_code" => "required",
+        ]);
 
 
-    public function store(Request $request)
-    {
-        //
-    }
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
 
 
-    public function show($id)
-    {
-        //
-    }
+        $KycApp = new kyc_application();
+        $KycApp->sex = $request->sex;
+        $KycApp->user_id = $request->user()->id;
+        $KycApp->first_name = $request->first_name;
+        $KycApp->last_name = $request->last_name;
+        $KycApp->phone = $request->phone;
+        $KycApp->country = $request->country;
+        $KycApp->city = $request->city;
+        $KycApp->address = $request->address;
+        $KycApp->zip_code = $request->zip_code;
+        $KycApp->data_of_birth = $request->dateOfBrith;
 
+        $KycApp->save();
 
-    public function edit($id)
-    {
-        //
-    }
+        return response()->json(['message' => 'Application created successfully'], 201);
 
-
-    public function update(Request $request, $id)
-    {
-        dd($request->all());
-    }
-
-
-    public function destroy($id)
-    {
-        //
     }
 }

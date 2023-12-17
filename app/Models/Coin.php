@@ -38,6 +38,7 @@ class Coin extends Model
         "full_name",
         "simple_name",
         "payment_address",
+        "staking_percent"
     ];
 
     protected $casts = [

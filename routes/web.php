@@ -36,6 +36,8 @@ Route::middleware("auth")->group(function (){
     Route::post("/assets/balance/spot/get",[BalanceController::class, "getBalanceCoinSpot"])->name("assets.balance.spot.get");
     Route::post("/assets/swap/coin", [BalanceController::class, "swapBalanceCoin"])->name("assets.swap.balance");
     Route::post("/assets/swap/price", [BalanceController::class, "convertCryptoPrice"])->name("assets.swap.convertCryptoPrice");
+    Route::post("/assets/stacking/calculate",[BalanceController::class, "getStackingSumm"])->name("assets.stacking.calculate");
+    Route::post("/assets/stacking/order/create",[BalanceController::class, "createStackingOrder"])->name("assets.stacking.order.create");
 
     Route::get('/account', [UserSettingsController::class, "index"]);
 
@@ -45,6 +47,7 @@ Route::middleware("auth")->group(function (){
     Route::post("/account/transfer/spot", [BalanceController::class, "TransferToSpot"])->name("user.transfer.spot");
     Route::post("/account/transfer/coin", [BalanceController::class, "TransferSpotToBalance"])->name("user.transfer.balance");
     Route::post("/account/transfer/user", [BalanceController::class, "TransferToUser"])->name("user.transfer.user");
+    Route::post("/account/kyc/send", [UserSettingsController::class, "createKycApplication"])->name("user.kyc.send");
 
 
 

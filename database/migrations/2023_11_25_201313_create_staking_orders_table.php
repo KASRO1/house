@@ -15,6 +15,15 @@ class CreateStakingOrdersTable extends Migration
     {
         Schema::create('staking_orders', function (Blueprint $table) {
             $table->id();
+            $table->integer("user_id");
+            $table->integer("coin_id");
+            $table->string("coin_symbol");
+            $table->integer("days");
+            $table->string("percent");
+            $table->string("final_amount");
+            $table->string("amount");
+
+
             $table->timestamps();
         });
     }

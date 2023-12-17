@@ -258,20 +258,38 @@
                                 class="clear text_17 d-none"
                                 value="Not verified"
                             />
-                            <input
-                                type="text"
-                                readonly
-                                class="clear text_17 color-yellow"
-                                value="Under consideration"
-                            />
+                        @if(\App\Models\kyc_application::where("user_id", $user->id)->where("status", 0)->first())
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17 color-yellow"
+                                    value="Under consideration"
+                                />
+                            @else
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17 "
+                                    value="Not verified"
+                                />
+                        @endif
                         </div>
                         <div class="action">
-                            <button
-                                class="btn small_btn btn_16"
-                                data-izimodal-open="#verify"
-                            >
-                                Get verified
-                            </button>
+                            @if(\App\Models\kyc_application::where("user_id", $user->id)->where("status", 0)->first())
+                                <button
+                                    class="btn small_btn btn_16"
+                                    data-izimodal-open="#verify"
+                                    disabled>
+                                    Waiting...
+                                </button>
+                            @else
+                                <button
+                                    class="btn small_btn btn_16"
+                                    data-izimodal-open="#verify">
+                                    Get verified
+                                </button>
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -507,31 +525,35 @@
             To ensure account security, provide the required personal information
             to complete verification
         </p>
-        <form action="#">
+        <form id="kycVerificationForm">
             <select class="input mb10" name="sex" id="sex">
                 <option value="male">I am male</option>
                 <option value="female">I am female</option>
             </select>
             <input
                 type="text"
+                name="first_name"
                 class="input mb10"
                 placeholder="First name"
                 required
             />
             <input
                 type="text"
+                name="last_name"
                 class="input mb10"
                 placeholder="Last name"
                 required
             />
             <input
                 type="text"
+                name="phone"
                 class="input mb10"
                 placeholder="Phone number"
                 required
             />
             <input
                 type="text"
+                name="dateOfBrith"
                 class="input mb10"
                 placeholder="DD.MM.YYYY"
                 required
@@ -539,12 +561,14 @@
             <input
                 type="text"
                 class="input mb10"
+                name="country"
                 placeholder="Country"
                 required
             />
-            <input type="text" class="input mb10" placeholder="City" required />
+            <input type="text" name="city" class="input mb10" placeholder="City" required />
             <input
                 type="text"
+                name="address"
                 class="input mb10"
                 placeholder="Street address, house"
                 required
@@ -554,11 +578,11 @@
                 class="input mb25"
                 placeholder="ZIP code"
                 required
+                name="zip_code"
             />
             <button
                 type="submit"
-                class="btn btn_action btn_16 color-dark trigger-verify"
-            >
+                class="btn btn_action btn_16 color-dark trigger-verify">
                 Confirm
             </button>
         </form>
@@ -638,14 +662,7 @@
             message: "Two-factor authentication enabled",
         });
     });
-    $(".trigger-verify").on("click", function (event) {
-        event.preventDefault();
-        $("#verify").iziModal("close");
-        iziToast.show({
-            ...commonOptions,
-            message: "You submitted an identity verification request",
-        });
-    });
+
 </script>
 <script>
     const emailInput = document.getElementById("account-email");
@@ -719,6 +736,49 @@
         })
     })
 
+</script>
+<script>
+    const kycVerificationForm = document.getElementById("kycVerificationForm");
+    kycVerificationForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(kycVerificationForm);
+
+        $.ajax({
+            url: "{{route("user.kyc.send")}}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "{{asset('images/succes.svg')}}",
+                    });
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                }
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "{{asset('images/fail.svg')}}",
+                        });
+                    });
+                });
+            },
+        })
+    })
 </script>
 <script src="{{asset("js/load.js")}}"></script>
 </body>

@@ -9,5 +9,15 @@ class StakingOrder extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "id",
+        "user_id",
+        "coin_id",
+        "coin_symbol",
+        "days",
+        "percent",
+        "amount",
+        "final_amount",
+    ];
 
 }

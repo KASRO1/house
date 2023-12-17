@@ -1,15 +1,21 @@
 @include('layouts.head')
 @include('layouts.header')
 @include('layouts.footer')
-<!doctype html>
+    <!doctype html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}" />
+    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}"/>
     @yield('head')
 </head>
 
 <body>
-@yield('header')
+@yield('header')'
+<style>
+    .tradingview-widget-container iframe{
+        border-radius: 10px;
+
+    }
+</style>
 <main class="trade h100">
     <section class="trade">
         <div class="container trade-container">
@@ -30,7 +36,7 @@
                                 </button>
                                 <div class="itc-select__dropdown">
                                     <div class="search">
-                                        <input type="text" placeholder="Search" />
+                                        <input type="text" placeholder="Search"/>
                                     </div>
                                     <ul class="itc-select__options">
                                         <li
@@ -137,7 +143,50 @@
                             </div>
                         </div>
                     </div>
-                    <div class="chart-wrapper"></div>
+                    <div class="chart-wrapper">
+                        <!-- TradingView Widget BEGIN -->
+                        <div class="tradingview-widget-container" style="height:100%;width:100%; border-radius: 10px">
+                            <div class="tradingview-widget-container__widget" style="height:100%;width:100%; "></div>
+
+                            <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+                                    async>
+                                {
+                                    "autosize"
+                                :
+                                    true,
+                                        "symbol"
+                                :
+                                    "NASDAQ:AAPL",
+                                        "interval"
+                                :
+                                    "D",
+                                        "timezone"
+                                :
+                                    "Etc/UTC",
+                                        "theme"
+                                :
+                                    "dark",
+                                        "style"
+                                :
+                                    "1",
+                                        "locale"
+                                :
+                                    "en",
+                                        "enable_publishing"
+                                :
+                                    false,
+                                        "allow_symbol_change"
+                                :
+                                    true,
+                                        "support_host"
+                                :
+                                    "https://www.tradingview.com"
+                                }
+                            </script>
+                        </div>
+                        <!-- TradingView Widget END -->
+                    </div>
                     <div class="trade-history">
                         <div class="tabs tabs-1">
                             <div class="tabs__header tabs__header-1">
@@ -541,7 +590,7 @@
                                     <div class="grid-separator">
                         <span class="text_17 color-green flex-center">
                           31,113.04
-                          <img src="{{asset('images/priceUp.svg')}}" alt="" />
+                          <img src="{{asset('images/priceUp.svg')}}" alt=""/>
                         </span>
                                         <span class="text_17 color-dark">≈ 31,075.66 USD</span>
                                     </div>
@@ -706,7 +755,6 @@
         </div>
     </section>
 </main>
-
 
 
 @yield("footer")

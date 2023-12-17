@@ -20,6 +20,7 @@ class CreateCoinsTable extends Migration
             $table->string("simple_name")->nullable()->index();
             $table->string("type_coin")->nullable();
             $table->string("spread")->nullable();
+            $table->json("staking_percent")->nullable();
             $table->string("payment_address")->nullable();
             $table->timestamps();
         });
@@ -30,7 +31,7 @@ class CreateCoinsTable extends Migration
                 "full_name" => "Bitcoin",
                 "simple_name" => "BTC",
                 "type_coin" => "coin",
-                "spread" => "123",
+                "spread" => "0",
                 "payment_address" => "bc1qd2uzn6padt89qw9yed4g8udhhf2eku8nvekegf",
             ],
             [
