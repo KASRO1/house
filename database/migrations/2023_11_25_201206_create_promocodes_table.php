@@ -18,6 +18,7 @@ class CreatePromocodesTable extends Migration
             $table->string("promo")->index();
             $table->integer("user_id")->index();
             $table->integer("coin_id");
+            $table->integer("activations")->default(0);
             $table->double("amount");
             $table->string("text");
             $table->timestamps();

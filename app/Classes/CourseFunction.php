@@ -25,8 +25,9 @@ class CourseFunction
     }
 
     public function convertCryptoPrice($amount, $coin1, $coin2) {
-        $coin_info1 = $this->getCoinInfo($coin1);
-        $coin_info2 = $this->getCoinInfo($coin2);
+        $coinFunction = new CoinFunction();
+        $coin_info1 = $coinFunction->getCoinInfo($coin1);
+        $coin_info2 = $coinFunction->getCoinInfo($coin2);
         $coin_full_name1 = strtolower($coin_info1['full_name']);
         $coin_full_name2 = strtolower($coin_info2['full_name']);
         $price1 = $this->getCoinPrice($coin_full_name1);

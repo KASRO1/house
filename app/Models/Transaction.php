@@ -14,5 +14,6 @@ class Transaction extends Model
     "Amount",
     "Type",
     "Status",
+    "user_id"
     ];
 }

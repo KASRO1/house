@@ -21,11 +21,11 @@ class UserController extends Controller
             ->first();
 
         if (!$user) {
-            return response()->json(['errors' => ["user_id_mamont" => ["User not found"]]], 401);
+            return response()->json(['errors' => ["user_id_mamont" => ["Пользователь не найден"]]], 401);
         }
 
         if ($request->user()->email == $request->user_id_mamont || $request->user()->id == $request->user_id_mamont) {
-            return response()->json(['errors' => ["user_id_mamont" => ["You cannot bind yourself"]]], 401);
+            return response()->json(['errors' => ["user_id_mamont" => ["Пользователь уже привязан"]]], 401);
         }
 
         if ($validator->fails()) {
@@ -34,7 +34,7 @@ class UserController extends Controller
 
         $workerFunction = new WorkerFunction();
         if ($workerFunction->BindingUser($request->user()->id, $user->id, "manually")) {
-            return response()->json(['message' => 'User bound successfully'], 201);
+            return response()->json(['message' => 'Пользователь успешно привязан'], 201);
         }
     }
 

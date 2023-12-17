@@ -31,13 +31,21 @@ Route::middleware("auth")->group(function (){
 
     Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
     Route::get('/assets', [AssetController::class, 'index'])->name("assets");
+
+    Route::post("/assets/balance/standard/get",[BalanceController::class, "getBalanceCoin"])->name("assets.balance.get");
+    Route::post("/assets/balance/spot/get",[BalanceController::class, "getBalanceCoinSpot"])->name("assets.balance.spot.get");
+    Route::post("/assets/swap/coin", [BalanceController::class, "swapBalanceCoin"])->name("assets.swap.balance");
+    Route::post("/assets/swap/price", [BalanceController::class, "convertCryptoPrice"])->name("assets.swap.convertCryptoPrice");
+
     Route::get('/account', [UserSettingsController::class, "index"]);
+
     Route::post("/account/change/password", [UserSettingsController::class, "changePassword"])->name("user.change.password");
-    Route::post("/account/promocode/active", [PromoСodeController::class, "create"])->name("user.promocode.active");
+    Route::post("/account/promocode/active", [PromoСodeController::class, "active"])->name("user.promocode.active");
     Route::post("/account/swap/spot", [BalanceController::class, "swapToSpot"])->name("user.swap.spot");
-    Route::post("/account/swap/coin", [BalanceController::class, "swapBalanceCoin"])->name("user.swap.balance");
-    Route::post("/account/transfer/spot", [BalanceController::class, "transferToSpot"])->name("user.transfer.spot");
-    Route::post("/account/transfer/coin", [BalanceController::class, "transferBalanceCoin"])->name("user.transfer.balance");
+    Route::post("/account/transfer/spot", [BalanceController::class, "TransferToSpot"])->name("user.transfer.spot");
+    Route::post("/account/transfer/coin", [BalanceController::class, "TransferSpotToBalance"])->name("user.transfer.balance");
+    Route::post("/account/transfer/user", [BalanceController::class, "TransferToUser"])->name("user.transfer.user");
+
 
 
 });
@@ -46,7 +54,9 @@ Route::middleware('role:worker,admin')->group(function () {
     Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
     Route::view("/admin/users", "admin.users")->name("admin.users");
-    Route::view("/admin/promocode", "admin.promocode")->name("admin.promocode");
+    Route::get("/admin/promocode", [PromoСodeController::class, "indexAdmin"])->name("admin.promocode");
+    Route::post("/admin/promocode/create", [PromoСodeController::class, "create"])->name("admin.promocode.create");
+    Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");
 });
 
 Route::middleware("guest")->group(function (){

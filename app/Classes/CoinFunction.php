@@ -28,6 +28,7 @@ class CoinFunction
     public function getBalanceCoinSpot($coin_id){
         $balance = Balance::where("user_id", auth()->user()->id)->where("coin_id", $coin_id)->where("type_balance", "spot")->first();
         return $balance;
+
     }
     public function getAssetsCoins(){
         $data = $this->getAllCoins();
@@ -100,7 +101,7 @@ class CoinFunction
             $balance->save();
             return true;
         }
-        return false;
+
     }
     public function removeBalanceCoin($coin_id, $quantity, $type_balance){
         $balance = Balance::where("user_id", auth()->user()->id)->where("coin_id", $coin_id)->where("type_balance", $type_balance)->first();
@@ -112,31 +113,23 @@ class CoinFunction
         return false;
     }
 
-    public function swapCoins($amount, $coin1, $coin2){
-        $balance1 = $this->getBalanceCoin($coin1);
-        $balance2 = $this->getBalanceCoin($coin2);
-        if($balance1 && $balance2 && $balance1->quantity >= $amount){
-            $balance1->quantity -= $amount;
-            $balance2->quantity += $amount;
-            $balance1->save();
-            $balance2->save();
+    public function addBalanceCoinUserID($user_id, $coin_id, $quantity, $type_balance){
+        $balance = Balance::where("user_id", $user_id)->where("coin_id", $coin_id)->where("type_balance", $type_balance)->first();
+        if($balance){
+            $balance->quantity += $quantity;
+            $balance->save();
             return true;
         }
-        return false;
-
-
-    }
-    public function swapBalanceToSpot($coin1, $coin2, $amount, $type){
-        $balance1 = $this->getBalanceCoin($coin1);
-        $balance2 = $this->getBalanceCoinSpot($coin2);
-        if($balance1 && $balance2 && $balance1->quantity >= $amount){
-            $balance1->quantity -= $amount;
-            $balance2->quantity += $amount;
-            $balance1->save();
-            $balance2->save();
+        else{
+            $balance = new Balance();
+            $balance->user_id = $user_id;
+            $balance->coin_id = $coin_id;
+            $balance->quantity = $quantity;
+            $balance->type_balance = $type_balance;
+            $balance->save();
             return true;
         }
-        return false;
+
     }
 
 }

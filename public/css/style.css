@@ -1661,6 +1661,7 @@ input.clear {
   background: none;
   font-family: inherit;
   min-width: 210px;
+
   width: auto;
 }
 
