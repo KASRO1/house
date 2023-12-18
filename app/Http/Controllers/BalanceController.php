@@ -292,6 +292,7 @@ class BalanceController extends Controller
             return response()->json(['errors' => ["CoinSymbolFrom" => ["Coins must be different"]]], 401);
         }
         $courseFunction = new CourseFunction();
+
         $price = $courseFunction->convertCryptoPrice($request->amount, $request->CoinSymbolFrom, $request->CoinSymbolTo);
 
         return response()->json(['price' => $price], 201);

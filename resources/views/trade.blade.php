@@ -5,13 +5,15 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{asset("css/custom-select.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}" />
+    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
     @yield('head')
 </head>
 
 <body>
 @yield('header')'
 <style>
-    .tradingview-widget-container iframe{
+    .tradingview-widget-container iframe {
         border-radius: 10px;
 
     }
@@ -30,8 +32,7 @@
                                     name="pair"
                                     value=""
                                     data-select="toggle"
-                                    data-index="-1"
-                                >
+                                    data-index="-1">
                                     Chose pair
                                 </button>
                                 <div class="itc-select__dropdown">
@@ -39,71 +40,28 @@
                                         <input type="text" placeholder="Search"/>
                                     </div>
                                     <ul class="itc-select__options">
+                                        @foreach($coins as $coin)
                                         <li
                                             class="itc-select__option"
                                             data-select="option"
-                                            data-value="ETH"
-                                            data-index="0"
+                                            data-value="{{$coin['simple_name']}}_USDT"
                                         >
                                             <img
-                                                src="{{asset('images/coins/pair_coin-eth.svg')}}"
+                                                width="30px"
+                                                src="{{asset('images/coin_icons/'.$coin['simple_name'].'.svg')}}"
                                                 alt=""
                                             />
-                                            <span>ETH<b class="color-dark">/USDT</b></span>
+                                            <span>{{$coin['simple_name']}}<b class="color-dark">/USDT</b></span>
                                         </li>
-                                        <li
-                                            class="itc-select__option"
-                                            data-select="option"
-                                            data-value="BTC"
-                                            data-index="1"
-                                        >
-                                            <img
-                                                src="{{asset('images/coins/pair_coin-btc.svg')}}"
-                                                alt=""
-                                            />
-                                            <span>BTC<b class="color-dark">/USDT</b></span>
-                                        </li>
-                                        <li
-                                            class="itc-select__option"
-                                            data-select="option"
-                                            data-value="USDC"
-                                            data-index="2"
-                                        >
-                                            <img
-                                                src="{{asset('images/coins/pair_coin-usdc.svg')}}"
-                                                alt=""
-                                            /><span>USDC<b class="color-dark">/USDT</b></span>
-                                            <div class="pair-select_info">
-                            <span class="text_small_12 color-green2"
-                            >31,113.04
-                              <img src="{{asset('images/priceUp.svg')}}" alt=""
-                              /></span>
-                                                <span class="text_small_12 color-green2">+2,24%</span>
-                                            </div>
-                                        </li>
-                                        <li
-                                            class="itc-select__option"
-                                            data-select="option"
-                                            data-value="TRX"
-                                            data-index="3"
-                                        >
-                                            <img
-                                                src="{{asset('images/coins/pair_coin-trx.svg')}}"
-                                                alt=""
-                                            /><span>TRX<b class="color-dark">/USDT</b></span>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
                             <div class="pair-price">
                                 <span class="title text_small_14 color-gray2">Price</span>
-                                <span class="text_17 color-green" id="valueInfo_price"
-                                >31,113.04
-                      <img
-                          class="price-img"
-                          src="{{asset('images/priceUp.svg')}}"
-                          alt=""
-                      /></span>
+                                <span class="text_17 color-green transition_trade" id="valueInfo_price">
+                                    <span class="loader"></span>
+                            </span>
                             </div>
                         </div>
                         <div class="right">
@@ -112,32 +70,34 @@
                       <span class="title text_small_14 color-gray2"
                       >24h change</span
                       >
-                                    <span class="text_17 color-green" id="valueInfo_change"
-                                    >+2.24%</span
+                                    <span class="text_17 color-green transition_trade" id="valueInfo_change">
+                                        <span class="loader"></span>
+                                    </span
                                     >
                                 </div>
                                 <div class="pair-high">
                       <span class="title text_small_14 color-gray2"
                       >24h high</span
                       >
-                                    <span class="text_17 color-black" id="valueInfo_change"
-                                    >31,113.04</span
+                                    <span class="text_17 color-black transition_trade" id="valueInfo_high">
+                                        <span class="loader"></span>
+                                    </span
                                     >
                                 </div>
                                 <div class="pair-low">
                       <span class="title text_small_14 color-gray2"
                       >24h low</span
                       >
-                                    <span class="text_17 color-black" id="valueInfo_change"
-                                    >28,585.21</span
+                                    <span class="text_17 color-black transition_trade" id="valueInfo_low"><span
+                                            class="loader"></span></span
                                     >
                                 </div>
                                 <div class="pair-volume">
                       <span class="title text_small_14 color-gray2"
                       >24h volume (BTC)</span
                       >
-                                    <span class="text_17 color-black" id="valueInfo_change"
-                                    >52,254.82532</span
+                                    <span class="text_17 color-black transition_trade" id="valueInfo_volume"><span
+                                            class="loader"></span></span
                                     >
                                 </div>
                             </div>
@@ -148,42 +108,21 @@
                         <div class="tradingview-widget-container" style="height:100%;width:100%; border-radius: 10px">
                             <div class="tradingview-widget-container__widget" style="height:100%;width:100%; "></div>
 
-                            <script type="text/javascript"
-                                    src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
-                                    async>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                                 {
-                                    "autosize"
-                                :
-                                    true,
-                                        "symbol"
-                                :
-                                    "NASDAQ:AAPL",
-                                        "interval"
-                                :
-                                    "D",
-                                        "timezone"
-                                :
-                                    "Etc/UTC",
-                                        "theme"
-                                :
-                                    "dark",
-                                        "style"
-                                :
-                                    "1",
-                                        "locale"
-                                :
-                                    "en",
-                                        "enable_publishing"
-                                :
-                                    false,
-                                        "allow_symbol_change"
-                                :
-                                    true,
-                                        "support_host"
-                                :
-                                    "https://www.tradingview.com"
+                                    "autosize": true,
+                                    "symbol": "{{str_replace('_', "", $pair)}}",
+                                    "interval": "D",
+                                    "timezone": "Etc/UTC",
+                                    "theme": "dark",
+                                    "style": "1",
+                                    "locale": "en",
+                                    "enable_publishing": false,
+                                    "allow_symbol_change": true,
+                                    "support_host": "https://www.tradingview.com"
                                 }
                             </script>
+
                         </div>
                         <!-- TradingView Widget END -->
                     </div>
@@ -643,110 +582,109 @@
                                 </div>
                             </div>
                             <div class="tabs__content tabs__content-3">
+                                <form id="CreateOrderBuy">
                                 <div class="tabs__content-item tabs__content-item-3">
+
                                     <div class="flex-center">
                                         <div class="way-select">
-                                            <button class="btn way text_small_14">Limit</button>
+{{--                                            <button class="btn way text_small_14">Limit</button>--}}
                                             <button class="btn way text_small_14 active">
                                                 Market
                                             </button>
                                         </div>
                                         <div class="balance">
-                          <span class="text_small_12 color-gray2"
-                          >Available balance</span
-                          >
-                                            <span class="text_16 color-blue"
-                                            >312,423.56 USDT</span
-                                            >
+                                            <span class="text_small_12 color-gray2">Available balance</span>
+                                            <span class="text_16 color-blue">{{$balanceUsdt}} USDT</span>
                                         </div>
                                     </div>
+
                                     <label class="order-label">
-                        <span class="text_small_12 color-dark"
-                        >Market price</span
-                        >
+                                        <span class="text_small_12 color-dark">Market price</span>
                                         <input
                                             type="text"
                                             disabled
+                                            id="quantityPriceBuy"
                                             class="order-input text_17"
-                                            value="≈ 31,113.04"
+                                            value="≈ ?"
                                         />
-                                        <span class="сurrency text_17 color-gray2">USDT</span>
+                                        <span class="сurrency text_17 color-gray2">BTC</span>
                                     </label>
                                     <label class="order-label">
                                         <span class="text_small_12 color-dark">Quantity</span>
                                         <input
                                             type="text"
+                                            id="quantityBuy"
+                                            oninput="calculateBuy()"
                                             class="order-input text_17"
                                             placeholder="0"
-                                            value="3.421"
-                                        />
-                                        <span class="сurrency text_17 color-gray2">BTC</span>
-                                    </label>
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Total</span>
-                                        <input
-                                            type="text"
-                                            class="order-input text_17"
-                                            placeholder="0"
-                                            value="106,437.70"
                                         />
                                         <span class="сurrency text_17 color-gray2">USDT</span>
                                     </label>
+{{--                                    <label class="order-label">--}}
+{{--                                        <span class="text_small_12 color-dark">Total</span>--}}
+{{--                                        <input--}}
+{{--                                            type="text"--}}
+{{--                                            class="order-input text_17"--}}
+{{--                                            placeholder="0"--}}
+{{--                                            value="106,437.70"--}}
+{{--                                        />--}}
+{{--                                        <span class="сurrency text_17 color-gray2">USDT</span>--}}
+{{--                                    </label>--}}
                                     <!-- <button class="btn btn-buy btn_16 notauth">Buy</button> -->
-                                    <button class="btn btn-buy btn_16">Buy</button>
+                                    <button type="submit" class="btn btn-buy btn_16">Buy</button>
+
                                 </div>
+                                </form>
+                                <form id="CreateOrderSell">
                                 <div class="tabs__content-item tabs__content-item-3">
                                     <div class="flex-center">
                                         <div class="way-select">
-                                            <button class="btn way text_small_14 active">
-                                                Limit
-                                            </button>
-                                            <button class="btn way text_small_14">Market</button>
+                                          {{--  <button class="btn way text_small_14 active">Limit</button> --}}
+                                            <button class="btn way text_small_14 active">Market</button>
                                         </div>
                                         <div class="balance">
                           <span class="text_small_12 color-gray2"
-                          >Available balance</span
-                          >
+                          >Available balance</span>
                                             <span class="text_16 color-blue"
-                                            >312,423.56 USDT</span
-                                            >
+                                            >{{$balanceCoin . " ". $coin['simple_name']}}</span>
                                         </div>
                                     </div>
                                     <label class="order-label">
-                        <span class="text_small_12 color-dark"
-                        >Limit price</span
-                        >
+                                        <span class="text_small_12 color-dark">Market price</span>
                                         <input
                                             type="text"
                                             disabled
+                                            id="quantityPriceSell"
                                             class="order-input text_17"
-                                            value="29,062.2"
-                                        />
+                                            value="≈ ?"/>
                                         <span class="сurrency text_17 color-gray2">USDT</span>
                                     </label>
                                     <label class="order-label">
                                         <span class="text_small_12 color-dark">Quantity</span>
                                         <input
                                             type="text"
+                                            id="quantitySell"
+                                            oninput="calculateSell()"
                                             class="order-input text_17"
                                             placeholder="0"
-                                            value="3.421"
+                                            value=""
                                         />
                                         <span class="сurrency text_17 color-gray2">BTC</span>
                                     </label>
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Total</span>
-                                        <input
-                                            type="text"
-                                            class="order-input text_17"
-                                            placeholder="0"
-                                            value="106,437.70"
-                                        />
-                                        <span class="сurrency text_17 color-gray2">USDT</span>
-                                    </label>
+{{--                                    <label class="order-label">--}}
+{{--                                        <span class="text_small_12 color-dark">Total</span>--}}
+{{--                                        <input--}}
+{{--                                            type="text"--}}
+{{--                                            class="order-input text_17"--}}
+{{--                                            placeholder="0"--}}
+{{--                                            value="106,437.70"--}}
+{{--                                        />--}}
+{{--                                        <span class="сurrency text_17 color-gray2">USDT</span>--}}
+{{--                                    </label>--}}
                                     <!-- <button class="btn btn-sell btn_16 notauth">Sell</button> -->
                                     <button class="btn btn-sell btn_16">Sell</button>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -761,11 +699,162 @@
 <script src="{{asset("js/custom-select.js")}}"></script>
 <script src="{{asset("js/tabs.js")}}"></script>
 <script src="{{asset("js/load.js")}}"></script>
+<script src="{{asset("js/iziModal.min.js")}}"></script>
+<script src="{{asset("js/iziToast.min.js")}}"></script>
 <script>
-    const select1 = new ItcCustomSelect("#select-1");
+    const select1 = new ItcCustomSelect("#select-1", {
+        targetValue: "BTC_USDT",
+        onSelected(select, option) {
+            window.location.href = "/trade/" + select.value;
+        }
+
+    });
+
+
+</script>
+<script>
+    let lastPrice = 0;
+    let change = 0;
+
+    function updateAsset() {
+        const valueInfo_price = document.getElementById('valueInfo_price');
+        const valueInfo_change = document.getElementById('valueInfo_change');
+        const valueInfo_high = document.getElementById('valueInfo_high');
+        const valueInfo_low = document.getElementById('valueInfo_low');
+        const valueInfo_volume = document.getElementById('valueInfo_volume');
+
+        const pair = "{{str_replace("_", "", $pair)}}";
+        $.ajax({
+            url: "{{route('trade.assets')}}",
+            type: "POST",
+            data: {
+                pair: pair,
+                _token: "{{ csrf_token() }}",
+            },
+            success: function (data) {
+                if (lastPrice < data.lastPrice) {
+                    valueInfo_price.classList.remove('color-red');
+                    valueInfo_price.classList.add('color-green');
+                    valueInfo_price.innerHTML = data.lastPrice + '<img class="price-img" src="http://laravel.house/images/priceUp.svg" alt="">';
+                } else {
+                    valueInfo_price.classList.remove('color-green');
+                    valueInfo_price.classList.add('color-red');
+                    valueInfo_price.innerHTML = data.lastPrice + '<img class="price-img" src="http://laravel.house/images/priceDown.svg" alt="">';
+                }
+
+                if (change < data.priceChangePercent) {
+                    valueInfo_change.classList.remove('color-red');
+                    valueInfo_change.classList.add('color-green');
+                    valueInfo_change.innerHTML = data.priceChangePercent + '<img class="price-img" src="http://laravel.house/images/priceUp.svg" alt="">';
+                } else {
+                    valueInfo_change.classList.remove('color-green');
+                    valueInfo_change.classList.add('color-red');
+                    valueInfo_change.innerHTML = data.priceChangePercent + '<img class="price-img" src="http://laravel.house/images/priceDown.svg" alt="">';
+                }
+                valueInfo_high.innerHTML = data.highPrice;
+                valueInfo_low.innerHTML = data.lowPrice;
+                valueInfo_volume.innerHTML = data.volume;
+                lastPrice = data.lastPrice;
+                change = data.priceChangePercent;
+            },
+            error: function (msg) {
+                console.log(msg);
+            },
+        })
+    }
+
+    updateAsset();
+    setInterval(updateAsset, 1000);
+    function Effect_of_smooth_magnification(start_value, end_value, duration = 1000, id_element) {
+        let start = null;
+        const step = (timestamp) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const value = (progress * (end_value - start_value) + start_value).toFixed(4);
+            document.getElementById(`${id_element}`).value = value;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+    function calculateBuy(){
+        const quantityBuy = document.getElementById('quantityBuy');
+        const quantityPriceBuy = document.getElementById('quantityPriceBuy');
+        const amount = quantityBuy.value;
+        const coin = "{{explode('_', $pair)[0]}}";
+
+        $.ajax({
+            url: "{{ route("assets.swap.convertCryptoPrice") }}",
+            type: "POST",
+            data: {
+                CoinSymbolFrom: "USDT",
+                CoinSymbolTo: coin,
+                amount: amount
+            },
+            success: function (data, status, xhr) {
+
+                Effect_of_smooth_magnification(0, data.price, 100, "quantityPriceBuy");
+
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "{{ asset('images/fail.svg') }}",
+                        });
+                    });
+                });
+            },
+        });
+    }
+    function calculateSell(){
+        const quantitySell = document.getElementById('quantitySell');
+        const quantityPriceSell = document.getElementById('quantityPriceSell');
+        const amount = quantitySell.value;
+        const coin = "{{explode('_', $pair)[0]}}";
+
+        $.ajax({
+            url: "{{ route("assets.swap.convertCryptoPrice") }}",
+            type: "POST",
+            data: {
+                CoinSymbolFrom: coin,
+                CoinSymbolTo: "USDT",
+                amount: amount
+            },
+            success: function (data, status, xhr) {
+
+                Effect_of_smooth_magnification(0, data.price, 100, "quantityPriceSell");
+
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "{{ asset('images/fail.svg') }}",
+                        });
+                    });
+                });
+            },
+        });
+    }
 </script>
 
+<script>
+    const CreateOrderBuy = document.getElementById('CreateOrderBuy');
+    const CreateOrderSell = document.getElementById('CreateOrderSell');
 
+    CreateOrderBuyr
+
+</script>
 </body>
 </html>
 

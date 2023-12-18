@@ -18,10 +18,10 @@ class CreateOrdersTable extends Migration
             $table->integer("user_id")->index();
             $table->string("type_order");
             $table->string("type_trade");
-            $table->dateTime("date_close");
+            $table->dateTime("date_close")->nullable();
             $table->integer("coin_id");
             $table->double("open_order_price");
-            $table->double("close_order_price");
+            $table->double("close_order_price")->nullable();
             $table->double("amount");
             $table->string("status");
             $table->timestamps();

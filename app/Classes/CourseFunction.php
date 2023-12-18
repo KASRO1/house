@@ -35,4 +35,24 @@ class CourseFunction
         $total = ($price1 / $price2) * $amount;
         return number_format($total, 2, '.', '');
     }
+    public function getAssetsCoin($pair) {
+        $coin = str_replace('_', '', $pair);
+        $coin = strtolower($coin);
+        $url = "https://testnet.binancefuture.com/fapi/v1/ticker/24hr?symbol=".urlencode($coin);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        try {
+            $output = curl_exec($ch);
+            if ($output === false) {
+                throw new Exception(curl_error($ch), curl_errno($ch));
+            }
+        } finally {
+            curl_close($ch);
+        }
+
+        return json_decode($output, true);
+    }
 }

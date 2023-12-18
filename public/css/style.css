@@ -2233,7 +2233,29 @@ button.clear {
   right: 20px;
   pointer-events: none;
 }
+.loader {
+    width: 14px;
+    height: 14px;
+    background: var(--Green);
+    display: inline-block;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: animloader 1s ease-in infinite;
+}
 
+@keyframes animloader {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+.transition_trade{
+    transition: color 0.5s, opacity 0.5s;
+}
 .search input {
   width: 100%;
   padding: 0 0 6px 0;
