@@ -5,10 +5,9 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="<?php echo e(asset("css/custom-select.css")); ?>"/>
-    <link rel="stylesheet" href="<?php echo e(asset("css/iziToast.css")); ?>" />
-    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>" />
-    <?php echo $__env->yieldContent('head'); ?>
-</head>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziToast.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>"/>
+<?php echo $__env->yieldContent('head'); ?>
 
 <body>
 <?php echo $__env->yieldContent('header'); ?>'
@@ -16,6 +15,16 @@
     .tradingview-widget-container iframe {
         border-radius: 10px;
 
+    }
+    .grid-line {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .grid-line.active {
+        opacity: 1;
+        transform: translateY(0);
     }
 </style>
 <main class="trade h100">
@@ -40,19 +49,19 @@
                                         <input type="text" placeholder="Search"/>
                                     </div>
                                     <ul class="itc-select__options">
-                                        <?php $__currentLoopData = $coins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $coin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <li
-                                            class="itc-select__option"
-                                            data-select="option"
-                                            data-value="<?php echo e($coin['simple_name']); ?>_USDT"
-                                        >
-                                            <img
-                                                width="30px"
-                                                src="<?php echo e(asset('images/coin_icons/'.$coin['simple_name'].'.svg')); ?>"
-                                                alt=""
-                                            />
-                                            <span><?php echo e($coin['simple_name']); ?><b class="color-dark">/USDT</b></span>
-                                        </li>
+                                        <?php $__currentLoopData = $coins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Coin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <li
+                                                class="itc-select__option"
+                                                data-select="option"
+                                                data-value="<?php echo e($Coin['simple_name']); ?>_USDT"
+                                            >
+                                                <img
+                                                    width="30px"
+                                                    src="<?php echo e(asset('images/coin_icons/'.$Coin['simple_name'].'.svg')); ?>"
+                                                    alt=""
+                                                />
+                                                <span><?php echo e($Coin['simple_name']); ?><b class="color-dark">/USDT</b></span>
+                                            </li>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </ul>
                                 </div>
@@ -108,18 +117,40 @@
                         <div class="tradingview-widget-container" style="height:100%;width:100%; border-radius: 10px">
                             <div class="tradingview-widget-container__widget" style="height:100%;width:100%; "></div>
 
-                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                            <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+                                    async>
                                 {
-                                    "autosize": true,
-                                    "symbol": "<?php echo e(str_replace('_', "", $pair)); ?>",
-                                    "interval": "D",
-                                    "timezone": "Etc/UTC",
-                                    "theme": "dark",
-                                    "style": "1",
-                                    "locale": "en",
-                                    "enable_publishing": false,
-                                    "allow_symbol_change": true,
-                                    "support_host": "https://www.tradingview.com"
+                                    "autosize"
+                                :
+                                    true,
+                                        "symbol"
+                                :
+                                    "<?php echo e(str_replace('_', "", $pair)); ?>",
+                                        "interval"
+                                :
+                                    "D",
+                                        "timezone"
+                                :
+                                    "Etc/UTC",
+                                        "theme"
+                                :
+                                    "dark",
+                                        "style"
+                                :
+                                    "1",
+                                        "locale"
+                                :
+                                    "en",
+                                        "enable_publishing"
+                                :
+                                    false,
+                                        "allow_symbol_change"
+                                :
+                                    true,
+                                        "support_host"
+                                :
+                                    "https://www.tradingview.com"
                                 }
                             </script>
 
@@ -150,7 +181,8 @@
                                         <div>Total (USDT)</div>
                                         <div>Cancel</div>
                                     </div>
-                                    <div class="overflow">
+                                    <div class="overflow" id="openOrders">
+
                                         <div class="grid-line">
                                             <div>05/21/23, 13:43:57</div>
                                             <div>BTC/USDT</div>
@@ -159,14 +191,7 @@
                                             <div>26,481.13</div>
                                             <div>0.685630</div>
                                             <div>18,156.16</div>
-                                            <div>
-                                                <button class="clear cancel-btn">
-                                                    <img
-                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
-                                                        alt="x"
-                                                    />
-                                                </button>
-                                            </div>
+
                                         </div>
                                         <div class="grid-line">
                                             <div>05/21/23, 13:43:57</div>
@@ -317,7 +342,7 @@
                                         <div>Total (USDT)</div>
                                         <div>Status</div>
                                     </div>
-                                    <div class="overflow">
+                                    <div class="overflow" id="closedOrders">
                                         <div class="grid-line">
                                             <div>05/21/23, 13:43:57</div>
                                             <div>BTC/USDT</div>
@@ -583,107 +608,111 @@
                             </div>
                             <div class="tabs__content tabs__content-3">
                                 <form id="CreateOrderBuy">
-                                <div class="tabs__content-item tabs__content-item-3">
+                                    <div class="tabs__content-item tabs__content-item-3">
 
-                                    <div class="flex-center">
-                                        <div class="way-select">
+                                        <div class="flex-center">
+                                            <div class="way-select">
+                                                
+                                                <button class="btn way text_small_14 active">
+                                                    Market
+                                                </button>
+                                            </div>
+                                            <div class="balance">
+                                                <span class="text_small_12 color-gray2">Available balance</span>
+                                                <span class="text_16 color-blue"><?php echo e($balanceUsdt); ?> USDT</span>
+                                            </div>
+                                        </div>
 
-                                            <button class="btn way text_small_14 active">
-                                                Market
-                                            </button>
-                                        </div>
-                                        <div class="balance">
-                                            <span class="text_small_12 color-gray2">Available balance</span>
-                                            <span class="text_16 color-blue"><?php echo e($balanceUsdt); ?> USDT</span>
-                                        </div>
+                                        <label class="order-label">
+                                            <span class="text_small_12 color-dark">Market price</span>
+                                            <input
+                                                type="text"
+                                                disabled
+                                                id="quantityPriceBuy"
+                                                class="order-input text_17"
+                                                value="≈ ?"
+                                            />
+
+
+                                            <span class="сurrency text_17 color-gray2"><?php echo e($coin['simple_name']); ?></span>
+                                        </label>
+                                        <label class="order-label">
+                                            <span class="text_small_12 color-dark">Quantity</span>
+                                            <input
+                                                type="text"
+                                                id="quantityBuy"
+                                                name="amount"
+                                                oninput="delayedCalculateBuy()"
+                                                class="order-input  text_17"
+                                                placeholder="0"
+                                            />
+                                            <span class="сurrency text_17 color-gray2">USDT</span>
+                                        </label>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        <!-- <button class="btn btn-buy btn_16 notauth">Buy</button> -->
+                                        <button type="submit" class="btn btn-buy btn_16">Buy</button>
+
                                     </div>
-
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Market price</span>
-                                        <input
-                                            type="text"
-                                            disabled
-                                            id="quantityPriceBuy"
-                                            class="order-input text_17"
-                                            value="≈ ?"
-                                        />
-                                        <span class="сurrency text_17 color-gray2">BTC</span>
-                                    </label>
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Quantity</span>
-                                        <input
-                                            type="text"
-                                            id="quantityBuy"
-                                            oninput="calculateBuy()"
-                                            class="order-input text_17"
-                                            placeholder="0"
-                                        />
-                                        <span class="сurrency text_17 color-gray2">USDT</span>
-                                    </label>
-
-
-
-
-
-
-
-
-
-
-                                    <!-- <button class="btn btn-buy btn_16 notauth">Buy</button> -->
-                                    <button type="submit" class="btn btn-buy btn_16">Buy</button>
-
-                                </div>
                                 </form>
                                 <form id="CreateOrderSell">
-                                <div class="tabs__content-item tabs__content-item-3">
-                                    <div class="flex-center">
-                                        <div class="way-select">
-                                          
-                                            <button class="btn way text_small_14 active">Market</button>
-                                        </div>
-                                        <div class="balance">
+                                    <div class="tabs__content-item tabs__content-item-3">
+                                        <div class="flex-center">
+                                            <div class="way-select">
+                                                
+                                                <button class="btn way text_small_14 active">Market</button>
+                                            </div>
+                                            <div class="balance">
                           <span class="text_small_12 color-gray2"
                           >Available balance</span>
-                                            <span class="text_16 color-blue"
-                                            ><?php echo e($balanceCoin . " ". $coin['simple_name']); ?></span>
+                                                <span class="text_16 color-blue"
+                                                ><?php echo e($balanceCoin . " ". $coin['simple_name']); ?></span>
+                                            </div>
                                         </div>
+                                        <label class="order-label">
+                                            <span class="text_small_12 color-dark">Market price</span>
+                                            <input
+                                                type="text"
+                                                disabled
+                                                id="quantityPriceSell"
+                                                class="order-input text_17"
+                                                value="≈ ?"/>
+                                            <span class="сurrency text_17 color-gray2">USDT</span>
+                                        </label>
+                                        <label class="order-label">
+                                            <span class="text_small_12 color-dark">Quantity</span>
+                                            <input
+                                                type="text"
+                                                id="quantitySell"
+                                                name="amount"
+                                                oninput="delayedCalculateSell()"
+                                                class="order-input text_17"
+                                                placeholder="0"
+                                                value=""
+                                            />
+                                            <span class="сurrency text_17 color-gray2"><?php echo e($coin['simple_name']); ?></span>
+                                        </label>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        <!-- <button class="btn btn-sell btn_16 notauth">Sell</button> -->
+                                        <button class="btn btn-sell btn_16">Sell</button>
                                     </div>
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Market price</span>
-                                        <input
-                                            type="text"
-                                            disabled
-                                            id="quantityPriceSell"
-                                            class="order-input text_17"
-                                            value="≈ ?"/>
-                                        <span class="сurrency text_17 color-gray2">USDT</span>
-                                    </label>
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Quantity</span>
-                                        <input
-                                            type="text"
-                                            id="quantitySell"
-                                            oninput="calculateSell()"
-                                            class="order-input text_17"
-                                            placeholder="0"
-                                            value=""
-                                        />
-                                        <span class="сurrency text_17 color-gray2">BTC</span>
-                                    </label>
-
-
-
-
-
-
-
-
-
-
-                                    <!-- <button class="btn btn-sell btn_16 notauth">Sell</button> -->
-                                    <button class="btn btn-sell btn_16">Sell</button>
-                                </div>
                                 </form>
                             </div>
                         </div>
@@ -713,6 +742,15 @@
 
 </script>
 <script>
+    const commonOptions = {
+        closeOnClick: true,
+        class: "toast",
+        transitionIn: "fadeInDown",
+        transitionOut: "fadeOutUp",
+        position: "topCenter",
+        iconUrl: "/assets/images/succes.svg",
+        close: false,
+    };
     let lastPrice = 0;
     let change = 0;
 
@@ -765,6 +803,7 @@
 
     updateAsset();
     setInterval(updateAsset, 1000);
+
     function Effect_of_smooth_magnification(start_value, end_value, duration = 1000, id_element) {
         let start = null;
         const step = (timestamp) => {
@@ -778,12 +817,18 @@
         };
         window.requestAnimationFrame(step);
     }
-    function calculateBuy(){
+
+    let buyTimeout;
+    let sellTimeout;
+
+    function calculateBuy() {
         const quantityBuy = document.getElementById('quantityBuy');
         const quantityPriceBuy = document.getElementById('quantityPriceBuy');
         const amount = quantityBuy.value;
         const coin = "<?php echo e(explode('_', $pair)[0]); ?>";
-
+        if (isNaN(amount)) {
+            return;
+        }
         $.ajax({
             url: "<?php echo e(route("assets.swap.convertCryptoPrice")); ?>",
             type: "POST",
@@ -812,12 +857,16 @@
             },
         });
     }
-    function calculateSell(){
+
+    function calculateSell() {
+
         const quantitySell = document.getElementById('quantitySell');
         const quantityPriceSell = document.getElementById('quantityPriceSell');
         const amount = quantitySell.value;
         const coin = "<?php echo e(explode('_', $pair)[0]); ?>";
-
+        if (isNaN(amount)) {
+            return;
+        }
         $.ajax({
             url: "<?php echo e(route("assets.swap.convertCryptoPrice")); ?>",
             type: "POST",
@@ -846,12 +895,251 @@
             },
         });
     }
-</script>
 
+    function addLoaderClass(elementId) {
+        // Добавить класс loader к элементу
+        $("#" + elementId).addClass("loader");
+    }
+
+    function removeLoaderClass(elementId) {
+        // Убрать класс loader из элемента
+        $("#" + elementId).removeClass("loader");
+    }
+
+    function delayedCalculateBuy() {
+        clearTimeout(buyTimeout);
+        addLoaderClass("quantityPriceBuy");
+        buyTimeout = setTimeout(function () {
+            calculateBuy();
+            setTimeout(function () {
+                removeLoaderClass("quantityPriceBuy");
+            }, 400);
+
+
+        }, 500);
+    }
+
+    function delayedCalculateSell() {
+        clearTimeout(sellTimeout);
+        addLoaderClass("quantityPriceSell");
+        sellTimeout = setTimeout(function () {
+            calculateSell();
+            setTimeout(function () {
+                removeLoaderClass("quantityPriceSell");
+            }, 400);
+
+        }, 500);
+    }
+</script>
+<script>
+    function formatDateString(inputDate) {
+        const date = new Date(inputDate);
+
+        const day = date.getUTCDate();
+        const month = date.getUTCMonth() + 1;
+        const year = date.getUTCFullYear() % 100;
+
+        // Получаем часы, минуты и секунды
+        const hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+        const seconds = date.getUTCSeconds();
+
+
+        const formattedDate = `${(month < 10 ? '0' : '') + month}/${(day < 10 ? '0' : '') + day}/${year}, ${hours}:${(minutes < 10 ? '0' : '') + minutes}:${(seconds < 10 ? '0' : '') + seconds}`;
+
+        return formattedDate;
+    }
+
+    function renderTable(data, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+
+        // Получаем значение цены из элемента
+        const price = parseFloat(document.getElementById('valueInfo_price').textContent);
+
+        data.forEach(order => {
+            const gridLine = document.createElement("div");
+            gridLine.classList.add("grid-line");
+
+            const calculatedAmount = parseFloat(order.amount) * price;
+
+            gridLine.innerHTML = `
+            <div>${formatDateString(order.created_at)}</div>
+            <div>${order.symbol}/USDT</div>
+            <div>${order.type_order}</div>
+            <div>${order.type_trade}</div>
+            <div>${order.open_order_price.toFixed(2)}</div>
+            <div>${order.amount.toFixed(2)}</div>
+            <div>${isNaN(calculatedAmount) ? '<div class="loader"></div>' : calculatedAmount.toFixed(2)}</div>`;
+
+            if (containerId === "openOrders") {
+                const cancelButton = document.createElement("div");
+                cancelButton.innerHTML = `
+                <button onclick="closeOrder(${order.id})" class="clear cancel-btn">
+                    <img src="<?php echo e(asset('images/cancel-icon.svg')); ?>" alt="x"/>
+                </button>`;
+                gridLine.appendChild(cancelButton);
+            } else {
+                const statusColumn = document.createElement("div");
+                statusColumn.textContent = order.status;
+                gridLine.appendChild(statusColumn);
+            }
+
+            container.appendChild(gridLine);
+
+            // Добавляем класс для анимации
+            setTimeout(() => {
+                gridLine.classList.add("active");
+            }, 100); // Измените это значение по необходимости
+        });
+    }
+
+
+    // Отрисовываем таблицы при загрузке страницы
+    // renderTable(openOrdersData, "openOrders");
+    // renderTable(closedOrdersData, "closedOrders");
+
+
+    function getHistory() {
+        const pair = "<?php echo e(str_replace("_", "", $pair)); ?>";
+        $.ajax({
+            url: "<?php echo e(route('trade.history')); ?>",
+            type: "POST",
+            data: {
+                pair: pair,
+                _token: "<?php echo e(csrf_token()); ?>",
+            },
+            success: function (data) {
+                console.log(data)
+                renderTable(data.OpenOrder, "openOrders");
+                renderTable(data.CloseOrder, "closedOrders");
+            },
+            error: function (msg) {
+                console.log(msg);
+            },
+        })
+    }
+
+    setInterval(getHistory, 15000)
+    setTimeout(getHistory, 1000);
+    function closeOrder(id){
+        $.ajax({
+            url: "<?php echo e(route('trade.order.close')); ?>",
+            type: "POST",
+            data: {
+                id: id,
+                _token: "<?php echo e(csrf_token()); ?>",
+            },
+            success: function (data) {
+                console.log(data)
+                getHistory()
+                iziToast.show({
+                    ...commonOptions,
+                    message: data.message,
+                    iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                });
+            },
+            error: function (msg) {
+                console.log(msg);
+            },
+        })
+    }
+</script>
 <script>
     const CreateOrderBuy = document.getElementById('CreateOrderBuy');
     const CreateOrderSell = document.getElementById('CreateOrderSell');
 
+    CreateOrderBuy.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const coin = "USDT";
+        const type_order = "market";
+        const type_trade = "buy";
+        const formData = new FormData(CreateOrderBuy);
+        formData.append("coin_symbol", coin);
+        formData.append("type_order", type_order);
+        formData.append("type_trade", type_trade);
+
+        $.ajax({
+            url: "<?php echo e(route("trade.create.order")); ?>",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data, status, xhr) {
+                console.log(data);
+                getHistory();
+                if (xhr.status === 201) {
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                    });
+
+                }
+            },
+            error: function (data) {
+
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        });
+
+    });
+
+    CreateOrderSell.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const coin = "<?php echo e($coin['simple_name']); ?>";
+        const type_order = "market";
+        const type_trade = "sell";
+        const formData = new FormData(CreateOrderSell);
+        formData.append("coin_symbol", coin);
+        formData.append("type_order", type_order);
+        formData.append("type_trade", type_trade);
+
+        $.ajax({
+            url: "<?php echo e(route("trade.create.order")); ?>",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data, status, xhr) {
+                console.log(data);
+                getHistory();
+                if (xhr.status === 201) {
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                    });
+
+                }
+            },
+            error: function (data) {
+
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        });
+
+    });
 
 </script>
 </body>

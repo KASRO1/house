@@ -5,9 +5,9 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{asset("css/custom-select.css")}}"/>
-    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
-    @yield('head')
+    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}"/>
+@yield('head')
 
 <body>
 @yield('header')'
@@ -15,6 +15,16 @@
     .tradingview-widget-container iframe {
         border-radius: 10px;
 
+    }
+    .grid-line {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .grid-line.active {
+        opacity: 1;
+        transform: translateY(0);
     }
 </style>
 <main class="trade h100">
@@ -40,18 +50,18 @@
                                     </div>
                                     <ul class="itc-select__options">
                                         @foreach($coins as $Coin)
-                                        <li
-                                            class="itc-select__option"
-                                            data-select="option"
-                                            data-value="{{$Coin['simple_name']}}_USDT"
-                                        >
-                                            <img
-                                                width="30px"
-                                                src="{{asset('images/coin_icons/'.$Coin['simple_name'].'.svg')}}"
-                                                alt=""
-                                            />
-                                            <span>{{$Coin['simple_name']}}<b class="color-dark">/USDT</b></span>
-                                        </li>
+                                            <li
+                                                class="itc-select__option"
+                                                data-select="option"
+                                                data-value="{{$Coin['simple_name']}}_USDT"
+                                            >
+                                                <img
+                                                    width="30px"
+                                                    src="{{asset('images/coin_icons/'.$Coin['simple_name'].'.svg')}}"
+                                                    alt=""
+                                                />
+                                                <span>{{$Coin['simple_name']}}<b class="color-dark">/USDT</b></span>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -107,18 +117,40 @@
                         <div class="tradingview-widget-container" style="height:100%;width:100%; border-radius: 10px">
                             <div class="tradingview-widget-container__widget" style="height:100%;width:100%; "></div>
 
-                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                            <script type="text/javascript"
+                                    src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+                                    async>
                                 {
-                                    "autosize": true,
-                                    "symbol": "{{str_replace('_', "", $pair)}}",
-                                    "interval": "D",
-                                    "timezone": "Etc/UTC",
-                                    "theme": "dark",
-                                    "style": "1",
-                                    "locale": "en",
-                                    "enable_publishing": false,
-                                    "allow_symbol_change": true,
-                                    "support_host": "https://www.tradingview.com"
+                                    "autosize"
+                                :
+                                    true,
+                                        "symbol"
+                                :
+                                    "{{str_replace('_', "", $pair)}}",
+                                        "interval"
+                                :
+                                    "D",
+                                        "timezone"
+                                :
+                                    "Etc/UTC",
+                                        "theme"
+                                :
+                                    "dark",
+                                        "style"
+                                :
+                                    "1",
+                                        "locale"
+                                :
+                                    "en",
+                                        "enable_publishing"
+                                :
+                                    false,
+                                        "allow_symbol_change"
+                                :
+                                    true,
+                                        "support_host"
+                                :
+                                    "https://www.tradingview.com"
                                 }
                             </script>
 
@@ -149,7 +181,8 @@
                                         <div>Total (USDT)</div>
                                         <div>Cancel</div>
                                     </div>
-                                    <div class="overflow">
+                                    <div class="overflow" id="openOrders">
+
                                         <div class="grid-line">
                                             <div>05/21/23, 13:43:57</div>
                                             <div>BTC/USDT</div>
@@ -158,14 +191,7 @@
                                             <div>26,481.13</div>
                                             <div>0.685630</div>
                                             <div>18,156.16</div>
-                                            <div>
-                                                <button class="clear cancel-btn">
-                                                    <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
-                                                        alt="x"
-                                                    />
-                                                </button>
-                                            </div>
+
                                         </div>
                                         <div class="grid-line">
                                             <div>05/21/23, 13:43:57</div>
@@ -316,7 +342,7 @@
                                         <div>Total (USDT)</div>
                                         <div>Status</div>
                                     </div>
-                                    <div class="overflow">
+                                    <div class="overflow" id="closedOrders">
                                         <div class="grid-line">
                                             <div>05/21/23, 13:43:57</div>
                                             <div>BTC/USDT</div>
@@ -582,111 +608,111 @@
                             </div>
                             <div class="tabs__content tabs__content-3">
                                 <form id="CreateOrderBuy">
-                                <div class="tabs__content-item tabs__content-item-3">
+                                    <div class="tabs__content-item tabs__content-item-3">
 
-                                    <div class="flex-center">
-                                        <div class="way-select">
-{{--                                            <button class="btn way text_small_14">Limit</button>--}}
-                                            <button class="btn way text_small_14 active">
-                                                Market
-                                            </button>
+                                        <div class="flex-center">
+                                            <div class="way-select">
+                                                {{--                                            <button class="btn way text_small_14">Limit</button>--}}
+                                                <button class="btn way text_small_14 active">
+                                                    Market
+                                                </button>
+                                            </div>
+                                            <div class="balance">
+                                                <span class="text_small_12 color-gray2">Available balance</span>
+                                                <span class="text_16 color-blue">{{$balanceUsdt}} USDT</span>
+                                            </div>
                                         </div>
-                                        <div class="balance">
-                                            <span class="text_small_12 color-gray2">Available balance</span>
-                                            <span class="text_16 color-blue">{{$balanceUsdt}} USDT</span>
-                                        </div>
+
+                                        <label class="order-label">
+                                            <span class="text_small_12 color-dark">Market price</span>
+                                            <input
+                                                type="text"
+                                                disabled
+                                                id="quantityPriceBuy"
+                                                class="order-input text_17"
+                                                value="≈ ?"
+                                            />
+
+
+                                            <span class="сurrency text_17 color-gray2">{{$coin['simple_name']}}</span>
+                                        </label>
+                                        <label class="order-label">
+                                            <span class="text_small_12 color-dark">Quantity</span>
+                                            <input
+                                                type="text"
+                                                id="quantityBuy"
+                                                name="amount"
+                                                oninput="delayedCalculateBuy()"
+                                                class="order-input  text_17"
+                                                placeholder="0"
+                                            />
+                                            <span class="сurrency text_17 color-gray2">USDT</span>
+                                        </label>
+                                        {{--                                    <label class="order-label">--}}
+                                        {{--                                        <span class="text_small_12 color-dark">Total</span>--}}
+                                        {{--                                        <input--}}
+                                        {{--                                            type="text"--}}
+                                        {{--                                            class="order-input text_17"--}}
+                                        {{--                                            placeholder="0"--}}
+                                        {{--                                            value="106,437.70"--}}
+                                        {{--                                        />--}}
+                                        {{--                                        <span class="сurrency text_17 color-gray2">USDT</span>--}}
+                                        {{--                                    </label>--}}
+                                        <!-- <button class="btn btn-buy btn_16 notauth">Buy</button> -->
+                                        <button type="submit" class="btn btn-buy btn_16">Buy</button>
+
                                     </div>
-
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Market price</span>
-                                        <input
-                                            type="text"
-                                            disabled
-                                            id="quantityPriceBuy"
-                                            class="order-input text_17"
-                                            value="≈ ?"
-                                        />
-
-
-                                        <span class="сurrency text_17 color-gray2">{{$coin['simple_name']}}</span>
-                                    </label>
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Quantity</span>
-                                        <input
-                                            type="text"
-                                            id="quantityBuy"
-                                            name="amount"
-                                            oninput="calculateBuy()"
-                                            class="order-input text_17"
-                                            placeholder="0"
-                                        />
-                                        <span class="сurrency text_17 color-gray2">USDT</span>
-                                    </label>
-{{--                                    <label class="order-label">--}}
-{{--                                        <span class="text_small_12 color-dark">Total</span>--}}
-{{--                                        <input--}}
-{{--                                            type="text"--}}
-{{--                                            class="order-input text_17"--}}
-{{--                                            placeholder="0"--}}
-{{--                                            value="106,437.70"--}}
-{{--                                        />--}}
-{{--                                        <span class="сurrency text_17 color-gray2">USDT</span>--}}
-{{--                                    </label>--}}
-                                    <!-- <button class="btn btn-buy btn_16 notauth">Buy</button> -->
-                                    <button type="submit" class="btn btn-buy btn_16">Buy</button>
-
-                                </div>
                                 </form>
                                 <form id="CreateOrderSell">
-                                <div class="tabs__content-item tabs__content-item-3">
-                                    <div class="flex-center">
-                                        <div class="way-select">
-                                          {{--  <button class="btn way text_small_14 active">Limit</button> --}}
-                                            <button class="btn way text_small_14 active">Market</button>
-                                        </div>
-                                        <div class="balance">
+                                    <div class="tabs__content-item tabs__content-item-3">
+                                        <div class="flex-center">
+                                            <div class="way-select">
+                                                {{--  <button class="btn way text_small_14 active">Limit</button> --}}
+                                                <button class="btn way text_small_14 active">Market</button>
+                                            </div>
+                                            <div class="balance">
                           <span class="text_small_12 color-gray2"
                           >Available balance</span>
-                                            <span class="text_16 color-blue"
-                                            >{{$balanceCoin . " ". $coin['simple_name']}}</span>
+                                                <span class="text_16 color-blue"
+                                                >{{$balanceCoin . " ". $coin['simple_name']}}</span>
+                                            </div>
                                         </div>
+                                        <label class="order-label">
+                                            <span class="text_small_12 color-dark">Market price</span>
+                                            <input
+                                                type="text"
+                                                disabled
+                                                id="quantityPriceSell"
+                                                class="order-input text_17"
+                                                value="≈ ?"/>
+                                            <span class="сurrency text_17 color-gray2">USDT</span>
+                                        </label>
+                                        <label class="order-label">
+                                            <span class="text_small_12 color-dark">Quantity</span>
+                                            <input
+                                                type="text"
+                                                id="quantitySell"
+                                                name="amount"
+                                                oninput="delayedCalculateSell()"
+                                                class="order-input text_17"
+                                                placeholder="0"
+                                                value=""
+                                            />
+                                            <span class="сurrency text_17 color-gray2">{{$coin['simple_name']}}</span>
+                                        </label>
+                                        {{--                                    <label class="order-label">--}}
+                                        {{--                                        <span class="text_small_12 color-dark">Total</span>--}}
+                                        {{--                                        <input--}}
+                                        {{--                                            type="text"--}}
+                                        {{--                                            class="order-input text_17"--}}
+                                        {{--                                            placeholder="0"--}}
+                                        {{--                                            value="106,437.70"--}}
+                                        {{--                                        />--}}
+                                        {{--                                        <span class="сurrency text_17 color-gray2">USDT</span>--}}
+                                        {{--                                    </label>--}}
+                                        <!-- <button class="btn btn-sell btn_16 notauth">Sell</button> -->
+                                        <button class="btn btn-sell btn_16">Sell</button>
                                     </div>
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Market price</span>
-                                        <input
-                                            type="text"
-                                            disabled
-                                            id="quantityPriceSell"
-                                            class="order-input text_17"
-                                            value="≈ ?"/>
-                                        <span class="сurrency text_17 color-gray2">USDT</span>
-                                    </label>
-                                    <label class="order-label">
-                                        <span class="text_small_12 color-dark">Quantity</span>
-                                        <input
-                                            type="text"
-                                            id="quantitySell"
-                                            name="amount"
-                                            oninput="calculateSell()"
-                                            class="order-input text_17"
-                                            placeholder="0"
-                                            value=""
-                                        />
-                                        <span class="сurrency text_17 color-gray2">{{$coin['simple_name']}}</span>
-                                    </label>
-{{--                                    <label class="order-label">--}}
-{{--                                        <span class="text_small_12 color-dark">Total</span>--}}
-{{--                                        <input--}}
-{{--                                            type="text"--}}
-{{--                                            class="order-input text_17"--}}
-{{--                                            placeholder="0"--}}
-{{--                                            value="106,437.70"--}}
-{{--                                        />--}}
-{{--                                        <span class="сurrency text_17 color-gray2">USDT</span>--}}
-{{--                                    </label>--}}
-                                    <!-- <button class="btn btn-sell btn_16 notauth">Sell</button> -->
-                                    <button class="btn btn-sell btn_16">Sell</button>
-                                </div>
                                 </form>
                             </div>
                         </div>
@@ -777,6 +803,7 @@
 
     updateAsset();
     setInterval(updateAsset, 1000);
+
     function Effect_of_smooth_magnification(start_value, end_value, duration = 1000, id_element) {
         let start = null;
         const step = (timestamp) => {
@@ -790,12 +817,16 @@
         };
         window.requestAnimationFrame(step);
     }
-    function calculateBuy(){
+
+    let buyTimeout;
+    let sellTimeout;
+
+    function calculateBuy() {
         const quantityBuy = document.getElementById('quantityBuy');
         const quantityPriceBuy = document.getElementById('quantityPriceBuy');
         const amount = quantityBuy.value;
         const coin = "{{explode('_', $pair)[0]}}";
-        if(isNaN(amount)){
+        if (isNaN(amount)) {
             return;
         }
         $.ajax({
@@ -826,13 +857,14 @@
             },
         });
     }
-    function calculateSell(){
+
+    function calculateSell() {
 
         const quantitySell = document.getElementById('quantitySell');
         const quantityPriceSell = document.getElementById('quantityPriceSell');
         const amount = quantitySell.value;
         const coin = "{{explode('_', $pair)[0]}}";
-        if(isNaN(amount)){
+        if (isNaN(amount)) {
             return;
         }
         $.ajax({
@@ -863,15 +895,164 @@
             },
         });
     }
+
+    function addLoaderClass(elementId) {
+        // Добавить класс loader к элементу
+        $("#" + elementId).addClass("loader");
+    }
+
+    function removeLoaderClass(elementId) {
+        // Убрать класс loader из элемента
+        $("#" + elementId).removeClass("loader");
+    }
+
+    function delayedCalculateBuy() {
+        clearTimeout(buyTimeout);
+        addLoaderClass("quantityPriceBuy");
+        buyTimeout = setTimeout(function () {
+            calculateBuy();
+            setTimeout(function () {
+                removeLoaderClass("quantityPriceBuy");
+            }, 400);
+
+
+        }, 500);
+    }
+
+    function delayedCalculateSell() {
+        clearTimeout(sellTimeout);
+        addLoaderClass("quantityPriceSell");
+        sellTimeout = setTimeout(function () {
+            calculateSell();
+            setTimeout(function () {
+                removeLoaderClass("quantityPriceSell");
+            }, 400);
+
+        }, 500);
+    }
 </script>
 
+<script>
+    function formatDateString(inputDate) {
+        const date = new Date(inputDate);
+
+        const day = date.getUTCDate();
+        const month = date.getUTCMonth() + 1;
+        const year = date.getUTCFullYear() % 100;
+
+        // Получаем часы, минуты и секунды
+        const hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+        const seconds = date.getUTCSeconds();
+
+
+        const formattedDate = `${(month < 10 ? '0' : '') + month}/${(day < 10 ? '0' : '') + day}/${year}, ${hours}:${(minutes < 10 ? '0' : '') + minutes}:${(seconds < 10 ? '0' : '') + seconds}`;
+
+        return formattedDate;
+    }
+
+    function renderTable(data, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+
+        // Получаем значение цены из элемента
+        const price = parseFloat(document.getElementById('valueInfo_price').textContent);
+
+        data.forEach(order => {
+            const gridLine = document.createElement("div");
+            gridLine.classList.add("grid-line");
+
+            const calculatedAmount = parseFloat(order.amount) * price;
+
+            gridLine.innerHTML = `
+            <div>${formatDateString(order.created_at)}</div>
+            <div>${order.symbol}/USDT</div>
+            <div>${order.type_order}</div>
+            <div>${order.type_trade}</div>
+            <div>${order.open_order_price.toFixed(2)}</div>
+            <div>${order.amount.toFixed(2)}</div>
+            <div>${isNaN(calculatedAmount) ? '<div class="loader"></div>' : calculatedAmount.toFixed(2)}</div>`;
+
+            if (containerId === "openOrders") {
+                const cancelButton = document.createElement("div");
+                cancelButton.innerHTML = `
+                <button onclick="closeOrder(${order.id})" class="clear cancel-btn">
+                    <img src="{{asset('images/cancel-icon.svg')}}" alt="x"/>
+                </button>`;
+                gridLine.appendChild(cancelButton);
+            } else {
+                const statusColumn = document.createElement("div");
+                statusColumn.textContent = order.status;
+                gridLine.appendChild(statusColumn);
+            }
+
+            container.appendChild(gridLine);
+
+            // Добавляем класс для анимации
+            setTimeout(() => {
+                gridLine.classList.add("active");
+            }, 100); // Измените это значение по необходимости
+        });
+    }
+
+
+    // Отрисовываем таблицы при загрузке страницы
+    // renderTable(openOrdersData, "openOrders");
+    // renderTable(closedOrdersData, "closedOrders");
+
+
+    function getHistory() {
+        const pair = "{{str_replace("_", "", $pair)}}";
+        $.ajax({
+            url: "{{route('trade.history')}}",
+            type: "POST",
+            data: {
+                pair: pair,
+                _token: "{{ csrf_token() }}",
+            },
+            success: function (data) {
+                console.log(data)
+                renderTable(data.OpenOrder, "openOrders");
+                renderTable(data.CloseOrder, "closedOrders");
+            },
+            error: function (msg) {
+                console.log(msg);
+            },
+        })
+    }
+
+    setInterval(getHistory, 15000)
+    setTimeout(getHistory, 1000);
+    function closeOrder(id){
+        $.ajax({
+            url: "{{route('trade.order.close')}}",
+            type: "POST",
+            data: {
+                id: id,
+                _token: "{{ csrf_token() }}",
+            },
+            success: function (data) {
+                console.log(data)
+                getHistory()
+                iziToast.show({
+                    ...commonOptions,
+                    message: data.message,
+                    iconUrl: "{{ asset('images/succes.svg') }}",
+                });
+            },
+            error: function (msg) {
+                console.log(msg);
+            },
+        })
+    }
+</script>
 <script>
     const CreateOrderBuy = document.getElementById('CreateOrderBuy');
     const CreateOrderSell = document.getElementById('CreateOrderSell');
 
     CreateOrderBuy.addEventListener("submit", (e) => {
         e.preventDefault();
-        const coin = "{{$coin['simple_name']}}";
+        const coin = "USDT";
         const type_order = "market";
         const type_trade = "buy";
         const formData = new FormData(CreateOrderBuy);
@@ -879,38 +1060,39 @@
         formData.append("type_order", type_order);
         formData.append("type_trade", type_trade);
 
-            $.ajax({
-                url: "{{ route("trade.create.order") }}",
-                type: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (data, status, xhr) {
-                    console.log(data);
-                    if (xhr.status === 201) {
+        $.ajax({
+            url: "{{ route("trade.create.order") }}",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data, status, xhr) {
+                console.log(data);
+                getHistory();
+                if (xhr.status === 201) {
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "{{ asset('images/succes.svg') }}",
+                    });
+
+                }
+            },
+            error: function (data) {
+
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
                         iziToast.show({
                             ...commonOptions,
-                            message: data.message,
-                            iconUrl: "{{ asset('images/succes.svg') }}",
+                            message: message,
+                            iconUrl: "{{ asset('images/fail.svg') }}",
                         });
-
-                    }
-                },
-                error: function (data) {
-
-                    const errors = data.responseJSON.errors;
-                    const errorMessages = Object.values(errors);
-                    errorMessages.forEach((errorMessage) => {
-                        errorMessage.forEach((message) => {
-                            iziToast.show({
-                                ...commonOptions,
-                                message: message,
-                                iconUrl: "{{ asset('images/fail.svg') }}",
-                            });
-                        });
+                    });
                 });
-                },
-            });
+            },
+        });
 
     });
 
@@ -932,6 +1114,7 @@
             processData: false,
             success: function (data, status, xhr) {
                 console.log(data);
+                getHistory();
                 if (xhr.status === 201) {
                     iziToast.show({
                         ...commonOptions,

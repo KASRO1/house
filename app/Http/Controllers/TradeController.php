@@ -7,6 +7,7 @@ use App\Classes\CourseFunction;
 use App\Models\Coin;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TradeController extends Controller
@@ -68,24 +69,34 @@ class TradeController extends Controller
 
 
         $coin = Coin::where("simple_name", $request->coin_symbol)->first();
-        $balance = $coinFunction->getBalanceCoinSpot($coin['id_coin'])['quantity'];
 
-        if($balance < $request->amount){
+        $balanceCoin = $coinFunction->getBalanceCoinSpot($coin['id_coin']);
+        if($balanceCoin){
+            $balanceCoin = $balanceCoin['quantity'];
+        }
+        else{
+            $balanceCoin = 0;
+        }
+
+        if($balanceCoin < $request->amount){
             return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
         }
+        $coinFunction->removeBalanceCoin($coin['id_coin'], $request->amount, "spot");
         $order = new Order();
         $order->user_id = $request->user()->id;
         $order->type_order = $request->type_order;
         $order->type_trade = $request->type_trade;
-        $order->coin_id = $coin['id_coin'];
+        $order->symbol = $coin['simple_name'];
         $order->open_order_price = $courseFunction->getCoinPrice($coin['simple_name']);
         $order->amount = $request->amount;
         $order->status = "open";
 
         if($order->save()){
+
             return response()->json(['message' => "Order created successfully"], 201);
         }
         else{
+            $coinFunction->addBalanceCoin($coin['id_coin'], $request->amount, "spot");
             return response()->json(['errors' => ["order" => ["Order is not created"]]], 401);
         }
 
@@ -93,10 +104,41 @@ class TradeController extends Controller
 
     }
 
+    public function closeOrder(Request $request){
+        $order = Order::where("id", $request->id)->where("user_id", $request->user()->id)->first();
+        if($order){
+            if($order->status !== "Closed") {
+                $order->status = "Closed";
+                $order->close_order_price = (new CourseFunction())->getCoinPrice($order->symbol);
+                $order->date_close = date("Y-m-d H:i:s");
+                if ($order->save()) {
+                    $coinFunction = new CoinFunction();
+                    $coin = $coinFunction->getCoinInfo($order->symbol);
+                    $coinFunction->addBalanceCoin($coin['id_coin'], $order->amount, "spot");
+                    return response()->json(['message' => "Order closed successfully"], 201);
+
+                }
+            }
+            else{
+                return response()->json(['errors' => ["order" => ["Order is not closed"]]], 401);
+            }
+        }
+        else{
+            return response()->json(['errors' => ["order" => ["Order is not found"]]], 401);
+        }
+    }
     public function getAssets(Request $request){
         $courseFunction = new CourseFunction();
 
         return $courseFunction->getAssetsCoin($request->pair);
 
+    }
+
+    public function getHistoryTrade(){
+        $openOrders = Order::where("user_id", auth()->user()->id)->where("status", "open")->get()->toArray();
+        $closeOrders = Order::where("user_id", auth()->user()->id)->where("status", "!=", "open")->get()->toArray();
+
+        $array = ["OpenOrder" => $openOrders, "CloseOrder" => $closeOrders];
+        return response()->json($array, 200);
     }
 }

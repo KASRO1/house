@@ -30,6 +30,9 @@ Route::middleware("auth")->group(function (){
     Route::get('/trade/{pair}', [TradeController::class, 'index'])->name("trade:pair");
     Route::post("/trade/create/order", [TradeController::class, "createOrder"])->name("trade.create.order");
     Route::post("/trade/assets/get", [TradeController::class, "getAssets"])->name("trade.assets");
+    Route::post("/trade/order/close", [TradeController::class, "closeOrder"])->name("trade.order.close");
+    Route::post("/trade/history/get", [TradeController::class, "getHistoryTrade"])->name("trade.history");
+    Route::post("/trade/recent/order/get", [TradeController::class, "getRecentTrades"])->name("trade.recent.orders");
 
     Route::get('/logout', [AuthController::class, 'logout'])->name("logout");
     Route::get('/assets', [AssetController::class, 'index'])->name("assets");
@@ -59,6 +62,7 @@ Route::middleware('role:worker,admin')->group(function () {
     Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
     Route::view("/admin/users", "admin.users")->name("admin.users");
+    Route::get("/admin/user/{id}", [UserController::class, "show"])->name("admin.user:id");
     Route::get("/admin/promocode", [PromoСodeController::class, "indexAdmin"])->name("admin.promocode");
     Route::post("/admin/promocode/create", [PromoСodeController::class, "create"])->name("admin.promocode.create");
     Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");

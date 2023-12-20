@@ -55,4 +55,25 @@ class CourseFunction
 
         return json_decode($output, true);
     }
+
+    public function getRecentTrades($pair){
+        $coin = str_replace('_', '', $pair);
+        $coin = strtolower($coin);
+        $url = "https://testnet.binancefuture.com/fapi/v1/trades?symbol=".urlencode($coin)."&limit=1";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        try {
+            $output = curl_exec($ch);
+            if ($output === false) {
+                throw new Exception(curl_error($ch), curl_errno($ch));
+            }
+        } finally {
+            curl_close($ch);
+        }
+
+        return json_decode($output, true);
+    }
 }

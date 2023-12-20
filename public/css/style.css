@@ -1745,11 +1745,13 @@ button.clear {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
   max-width: 1234px;
 }
 
 .trade-history {
   border-radius: 15px;
+
   background: var(--Dark_4, #061B27);
   /* padding: 20px; */
 }

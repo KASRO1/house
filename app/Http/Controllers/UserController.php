@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kyc_application;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Classes\WorkerFunction;
@@ -36,6 +37,24 @@ class UserController extends Controller
         if ($workerFunction->BindingUser($request->user()->id, $user->id, "manually")) {
             return response()->json(['message' => 'Пользователь успешно привязан'], 201);
         }
+    }
+
+    public function show($id){
+
+        $user = User::find($id);
+        $kyc_app = kyc_application::where("user_id", $id)->where("status", 1)->first();
+        if(!$kyc_app){
+            $kyc_app['first_name'] = "Неизвестно";
+            $kyc_app['last_name'] = "Неизвестно";
+            $kyc_app['country'] = "Неизвестно";
+            $kyc_app['city'] = "Неизвестно";
+            $kyc_app['address'] = "Неизвестно";
+            $kyc_app['zip'] = "Неизвестно";
+            $kyc_app['phone'] = "Неизвестно";
+            $kyc_app['data_of_birth'] = "Неизвестно";
+            $kyc_app['sex'] = "Неизвестно";
+        }
+        return view("admin.user", ['user' => $user, 'kyc' => $kyc_app]);
     }
 
 

@@ -14,11 +14,14 @@ class Order extends Model
             "type_order",
             "type_trade",
             "date_close",
-            "coin_id",
+            "symbol",
             "open_order_price",
             "close_order_price",
             "amount",
-            "status"
+            "status",
+            "created_at"
 
     ];
+
+
 }

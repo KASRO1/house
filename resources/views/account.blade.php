@@ -599,6 +599,7 @@
 <script src="{{asset("js/iziToast.min.js")}}"></script>
 <script src="{{asset("js/custom-select.js")}}"></script>
 <script src="{{asset("js/clipboard.min.js")}}"></script>
+
 <script>
     const modalOptions = {
         radius: "15px",
