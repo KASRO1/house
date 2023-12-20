@@ -28,7 +28,7 @@ Route::middleware("auth")->group(function (){
 
     Route::get('/trade', [TradeController::class, 'redirect']);
     Route::get('/trade/{pair}', [TradeController::class, 'index'])->name("trade:pair");
-    Route::post("/trade/create/order/limit", [TradeController::class, "createOrder"])->name("trade.create.order.limit");
+    Route::post("/trade/create/order", [TradeController::class, "createOrder"])->name("trade.create.order");
     Route::post("/trade/assets/get", [TradeController::class, "getAssets"])->name("trade.assets");
 
     Route::get('/logout', [AuthController::class, 'logout'])->name("logout");

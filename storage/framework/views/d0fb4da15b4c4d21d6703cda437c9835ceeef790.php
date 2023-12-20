@@ -1,16 +1,16 @@
-@include('layouts.head')
-@include('layouts.header')
-@include('layouts.footer')
+<?php echo $__env->make('layouts.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!doctype html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}"/>
-    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
-    @yield('head')
+    <link rel="stylesheet" href="<?php echo e(asset("css/custom-select.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziToast.css")); ?>" />
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>" />
+    <?php echo $__env->yieldContent('head'); ?>
 
 <body>
-@yield('header')'
+<?php echo $__env->yieldContent('header'); ?>'
 <style>
     .tradingview-widget-container iframe {
         border-radius: 10px;
@@ -39,20 +39,20 @@
                                         <input type="text" placeholder="Search"/>
                                     </div>
                                     <ul class="itc-select__options">
-                                        @foreach($coins as $Coin)
+                                        <?php $__currentLoopData = $coins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Coin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <li
                                             class="itc-select__option"
                                             data-select="option"
-                                            data-value="{{$Coin['simple_name']}}_USDT"
+                                            data-value="<?php echo e($Coin['simple_name']); ?>_USDT"
                                         >
                                             <img
                                                 width="30px"
-                                                src="{{asset('images/coin_icons/'.$Coin['simple_name'].'.svg')}}"
+                                                src="<?php echo e(asset('images/coin_icons/'.$Coin['simple_name'].'.svg')); ?>"
                                                 alt=""
                                             />
-                                            <span>{{$Coin['simple_name']}}<b class="color-dark">/USDT</b></span>
+                                            <span><?php echo e($Coin['simple_name']); ?><b class="color-dark">/USDT</b></span>
                                         </li>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </ul>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
                             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                                 {
                                     "autosize": true,
-                                    "symbol": "{{str_replace('_', "", $pair)}}",
+                                    "symbol": "<?php echo e(str_replace('_', "", $pair)); ?>",
                                     "interval": "D",
                                     "timezone": "Etc/UTC",
                                     "theme": "dark",
@@ -161,7 +161,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -178,7 +178,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -195,7 +195,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -212,7 +212,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -229,7 +229,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -246,7 +246,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -263,7 +263,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -280,7 +280,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -297,7 +297,7 @@
                                             <div>
                                                 <button class="clear cancel-btn">
                                                     <img
-                                                        src="{{asset('images/cancel-icon.svg')}}"
+                                                        src="<?php echo e(asset('images/cancel-icon.svg')); ?>"
                                                         alt="x"
                                                     />
                                                 </button>
@@ -528,7 +528,7 @@
                                     <div class="grid-separator">
                         <span class="text_17 color-green flex-center">
                           31,113.04
-                          <img src="{{asset('images/priceUp.svg')}}" alt=""/>
+                          <img src="<?php echo e(asset('images/priceUp.svg')); ?>" alt=""/>
                         </span>
                                         <span class="text_17 color-dark">≈ 31,075.66 USD</span>
                                     </div>
@@ -586,14 +586,14 @@
 
                                     <div class="flex-center">
                                         <div class="way-select">
-{{--                                            <button class="btn way text_small_14">Limit</button>--}}
+
                                             <button class="btn way text_small_14 active">
                                                 Market
                                             </button>
                                         </div>
                                         <div class="balance">
                                             <span class="text_small_12 color-gray2">Available balance</span>
-                                            <span class="text_16 color-blue">{{$balanceUsdt}} USDT</span>
+                                            <span class="text_16 color-blue"><?php echo e($balanceUsdt); ?> USDT</span>
                                         </div>
                                     </div>
 
@@ -608,7 +608,7 @@
                                         />
 
 
-                                        <span class="сurrency text_17 color-gray2">{{$coin['simple_name']}}</span>
+                                        <span class="сurrency text_17 color-gray2"><?php echo e($coin['simple_name']); ?></span>
                                     </label>
                                     <label class="order-label">
                                         <span class="text_small_12 color-dark">Quantity</span>
@@ -622,16 +622,16 @@
                                         />
                                         <span class="сurrency text_17 color-gray2">USDT</span>
                                     </label>
-{{--                                    <label class="order-label">--}}
-{{--                                        <span class="text_small_12 color-dark">Total</span>--}}
-{{--                                        <input--}}
-{{--                                            type="text"--}}
-{{--                                            class="order-input text_17"--}}
-{{--                                            placeholder="0"--}}
-{{--                                            value="106,437.70"--}}
-{{--                                        />--}}
-{{--                                        <span class="сurrency text_17 color-gray2">USDT</span>--}}
-{{--                                    </label>--}}
+
+
+
+
+
+
+
+
+
+
                                     <!-- <button class="btn btn-buy btn_16 notauth">Buy</button> -->
                                     <button type="submit" class="btn btn-buy btn_16">Buy</button>
 
@@ -641,14 +641,14 @@
                                 <div class="tabs__content-item tabs__content-item-3">
                                     <div class="flex-center">
                                         <div class="way-select">
-                                          {{--  <button class="btn way text_small_14 active">Limit</button> --}}
+                                          
                                             <button class="btn way text_small_14 active">Market</button>
                                         </div>
                                         <div class="balance">
                           <span class="text_small_12 color-gray2"
                           >Available balance</span>
                                             <span class="text_16 color-blue"
-                                            >{{$balanceCoin . " ". $coin['simple_name']}}</span>
+                                            ><?php echo e($balanceCoin . " ". $coin['simple_name']); ?></span>
                                         </div>
                                     </div>
                                     <label class="order-label">
@@ -672,18 +672,18 @@
                                             placeholder="0"
                                             value=""
                                         />
-                                        <span class="сurrency text_17 color-gray2">{{$coin['simple_name']}}</span>
+                                        <span class="сurrency text_17 color-gray2"><?php echo e($coin['simple_name']); ?></span>
                                     </label>
-{{--                                    <label class="order-label">--}}
-{{--                                        <span class="text_small_12 color-dark">Total</span>--}}
-{{--                                        <input--}}
-{{--                                            type="text"--}}
-{{--                                            class="order-input text_17"--}}
-{{--                                            placeholder="0"--}}
-{{--                                            value="106,437.70"--}}
-{{--                                        />--}}
-{{--                                        <span class="сurrency text_17 color-gray2">USDT</span>--}}
-{{--                                    </label>--}}
+
+
+
+
+
+
+
+
+
+
                                     <!-- <button class="btn btn-sell btn_16 notauth">Sell</button> -->
                                     <button class="btn btn-sell btn_16">Sell</button>
                                 </div>
@@ -698,12 +698,12 @@
 </main>
 
 
-@yield("footer")
-<script src="{{asset("js/custom-select.js")}}"></script>
-<script src="{{asset("js/tabs.js")}}"></script>
-<script src="{{asset("js/load.js")}}"></script>
-<script src="{{asset("js/iziModal.min.js")}}"></script>
-<script src="{{asset("js/iziToast.min.js")}}"></script>
+<?php echo $__env->yieldContent("footer"); ?>
+<script src="<?php echo e(asset("js/custom-select.js")); ?>"></script>
+<script src="<?php echo e(asset("js/tabs.js")); ?>"></script>
+<script src="<?php echo e(asset("js/load.js")); ?>"></script>
+<script src="<?php echo e(asset("js/iziModal.min.js")); ?>"></script>
+<script src="<?php echo e(asset("js/iziToast.min.js")); ?>"></script>
 <script>
     const select1 = new ItcCustomSelect("#select-1", {
         targetValue: "BTC_USDT",
@@ -735,13 +735,13 @@
         const valueInfo_low = document.getElementById('valueInfo_low');
         const valueInfo_volume = document.getElementById('valueInfo_volume');
 
-        const pair = "{{str_replace("_", "", $pair)}}";
+        const pair = "<?php echo e(str_replace("_", "", $pair)); ?>";
         $.ajax({
-            url: "{{route('trade.assets')}}",
+            url: "<?php echo e(route('trade.assets')); ?>",
             type: "POST",
             data: {
                 pair: pair,
-                _token: "{{ csrf_token() }}",
+                _token: "<?php echo e(csrf_token()); ?>",
             },
             success: function (data) {
                 if (lastPrice < data.lastPrice) {
@@ -794,12 +794,12 @@
         const quantityBuy = document.getElementById('quantityBuy');
         const quantityPriceBuy = document.getElementById('quantityPriceBuy');
         const amount = quantityBuy.value;
-        const coin = "{{explode('_', $pair)[0]}}";
+        const coin = "<?php echo e(explode('_', $pair)[0]); ?>";
         if(isNaN(amount)){
             return;
         }
         $.ajax({
-            url: "{{ route("assets.swap.convertCryptoPrice") }}",
+            url: "<?php echo e(route("assets.swap.convertCryptoPrice")); ?>",
             type: "POST",
             data: {
                 CoinSymbolFrom: "USDT",
@@ -819,7 +819,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -831,12 +831,12 @@
         const quantitySell = document.getElementById('quantitySell');
         const quantityPriceSell = document.getElementById('quantityPriceSell');
         const amount = quantitySell.value;
-        const coin = "{{explode('_', $pair)[0]}}";
+        const coin = "<?php echo e(explode('_', $pair)[0]); ?>";
         if(isNaN(amount)){
             return;
         }
         $.ajax({
-            url: "{{ route("assets.swap.convertCryptoPrice") }}",
+            url: "<?php echo e(route("assets.swap.convertCryptoPrice")); ?>",
             type: "POST",
             data: {
                 CoinSymbolFrom: coin,
@@ -856,7 +856,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -871,7 +871,7 @@
 
     CreateOrderBuy.addEventListener("submit", (e) => {
         e.preventDefault();
-        const coin = "{{$coin['simple_name']}}";
+        const coin = "<?php echo e($coin['simple_name']); ?>";
         const type_order = "market";
         const type_trade = "buy";
         const formData = new FormData(CreateOrderBuy);
@@ -880,7 +880,7 @@
         formData.append("type_trade", type_trade);
 
             $.ajax({
-                url: "{{ route("trade.create.order") }}",
+                url: "<?php echo e(route("trade.create.order")); ?>",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -891,7 +891,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: data.message,
-                            iconUrl: "{{ asset('images/succes.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                         });
 
                     }
@@ -905,7 +905,7 @@
                             iziToast.show({
                                 ...commonOptions,
                                 message: message,
-                                iconUrl: "{{ asset('images/fail.svg') }}",
+                                iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                             });
                         });
                 });
@@ -916,7 +916,7 @@
 
     CreateOrderSell.addEventListener("submit", (e) => {
         e.preventDefault();
-        const coin = "{{$coin['simple_name']}}";
+        const coin = "<?php echo e($coin['simple_name']); ?>";
         const type_order = "market";
         const type_trade = "sell";
         const formData = new FormData(CreateOrderSell);
@@ -925,7 +925,7 @@
         formData.append("type_trade", type_trade);
 
         $.ajax({
-            url: "{{ route("trade.create.order") }}",
+            url: "<?php echo e(route("trade.create.order")); ?>",
             type: "POST",
             data: formData,
             contentType: false,
@@ -936,7 +936,7 @@
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
-                        iconUrl: "{{ asset('images/succes.svg') }}",
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
 
                 }
@@ -950,7 +950,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -963,3 +963,4 @@
 </body>
 </html>
 
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/trade.blade.php ENDPATH**/ ?>

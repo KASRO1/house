@@ -1070,6 +1070,9 @@
                 StatusToast.innerText = "Успешно";
                 MessageToast.innerText = data.message;
                 Toast.show()
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
             },
             error: function (data) {
                 StatusToast.innerText = "Ошибка";

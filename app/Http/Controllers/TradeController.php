@@ -52,9 +52,10 @@ class TradeController extends Controller
 
     public function createOrder(Request $request){
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|min:1',
+            'amount' => 'required|numeric',
             'coin_symbol' => 'required',
-            'type_order' => 'required|in:buy,sell',
+            'type_trade' => 'required|in:buy,sell',
+            'type_order' => 'required|in:market,limit'
 
 
         ]);
@@ -63,13 +64,20 @@ class TradeController extends Controller
         }
 
         $courseFunction = new CourseFunction();
+        $coinFunction = new CoinFunction();
+
 
         $coin = Coin::where("simple_name", $request->coin_symbol)->first();
+        $balance = $coinFunction->getBalanceCoinSpot($coin['id_coin'])['quantity'];
+
+        if($balance < $request->amount){
+            return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
+        }
         $order = new Order();
         $order->user_id = $request->user()->id;
-        $order->type_order = "limit";
-        $order->type_trade = "buy";
-        $order->coin_id = $request->coin_symbol;
+        $order->type_order = $request->type_order;
+        $order->type_trade = $request->type_trade;
+        $order->coin_id = $coin['id_coin'];
         $order->open_order_price = $courseFunction->getCoinPrice($coin['simple_name']);
         $order->amount = $request->amount;
         $order->status = "open";

@@ -2,7 +2,7 @@
 <?php echo $__env->make("admin.layouts.aside", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make("admin.layouts.head", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make("admin.layouts.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
+<?php echo $__env->make("layouts.selectCoin", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <!DOCTYPE html>
 <html lang="en">
@@ -29,8 +29,9 @@
                 <!-- End Col -->
 
                 <div class="col-sm-auto">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAKIKeyModal">
-                        <i class="bi-plus me-1"></i> Create key
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#createAKIKeyModal">
+                        <i class="bi-plus me-1"></i> Создать промокод
                     </button>
                 </div>
                 <!-- End Col -->
@@ -45,13 +46,13 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <small class="text-cap">Промокоды</small>
-                        <span class="js-counter d-block display-3 text-dark mb-2">150</span>
+                        <span class="js-counter d-block display-3 text-dark mb-2"><?php echo e($statistic['totalPromo']); ?></span>
 
                         <div class="row col-divider">
 
 
                             <div class="col  text-center">
-                                <span class="d-block fw-semibold text-dark">5</span>
+                                <span class="d-block fw-semibold text-dark"><?php echo e($statistic['totalPromoLastWeek']); ?></span>
                                 <span class="d-block">За последнюю неделю</span>
                             </div>
                         </div>
@@ -67,13 +68,13 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <small class="text-cap"><span class="legend-indicator bg-success"></span> Активаций</small>
-                        <span class="js-counter d-block display-3 text-dark mb-2">25</span>
+                        <span class="js-counter d-block display-3 text-dark mb-2"><?php echo e($statistic['totalActivatePromo']); ?></span>
 
                         <div class="row col-divider">
 
 
                             <div class="col  text-center">
-                                <span class="d-block fw-semibold text-dark">5</span>
+                                <span class="d-block fw-semibold text-dark"><?php echo e($statistic['totalActivatePromoLastWeek']); ?></span>
                                 <span class="d-block">За последнюю неделю</span>
                             </div>
                         </div>
@@ -87,14 +88,15 @@
                 <!-- Card -->
                 <div class="card">
                     <div class="card-body text-center">
-                        <small class="text-cap"><span class="legend-indicator bg-danger"></span> Неиспользованных</small>
-                        <span class="js-counter d-block display-3 text-dark mb-2">4</span>
+                        <small class="text-cap"><span class="legend-indicator bg-danger"></span>
+                            Неиспользованных</small>
+                        <span class="js-counter d-block display-3 text-dark mb-2"><?php echo e($statistic['totalUnUsedPromo']); ?></span>
 
                         <div class="row col-divider">
 
 
                             <div class="col  text-center">
-                                <span class="d-block fw-semibold text-dark">0</span>
+                                <span class="d-block fw-semibold text-dark"><?php echo e($statistic['totalUnUsedPromoLastWeek']); ?></span>
                                 <span class="d-block">За последнюю неделю</span>
                             </div>
                         </div>
@@ -131,32 +133,39 @@
 
                     <!-- Dropdown -->
                     <div class="dropdown">
-                        <button type="button" class="btn btn-white btn-sm dropdown-toggle w-100" id="usersExportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi-download me-2"></i> Export
+                        <button type="button" class="btn btn-white btn-sm dropdown-toggle w-100"
+                                id="usersExportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi-download me-2"></i> Экспорт
                         </button>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="usersExportDropdown">
-                            <span class="dropdown-header">Select option:</span>
+                            <span class="dropdown-header">Выбери:</span>
                             <a id="export-copy" class="dropdown-item" href="javascript:;">
-                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/illustrations/copy-icon.svg" alt="Image Description">
-                                Copy
+                                <img class="avatar avatar-xss avatar-4x3 me-2"
+                                     src="/assets_admin/svg/illustrations/copy-icon.svg" alt="Image Description">
+                                Скопировать
                             </a>
                             <a id="export-print" class="dropdown-item" href="javascript:;">
-                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/illustrations/print-icon.svg" alt="Image Description">
-                                Print
+                                <img class="avatar avatar-xss avatar-4x3 me-2"
+                                     src="/assets_admin/svg/illustrations/print-icon.svg" alt="Image Description">
+                                Распечатать
                             </a>
                             <div class="dropdown-divider"></div>
-                            <span class="dropdown-header">Download options</span>
+                            <span class="dropdown-header">Скачай</span>
                             <a id="export-excel" class="dropdown-item" href="javascript:;">
-                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/brands/excel-icon.svg" alt="Image Description">
+                                <img class="avatar avatar-xss avatar-4x3 me-2"
+                                     src="/assets_admin/svg/brands/excel-icon.svg" alt="Image Description">
                                 Excel
                             </a>
                             <a id="export-csv" class="dropdown-item" href="javascript:;">
-                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/components/placeholder-csv-format.svg" alt="Image Description">
+                                <img class="avatar avatar-xss avatar-4x3 me-2"
+                                     src="/assets_admin/svg/components/placeholder-csv-format.svg"
+                                     alt="Image Description">
                                 .CSV
                             </a>
                             <a id="export-pdf" class="dropdown-item" href="javascript:;">
-                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/brands/pdf-icon.svg" alt="Image Description">
+                                <img class="avatar avatar-xss avatar-4x3 me-2"
+                                     src="/assets_admin/svg/brands/pdf-icon.svg" alt="Image Description">
                                 PDF
                             </a>
                         </div>
@@ -168,7 +177,9 @@
 
             <!-- Table -->
             <div class="table-responsive datatable-custom">
-                <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                <table id="datatable"
+                       class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+                       data-hs-datatables-options='{
                    "columnDefs": [{
                       "targets": [0, 1, 2, 3, 6],
                       "orderable": false
@@ -187,47 +198,33 @@
                     <thead class="thead-light">
                     <tr>
                         <th class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="datatableCheckAll">
-                                <label class="form-check-label" for="datatableCheckAll"></label>
-                            </div>
+
                         </th>
-                        <th class="table-column-ps-0">Name</th>
-                        <th>Created by</th>
-                        <th>API Key</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th></th>
+                        <th class="table-column-ps-0">КОЛ-ВО АКТИВАЦИЙ</th>
+                        <th>ПРОМОКОД</th>
+                        <th>СУММА</th>
+                        <th>ДАТА СОЗДАНИЯ</th>
+                        <th>Текст ошибки</th>
+                        <th>#</th>
                     </tr>
                     </thead>
 
                     <tbody>
+                    <?php $__currentLoopData = $promocodes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $promocode): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="apiKeyCheck1">
-                                <label class="form-check-label" for="apiKeyCheck1"></label>
-                            </div>
+
                         </td>
-                        <td class="table-column-ps-0">Streamlab</td>
-                        <td>
-                            <a class="d-flex align-items-center text-dark" href="#">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar avatar-xs avatar-circle">
-                                        <img class="avatar-img" src="/assets_admin/img/160x160/img9.jpg" alt="Image Description">
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <span class="text-inherit">Christina Bersh</span>
-                                </div>
-                            </a>
-                        </td>
+                        <td class="table-column-ps-0"><?php echo e($promocode['activations']); ?></td>
+
                         <td>
                             <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="apiKeyCode1" type="text" class="form-control" readonly value="GFKBH23BR2H3R29HO2N3">
-                                <a class="js-clipboard input-group-append input-group-text" href="javascript:;" data-bs-toggle="tooltip" title="Copy to clipboard" data-hs-clipboard-options='{
+                                <input id="apiKeyCode1" type="text" class="form-control" readonly
+                                       value="<?php echo e($promocode['promo']); ?>">
+                                <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
+                                   data-bs-toggle="tooltip" title="Скопировать промокод" data-hs-clipboard-options='{
                         "type": "tooltip",
-                        "successText": "Copied!",
+                        "successText": "Промокод скопирован!",
                         "contentTarget": "#apiKeyCode1",
                         "classChangeTarget": "#apiKeyCodeIcon1",
                         "defaultClass": "bi-clipboard",
@@ -237,297 +234,24 @@
                                 </a>
                             </div>
                         </td>
-                        <td><span class="legend-indicator bg-success"></span> Successful</td>
-                        <td>March 11, 2020</td>
+                        <td><?php echo e($promocode['amount'] . " " . $coinFunction->getCoinInfo($promocode['coin_id'])['simple_name']); ?></td>
+                        <td><?php echo e(\Carbon\Carbon::parse($promocode['created_at'])->format("d.m.Y")); ?></td>
+                        <td ><span data-bs-toggle="tooltip" title="<?php echo e($promocode['text']); ?>"><?php echo e(substr($promocode['text'], 0, 40)); ?></span></td>
                         <td>
                             <div class="dropdown">
-                                <button type="button" class="btn btn-white btn-sm" id="apiKeyDropdown1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    More <i class="bi-chevron-down ms-1"></i>
+                                <button type="button" class="btn btn-white btn-sm" id="apiKeyDropdown1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Еще <i class="bi-chevron-down ms-1"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="apiKeyDropdown1">
-                                    <a class="dropdown-item" href="#">Rename</a>
-                                    <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal" data-bs-target="#createAKIKeyModal">Regenerate Key</a>
-                                    <a class="dropdown-item" href="#">Disable</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="apiKeyCheck2">
-                                <label class="form-check-label" for="apiKeyCheck2"></label>
-                            </div>
-                        </td>
-                        <td class="table-column-ps-0">Node</td>
-                        <td>
-                            <a class="d-flex align-items-center text-dark" href="#">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar avatar-xs avatar-circle">
-                                        <img class="avatar-img" src="/assets_admin/img/160x160/img7.jpg" alt="Image Description">
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <span class="text-inherit">David Harrison</span>
-                                </div>
-                            </a>
-                        </td>
-                        <td>
-                            <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="apiKeyCode2" type="text" class="form-control" readonly value="FIN2Y98NE0XH1N39X1N8F">
-                                <a class="js-clipboard input-group-append input-group-text" href="javascript:;" data-bs-toggle="tooltip" title="Copy to clipboard" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "Copied!",
-                        "contentTarget": "#apiKeyCode2",
-                        "classChangeTarget": "#apiKeyCodeIcon2",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                    <i id="apiKeyCodeIcon2" class="bi-clipboard"></i>
-                                </a>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="legend-indicator bg-warning"></span> Warning
-                            <i class="tio-info-outlined bi-sm ms-1"></i>
-                        </td>
-                        <td>January 07, 2020</td>
-                        <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-white btn-sm" id="apiKeyDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    More <i class="bi-chevron-down ms-1"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="apiKeyDropdown2">
-                                    <a class="dropdown-item" href="#">Rename</a>
-                                    <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal" data-bs-target="#createAKIKeyModal">Regenerate Key</a>
-                                    <a class="dropdown-item" href="#">Disable</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
+                                    <a class="dropdown-item text-danger" href="<?php echo e(route("admin.promocode.delete", $promocode['promo'])); ?>">Удалить промокод</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                    <tr>
-                        <td class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="apiKeyCheck3">
-                                <label class="form-check-label" for="apiKeyCheck3"></label>
-                            </div>
-                        </td>
-                        <td class="table-column-ps-0">FrontMail</td>
-                        <td>
-                            <a class="d-flex align-items-center text-dark" href="#">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar avatar-xs avatar-soft-primary avatar-circle">
-                                        <span class="avatar-initials">A</span>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <span class="text-inherit">Anne Richard</span>
-                                </div>
-                            </a>
-                        </td>
-                        <td>
-                            <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="apiKeyCode3" type="text" class="form-control" readonly value="X291ZNO1Z29BE12YZ1Z12">
-                                <a class="js-clipboard input-group-append input-group-text" href="javascript:;" data-bs-toggle="tooltip" title="Copy to clipboard" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "Copied!",
-                        "contentTarget": "#apiKeyCode3",
-                        "classChangeTarget": "#apiKeyCodeIcon3",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                    <i id="apiKeyCodeIcon3" class="bi-clipboard"></i>
-                                </a>
-                            </div>
-                        </td>
-                        <td><span class="legend-indicator bg-success"></span> Successful</td>
-                        <td>February 20, 2020</td>
-                        <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-white btn-sm" id="apiKeyDropdown3" data-bs-toggle="dropdown" aria-expanded="false">
-                                    More <i class="bi-chevron-down ms-1"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="apiKeyDropdown3">
-                                    <a class="dropdown-item" href="#">Rename</a>
-                                    <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal" data-bs-target="#createAKIKeyModal">Regenerate Key</a>
-                                    <a class="dropdown-item" href="#">Disable</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="apiKeyCheck4">
-                                <label class="form-check-label" for="apiKeyCheck4"></label>
-                            </div>
-                        </td>
-                        <td class="table-column-ps-0">MobileAPI</td>
-                        <td>
-                            <a class="d-flex align-items-center text-dark" href="#">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar avatar-xs avatar-circle">
-                                        <img class="avatar-img" src="/assets_admin/img/160x160/img4.jpg" alt="Image Description">
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <span class="text-inherit">Sam Kart</span>
-                                </div>
-                            </a>
-                        </td>
-                        <td>
-                            <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="apiKeyCode4" type="text" class="form-control" readonly value="2N08C523X192YX1B231912">
-                                <a class="js-clipboard input-group-append input-group-text" href="javascript:;" data-bs-toggle="tooltip" title="Copy to clipboard" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "Copied!",
-                        "contentTarget": "#apiKeyCode4",
-                        "classChangeTarget": "#apiKeyCodeIcon4",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                    <i id="apiKeyCodeIcon4" class="bi-clipboard"></i>
-                                </a>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="legend-indicator bg-danger"></span> Failed
-                            <i class="tio-info-outlined bi-sm ms-1"></i>
-                        </td>
-                        <td>October 29, 2019</td>
-                        <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-white btn-sm" id="apiKeyDropdown4" data-bs-toggle="dropdown" aria-expanded="false">
-                                    More <i class="bi-chevron-down ms-1"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="apiKeyDropdown4">
-                                    <a class="dropdown-item" href="#">Rename</a>
-                                    <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal" data-bs-target="#createAKIKeyModal">Regenerate Key</a>
-                                    <a class="dropdown-item" href="#">Disable</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="apiKeyCheck5">
-                                <label class="form-check-label" for="apiKeyCheck5"></label>
-                            </div>
-                        </td>
-                        <td class="table-column-ps-0">RachelsKey</td>
-                        <td>
-                            <a class="d-flex align-items-center text-dark" href="#">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar avatar-xs avatar-soft-dark avatar-circle">
-                                        <span class="avatar-initials">R</span>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <span class="text-inherit">Rachel Doe</span>
-                                </div>
-                            </a>
-                        </td>
-                        <td>
-                            <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="apiKeyCode5" type="text" class="form-control" readonly value="GANA9ASD2XN931AFDQUI1">
-                                <a class="js-clipboard input-group-append input-group-text" href="javascript:;" data-bs-toggle="tooltip" title="Copy to clipboard" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "Copied!",
-                        "contentTarget": "#apiKeyCode5",
-                        "classChangeTarget": "#apiKeyCodeIcon5",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                    <i id="apiKeyCodeIcon5" class="bi-clipboard"></i>
-                                </a>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="legend-indicator bg-danger"></span> Failed
-                            <i class="tio-info-outlined bi-sm ms-1"></i>
-                        </td>
-                        <td>June 01, 2019</td>
-                        <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-white btn-sm" id="apiKeyDropdown5" data-bs-toggle="dropdown" aria-expanded="false">
-                                    More <i class="bi-chevron-down ms-1"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="apiKeyDropdown5">
-                                    <a class="dropdown-item" href="#">Rename</a>
-                                    <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal" data-bs-target="#createAKIKeyModal">Regenerate Key</a>
-                                    <a class="dropdown-item" href="#">Disable</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="apiKeyCheck6">
-                                <label class="form-check-label" for="apiKeyCheck6"></label>
-                            </div>
-                        </td>
-                        <td class="table-column-ps-0">Gulp</td>
-                        <td>
-                            <a class="d-flex align-items-center text-dark" href="#">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar avatar-xs avatar-soft-danger avatar-circle">
-                                        <span class="avatar-initials">B</span>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <span class="text-inherit">Brian Halligan</span>
-                                </div>
-                            </a>
-                        </td>
-                        <td>
-                            <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="apiKeyCode6" type="text" class="form-control" readonly value="LO2H1278EDBK12D12I127G">
-                                <a class="js-clipboard input-group-append input-group-text" href="javascript:;" data-bs-toggle="tooltip" title="Copy to clipboard" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "Copied!",
-                        "contentTarget": "#apiKeyCode6",
-                        "classChangeTarget": "#apiKeyCodeIcon6",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                    <i id="apiKeyCodeIcon6" class="bi-clipboard"></i>
-                                </a>
-                            </div>
-                        </td>
-                        <td><span class="legend-indicator bg-success"></span> Successful</td>
-                        <td>May 15, 2019</td>
-                        <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-white btn-sm" id="apiKeyDropdown6" data-bs-toggle="dropdown" aria-expanded="false">
-                                    More <i class="bi-chevron-down ms-1"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="apiKeyDropdown6">
-                                    <a class="dropdown-item" href="#">Rename</a>
-                                    <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal" data-bs-target="#createAKIKeyModal">Regenerate Key</a>
-                                    <a class="dropdown-item" href="#">Disable</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -538,11 +262,13 @@
                 <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
                     <div class="col-sm mb-2 mb-sm-0">
                         <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
-                            <span class="me-2">Showing:</span>
+                            <span class="me-2">Показать:</span>
 
                             <!-- Select -->
                             <div class="tom-select-custom">
-                                <select id="datatableEntries" class="js-select form-select form-select-borderless w-auto" autocomplete="off" data-hs-tom-select-options='{
+                                <select id="datatableEntries"
+                                        class="js-select form-select form-select-borderless w-auto" autocomplete="off"
+                                        data-hs-tom-select-options='{
                             "searchInDropdown": false,
                             "hideSearch": true
                           }'>
@@ -554,7 +280,7 @@
                             </div>
                             <!-- End Select -->
 
-                            <span class="text-secondary me-2">of</span>
+                            <span class="text-secondary me-2">записей</span>
 
                             <!-- Pagination Quantity -->
                             <span id="datatableWithPaginationInfoTotalQty"></span>
@@ -580,48 +306,15 @@
 
     <!-- Footer -->
 
-    <div class="footer">
-        <div class="row justify-content-between align-items-center">
-            <div class="col">
-                <p class="fs-6 mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2022 Htmlstream.</span></p>
-            </div>
-            <!-- End Col -->
-
-            <div class="col-auto">
-                <div class="d-flex justify-content-end">
-                    <!-- List Separator -->
-                    <ul class="list-inline list-separator">
-                        <li class="list-inline-item">
-                            <a class="list-separator-link" href="#">FAQ</a>
-                        </li>
-
-                        <li class="list-inline-item">
-                            <a class="list-separator-link" href="#">License</a>
-                        </li>
-
-                        <li class="list-inline-item">
-                            <!-- Keyboard Shortcuts Toggle -->
-                            <button class="btn btn-ghost-secondary btn btn-icon btn-ghost-secondary rounded-circle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasKeyboardShortcuts" aria-controls="offcanvasKeyboardShortcuts">
-                                <i class="bi-command"></i>
-                            </button>
-                            <!-- End Keyboard Shortcuts Toggle -->
-                        </li>
-                    </ul>
-                    <!-- End List Separator -->
-                </div>
-            </div>
-            <!-- End Col -->
-        </div>
-        <!-- End Row -->
-    </div>
-
+<?php echo $__env->yieldContent("footer"); ?>
     <!-- End Footer -->
 </main>
 <!-- ========== END MAIN CONTENT ========== -->
 
 <!-- ========== SECONDARY CONTENTS ========== -->
 <!-- Keyboard Shortcuts -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasKeyboardShortcuts" aria-labelledby="offcanvasKeyboardShortcutsLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasKeyboardShortcuts"
+     aria-labelledby="offcanvasKeyboardShortcutsLabel">
     <div class="offcanvas-header">
         <h4 id="offcanvasKeyboardShortcutsLabel" class="mb-0">Keyboard shortcuts</h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -639,7 +332,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">b</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">b</kbd>
                     </div>
                 </div>
                 <!-- End Row -->
@@ -653,7 +347,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">i</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">i</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -668,7 +363,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">u</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">u</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -683,7 +379,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                         <!-- End Col -->
                     </div>
                 </div>
@@ -698,7 +396,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -713,7 +412,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">e</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">e</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -839,7 +539,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">r</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">r</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -854,7 +555,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">n</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">n</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -869,7 +571,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">p</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">p</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -899,7 +602,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Tab</kbd>
+                        <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Tab</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -914,7 +618,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1"><i class="bi-arrow-up-short"></i></kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1"><i class="bi-arrow-up-short"></i></kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -929,7 +635,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1"><i class="bi-arrow-down-short fs-5"></i></kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1"><i class="bi-arrow-down-short fs-5"></i></kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -944,7 +652,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">m</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">m</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -959,7 +669,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">z</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">z</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -974,7 +685,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">y</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">y</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -995,7 +707,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">n</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">n</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -1010,7 +724,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">p</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">p</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -1025,7 +741,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -1040,7 +758,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">o</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">o</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -1055,7 +775,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">/</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">/</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -1068,7 +790,8 @@
 <!-- End Keyboard Shortcuts -->
 
 <!-- Activity -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream" aria-labelledby="offcanvasActivityStreamLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream"
+     aria-labelledby="offcanvasActivityStreamLabel">
     <div class="offcanvas-header">
         <h4 id="offcanvasActivityStreamLabel" class="mb-0">Activity stream</h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -1086,7 +809,8 @@
                     <div class="step-content">
                         <h5 class="mb-1">Iana Robinson</h5>
 
-                        <p class="fs-5 mb-1">Added 2 files to task <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fd-7</a></p>
+                        <p class="fs-5 mb-1">Added 2 files to task <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fd-7</a></p>
 
                         <ul class="list-group list-group-sm">
                             <!-- List Item -->
@@ -1096,10 +820,13 @@
                                         <!-- Media -->
                                         <div class="d-flex">
                                             <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="/assets_admin/svg/brands/excel-icon.svg" alt="Image Description">
+                                                <img class="avatar avatar-xs"
+                                                     src="/assets_admin/svg/brands/excel-icon.svg"
+                                                     alt="Image Description">
                                             </div>
                                             <div class="flex-grow-1 text-truncate ms-2">
-                                                <span class="d-block fs-6 text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
+                                                <span class="d-block fs-6 text-dark text-truncate"
+                                                      title="weekly-reports.xls">weekly-reports.xls</span>
                                                 <span class="d-block small text-muted">12kb</span>
                                             </div>
                                         </div>
@@ -1111,10 +838,13 @@
                                         <!-- Media -->
                                         <div class="d-flex">
                                             <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="/assets_admin/svg/brands/word-icon.svg" alt="Image Description">
+                                                <img class="avatar avatar-xs"
+                                                     src="/assets_admin/svg/brands/word-icon.svg"
+                                                     alt="Image Description">
                                             </div>
                                             <div class="flex-grow-1 text-truncate ms-2">
-                                                <span class="d-block fs-6 text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
+                                                <span class="d-block fs-6 text-dark text-truncate"
+                                                      title="weekly-reports.xls">weekly-reports.xls</span>
                                                 <span class="d-block small text-muted">4kb</span>
                                             </div>
                                         </div>
@@ -1141,7 +871,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Bob Dean</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-6</a> as <span class="badge bg-soft-success text-success rounded-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-6</a> as <span
+                                class="badge bg-soft-success text-success rounded-pill"><span
+                                    class="legend-indicator bg-success"></span>"Completed"</span></p>
 
                         <span class="small text-muted text-uppercase">Today</span>
                     </div>
@@ -1165,13 +898,16 @@
                             <li class="list-group-item list-group-item-light">
                                 <div class="row gx-1">
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-1.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-1.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-2.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-2.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-3.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-3.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col-auto align-self-center">
                                         <div class="text-center">
@@ -1214,7 +950,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Rachel King</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-success text-success rounded-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span
+                                class="badge bg-soft-success text-success rounded-pill"><span
+                                    class="legend-indicator bg-success"></span>"Completed"</span></p>
 
                         <span class="small text-muted text-uppercase">Apr 29</span>
                     </div>
@@ -1232,7 +971,8 @@
                     <div class="step-content">
                         <h5 class="mb-1">Finch Hoot</h5>
 
-                        <p class="fs-5 mb-1">Earned a "Top endorsed" <i class="bi-patch-check-fill text-primary"></i> badge</p>
+                        <p class="fs-5 mb-1">Earned a "Top endorsed" <i class="bi-patch-check-fill text-primary"></i>
+                            badge</p>
 
                         <span class="small text-muted text-uppercase">Apr 06</span>
                     </div>
@@ -1250,7 +990,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Project status updated</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-primary text-primary rounded-pill"><span class="legend-indicator bg-primary"></span>"In progress"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span
+                                class="badge bg-soft-primary text-primary rounded-pill"><span
+                                    class="legend-indicator bg-primary"></span>"In progress"</span></p>
 
                         <span class="small text-muted text-uppercase">Feb 10</span>
                     </div>
@@ -1273,7 +1016,8 @@
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-close">
-                <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal"
+                        aria-label="Close">
                     <i class="bi-x-lg"></i>
                 </button>
             </div>
@@ -1283,8 +1027,10 @@
             <div class="modal-body p-sm-5">
                 <div class="text-center">
                     <div class="w-75 w-sm-50 mx-auto mb-4">
-                        <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="default">
-                        <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="dark">
+                        <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg"
+                             alt="Image Description" data-hs-theme-appearance="default">
+                        <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg"
+                             alt="Image Description" data-hs-theme-appearance="dark">
                     </div>
 
                     <h4 class="h1">Welcome to Front</h4>
@@ -1301,16 +1047,20 @@
                 <div class="w-85 mx-auto">
                     <div class="row justify-content-between">
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg"
+                                 alt="Image Description">
                         </div>
                     </div>
                 </div>
@@ -1323,51 +1073,88 @@
 <!-- End Welcome Message Modal -->
 
 <!-- Create New API Key Modal -->
-<div class="modal fade" id="createAKIKeyModal" tabindex="-1" aria-labelledby="createAKIKeyModalLabel" role="dialog" aria-hidden="true">
+<div class="modal fade" id="createAKIKeyModal" tabindex="-1" aria-labelledby="createAKIKeyModalLabel" role="dialog"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-header">
-                <h4 class="modal-title" id="createAKIKeyModalLabel">Create API Key</h4>
+                <h4 class="modal-title" id="createAKIKeyModalLabel">Создать промокод</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- End Header -->
+            <form id="promocode_modal">
+                <!-- Body -->
+                <div class="modal-body">
+                    <!-- Form -->
 
-            <!-- Body -->
-            <div class="modal-body">
-                <!-- Form -->
-                <form>
-                    <input type="text" class="form-control" placeholder="API Key name">
-                </form>
-                <!-- End Form -->
-            </div>
-            <!-- End Body -->
-
-            <!-- Footer -->
-            <div class="modal-footer">
-                <div class="row align-items-sm-center flex-grow-1 mx-n2">
-                    <div class="col-sm mb-2 mb-sm-0">
-                        <p class="modal-footer-text">What is an API? <i class="bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="API stands for application programming interface. It can be helpful to think of the API as a way for different apps to talk to one another."></i></p>
-                    </div>
-                    <!-- End Col -->
-
-                    <div class="col-sm-auto">
-                        <div class="d-flex gap-3">
-                            <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="button" class="btn btn-primary">Generate</button>
+                    <div class="d-flex flex-column gap-2">
+                        <?php echo csrf_field(); ?>
+                        <input type="text" name="promocode" class="form-control"
+                               placeholder="Введите промокод от 5 символов">
+                        <div class="tom-select-custom">
+                            <select class="js-select form-select" name="coin_id" autocomplete="off"
+                                    data-hs-tom-select-options='{
+                                  "placeholder": "Выберите нужную монету...",
+                                  "hideSearch": false
+                                }'>
+                                <?php echo $__env->yieldContent("AdminSelectCoin"); ?>
+                            </select>
                         </div>
+                        <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
+                        <textarea name="text_error" class="form-control" placeholder="Введите текст вывода"
+                                  rows="4"></textarea>
                     </div>
-                    <!-- End Col -->
+
+
+                    <!-- End Form -->
                 </div>
-                <!-- End Row -->
-            </div>
+                <!-- End Body -->
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div class="row align-items-sm-center flex-grow-1 mx-n2">
+                        <div class="col-sm mb-2 mb-sm-0">
+
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-sm-auto">
+                            <div class="d-flex gap-3">
+                                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
+                                    Закрыть
+                                </button>
+                                <button type="submit" class="btn btn-primary">Создать</button>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                    </div>
+                    <!-- End Row -->
+                </div>
+            </form>
             <!-- End Footer -->
         </div>
     </div>
 </div>
 <!-- End Create New API Key Modal -->
 <!-- ========== END SECONDARY CONTENTS ========== -->
+<div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true"
+     style="top: 20px; right: 20px; z-index: 1000;">
+    <div class="toast-header">
+        <div class="d-flex align-items-center flex-grow-1">
 
+            <div class="flex-grow-1 ms-3">
+                <h5 id="StatusToast" class="mb-0"></h5>
+            </div>
+            <div class="text-end">
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-body" id="MessageToast">
+
+    </div>
+</div>
 <!-- JS Global Compulsory  -->
 <script src="/assets_admin/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/assets_admin/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
@@ -1437,27 +1224,27 @@
 
         const datatable = HSCore.components.HSDatatables.getItem(0)
 
-        $('#export-copy').click(function() {
+        $('#export-copy').click(function () {
             datatable.button('.buttons-copy').trigger()
         });
 
-        $('#export-excel').click(function() {
+        $('#export-excel').click(function () {
             datatable.button('.buttons-excel').trigger()
         });
 
-        $('#export-csv').click(function() {
+        $('#export-csv').click(function () {
             datatable.button('.buttons-csv').trigger()
         });
 
-        $('#export-pdf').click(function() {
+        $('#export-pdf').click(function () {
             datatable.button('.buttons-pdf').trigger()
         });
 
-        $('#export-print').click(function() {
+        $('#export-print').click(function () {
             datatable.button('.buttons-print').trigger()
         });
 
-        $('.js-datatable-filter').on('change', function() {
+        $('.js-datatable-filter').on('change', function () {
             var $this = $(this),
                 elVal = $this.val(),
                 targetColumnIndex = $this.data('target-column-index');
@@ -1469,7 +1256,7 @@
 
 <!-- JS Plugins Init. -->
 <script>
-    (function() {
+    (function () {
         window.onload = function () {
 
 
@@ -1543,6 +1330,50 @@
     })()
 </script>
 
+<script>
+    let Toast = new bootstrap.Toast(document.querySelector('#liveToast'))
+    let MessageToast = document.querySelector('#MessageToast')
+    let StatusToast = document.querySelector('#StatusToast')
+    const promocode_modal = document.getElementById("promocode_modal");
+    promocode_modal.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(promocode_modal);
+        $.ajax({
+            url: "/admin/promocode/create",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr) {
+                console.log(data)
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
+            },
+            error: function (data) {
+                console.log(data)
+                StatusToast.innerText = "Ошибка";
+
+                const errors = data.responseJSON.errors;
+
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        MessageToast.innerText = message;
+                    });
+                    Toast.show()
+                });
+
+            },
+        })
+
+    });
+</script>
 <!-- End Style Switcher JS -->
 </body>
 </html>

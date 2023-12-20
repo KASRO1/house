@@ -51,14 +51,7 @@
 
 
                             <!-- Collapse -->
-                            <div class="nav-item">
-                                <a class="nav-link" href="#navbarVerticalMenuPagesAccountMenu" >
-                                    <i class="bi-gear nav-icon"></i>
-                                    <span class="nav-link-title">Настройки</span>
-                                </a>
 
-
-                            </div>
                             <!-- End Collapse -->
 
                             <!-- Collapse -->
@@ -81,6 +74,14 @@
 
                             </div>
 
+                            <div class="nav-item">
+                                <a class="nav-link" href="#navbarVerticalMenuPagesAccountMenu" >
+                                    <i class="bi-gear nav-icon"></i>
+                                    <span class="nav-link-title">Настройки</span>
+                                </a>
+
+
+                            </div>
                         </div>
                         <!-- End Collapse -->
 
