@@ -449,7 +449,7 @@
                                 </div>
                             </td>
                             <td class="table-column-ps-0">
-                                <a class="d-flex align-items-center" href="./user-profile.html">
+                                <a class="d-flex align-items-center" href="/admin/user/{{$mamont['mamontProfileInfo']['id']}}">
                                     <div class="flex-shrink-0">
                                         <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
                                             <span class="avatar-initials">{{$mamont['mamontProfileInfo']['email'][0]}}</span>

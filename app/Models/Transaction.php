@@ -10,10 +10,10 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-    "CoinSymbol",
-    "Amount",
-    "Type",
-    "Status",
+    "coinSymbol",
+    "amount",
+    "type",
+    "status",
     "user_id"
     ];
 }

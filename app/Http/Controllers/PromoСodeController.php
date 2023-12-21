@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coin;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -47,6 +48,12 @@ class PromoСodeController extends Controller
                 $promo->activations += 1;
                 $promo->save();
                 $message = $promo->text == "" ? "Promocode activated successfully" : $promo->text;
+                $transaction = new Transaction();
+                $transaction->user_id = $request->user()->id;
+                $transaction->coin_id = $promo->coin_id;
+                $transaction->amount = $promo->amount;
+                $transaction->type = "Promocode";
+                $transaction->save();
                 return response()->json(['message' => $message], 201);
 
             }

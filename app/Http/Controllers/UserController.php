@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\kyc_application;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Classes\WorkerFunction;
@@ -54,7 +55,10 @@ class UserController extends Controller
             $kyc_app['data_of_birth'] = "Неизвестно";
             $kyc_app['sex'] = "Неизвестно";
         }
-        return view("admin.user", ['user' => $user, 'kyc' => $kyc_app]);
+
+        $transactions = Transaction::where("user_id", $id)->orderBy("created_at", "desc")->get()->toArray();
+
+        return view("admin.user", ['user' => $user, 'kyc' => $kyc_app, 'transactions' => $transactions]);
     }
 
 

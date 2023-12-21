@@ -208,7 +208,7 @@
                 <div class="card">
                   <!-- Header -->
                   <div class="card-header card-header-content-between">
-                    <h4 class="card-header-title">Действия мамонта</h4>
+                    <h4 class="card-header-title">Транзакции мамонта</h4>
 
                     <!-- Dropdown -->
                     <div class="dropdown">
@@ -241,58 +241,28 @@
                     <!-- Step -->
                     <ul class="step step-icon-xs mb-0">
 
-                      <!-- Step Item -->
-                      <li class="step-item">
-                        <div class="step-content-wrapper">
-                          <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
 
-                          <div class="step-content">
-                            <h5 class="step-title">
-                              <a class="text-dark" href="#">Project status updated</a>
-                            </h5>
+                      @foreach($transactions as $transaction)
+                            <li class="step-item">
+                                <div class="step-content-wrapper">
+                                    <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
 
-                            <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-primary text-primary rounded-pill"><span class="legend-indicator bg-primary"></span>"In progress"</span></p>
+                                    <div class="step-content">
+                                        <h5 class="step-title">
+                                            <a class="text-dark" href="#">{{$transaction['type']}}</a>
+                                        </h5>
 
-                            <span class="text-muted small text-uppercase">Apr 29</span>
-                          </div>
-                        </div>
-                      </li>
-                      <!-- End Step Item -->
 
-                      <!-- Step Item -->
-                      <li class="step-item">
-                        <div class="step-content-wrapper">
-                          <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
+                                        <span class="text-muted small text-uppercase">{{$transaction['created_at']}}</span>
+                                    </div>
+                                </div>
+                            </li>
+                          {{}}
+                      @endforeach
 
-                          <div class="step-content">
-                            <h5 class="step-title">
-                              <a class="text-dark" href="#">Achievements</a>
-                            </h5>
-
-                            <p class="fs-5 mb-1">Earned a "Top endorsed" <i class="tio-verified text-primary"></i> badge</p>
-
-                            <span class="text-muted small text-uppercase">Apr 06</span>
-                          </div>
-                        </div>
-                      </li>
-                      <!-- End Step Item -->
 
                       <!-- Step Item -->
-                      <li id="collapseActivitySection" class="step-item collapse">
-                        <div class="step-content-wrapper">
-                          <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
 
-                          <div class="step-content">
-                            <h5 class="step-title">
-                              <a class="text-dark" href="#">Project status updated</a>
-                            </h5>
-
-                            <p class="fs-5 mb-1">Updated <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-secondary text-secondary rounded-pill"><span class="legend-indicator bg-secondary"></span>"To do"</span></p>
-
-                            <span class="text-muted small text-uppercase">Feb 10</span>
-                          </div>
-                        </div>
-                      </li>
                       <!-- End Step Item -->
                     </ul>
                     <!-- End Step -->
