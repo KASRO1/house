@@ -21,6 +21,33 @@ class CoinFunction
         $balances = Balance::where("user_id", auth()->user()->id)->where("quantity", ">", 0)->get();
         return $balances;
     }
+    public function getPositiveBalancesLimit5(){
+        $balances = Balance::where("user_id", auth()->user()->id)->where("quantity", ">", 0)->limit(5)->get();
+        return $balances;
+    }
+    public function getPositiveBalancesUser($user_id){
+        $balances = Balance::where("user_id", $user_id)->where("quantity", ">", 0)->get();
+        return $balances;
+    }
+
+    public function getPositiveBalancesUserLimit5($user_id){
+        $balances = Balance::where("user_id", $user_id)->where("quantity", ">", 0)->limit(5)->get();
+        return $balances;
+    }
+    public function getTotalBalanceUser($user_id){
+        $balances = Balance::where("user_id", $user_id)->where("quantity", ">", 0)->get()->toArray();
+        $total = 0;
+
+        foreach ($balances as $balance){
+            $courseFunction = new CourseFunction();
+            $coinName = $this->getCoinInfo($balance['coin_id'])['full_name'];
+            $total +=  (float)$courseFunction->getBalanceCoinToEquivalentUsd($coinName, $balance['quantity']);
+
+        }
+
+
+        return $total;
+    }
     public function getBalanceCoin($coin_id){
         $balance = Balance::where("user_id", auth()->user()->id)->where("coin_id", $coin_id)->where("type_balance", "standard")->first();
         return $balance;
@@ -85,6 +112,8 @@ class CoinFunction
         return $data;
     }
 
+
+
     public function addBalanceCoin($coin_id, $quantity, $type_balance){
         $balance = Balance::where("user_id", auth()->user()->id)->where("coin_id", $coin_id)->where("type_balance", $type_balance)->first();
         if($balance){
@@ -130,6 +159,15 @@ class CoinFunction
             return true;
         }
 
+    }
+    public function removeBalanceUser($user_id, $coin_id, $quantity, $type_balance){
+        $balance = Balance::where("user_id", $user_id)->where("coin_id", $coin_id)->where("type_balance", $type_balance)->first();
+        if($balance && $balance->quantity >= $quantity){
+            $balance->quantity -= $quantity;
+            $balance->save();
+            return true;
+        }
+        return false;
     }
 
 }

@@ -931,6 +931,7 @@
         }, 500);
     }
 </script>
+
 <script>
     function formatDateString(inputDate) {
         const date = new Date(inputDate);

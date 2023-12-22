@@ -2,6 +2,7 @@
 <?php echo $__env->make("admin.layouts.aside", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make("admin.layouts.head", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make("admin.layouts.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("layouts.selectCoin", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,21 +96,12 @@
                 <div class="d-flex gap-2">
                   <!-- Form Check -->
                   <div class="form-check form-check-switch">
-                    <input class="form-check-input" type="checkbox" value="" id="connectCheckbox">
-                    <label class="form-check-label btn btn-sm" for="connectCheckbox">
-                      <span class="form-check-default">
-                        <i class="bi-person-plus-fill"></i> Connect
-                      </span>
-                      <span class="form-check-active">
-                        <i class="bi-check-lg me-2"></i> Connected
-                      </span>
-                    </label>
+                      <a href="<?php echo e(route("admin.user.auth:id", $user['id'])); ?>" class="form-check-default btn btn-sm btn-primary ">
+                        <i class="bi-person-plus-fill"></i> Войти под этим аккаунтом
+                      </a>
                   </div>
                   <!-- End Form Check -->
 
-                  <a class="btn btn-icon btn-sm btn-white" href="#">
-                    <i class="bi-list-ul me-1"></i>
-                  </a>
 
                   <!-- Dropdown -->
                   <div class="dropdown nav-scroller-dropdown">
@@ -118,10 +110,14 @@
                     </button>
 
                     <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
-                      <span class="dropdown-header">Settings</span>
+                      <span class="dropdown-header">Настройки пользователя</span>
 
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-share-fill dropdown-item-icon"></i> Share profile
+                      <a class="dropdown-item" data-bs-toggle="modal"
+                         data-bs-target="#addBalanceUser">
+                        <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
+                      </a>
+                        <a class="dropdown-item" href="#">
+                        <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
                       </a>
                       <a class="dropdown-item" href="#">
                         <i class="bi-slash-circle dropdown-item-icon"></i>Заблокировать на бирже
@@ -132,11 +128,20 @@
 
                       <div class="dropdown-divider"></div>
 
-                      <span class="dropdown-header">Feedback</span>
+                        <?php if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin"): ?>
+                            <span class="dropdown-header">Настройки админа</span>
 
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-flag dropdown-item-icon"></i> Report
-                      </a>
+                            <?php if($user['users_status'] == "worker"): ?>
+                                <a class="dropdown-item" href="<?php echo e(route("admin.user.change.status:id", $user['id'])); ?>">
+                                    <i class="bi-flag dropdown-item-icon"></i> Снять админку
+                                </a>
+                            <?php else: ?>
+                                <a class="dropdown-item" href="<?php echo e(route("admin.user.change.status:id", $user['id'])); ?>">
+                                    <i class="bi-flag dropdown-item-icon"></i> Выдать админку
+                                </a>
+                            <?php endif; ?>
+
+                        <?php endif; ?>
                     </div>
                   </div>
                   <!-- End Dropdown -->
@@ -149,19 +154,9 @@
           <div class="row">
             <div class="col-lg-4">
               <!-- Card -->
-              <div class="card card-body mb-3 mb-lg-5">
-                <h5>Complete your profile</h5>
 
-                <!-- Progress -->
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="progress flex-grow-1">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <span class="ms-4">82%</span>
-                </div>
-                <!-- End Progress -->
-              </div>
               <!-- End Card -->
+
 
               <!-- Sticky Block Start Point -->
               <div id="accountSidebarNav"></div>
@@ -186,7 +181,7 @@
                     <li class="pb-0"><span class="card-subtitle">О пользователе</span></li>
                     <li><i class="bi-person dropdown-item-icon"></i> <?php echo e($kyc['first_name'] ." ". $kyc['last_name']); ?></li>
                     <li><i class="bi-briefcase dropdown-item-icon"></i> No department</li>
-                    <li><i class="bi-building dropdown-item-icon"></i> Htmlstream</li>
+                    <li><i class="bi-currency-dollar dropdown-item-icon"></i> <?php echo e($totalBalance); ?></li>
 
                     <li class="pt-4 pb-0"><span class="card-subtitle">Контакты</span></li>
                     <li><i class="bi-at dropdown-item-icon"></i> <?php echo e($user['email']); ?></li>
@@ -249,7 +244,7 @@
 
                                     <div class="step-content">
                                         <h5 class="step-title">
-                                            <a class="text-dark" href="#"><?php echo e($transaction['type']); ?></a>
+                                            <a class="text-dark" ><?php echo e($transaction['type']); ?></a>
                                         </h5>
 
 
@@ -257,8 +252,13 @@
                                     </div>
                                 </div>
                             </li>
-                          {{}}
+
                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php if(count($transactions) === 0): ?>
+                            <h1 style="text-align: center; width: 100%;">
+                                Not found
+                            </h1>
+                        <?php endif; ?>
 
 
                       <!-- Step Item -->
@@ -269,13 +269,6 @@
                   </div>
                   <!-- End Body -->
 
-                  <!-- Footer -->
-                  <div class="card-footer">
-                    <a class="link link-collapse" data-bs-toggle="collapse" href="#collapseActivitySection" role="button" aria-expanded="false" aria-controls="collapseActivitySection">
-                      <span class="link-collapse-default">View more</span>
-                      <span class="link-collapse-active">View less</span>
-                    </a>
-                  </div>
                   <!-- End Footer -->
                 </div>
                 <!-- End Card -->
@@ -286,7 +279,7 @@
                     <div class="card h-100">
                       <!-- Header -->
                       <div class="card-header">
-                        <h4 class="card-header-title">Connections</h4>
+                        <h4 class="card-header-title">Балансы монет</h4>
                       </div>
                       <!-- End Header -->
 
@@ -294,139 +287,38 @@
                       <div class="card-body">
                         <ul class="list-unstyled list-py-3 mb-0">
                           <!-- Item -->
-                          <li>
+
+                            <?php $__currentLoopData = $balances; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $balance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                            <?php
+                                $coin_name = $coinFunction->getCoinInfo($balance['coin_id'])['simple_name'];
+                            ?>
+
+                            <li>
                             <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" href="#">
+                              <a class="d-flex align-items-center me-2" >
                                 <div class="flex-shrink-0">
                                   <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                    <span class="avatar-initials">R</span>
-                                    <span class="avatar-status avatar-sm-status avatar-status-warning"></span>
+                                      <img src="<?php echo e(asset("/images/coin_icons/" . $coin_name . ".svg")); ?>">
                                   </div>
                                 </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <h5 class="text-hover-primary mb-0">Rachel Doe</h5>
-                                  <span class="fs-6 text-body">25 connections</span>
-                                </div>
-                              </a>
-                              <div class="ms-auto">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                  <input class="form-check-input" type="checkbox" value="" id="connectionsCheckbox1" checked>
-                                  <label class="form-check-label btn-icon btn-xs rounded-circle" for="connectionsCheckbox1">
-                                    <span class="form-check-default">
-                                      <i class="bi-person-plus-fill"></i>
-                                    </span>
-                                    <span class="form-check-active">
-                                      <i class="bi-check-lg"></i>
-                                    </span>
-                                  </label>
-                                </div>
-                                <!-- End Form Check -->
-                              </div>
-                            </div>
-                          </li>
-                          <!-- End Item -->
+                                <div class="flex-grow-1 ms-1">
+                                  <h5 class="text-hover-primary mb-0"><?php echo e($coin_name); ?></h5>
 
-                          <!-- Item -->
-                          <li>
-                            <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" href="#">
-                                <div class="flex-shrink-0">
-                                  <div class="avatar avatar-sm avatar-circle">
-                                    <img class="avatar-img" src="/assets_admin/img/160x160/img8.jpg" alt="Image Description">
-                                    <span class="avatar-status avatar-sm-status avatar-status-success"></span>
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <h5 class="text-hover-primary mb-0">Isabella Finley</h5>
-                                  <span class="fs-6 text-body">79 connections</span>
                                 </div>
                               </a>
                               <div class="ms-auto">
                                 <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                  <input class="form-check-input" type="checkbox" value="" id="connectionsCheckbox2">
-                                  <label class="form-check-label btn-icon btn-xs rounded-circle" for="connectionsCheckbox2">
-                                    <span class="form-check-default">
-                                      <i class="bi-person-plus-fill"></i>
-                                    </span>
-                                    <span class="form-check-active">
-                                      <i class="bi-check-lg"></i>
-                                    </span>
-                                  </label>
-                                </div>
-                                <!-- End Form Check -->
-                              </div>
-                            </div>
-                          </li>
-                          <!-- End Item -->
+                                <div class="form-check form-check-switch d-flex align-items-center">
+                                    <h5 class="align-items-center "><?php echo e($balance['quantity']); ?></h5>
 
-                          <!-- Item -->
-                          <li>
-                            <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" href="#">
-                                <div class="flex-shrink-0">
-                                  <div class="avatar avatar-sm avatar-circle">
-                                    <img class="avatar-img" src="/assets_admin/img/160x160/img3.jpg" alt="Image Description">
-                                    <span class="avatar-status avatar-sm-status avatar-status-warning"></span>
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <h5 class="text-hover-primary mb-0">David Harrison</h5>
-                                  <span class="fs-6 text-body">0 connections</span>
-                                </div>
-                              </a>
-                              <div class="ms-auto">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                  <input class="form-check-input" type="checkbox" value="" id="connectionsCheckbox3" checked>
-                                  <label class="form-check-label btn-icon btn-xs rounded-circle" for="connectionsCheckbox3">
-                                    <span class="form-check-default">
-                                      <i class="bi-person-plus-fill"></i>
-                                    </span>
-                                    <span class="form-check-active">
-                                      <i class="bi-check-lg"></i>
-                                    </span>
-                                  </label>
                                 </div>
                                 <!-- End Form Check -->
                               </div>
                             </div>
                           </li>
-                          <!-- End Item -->
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                          <!-- Item -->
-                          <li>
-                            <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" href="#">
-                                <div class="flex-shrink-0">
-                                  <div class="avatar avatar-sm avatar-circle">
-                                    <img class="avatar-img" src="/assets_admin/img/160x160/img6.jpg" alt="Image Description">
-                                    <span class="avatar-status avatar-sm-status avatar-status-danger"></span>
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <h5 class="text-hover-primary mb-0">Costa Quinn</h5>
-                                  <span class="fs-6 text-body">9 connections</span>
-                                </div>
-                              </a>
-                              <div class="ms-auto">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                  <input class="form-check-input" type="checkbox" value="" id="connectionsCheckbox4">
-                                  <label class="form-check-label btn-icon btn-xs rounded-circle" for="connectionsCheckbox4">
-                                    <span class="form-check-default">
-                                      <i class="bi-person-plus-fill"></i>
-                                    </span>
-                                    <span class="form-check-active">
-                                      <i class="bi-check-lg"></i>
-                                    </span>
-                                  </label>
-                                </div>
-                                <!-- End Form Check -->
-                              </div>
-                            </div>
-                          </li>
                           <!-- End Item -->
                         </ul>
                       </div>
@@ -434,7 +326,7 @@
 
                       <!-- Footer -->
                       <a class="card-footer text-center" href="user-profile-connections.html">
-                        View all connections <i class="bi-chevron-right"></i>
+                        Посмотреть все <i class="bi-chevron-right"></i>
                       </a>
                       <!-- End Footer -->
                     </div>
@@ -446,7 +338,7 @@
                     <div class="card h-100">
                       <!-- Header -->
                       <div class="card-header">
-                        <h4 class="card-header-title">Teams</h4>
+                        <h4 class="card-header-title">Сессии</h4>
                       </div>
                       <!-- End Header -->
 
@@ -455,91 +347,28 @@
                         <ul class="nav nav-pills card-nav card-nav-vertical nav-pills">
                           <!-- Item -->
                           <li>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" >
                               <div class="d-flex">
                                 <div class="flex-shrink-0">
                                   <i class="bi-people-fill nav-icon text-dark"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#digitalmarketing</span>
-                                  <small class="d-block text-muted">8 members</small>
+                                  <span class="d-block text-dark">192.01.40.16</span>
+                                  <small class="d-block text-muted">19.10.2023</small>
                                 </div>
                               </div>
                             </a>
                           </li>
                           <!-- End Item -->
 
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" href="#">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#ethereum</span>
-                                  <small class="d-block text-muted">14 members</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                          <!-- End Item -->
 
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" href="#">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#conference</span>
-                                  <small class="d-block text-muted">3 members</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                          <!-- End Item -->
-
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" href="#">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#supportteam</span>
-                                  <small class="d-block text-muted">3 members</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                          <!-- End Item -->
-
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" href="#">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#invoices</span>
-                                  <small class="d-block text-muted">3 members</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
                           <!-- End Item -->
                         </ul>
                       </div>
                       <!-- End Body -->
 
                       <!-- Footer -->
-                      <a class="card-footer text-center" href="user-profile-teams.html">
-                        View all teams <i class="bi-chevron-right"></i>
-                      </a>
+
                       <!-- End Footer -->
                     </div>
                     <!-- End Card -->
@@ -548,192 +377,9 @@
                 <!-- End Row -->
 
                 <!-- Card -->
-                <div class="card">
-                  <!-- Header -->
-                  <div class="card-header card-header-content-between">
-                    <h4 class="card-header-title">Projects</h4>
 
-                    <!-- Dropdown -->
-                    <div class="dropdowm">
-                      <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm rounded-circle" id="projectReportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi-three-dots-vertical"></i>
-                      </button>
 
-                      <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="projectReportDropdown">
-                        <span class="dropdown-header">Settings</span>
 
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-share-fill dropdown-item-icon"></i> Share connections
-                        </a>
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                        </a>
-
-                        <div class="dropdown-divider"></div>
-
-                        <span class="dropdown-header">Feedback</span>
-
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-chat-left-dots dropdown-item-icon"></i> Report
-                        </a>
-                      </div>
-                    </div>
-                    <!-- End Dropdown -->
-                  </div>
-                  <!-- End Header -->
-
-                  <!-- Table -->
-                  <div class="table-responsive">
-                    <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
-                      <thead class="thead-light">
-                        <tr>
-                          <th>Project</th>
-                          <th style="width: 40%;">Progress</th>
-                          <th class="table-text-end">Hours spent</th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div class="d-flex">
-                              <span class="avatar avatar-xs avatar-soft-dark avatar-circle">
-                                <span class="avatar-initials">U</span>
-                              </span>
-                              <div class="ms-3">
-                                <h5 class="mb-0">UI/UX</h5>
-                                <small>Updated 2 hours ago</small>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="d-flex align-items-center">
-                              <span class="me-3">0%</span>
-                              <div class="progress table-progress">
-                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="table-text-end">4:25</td>
-                        </tr>
-
-                        <tr>
-                          <td>
-                            <div class="d-flex">
-                              <img class="avatar avatar-xs" src="/assets_admin/svg/brands/spec-icon.svg" alt="Image Description">
-                              <div class="ms-3">
-                                <h5 class="mb-0">Get a complete audit store</h5>
-                                <small>Updated 1 day ago</small>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="d-flex align-items-center">
-                              <span class="me-3">45%</span>
-                              <div class="progress table-progress">
-                                <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="table-text-end">18:42</td>
-                        </tr>
-
-                        <tr>
-                          <td>
-                            <div class="d-flex">
-                              <img class="avatar avatar-xs" src="/assets_admin/svg/brands/capsule-icon.svg" alt="Image Description">
-                              <div class="ms-3">
-                                <h5 class="mb-0">Build stronger customer relationships</h5>
-                                <small>Updated 2 days ago</small>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="d-flex align-items-center">
-                              <span class="me-3">59%</span>
-                              <div class="progress table-progress">
-                                <div class="progress-bar" role="progressbar" style="width: 59%" aria-valuenow="59" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="table-text-end">9:01</td>
-                        </tr>
-
-                        <tr>
-                          <td>
-                            <div class="d-flex">
-                              <img class="avatar avatar-xs" src="/assets_admin/svg/brands/mailchimp-icon.svg" alt="Image Description">
-                              <div class="ms-3">
-                                <h5 class="mb-0">Update subscription method</h5>
-                                <small>Updated 2 days ago</small>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="d-flex align-items-center">
-                              <span class="me-3">57%</span>
-                              <div class="progress table-progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 57%" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="table-text-end">0:37</td>
-                        </tr>
-
-                        <tr>
-                          <td>
-                            <div class="d-flex">
-                              <img class="avatar avatar-xs" src="/assets_admin/svg/brands/figma-icon.svg" alt="Image Description">
-                              <div class="ms-3">
-                                <h5 class="mb-0">Create a new theme</h5>
-                                <small>Updated 1 week ago</small>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="d-flex align-items-center">
-                              <span class="me-3">100%</span>
-                              <div class="progress table-progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="table-text-end">24:12</td>
-                        </tr>
-
-                        <tr>
-                          <td>
-                            <div class="d-flex">
-                              <span class="avatar avatar-xs avatar-soft-info avatar-circle">
-                                <span class="avatar-initials">I</span>
-                              </span>
-                              <div class="ms-3">
-                                <h5 class="mb-0">Improve social banners</h5>
-                                <small>Updated 1 week ago</small>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="d-flex align-items-center">
-                              <span class="me-3">0%</span>
-                              <div class="progress table-progress">
-                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="table-text-end">8:08</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- End Table -->
-
-                  <!-- Footer -->
-                  <a class="card-footer text-center" href="./projects.html">
-                    View all projects <i class="bi-chevron-right"></i>
-                  </a>
-                  <!-- End Footer -->
-                </div>
                 <!-- End Card -->
               </div>
 
@@ -1405,59 +1051,85 @@
   </div>
   <!-- End Activity -->
 
-  <!-- Welcome Message Modal -->
-  <div class="modal fade" id="welcomeMessageModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <!-- Header -->
-        <div class="modal-close">
-          <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
-            <i class="bi-x-lg"></i>
-          </button>
-        </div>
-        <!-- End Header -->
+  <!-- Create New API Key Modal -->
+  <div class="modal fade" id="addBalanceUser" tabindex="-1" aria-labelledby="addBalanceUserLabel" role="dialog"
+       aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <!-- Header -->
+              <div class="modal-header">
+                  <h4 class="modal-title" id="addBalanceUserLabel">Добавить баланс пользователю</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- End Header -->
+              <form id="addBalance_modal">
+                  <!-- Body -->
+                  <div class="modal-body">
+                      <!-- Form -->
 
-        <!-- Body -->
-        <div class="modal-body p-sm-5">
-          <div class="text-center">
-            <div class="w-75 w-sm-50 mx-auto mb-4">
-              <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="default">
-              <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="dark">
-            </div>
+                      <div class="d-flex flex-column gap-2">
+                          <?php echo csrf_field(); ?>
+                          <input type="text" name="user_id" class="form-control" hidden=""
+                                 >
+                          <div class="tom-select-custom">
+                              <select class="js-select form-select" name="coin_id" autocomplete="off"
+                                      data-hs-tom-select-options='{
+                                  "placeholder": "Выберите нужную монету...",
+                                  "hideSearch": false
+                                }'>
+                                  <?php echo $__env->yieldContent("AdminSelectCoin"); ?>
+                              </select>
+                          </div>
+                          <div class="tom-select-custom">
+                              <select class="js-select form-select" name="type_deposit" autocomplete="off"
+                                      data-hs-tom-select-options='{
+                                  "placeholder": "Выберите тип транзакции...",
+                                  "hideSearch": false
+                                }'>
+                                  <option value="">Тип транзакции</option>
+                                  <option value="Swap">Swap</option>
+                                  <option value="TransferToUser">TransferToUser</option>
+                                  <option value="Spot">Spot</option>
+                                  <option value="Stacking">Stacking</option>
+                                  <option value="Support">Support</option>
+                                  <option value="Deposit">Deposit</option>
+                              </select>
+                          </div>
+                          <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
 
-            <h4 class="h1">Welcome to Front</h4>
+                      </div>
 
-            <p>We're happy to see you in our community.</p>
+
+                      <!-- End Form -->
+                  </div>
+                  <!-- End Body -->
+
+                  <!-- Footer -->
+                  <div class="modal-footer">
+                      <div class="row align-items-sm-center flex-grow-1 mx-n2">
+                          <div class="col-sm mb-2 mb-sm-0">
+
+                          </div>
+                          <!-- End Col -->
+
+                          <div class="col-sm-auto">
+                              <div class="d-flex gap-3">
+                                  <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
+                                      Закрыть
+                                  </button>
+                                  <button type="submit" class="btn btn-primary">Создать</button>
+                              </div>
+                          </div>
+                          <!-- End Col -->
+                      </div>
+                      <!-- End Row -->
+                  </div>
+              </form>
+              <!-- End Footer -->
           </div>
-        </div>
-        <!-- End Body -->
-
-        <!-- Footer -->
-        <div class="modal-footer d-block text-center py-sm-5">
-          <small class="text-cap text-muted">Trusted by the world's best teams</small>
-
-          <div class="w-85 mx-auto">
-            <div class="row justify-content-between">
-              <div class="col">
-                <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg" alt="Image Description">
-              </div>
-              <div class="col">
-                <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg" alt="Image Description">
-              </div>
-              <div class="col">
-                <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg" alt="Image Description">
-              </div>
-              <div class="col">
-                <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg" alt="Image Description">
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Footer -->
       </div>
-    </div>
   </div>
-
+  <!-- End Create New API Key Modal -->
   <!-- End Welcome Message Modal -->
   <!-- ========== END SECONDARY CONTENTS ========== -->
 

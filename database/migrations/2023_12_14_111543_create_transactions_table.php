@@ -16,10 +16,10 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->integer("user_id")->index();
-            $table->string("CoinSymbol");
-            $table->string("Amount");
-            $table->string("Type");
-            $table->string("Status");
+            $table->string("coinSymbol");
+            $table->string("amount");
+            $table->string("type");
+            $table->string("status");
             $table->timestamps();
         });
     }

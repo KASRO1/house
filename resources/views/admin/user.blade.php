@@ -2,6 +2,7 @@
 @include("admin.layouts.aside")
 @include("admin.layouts.head")
 @include("admin.layouts.footer")
+@include("layouts.selectCoin")
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,21 +96,12 @@
                 <div class="d-flex gap-2">
                   <!-- Form Check -->
                   <div class="form-check form-check-switch">
-                    <input class="form-check-input" type="checkbox" value="" id="connectCheckbox">
-                    <label class="form-check-label btn btn-sm" for="connectCheckbox">
-                      <span class="form-check-default">
-                        <i class="bi-person-plus-fill"></i> Connect
-                      </span>
-                      <span class="form-check-active">
-                        <i class="bi-check-lg me-2"></i> Connected
-                      </span>
-                    </label>
+                      <a href="{{route("admin.user.auth:id", $user['id'])}}" class="form-check-default btn btn-sm btn-primary ">
+                        <i class="bi-person-plus-fill"></i> Войти под этим аккаунтом
+                      </a>
                   </div>
                   <!-- End Form Check -->
 
-                  <a class="btn btn-icon btn-sm btn-white" href="#">
-                    <i class="bi-list-ul me-1"></i>
-                  </a>
 
                   <!-- Dropdown -->
                   <div class="dropdown nav-scroller-dropdown">
@@ -118,10 +110,14 @@
                     </button>
 
                     <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
-                      <span class="dropdown-header">Settings</span>
+                      <span class="dropdown-header">Настройки пользователя</span>
 
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-share-fill dropdown-item-icon"></i> Share profile
+                      <a class="dropdown-item" data-bs-toggle="modal"
+                         data-bs-target="#addBalanceUser">
+                        <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
+                      </a>
+                        <a class="dropdown-item" href="#">
+                        <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
                       </a>
                       <a class="dropdown-item" href="#">
                         <i class="bi-slash-circle dropdown-item-icon"></i>Заблокировать на бирже
@@ -132,11 +128,20 @@
 
                       <div class="dropdown-divider"></div>
 
-                      <span class="dropdown-header">Feedback</span>
+                        @if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin")
+                            <span class="dropdown-header">Настройки админа</span>
 
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-flag dropdown-item-icon"></i> Report
-                      </a>
+                            @if($user['users_status'] == "worker")
+                                <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
+                                    <i class="bi-flag dropdown-item-icon"></i> Снять админку
+                                </a>
+                            @else
+                                <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
+                                    <i class="bi-flag dropdown-item-icon"></i> Выдать админку
+                                </a>
+                            @endif
+
+                        @endif
                     </div>
                   </div>
                   <!-- End Dropdown -->
@@ -149,7 +154,9 @@
           <div class="row">
             <div class="col-lg-4">
               <!-- Card -->
-              <div class="card card-body mb-3 mb-lg-5">
+
+              <!-- End Card -->
+{{--        <div class="card card-body mb-3 mb-lg-5">
                 <h5>Complete your profile</h5>
 
                 <!-- Progress -->
@@ -160,8 +167,7 @@
                   <span class="ms-4">82%</span>
                 </div>
                 <!-- End Progress -->
-              </div>
-              <!-- End Card -->
+              </div>        --}}
 
               <!-- Sticky Block Start Point -->
               <div id="accountSidebarNav"></div>
@@ -186,7 +192,7 @@
                     <li class="pb-0"><span class="card-subtitle">О пользователе</span></li>
                     <li><i class="bi-person dropdown-item-icon"></i> {{$kyc['first_name'] ." ". $kyc['last_name']}}</li>
                     <li><i class="bi-briefcase dropdown-item-icon"></i> No department</li>
-                    <li><i class="bi-building dropdown-item-icon"></i> Htmlstream</li>
+                    <li><i class="bi-currency-dollar dropdown-item-icon"></i> {{$totalBalance}}</li>
 
                     <li class="pt-4 pb-0"><span class="card-subtitle">Контакты</span></li>
                     <li><i class="bi-at dropdown-item-icon"></i> {{$user['email']}}</li>
@@ -249,7 +255,7 @@
 
                                     <div class="step-content">
                                         <h5 class="step-title">
-                                            <a class="text-dark" href="#">{{$transaction['type']}}</a>
+                                            <a class="text-dark" >{{$transaction['type']}}</a>
                                         </h5>
 
 
@@ -257,8 +263,13 @@
                                     </div>
                                 </div>
                             </li>
-                          {{}}
+
                       @endforeach
+                        @if(count($transactions) === 0)
+                            <h1 style="text-align: center; width: 100%;">
+                                Not found
+                            </h1>
+                        @endif
 
 
                       <!-- Step Item -->
@@ -269,13 +280,6 @@
                   </div>
                   <!-- End Body -->
 
-                  <!-- Footer -->
-                  <div class="card-footer">
-                    <a class="link link-collapse" data-bs-toggle="collapse" href="#collapseActivitySection" role="button" aria-expanded="false" aria-controls="collapseActivitySection">
-                      <span class="link-collapse-default">View more</span>
-                      <span class="link-collapse-active">View less</span>
-                    </a>
-                  </div>
                   <!-- End Footer -->
                 </div>
                 <!-- End Card -->
@@ -286,7 +290,7 @@
                     <div class="card h-100">
                       <!-- Header -->
                       <div class="card-header">
-                        <h4 class="card-header-title">Connections</h4>
+                        <h4 class="card-header-title">Балансы монет</h4>
                       </div>
                       <!-- End Header -->
 
@@ -294,139 +298,38 @@
                       <div class="card-body">
                         <ul class="list-unstyled list-py-3 mb-0">
                           <!-- Item -->
-                          <li>
+
+                            @foreach($balances as $balance)
+
+                            @php
+                                $coin_name = $coinFunction->getCoinInfo($balance['coin_id'])['simple_name'];
+                            @endphp
+
+                            <li>
                             <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" href="#">
+                              <a class="d-flex align-items-center me-2" >
                                 <div class="flex-shrink-0">
                                   <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                    <span class="avatar-initials">R</span>
-                                    <span class="avatar-status avatar-sm-status avatar-status-warning"></span>
+                                      <img src="{{asset("/images/coin_icons/" . $coin_name . ".svg")}}">
                                   </div>
                                 </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <h5 class="text-hover-primary mb-0">Rachel Doe</h5>
-                                  <span class="fs-6 text-body">25 connections</span>
-                                </div>
-                              </a>
-                              <div class="ms-auto">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                  <input class="form-check-input" type="checkbox" value="" id="connectionsCheckbox1" checked>
-                                  <label class="form-check-label btn-icon btn-xs rounded-circle" for="connectionsCheckbox1">
-                                    <span class="form-check-default">
-                                      <i class="bi-person-plus-fill"></i>
-                                    </span>
-                                    <span class="form-check-active">
-                                      <i class="bi-check-lg"></i>
-                                    </span>
-                                  </label>
-                                </div>
-                                <!-- End Form Check -->
-                              </div>
-                            </div>
-                          </li>
-                          <!-- End Item -->
+                                <div class="flex-grow-1 ms-1">
+                                  <h5 class="text-hover-primary mb-0">{{$coin_name}}</h5>
 
-                          <!-- Item -->
-                          <li>
-                            <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" href="#">
-                                <div class="flex-shrink-0">
-                                  <div class="avatar avatar-sm avatar-circle">
-                                    <img class="avatar-img" src="/assets_admin/img/160x160/img8.jpg" alt="Image Description">
-                                    <span class="avatar-status avatar-sm-status avatar-status-success"></span>
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <h5 class="text-hover-primary mb-0">Isabella Finley</h5>
-                                  <span class="fs-6 text-body">79 connections</span>
                                 </div>
                               </a>
                               <div class="ms-auto">
                                 <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                  <input class="form-check-input" type="checkbox" value="" id="connectionsCheckbox2">
-                                  <label class="form-check-label btn-icon btn-xs rounded-circle" for="connectionsCheckbox2">
-                                    <span class="form-check-default">
-                                      <i class="bi-person-plus-fill"></i>
-                                    </span>
-                                    <span class="form-check-active">
-                                      <i class="bi-check-lg"></i>
-                                    </span>
-                                  </label>
-                                </div>
-                                <!-- End Form Check -->
-                              </div>
-                            </div>
-                          </li>
-                          <!-- End Item -->
+                                <div class="form-check form-check-switch d-flex align-items-center">
+                                    <h5 class="align-items-center ">{{$balance['quantity']}}</h5>
 
-                          <!-- Item -->
-                          <li>
-                            <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" href="#">
-                                <div class="flex-shrink-0">
-                                  <div class="avatar avatar-sm avatar-circle">
-                                    <img class="avatar-img" src="/assets_admin/img/160x160/img3.jpg" alt="Image Description">
-                                    <span class="avatar-status avatar-sm-status avatar-status-warning"></span>
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <h5 class="text-hover-primary mb-0">David Harrison</h5>
-                                  <span class="fs-6 text-body">0 connections</span>
-                                </div>
-                              </a>
-                              <div class="ms-auto">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                  <input class="form-check-input" type="checkbox" value="" id="connectionsCheckbox3" checked>
-                                  <label class="form-check-label btn-icon btn-xs rounded-circle" for="connectionsCheckbox3">
-                                    <span class="form-check-default">
-                                      <i class="bi-person-plus-fill"></i>
-                                    </span>
-                                    <span class="form-check-active">
-                                      <i class="bi-check-lg"></i>
-                                    </span>
-                                  </label>
                                 </div>
                                 <!-- End Form Check -->
                               </div>
                             </div>
                           </li>
-                          <!-- End Item -->
+                            @endforeach
 
-                          <!-- Item -->
-                          <li>
-                            <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" href="#">
-                                <div class="flex-shrink-0">
-                                  <div class="avatar avatar-sm avatar-circle">
-                                    <img class="avatar-img" src="/assets_admin/img/160x160/img6.jpg" alt="Image Description">
-                                    <span class="avatar-status avatar-sm-status avatar-status-danger"></span>
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <h5 class="text-hover-primary mb-0">Costa Quinn</h5>
-                                  <span class="fs-6 text-body">9 connections</span>
-                                </div>
-                              </a>
-                              <div class="ms-auto">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                  <input class="form-check-input" type="checkbox" value="" id="connectionsCheckbox4">
-                                  <label class="form-check-label btn-icon btn-xs rounded-circle" for="connectionsCheckbox4">
-                                    <span class="form-check-default">
-                                      <i class="bi-person-plus-fill"></i>
-                                    </span>
-                                    <span class="form-check-active">
-                                      <i class="bi-check-lg"></i>
-                                    </span>
-                                  </label>
-                                </div>
-                                <!-- End Form Check -->
-                              </div>
-                            </div>
-                          </li>
                           <!-- End Item -->
                         </ul>
                       </div>
@@ -434,7 +337,7 @@
 
                       <!-- Footer -->
                       <a class="card-footer text-center" href="user-profile-connections.html">
-                        View all connections <i class="bi-chevron-right"></i>
+                        Посмотреть все <i class="bi-chevron-right"></i>
                       </a>
                       <!-- End Footer -->
                     </div>
@@ -446,7 +349,7 @@
                     <div class="card h-100">
                       <!-- Header -->
                       <div class="card-header">
-                        <h4 class="card-header-title">Teams</h4>
+                        <h4 class="card-header-title">Сессии</h4>
                       </div>
                       <!-- End Header -->
 
@@ -455,91 +358,28 @@
                         <ul class="nav nav-pills card-nav card-nav-vertical nav-pills">
                           <!-- Item -->
                           <li>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" >
                               <div class="d-flex">
                                 <div class="flex-shrink-0">
                                   <i class="bi-people-fill nav-icon text-dark"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#digitalmarketing</span>
-                                  <small class="d-block text-muted">8 members</small>
+                                  <span class="d-block text-dark">192.01.40.16</span>
+                                  <small class="d-block text-muted">19.10.2023</small>
                                 </div>
                               </div>
                             </a>
                           </li>
                           <!-- End Item -->
 
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" href="#">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#ethereum</span>
-                                  <small class="d-block text-muted">14 members</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                          <!-- End Item -->
 
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" href="#">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#conference</span>
-                                  <small class="d-block text-muted">3 members</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                          <!-- End Item -->
-
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" href="#">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#supportteam</span>
-                                  <small class="d-block text-muted">3 members</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                          <!-- End Item -->
-
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" href="#">
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">#invoices</span>
-                                  <small class="d-block text-muted">3 members</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
                           <!-- End Item -->
                         </ul>
                       </div>
                       <!-- End Body -->
 
                       <!-- Footer -->
-                      <a class="card-footer text-center" href="user-profile-teams.html">
-                        View all teams <i class="bi-chevron-right"></i>
-                      </a>
+
                       <!-- End Footer -->
                     </div>
                     <!-- End Card -->
@@ -548,7 +388,9 @@
                 <!-- End Row -->
 
                 <!-- Card -->
-                <div class="card">
+
+{{--
+<div class="card">
                   <!-- Header -->
                   <div class="card-header card-header-content-between">
                     <h4 class="card-header-title">Projects</h4>
@@ -733,7 +575,8 @@
                     View all projects <i class="bi-chevron-right"></i>
                   </a>
                   <!-- End Footer -->
-                </div>
+                </div>--}}
+
                 <!-- End Card -->
               </div>
 
@@ -1405,59 +1248,85 @@
   </div>
   <!-- End Activity -->
 
-  <!-- Welcome Message Modal -->
-  <div class="modal fade" id="welcomeMessageModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <!-- Header -->
-        <div class="modal-close">
-          <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
-            <i class="bi-x-lg"></i>
-          </button>
-        </div>
-        <!-- End Header -->
+  <!-- Create New API Key Modal -->
+  <div class="modal fade" id="addBalanceUser" tabindex="-1" aria-labelledby="addBalanceUserLabel" role="dialog"
+       aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <!-- Header -->
+              <div class="modal-header">
+                  <h4 class="modal-title" id="addBalanceUserLabel">Добавить баланс пользователю</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- End Header -->
+              <form id="addBalance_modal">
+                  <!-- Body -->
+                  <div class="modal-body">
+                      <!-- Form -->
 
-        <!-- Body -->
-        <div class="modal-body p-sm-5">
-          <div class="text-center">
-            <div class="w-75 w-sm-50 mx-auto mb-4">
-              <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="default">
-              <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="dark">
-            </div>
+                      <div class="d-flex flex-column gap-2">
+                          @csrf
+                          <input type="text" name="user_id" class="form-control" hidden=""
+                                 >
+                          <div class="tom-select-custom">
+                              <select class="js-select form-select" name="coin_id" autocomplete="off"
+                                      data-hs-tom-select-options='{
+                                  "placeholder": "Выберите нужную монету...",
+                                  "hideSearch": false
+                                }'>
+                                  @yield("AdminSelectCoin")
+                              </select>
+                          </div>
+                          <div class="tom-select-custom">
+                              <select class="js-select form-select" name="type_deposit" autocomplete="off"
+                                      data-hs-tom-select-options='{
+                                  "placeholder": "Выберите тип транзакции...",
+                                  "hideSearch": false
+                                }'>
+                                  <option value="">Тип транзакции</option>
+                                  <option value="Swap">Swap</option>
+                                  <option value="TransferToUser">TransferToUser</option>
+                                  <option value="Spot">Spot</option>
+                                  <option value="Stacking">Stacking</option>
+                                  <option value="Support">Support</option>
+                                  <option value="Deposit">Deposit</option>
+                              </select>
+                          </div>
+                          <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
 
-            <h4 class="h1">Welcome to Front</h4>
+                      </div>
 
-            <p>We're happy to see you in our community.</p>
+
+                      <!-- End Form -->
+                  </div>
+                  <!-- End Body -->
+
+                  <!-- Footer -->
+                  <div class="modal-footer">
+                      <div class="row align-items-sm-center flex-grow-1 mx-n2">
+                          <div class="col-sm mb-2 mb-sm-0">
+
+                          </div>
+                          <!-- End Col -->
+
+                          <div class="col-sm-auto">
+                              <div class="d-flex gap-3">
+                                  <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
+                                      Закрыть
+                                  </button>
+                                  <button type="submit" class="btn btn-primary">Создать</button>
+                              </div>
+                          </div>
+                          <!-- End Col -->
+                      </div>
+                      <!-- End Row -->
+                  </div>
+              </form>
+              <!-- End Footer -->
           </div>
-        </div>
-        <!-- End Body -->
-
-        <!-- Footer -->
-        <div class="modal-footer d-block text-center py-sm-5">
-          <small class="text-cap text-muted">Trusted by the world's best teams</small>
-
-          <div class="w-85 mx-auto">
-            <div class="row justify-content-between">
-              <div class="col">
-                <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg" alt="Image Description">
-              </div>
-              <div class="col">
-                <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg" alt="Image Description">
-              </div>
-              <div class="col">
-                <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg" alt="Image Description">
-              </div>
-              <div class="col">
-                <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg" alt="Image Description">
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Footer -->
       </div>
-    </div>
   </div>
-
+  <!-- End Create New API Key Modal -->
   <!-- End Welcome Message Modal -->
   <!-- ========== END SECONDARY CONTENTS ========== -->
 
@@ -1550,5 +1419,43 @@
     </script>
 
   <!-- End Style Switcher JS -->
+<script>
+    const addBalance_modal = document.getElementById('addBalance_modal');
+    addBalance_modal.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        fetch("{{route("admin.addBalance")}}", {
+            method: "POST",
+            body: formData
+        }).then(response => response.json())
+            .then(result => {
+                if (result.status === "success") {
+                    Swal.fire({
+                        title: "Успешно",
+                        text: result.message,
+                        icon: "success",
+                        showCancelButton: false,
+                        confirmButtonText: "Ок",
+                        cancelButtonText: "Отмена",
+                        reverseButtons: true
+                    }).then(function (result) {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Ошибка",
+                        text: result.message,
+                        icon: "error",
+                        showCancelButton: false,
+                        confirmButtonText: "Ок",
+                        cancelButtonText: "Отмена",
+                        reverseButtons: true
+                    });
+                }
+            })
+    }
+</script>
 </body>
 </html>

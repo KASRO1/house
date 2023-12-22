@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\CoinFunction;
+use App\Models\BindingUser;
 use App\Models\kyc_application;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Classes\WorkerFunction;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -42,8 +45,14 @@ class UserController extends Controller
 
     public function show($id){
 
+        $CoinFunction = new CoinFunction();
         $user = User::find($id);
         $kyc_app = kyc_application::where("user_id", $id)->where("status", 1)->first();
+        $positive_balanced = $CoinFunction->getPositiveBalancesUserLimit5($id);
+        $coins = $CoinFunction->getAllCoins();
+        $total_balance = $CoinFunction->getTotalBalanceUser($id);
+
+
         if(!$kyc_app){
             $kyc_app['first_name'] = "Неизвестно";
             $kyc_app['last_name'] = "Неизвестно";
@@ -58,9 +67,68 @@ class UserController extends Controller
 
         $transactions = Transaction::where("user_id", $id)->orderBy("created_at", "desc")->get()->toArray();
 
-        return view("admin.user", ['user' => $user, 'kyc' => $kyc_app, 'transactions' => $transactions]);
+        return view("admin.user", ['user' => $user, 'kyc' => $kyc_app,
+            'transactions' => $transactions, 'balances' => $positive_balanced,
+            "coinFunction" => $CoinFunction, "coins" => $coins,
+            "totalBalance" => $total_balance]);
     }
 
+    public function auth($id){
+        $user = BindingUser::where("user_id_mamont", $id)->where("user_id_worker", Auth::user()->id)->first();
+        if($user){
+            $user = User::find($id);
+            auth()->login($user);
+            return redirect()->route("trade");
+        }
+
+
+    }
+
+    public function changeStatus($id){
+        $user = User::find($id);
+        if($user->users_status == "user"){
+            $user->users_status = "worker";
+        }
+        else{
+            $user->users_status = "user";
+        }
+        $user->save();
+        return redirect()->route("admin.user:id", $id);
+    }
+
+    public function addBalance(Request $request){
+        $validator = Validator::make($request->all(), [
+            'type_deposit' => 'required',
+            'coin_id' => 'required',
+            'amount' => 'required|numeric|min:1',
+            'user_id' => 'required|exists:users,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $coinFunction = new CoinFunction();
+        $coinFunction->addBalanceCoinUserID($request->user_id, $request->coin, $request->amount, $request->type_deposit);
+        return response()->json(['message' => 'Баланс успешно пополнен'], 201);
+    }
+    public function removeBalance(Request $request){
+        $validator = Validator::make($request->all(), [
+            'type_deposit' => 'required',
+            'coin' => 'required',
+            'amount' => 'required|numeric|min:1',
+            'user_id' => 'required|exists:users,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $coinFunction = new CoinFunction();
+        $action = $coinFunction->removeBalanceUser($request->user_id, $request->coin, $request->amount, $request->type_deposit);
+        if(!$action){
+            return response()->json(['errors' => ["amount" => ["Не удалось отнять баланс, возможно сумма превышает баланса"]]], 401);
+        }
+        return response()->json(['message' => 'Баланс успешно уменьшен'], 201);
+    }
 
 
 }

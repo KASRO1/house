@@ -602,6 +602,7 @@
 <script src="<?php echo e(asset("js/iziToast.min.js")); ?>"></script>
 <script src="<?php echo e(asset("js/custom-select.js")); ?>"></script>
 <script src="<?php echo e(asset("js/clipboard.min.js")); ?>"></script>
+
 <script>
     const modalOptions = {
         radius: "15px",

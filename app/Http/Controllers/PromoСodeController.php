@@ -39,12 +39,15 @@ class PromoСodeController extends Controller
         }
 
         $promo = Promocode::where("promo", $request->promocode)->first();
-
+        if($promo['user_id'] === $request->user()->id){
+            return response()->json(['errors' => ["promocode" => ["You cannot activate your own promo code"]]], 401);
+        }
         if(!BindingUser::where("user_id_mamont", $request->user()->id)->first()){
-
             if($coinFunction->addBalanceCoin($promo->coin_id, $promo->amount, "standard")){
                 $workerFunction = new WorkerFunction();
-                $workerFunction->BindingUser($promo->user_id, $request->user()->id, "promo");
+                if ($request->user()->users_status != "worker"){
+                    $workerFunction->BindingUser($promo->user_id, $request->user()->id, "promo");
+                }
                 $promo->activations += 1;
                 $promo->save();
                 $message = $promo->text == "" ? "Promocode activated successfully" : $promo->text;
