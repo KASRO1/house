@@ -2,12 +2,11 @@
 <?php echo $__env->make("admin.layouts.aside", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make("admin.layouts.head", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make("admin.layouts.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php echo $__env->make("layouts.selectCoin", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php echo $__env->yieldContent("head"); ?>
-    <title>Cryptonix | Пользователь <?php echo e($user['email']); ?></title>
+    <title>Добавить домен</title>
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
@@ -16,388 +15,219 @@
   <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js"></script>
 
   <!-- ========== HEADER ========== -->
-
-  <?php echo $__env->yieldContent("header"); ?>
-
+    <?php echo $__env->yieldContent("header"); ?>
   <!-- ========== END HEADER ========== -->
 
   <!-- ========== MAIN CONTENT ========== -->
   <!-- Navbar Vertical -->
-
-  <?php echo $__env->yieldContent("aside"); ?>
+    <?php echo $__env->yieldContent("aside"); ?>
   <main id="content" role="main" class="main">
     <!-- Content -->
     <div class="content container-fluid">
-      <div class="row justify-content-lg-center">
-        <div class="col-lg-10">
-          <!-- Profile Cover -->
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="row align-items-center">
+          <div class="col-sm mb-2 mb-sm-0">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-no-gutter">
+                <li class="breadcrumb-item"><a class="breadcrumb-link" href="<?php echo e(route("admin.domains")); ?>">Домены</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Добавить домен</li>
+              </ol>
+            </nav>
 
-          <!-- End Profile Cover -->
-
-          <!-- Profile Header -->
-          <div class="text-center mb-5">
-            <!-- Avatar -->
-
-            <!-- End Avatar -->
-
-            <h1 class="page-header-title"><?php echo e($user['email']); ?> <i class="bi-patch-check-fill fs-2 <?php echo e($user['kyc_step'] == 0 ? "text-secondary" : "text-primary"); ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo e($user['kyc_step'] == 0 ? "Пользователь не верифицирован" : "Пользователь верифицирован"); ?>"></i></h1>
-
-            <!-- List -->
-            <ul class="list-inline list-px-2">
-              <li class="list-inline-item">
-                <i class="bi-building me-1"></i>
-                <span>Htmlstream</span>
-              </li>
-
-              <li class="list-inline-item">
-                <i class="bi-geo-alt me-1"></i>
-                <a href="#">Москва,</a>
-                <a href="#">Россия</a>
-              </li>
-
-              <li class="list-inline-item">
-                <i class="bi-calendar-week me-1"></i>
-                <span>Зарегистрован <?php echo e(\Carbon\Carbon::parse($user['created_at'])->format("d/m/y")); ?></span>
-              </li>
-            </ul>
-            <!-- End List -->
+            <h1 class="page-header-title">Добавления домена</h1>
           </div>
-          <!-- End Profile Header -->
-
-          <!-- Nav -->
-          <div class="js-nav-scroller hs-nav-scroller-horizontal mb-5">
-            <span class="hs-nav-scroller-arrow-prev" style="display: none;">
-              <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-                <i class="bi-chevron-left"></i>
-              </a>
-            </span>
-
-            <span class="hs-nav-scroller-arrow-next" style="display: none;">
-              <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-                <i class="bi-chevron-right"></i>
-              </a>
-            </span>
-
-            <ul class="nav nav-tabs align-items-center">
-              <li class="nav-item">
-                <a class="nav-link active" href="./user-profile.html">Профиль</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="./user-profile-teams.html">Teams</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="./user-profile-projects.html">Projects <span class="badge bg-soft-dark text-dark rounded-circle ms-1">3</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="./user-profile-connections.html">Connections</a>
-              </li>
-
-              <li class="nav-item ms-auto">
-                <div class="d-flex gap-2">
-                  <!-- Form Check -->
-                  <div class="form-check form-check-switch">
-                      <a href="<?php echo e(route("admin.user.auth:id", $user['id'])); ?>" class="form-check-default btn btn-sm btn-primary ">
-                        <i class="bi-person-plus-fill"></i> Войти под этим аккаунтом
-                      </a>
-                  </div>
-                  <!-- End Form Check -->
-
-
-                  <!-- Dropdown -->
-                  <div class="dropdown nav-scroller-dropdown">
-                    <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi-three-dots-vertical"></i>
-                    </button>
-
-                    <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
-                      <span class="dropdown-header">Настройки пользователя</span>
-
-                      <a class="dropdown-item" data-bs-toggle="modal"
-                         data-bs-target="#addBalanceUser">
-                        <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
-                      </a>
-                        <a class="dropdown-item" href="#">
-                        <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
-                      </a>
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-slash-circle dropdown-item-icon"></i>Заблокировать на бирже
-                      </a>
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                      </a>
-
-                      <div class="dropdown-divider"></div>
-
-                        <?php if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin"): ?>
-                            <span class="dropdown-header">Настройки админа</span>
-
-                            <?php if($user['users_status'] == "worker"): ?>
-                                <a class="dropdown-item" href="<?php echo e(route("admin.user.change.status:id", $user['id'])); ?>">
-                                    <i class="bi-flag dropdown-item-icon"></i> Снять админку
-                                </a>
-                            <?php else: ?>
-                                <a class="dropdown-item" href="<?php echo e(route("admin.user.change.status:id", $user['id'])); ?>">
-                                    <i class="bi-flag dropdown-item-icon"></i> Выдать админку
-                                </a>
-                            <?php endif; ?>
-
-                        <?php endif; ?>
-                    </div>
-                  </div>
-                  <!-- End Dropdown -->
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- End Nav -->
-
-          <div class="row">
-            <div class="col-lg-4">
-              <!-- Card -->
-
-              <!-- End Card -->
-
-
-              <!-- Sticky Block Start Point -->
-              <div id="accountSidebarNav"></div>
-
-              <!-- Card -->
-              <div class="js-sticky-block card mb-3 mb-lg-5" data-hs-sticky-block-options='{
-                     "parentSelector": "#accountSidebarNav",
-                     "breakpoint": "lg",
-                     "startPoint": "#accountSidebarNav",
-                     "endPoint": "#stickyBlockEndPoint",
-                     "stickyOffsetTop": 20
-                   }'>
-                <!-- Header -->
-                <div class="card-header">
-                  <h4 class="card-header-title">Профиль</h4>
-                </div>
-                <!-- End Header -->
-
-                <!-- Body -->
-                <div class="card-body">
-                  <ul class="list-unstyled list-py-2 text-dark mb-0">
-                    <li class="pb-0"><span class="card-subtitle">О пользователе</span></li>
-                    <li><i class="bi-person dropdown-item-icon"></i> <?php echo e($kyc['first_name'] ." ". $kyc['last_name']); ?></li>
-                    <li><i class="bi-briefcase dropdown-item-icon"></i> No department</li>
-                    <li><i class="bi-currency-dollar dropdown-item-icon"></i> <?php echo e($totalBalance); ?></li>
-
-                    <li class="pt-4 pb-0"><span class="card-subtitle">Контакты</span></li>
-                    <li><i class="bi-at dropdown-item-icon"></i> <?php echo e($user['email']); ?></li>
-                    <li><i class="bi-phone dropdown-item-icon"></i> <?php echo e($kyc['phone']); ?></li>
-
-                    <li class="pt-4 pb-0"><span class="card-subtitle">Teams</span></li>
-                    <li><i class="bi-people dropdown-item-icon"></i> Member of 7 teams</li>
-                    <li><i class="bi-stickies dropdown-item-icon"></i> Working on 8 projects</li>
-                  </ul>
-                </div>
-                <!-- End Body -->
-              </div>
-              <!-- End Card -->
-            </div>
-
-            <div class="col-lg-8">
-              <div class="d-grid gap-3 gap-lg-5">
-                <!-- Card -->
-                <div class="card">
-                  <!-- Header -->
-                  <div class="card-header card-header-content-between">
-                    <h4 class="card-header-title">Транзакции мамонта</h4>
-
-                    <!-- Dropdown -->
-                    <div class="dropdown">
-
-                      <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="contentActivityStreamDropdown">
-                        <span class="dropdown-header">Settings</span>
-
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-share-fill dropdown-item-icon"></i> Share connections
-                        </a>
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                        </a>
-
-                        <div class="dropdown-divider"></div>
-
-                        <span class="dropdown-header">Feedback</span>
-
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-chat-left-dots dropdown-item-icon"></i> Report
-                        </a>
-                      </div>
-                    </div>
-                    <!-- End Dropdown -->
-                  </div>
-                  <!-- End Header -->
-
-                  <!-- Body -->
-                  <div class="card-body card-body-height" style="height: 30rem;">
-                    <!-- Step -->
-                    <ul class="step step-icon-xs mb-0">
-
-
-                      <?php $__currentLoopData = $transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $transaction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <li class="step-item">
-                                <div class="step-content-wrapper">
-                                    <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
-
-                                    <div class="step-content">
-                                        <h5 class="step-title">
-                                            <a class="text-dark" ><?php echo e($transaction['type']); ?></a>
-                                        </h5>
-
-
-                                        <span class="text-muted small text-uppercase"><?php echo e($transaction['created_at']); ?></span>
-                                    </div>
-                                </div>
-                            </li>
-
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php if(count($transactions) === 0): ?>
-                            <h1 style="text-align: center; width: 100%;">
-                                Not found
-                            </h1>
-                        <?php endif; ?>
-
-
-                      <!-- Step Item -->
-
-                      <!-- End Step Item -->
-                    </ul>
-                    <!-- End Step -->
-                  </div>
-                  <!-- End Body -->
-
-                  <!-- End Footer -->
-                </div>
-                <!-- End Card -->
-
-                <div class="row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <!-- Card -->
-                    <div class="card h-100">
-                      <!-- Header -->
-                      <div class="card-header">
-                        <h4 class="card-header-title">Балансы монет</h4>
-                      </div>
-                      <!-- End Header -->
-
-                      <!-- Body -->
-                      <div class="card-body">
-                        <ul class="list-unstyled list-py-3 mb-0">
-                          <!-- Item -->
-
-                            <?php $__currentLoopData = $balances; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $balance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-                            <?php
-                                $coin_name = $coinFunction->getCoinInfo($balance['coin_id'])['simple_name'];
-                            ?>
-
-                            <li>
-                            <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" >
-                                <div class="flex-shrink-0">
-                                  <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                      <img src="<?php echo e(asset("/images/coin_icons/" . $coin_name . ".svg")); ?>">
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1 ms-1">
-                                  <h5 class="text-hover-primary mb-0"><?php echo e($coin_name); ?></h5>
-
-                                </div>
-                              </a>
-                              <div class="ms-auto">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch d-flex align-items-center">
-                                    <h5 class="align-items-center "><?php echo e($balance['quantity']); ?></h5>
-
-                                </div>
-                                <!-- End Form Check -->
-                              </div>
-                            </div>
-                          </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                          <!-- End Item -->
-                        </ul>
-                      </div>
-                      <!-- End Body -->
-
-                      <!-- Footer -->
-                      <a class="card-footer text-center" href="user-profile-connections.html">
-                        Посмотреть все <i class="bi-chevron-right"></i>
-                      </a>
-                      <!-- End Footer -->
-                    </div>
-                    <!-- End Card -->
-                  </div>
-
-                  <div class="col-sm-6">
-                    <!-- Card -->
-                    <div class="card h-100">
-                      <!-- Header -->
-                      <div class="card-header">
-                        <h4 class="card-header-title">Сессии</h4>
-                      </div>
-                      <!-- End Header -->
-
-                      <!-- Body -->
-                      <div class="card-body">
-                        <ul class="nav nav-pills card-nav card-nav-vertical nav-pills">
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" >
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">192.01.40.16</span>
-                                  <small class="d-block text-muted">19.10.2023</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                          <!-- End Item -->
-
-
-                          <!-- End Item -->
-                        </ul>
-                      </div>
-                      <!-- End Body -->
-
-                      <!-- Footer -->
-
-                      <!-- End Footer -->
-                    </div>
-                    <!-- End Card -->
-                  </div>
-                </div>
-                <!-- End Row -->
-
-                <!-- Card -->
-
-
-
-                <!-- End Card -->
-              </div>
-
-              <!-- Sticky Block End Point -->
-              <div id="stickyBlockEndPoint"></div>
-            </div>
-          </div>
-          <!-- End Row -->
+          <!-- End Col -->
         </div>
-        <!-- End Col -->
+        <!-- End Row -->
       </div>
+      <!-- End Page Header -->
+
+      <div class="row">
+        <div class="col-lg-4 mb-3 mb-lg-0">
+          <h4>Основное</h4>
+        </div>
+
+        <div class="col-lg-8">
+          <!-- Card -->
+          <div class="card">
+            <!-- Body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label for="firstNameLabel" class="form-label">STMP HOST</label>
+                    <input type="text" class="form-control" name="firstName" id="firstNameLabel" placeholder="Clarice" aria-label="Clarice">
+                  </div>
+                  <!-- End Form -->
+                </div>
+                <!-- End Col -->
+
+                <div class="col-sm-6">
+                  <!-- Form -->
+                  <div class="mb-4">
+                    <label for="lastNameLabel" class="form-label">STMP EMAIL</label>
+                    <input type="text" class="form-control" name="lastName" id="lastNameLabel" placeholder="Boone" aria-label="Boone">
+                  </div>
+                  <!-- End Form -->
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+
+              <!-- Form -->
+              <div class="mb-4">
+                <label for="emailLabel" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="emailLabel" placeholder="clarice@site.com" aria-label="clarice@site.com">
+              </div>
+              <!-- End Form -->
+
+              <!-- Form -->
+              <div class="js-add-field mb-4" data-hs-add-field-options='{
+                      "template": "#addPhoneFieldTemplate",
+                      "container": "#addPhoneFieldContainer",
+                      "defaultCreated": 0
+                    }'>
+                <label for="phoneLabel" class="form-label">Phone <span class="form-label-secondary">(Optional)</span></label>
+
+                <div class="input-group">
+                  <input type="text" class="js-input-mask form-control" name="phone" id="phoneLabel" placeholder="+x(xxx)xxx-xx-xx" aria-label="+x(xxx)xxx-xx-xx" data-hs-mask-options='{
+                           "mask": "+0(000)000-00-00"
+                         }'>
+
+                  <div class="input-group-append">
+                    <!-- Select -->
+                    <div class="tom-select-custom tom-select-custom-end">
+                      <select class="js-select form-select" autocomplete="off" name="phoneSelect" data-hs-tom-select-options='{
+                              "searchInDropdown": false,
+                              "hideSearch": true,
+                              "dropdownWidth": "8rem"
+                            }'>
+                        <option value="Mobile" selected>Mobile</option>
+                        <option value="Home">Home</option>
+                        <option value="Work">Work</option>
+                        <option value="Fax">Fax</option>
+                        <option value="Direct">Direct</option>
+                      </select>
+                      <!-- End Select -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Container For Input Field -->
+                <div id="addPhoneFieldContainer"></div>
+
+                <a href="javascript:;" class="js-create-field form-link">
+                  <i class="bi-plus"></i> Add phone
+                </a>
+              </div>
+              <!-- End Form -->
+
+              <!-- Add Phone Input Field -->
+              <div id="addAddressFieldTemplate" style="display: none;">
+                <div class="input-group-add-field">
+                  <input type="text" class="form-control" data-name="addressLine" placeholder="Your address" aria-label="Your address">
+
+                  <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                    <i class="bi-x"></i>
+                  </a>
+                </div>
+              </div>
+              <!-- End Add Phone Input Field -->
+
+              <!-- Add Phone Input Field -->
+              <div id="addPhoneFieldTemplate" class="input-group-add-field" style="display: none;">
+                <div class="input-group">
+                  <input type="text" class="js-input-mask form-control" data-name="additionlPhone" placeholder="+x(xxx)xxx-xx-xx" aria-label="+x(xxx)xxx-xx-xx" data-hs-mask-options='{
+                           "mask": "+0(000)000-00-00"
+                         }'>
+
+                  <div class="input-group-append">
+                    <!-- Select -->
+                    <div class="tom-select-custom tom-select-custom-end">
+                      <select class="js-select-dynamic form-select" autocomplete="off" data-name="phoneSelect" data-hs-tom-select-options='{
+                              "searchInDropdown": false,
+                              "hideSearch": true,
+                              "dropdownWidth": "8rem"
+                            }'>
+                        <option value="Mobile" selected>Mobile</option>
+                        <option value="Home">Home</option>
+                        <option value="Work">Work</option>
+                        <option value="Fax">Fax</option>
+                        <option value="Direct">Direct</option>
+                      </select>
+                      <!-- End Select -->
+                    </div>
+                  </div>
+                </div>
+
+                <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                  <i class="bi-x"></i>
+                </a>
+              </div>
+              <!-- End Add Phone Input Field -->
+
+              <!-- Form Check -->
+              <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" value="" id="marketingEmailsCheckbox">
+                <label class="form-check-label" for="marketingEmailsCheckbox">I want to receive promotions, announcements, and marketing emails.</label>
+              </div>
+              <!-- End Form Check -->
+
+              <div class="d-flex justify-content-end gap-3">
+                <button type="button" class="btn btn-white">Discard</button>
+                <button type="button" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+            <!-- Body -->
+          </div>
+          <!-- End Card -->
+        </div>
+      </div>
+      <!-- End Row -->
+
+
       <!-- End Row -->
     </div>
     <!-- End Content -->
 
     <!-- Footer -->
 
-      <?php echo $__env->yieldContent("footer"); ?>
+    <div class="footer">
+      <div class="row justify-content-between align-items-center">
+        <div class="col">
+          <p class="fs-6 mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2022 Htmlstream.</span></p>
+        </div>
+        <!-- End Col -->
+
+        <div class="col-auto">
+          <div class="d-flex justify-content-end">
+            <!-- List Separator -->
+            <ul class="list-inline list-separator">
+              <li class="list-inline-item">
+                <a class="list-separator-link" href="#">FAQ</a>
+              </li>
+
+              <li class="list-inline-item">
+                <a class="list-separator-link" href="#">License</a>
+              </li>
+
+              <li class="list-inline-item">
+                <!-- Keyboard Shortcuts Toggle -->
+                <button class="btn btn-ghost-secondary btn btn-icon btn-ghost-secondary rounded-circle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasKeyboardShortcuts" aria-controls="offcanvasKeyboardShortcuts">
+                  <i class="bi-command"></i>
+                </button>
+                <!-- End Keyboard Shortcuts Toggle -->
+              </li>
+            </ul>
+            <!-- End List Separator -->
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
 
     <!-- End Footer -->
   </main>
@@ -854,7 +684,7 @@
   <!-- Activity -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream" aria-labelledby="offcanvasActivityStreamLabel">
     <div class="offcanvas-header">
-      <h4 id="offcanvasActivityStreamLabel" class="mb-0">Последние действия мамонта</h4>
+      <h4 id="offcanvasActivityStreamLabel" class="mb-0">Activity stream</h4>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -1051,85 +881,59 @@
   </div>
   <!-- End Activity -->
 
-  <!-- Create New API Key Modal -->
-  <div class="modal fade" id="addBalanceUser" tabindex="-1" aria-labelledby="addBalanceUserLabel" role="dialog"
-       aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-              <!-- Header -->
-              <div class="modal-header">
-                  <h4 class="modal-title" id="addBalanceUserLabel">Добавить баланс пользователю</h4>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <!-- End Header -->
-              <form id="addBalance_modal">
-                  <!-- Body -->
-                  <div class="modal-body">
-                      <!-- Form -->
+  <!-- Welcome Message Modal -->
+  <div class="modal fade" id="welcomeMessageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-close">
+          <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi-x-lg"></i>
+          </button>
+        </div>
+        <!-- End Header -->
 
-                      <div class="d-flex flex-column gap-2">
-                          <?php echo csrf_field(); ?>
-                          <input type="text" name="user_id" class="form-control" hidden=""
-                                 >
-                          <div class="tom-select-custom">
-                              <select class="js-select form-select" name="coin_id" autocomplete="off"
-                                      data-hs-tom-select-options='{
-                                  "placeholder": "Выберите нужную монету...",
-                                  "hideSearch": false
-                                }'>
-                                  <?php echo $__env->yieldContent("AdminSelectCoin"); ?>
-                              </select>
-                          </div>
-                          <div class="tom-select-custom">
-                              <select class="js-select form-select" name="type_deposit" autocomplete="off"
-                                      data-hs-tom-select-options='{
-                                  "placeholder": "Выберите тип транзакции...",
-                                  "hideSearch": false
-                                }'>
-                                  <option value="">Тип транзакции</option>
-                                  <option value="Swap">Swap</option>
-                                  <option value="TransferToUser">TransferToUser</option>
-                                  <option value="Spot">Spot</option>
-                                  <option value="Stacking">Stacking</option>
-                                  <option value="Support">Support</option>
-                                  <option value="Deposit">Deposit</option>
-                              </select>
-                          </div>
-                          <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
+        <!-- Body -->
+        <div class="modal-body p-sm-5">
+          <div class="text-center">
+            <div class="w-75 w-sm-50 mx-auto mb-4">
+              <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="default">
+              <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="dark">
+            </div>
 
-                      </div>
+            <h4 class="h1">Welcome to Front</h4>
 
-
-                      <!-- End Form -->
-                  </div>
-                  <!-- End Body -->
-
-                  <!-- Footer -->
-                  <div class="modal-footer">
-                      <div class="row align-items-sm-center flex-grow-1 mx-n2">
-                          <div class="col-sm mb-2 mb-sm-0">
-
-                          </div>
-                          <!-- End Col -->
-
-                          <div class="col-sm-auto">
-                              <div class="d-flex gap-3">
-                                  <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
-                                      Закрыть
-                                  </button>
-                                  <button type="submit" class="btn btn-primary">Создать</button>
-                              </div>
-                          </div>
-                          <!-- End Col -->
-                      </div>
-                      <!-- End Row -->
-                  </div>
-              </form>
-              <!-- End Footer -->
+            <p>We're happy to see you in our community.</p>
           </div>
+        </div>
+        <!-- End Body -->
+
+        <!-- Footer -->
+        <div class="modal-footer d-block text-center py-sm-5">
+          <small class="text-cap text-muted">Trusted by the world's best teams</small>
+
+          <div class="w-85 mx-auto">
+            <div class="row justify-content-between">
+              <div class="col">
+                <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg" alt="Image Description">
+              </div>
+              <div class="col">
+                <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg" alt="Image Description">
+              </div>
+              <div class="col">
+                <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg" alt="Image Description">
+              </div>
+              <div class="col">
+                <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg" alt="Image Description">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Footer -->
       </div>
+    </div>
   </div>
-  <!-- End Create New API Key Modal -->
+
   <!-- End Welcome Message Modal -->
   <!-- ========== END SECONDARY CONTENTS ========== -->
 
@@ -1142,8 +946,10 @@
   <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js"></script>
   <script src="/assets_admin/vendor/hs-form-search/dist/hs-form-search.min.js"></script>
 
-  <script src="/assets_admin/vendor/hs-nav-scroller/dist/hs-nav-scroller.min.js"></script>
-  <script src="/assets_admin/vendor/hs-sticky-block/dist/hs-sticky-block.min.js"></script>
+  <script src="/assets_admin/vendor/hs-quantity-counter/dist/hs-quantity-counter.min.js"></script>
+  <script src="/assets_admin/vendor/hs-add-field/dist/hs-add-field.min.js"></script>
+  <script src="/assets_admin/vendor/tom-select/dist/js/tom-select.complete.min.js"></script>
+  <script src="/assets_admin/vendor/imask/dist/imask.min.js"></script>
 
   <!-- JS Front -->
   <script src="/assets_admin/js/theme.min.js"></script>
@@ -1169,16 +975,24 @@
         HSBsDropdown.init()
 
 
-        // INITIALIZATION OF NAV SCROLLER
+        // INITIALIZATION OF SELECT
         // =======================================================
-        new HsNavScroller('.js-nav-scroller')
+        HSCore.components.HSTomSelect.init('.js-select')
 
 
-        // INITIALIZATION OF STICKY BLOCKS
+        // INITIALIZATION OF ADD FIELD
         // =======================================================
-        new HSStickyBlock('.js-sticky-block', {
-          targetSelector: document.getElementById('header').classList.contains('navbar-fixed') ? '#header' : null
+        new HSAddField('.js-add-field', {
+          addedField: field => {
+            HSCore.components.HSTomSelect.init(field.querySelector('.js-select-dynamic'))
+            HSCore.components.HSMask.init(field.querySelector('.js-input-mask'))
+          }
         })
+
+
+        // INITIALIZATION OF INPUT MASK
+        // =======================================================
+        HSCore.components.HSMask.init('.js-input-mask')
       }
     })()
   </script>
@@ -1224,4 +1038,4 @@
   <!-- End Style Switcher JS -->
 </body>
 </html>
-<?php /**PATH D:\OSPanel\domains\house\house\resources\views/admin/user.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\OSPanel\domains\house\house\resources\views/admin/domain_add.blade.php ENDPATH**/ ?>

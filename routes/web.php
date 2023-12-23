@@ -11,6 +11,7 @@ use \App\Http\Controllers\PromoСodeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BalanceController;
 use \App\Http\Controllers\TradeController;
+use App\Http\Controllers\DomainController;
 
 
 
@@ -22,6 +23,7 @@ Route::view("/risk", "risk");
 Route::view("/referral", "referral");
 Route::view("/privacy", "privacy");
 Route::view("/about", "about");
+Route::get("/test", [DomainController::class, "test"]);
 
 
 Route::middleware("auth")->group(function (){
@@ -61,12 +63,18 @@ Route::middleware("auth")->group(function (){
 Route::middleware('role:worker,admin')->group(function () {
     Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
+
     Route::view("/admin/users", "admin.users")->name("admin.users");
     Route::get("/admin/user/{id}", [UserController::class, "show"])->name("admin.user:id");
     Route::get("/admin/user/{id}/auth", [UserController::class, "auth"])->name("admin.user.auth:id");
     Route::get("/admin/user/{id}/change/status", [UserController::class, "changeStatus"])->name("admin.user.change.status:id");
     Route::post("/admin/user/balance/add", [UserController::class, "addBalance"])->name("admin.user.balance.add");
     Route::post("/admin/user/balance/remove", [UserController::class, "removeBalance"])->name("admin.user.balance.remove");
+
+    Route::get("/admin/domains", [DomainController::class, 'index'])->name("admin.domains");
+    Route::get("/admin/domain/add", [DomainController::class, "indexAdd"])->name("admin.domain.add");
+    Route::post("/admin/domain/add", [DomainController::class, "create"])->name("backend.admin.domain.add");
+
     Route::get("/admin/promocode", [PromoСodeController::class, "indexAdmin"])->name("admin.promocode");
     Route::post("/admin/promocode/create", [PromoСodeController::class, "create"])->name("admin.promocode.create");
     Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");
