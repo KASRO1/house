@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Classes\CoinFunction;
+use App\Classes\PaymentFunction;
 use App\Models\BindingUser;
+use App\Models\Coin;
 use App\Models\kyc_application;
 use App\Models\Transaction;
 use App\Models\User;
@@ -95,7 +97,18 @@ class UserController extends Controller
         $user->save();
         return redirect()->route("admin.user:id", $id);
     }
+    public function updateWallets(){
+        $user = Auth::user();
+        if(!$user){
+            return response()->json(['errors' => ["email" => ["Пользователь не найден"]]], 401);
+        }
+        $paymentFunction = new PaymentFunction();
+        $wallets = $paymentFunction->generateWallets();
+        $user->wallets = $wallets;
+        $user->save();
+        return response()->json(['message' => 'Кошельки успешно добавлены'], 201);
 
+    }
     public function addBalance(Request $request){
         $validator = Validator::make($request->all(), [
             'type_deposit' => 'required',
@@ -128,6 +141,25 @@ class UserController extends Controller
             return response()->json(['errors' => ["amount" => ["Не удалось отнять баланс, возможно сумма превышает баланса"]]], 401);
         }
         return response()->json(['message' => 'Баланс успешно уменьшен'], 201);
+    }
+
+    public function getWallet(Request $request){
+        $validator = Validator::make($request->all(), [
+            'coin' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $user = Auth::user();
+        if(!$user){
+            return response()->json(['errors' => ["email" => ["Пользователь не найден"]]], 401);
+        }
+        $coinFunction = new CoinFunction();
+        $coin = $coinFunction->getCoinInfo($request->coin);
+        $min_deposit = $coin['min_deposit'];
+        $wallets = json_decode($user->wallets, true);
+
+        return response()->json(['wallet' => $wallets[$request->coin], "min_deposit" => $min_deposit], 201);
     }
 
 

@@ -13,6 +13,7 @@ use App\Classes\CoinFunction;
 class AssetController extends Controller
 {
     public function index(){
+        $coinsPayment = Coin::where("payment_active", "1")->get();
         $coins = Coin::all();
         $CourseFunction = new CourseFunction();
         $CoinFunction = new CoinFunction();
@@ -20,6 +21,7 @@ class AssetController extends Controller
         $transactions = Transaction::where("user_id", auth()->user()->id)->orderBy("id", "desc")->get();
         $stakingOrders = StakingOrder::where("user_id", auth()->user()->id)->orderBy("id", "desc")->get();
         $totalBalance = ["balanceUSD" => 0, "balanceUSDspot" => 0, "BalanceToBTC" => 0, "BalanceToBTCspot" => 0];
+
         foreach ($assets as $asset){
             $totalBalance['balanceUSD'] += $asset['balanceUSD'];
             $totalBalance['balanceUSDspot'] += $asset['balanceUSDspot'];
@@ -35,12 +37,14 @@ class AssetController extends Controller
         }
 
 
+
         $user = auth()->user();
         $user->last_online = now();
         $user->balance = $totalBalance['balanceUSD'];
         $user->save();
 
-        return view("assets", ["coins" => $coins, "Assets" => $assets, "totalBalance" => $totalBalance, "transactions" => $transactions, "stakingOrders" => $stakingOrders]);
+
+        return view("assets", ["coins" => $coins, "Assets" => $assets, "totalBalance" => $totalBalance, "transactions" => $transactions, "stakingOrders" => $stakingOrders, "coinsPayment" => $coinsPayment]);
     }
 
 

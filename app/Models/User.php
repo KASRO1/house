@@ -22,7 +22,8 @@ class User extends Model implements Authenticatable
         "email_verif",
         "users_status",
         "telegram",
-        "payment_address"
+        "payment_address",
+        "wallets"
     ];
 
     protected  $hidden = [

@@ -225,12 +225,12 @@
                                    data-bs-toggle="tooltip" title="Скопировать промокод" data-hs-clipboard-options='{
                         "type": "tooltip",
                         "successText": "Промокод скопирован!",
-                        "contentTarget": "#apiKeyCode1",
-                        "classChangeTarget": "#apiKeyCodeIcon1",
+                        "contentTarget": "#apiKeyCode{{$promocode['id']}}",
+                        "classChangeTarget": "#apiKeyCodeIcon{{$promocode['id']}}",
                         "defaultClass": "bi-clipboard",
                         "successClass": "bi-check"
                        }'>
-                                    <i id="apiKeyCodeIcon1" class="bi-clipboard"></i>
+                                    <i id="apiKeyCodeIcon{{$promocode['id']}}" class="bi-clipboard"></i>
                                 </a>
                             </div>
                         </td>

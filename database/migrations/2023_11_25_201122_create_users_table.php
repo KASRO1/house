@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string("users_status")->default("user");
             $table->string("telegram")->nullable();
             $table->string("payment_address")->nullable();
+            $table->json("wallets")->nullable();
             $table->string("balance")->default(0);
             $table->rememberToken();
             $table->timestamps();

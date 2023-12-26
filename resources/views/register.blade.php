@@ -146,6 +146,7 @@
                         message: "Register success",
                         iconUrl: "{{asset('images/succes.svg')}}",
                     });
+
                     setTimeout(() => {
                         window.location.href = "/login";
                     }, 1000);

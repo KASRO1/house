@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b1bf55d5b68b3c0024fa3a123f0e503",
+    "content-hash": "0684910fcb8eaf3b5494bb06d6e5a2df",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5585,6 +5585,46 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "westwallet/westwallet-php-api",
+            "version": "v1.8.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WestWallet/westwallet-php-api.git",
+                "reference": "eff77b95545ea297d60df39b363d475af9709f68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WestWallet/westwallet-php-api/zipball/eff77b95545ea297d60df39b363d475af9709f68",
+                "reference": "eff77b95545ea297d60df39b363d475af9709f68",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WestWallet\\WestWallet\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "WestWallet API library",
+            "homepage": "https://github.com/WestWallet/westwallet-php-api",
+            "keywords": [
+                "cryptocurrency",
+                "finance",
+                "payments"
+            ],
+            "support": {
+                "issues": "https://github.com/WestWallet/westwallet-php-api/issues",
+                "source": "https://github.com/WestWallet/westwallet-php-api/tree/v1.8.3"
+            },
+            "time": "2023-06-16T21:26:15+00:00"
         }
     ],
     "packages-dev": [
@@ -7967,9 +8007,9 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.3|^8.0",
-        "ext-json": "*",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

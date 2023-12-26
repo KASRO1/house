@@ -45,6 +45,7 @@ Route::middleware("auth")->group(function (){
     Route::post("/assets/swap/price", [BalanceController::class, "convertCryptoPrice"])->name("assets.swap.convertCryptoPrice");
     Route::post("/assets/stacking/calculate",[BalanceController::class, "getStackingSumm"])->name("assets.stacking.calculate");
     Route::post("/assets/stacking/order/create",[BalanceController::class, "createStackingOrder"])->name("assets.stacking.order.create");
+    Route::post("/assets/wallet/get", [UserController::class, "getWallet"])->name("assets.wallet.get");
 
     Route::get('/account', [UserSettingsController::class, "index"]);
 
@@ -55,6 +56,8 @@ Route::middleware("auth")->group(function (){
     Route::post("/account/transfer/coin", [BalanceController::class, "TransferSpotToBalance"])->name("user.transfer.balance");
     Route::post("/account/transfer/user", [BalanceController::class, "TransferToUser"])->name("user.transfer.user");
     Route::post("/account/kyc/send", [UserSettingsController::class, "createKycApplication"])->name("user.kyc.send");
+    Route::post("/account/wallets/update", [UserController::class, "updateWallets"])->name("user.wallets.update");
+
 
 
 
@@ -72,8 +75,9 @@ Route::middleware('role:worker,admin')->group(function () {
     Route::post("/admin/user/balance/remove", [UserController::class, "removeBalance"])->name("admin.user.balance.remove");
 
     Route::get("/admin/domains", [DomainController::class, 'index'])->name("admin.domains");
-    Route::get("/admin/domain/add", [DomainController::class, "indexAdd"])->name("admin.domain.add");
     Route::post("/admin/domain/add", [DomainController::class, "create"])->name("backend.admin.domain.add");
+    Route::post("/admin/domain/update/status/{id}", [DomainController::class, "updateStatusCloudflare"])->name("backend.admin.domain.update.status");
+    Route::post("/admin/domain/delete/{id}", [DomainController::class, "delete"]);
 
     Route::get("/admin/promocode", [PromoСodeController::class, "indexAdmin"])->name("admin.promocode");
     Route::post("/admin/promocode/create", [PromoСodeController::class, "create"])->name("admin.promocode.create");

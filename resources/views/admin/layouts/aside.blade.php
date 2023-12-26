@@ -73,6 +73,13 @@
                                 </a>
 
                             </div>
+                            <div class="nav-item">
+                                <a class="nav-link" href="{{route("admin.domains")}}" >
+                                    <i class="bi-globe nav-icon"></i>
+                                    <span class="nav-link-title">Домены</span>
+                                </a>
+
+                            </div>
 
                             <div class="nav-item">
                                 <a class="nav-link" href="#navbarVerticalMenuPagesAccountMenu" >

@@ -1064,12 +1064,13 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function (data, status,xhr) {
+            success: function (data, status, xhr) {
+                console.log(data)
                 StatusToast.innerText = "Успешно";
                 MessageToast.innerText = data.message;
                 Toast.show()
                 setTimeout(function () {
-                    location.reload();
+                    window.location.reload();
                 }, 1000);
             },
             error: function (data) {

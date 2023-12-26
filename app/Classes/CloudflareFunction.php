@@ -23,30 +23,46 @@ class CloudflareFunction{
         return $data;
     }
 
-//    function delete_domain_cloudflare($domain): bool
-//    {
-//        $key = new APIKey(CLOUDFLARE_EMAIL, CLOUDFLARE_API_KEY);
-//        $adapter = new Guzzle($key);
-//        $zone = new Zones($adapter);
-//
-//        try {
-//            $response = $zone->getZoneID($domain);
-//
-//
-//        } catch (EndpointException $e) {
-//            return false;
-//        }
-//
-//        if (!empty($response)) {
-//            $zone_id = $response;
-//            if(delete_domain($zone_id)){
-//                $zone->deleteZone($zone_id);
-//                return true;
-//            }
-//        }
-//        return false;
-//
-//
-//    }
+    function check_domain_status_cloudflare($zoneId)
+    {
+        $key = new APIKey(getenv('CLOUDFLARE_EMAIL'), getenv('CLOUDFLARE_API'));
+        $adapter = new Guzzle($key);
+        $zone = new Zones($adapter);
+
+        try {
+            $zoneInfo = $zone->getZoneByID($zoneId);
+
+            return $zoneInfo->result->status;
+        } catch (\Exception $e) {
+
+            throw $e;
+        }
+    }
+
+
+    function delete_domain_cloudflare($domain): bool
+    {
+        $key = new APIKey(getenv('CLOUDFLARE_EMAIL'), getenv('CLOUDFLARE_API'));
+        $adapter = new Guzzle($key);
+        $zone = new Zones($adapter);
+
+        try {
+            $response = $zone->getZoneID($domain);
+
+
+        } catch (EndpointException $e) {
+            return false;
+        }
+
+        if (!empty($response)) {
+            $zone_id = $response;
+                $zone->deleteZone($zone_id);
+                return true;
+
+        }
+        return false;
+
+
+    }
 
 }

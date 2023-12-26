@@ -24,10 +24,7 @@ class Coin extends Model
     /**
      * @var mixed|string
      */
-    public $payment_address;
-    /**
-     * @var mixed|string
-     */
+
     public $spread;
     /**
      * @var mixed|string
@@ -37,15 +34,16 @@ class Coin extends Model
         "id_coin",
         "full_name",
         "simple_name",
-        "payment_address",
-        "staking_percent"
+        "staking_percent",
+        "spread",
+        "min_deposit",
+        "payment_active"
     ];
 
     protected $casts = [
         "id_coin" => "string",
         "full_name" => "string",
         "simple_name" => "string",
-        "payment_address" => "string",
     ];
 
 

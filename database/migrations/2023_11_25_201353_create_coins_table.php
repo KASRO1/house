@@ -21,7 +21,9 @@ class CreateCoinsTable extends Migration
             $table->string("type_coin")->nullable();
             $table->string("spread")->nullable();
             $table->json("staking_percent")->nullable();
-            $table->string("payment_address")->nullable();
+            $table->string("min_deposit")->nullable();
+            $table->json("wallets")->nullable();
+            $table->boolean("payment_active")->default(0);
             $table->timestamps();
         });
 
@@ -32,7 +34,8 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BTC",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "bc1qd2uzn6padt89qw9yed4g8udhhf2eku8nvekegf",
+                "min_deposit" => "0.0005",
+                "payment_active" => 1,
             ],
             [
                 "id_coin" => "190",
@@ -40,7 +43,8 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ETH",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "0.01",
+                "payment_active" => 1
             ],
             [
                 "id_coin" => "191",
@@ -48,15 +52,29 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "LTC",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "0.025",
+                "payment_active" => 1
             ],
             [
                 "id_coin" => "192",
-                "full_name" => "Tether",
-                "simple_name" => "USDT",
+                "full_name" => "Tether TRC-20",
+                "simple_name" => "USDT TRC-20",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "10",
+                "payment_active" => 1
+
+            ],
+            [
+                "id_coin" => "292",
+                "full_name" => "Tether ERC-20",
+                "simple_name" => "USDT ERC-20",
+                "type_coin" => "coin",
+                "spread" => "0",
+                "min_deposit" => "10",
+                "payment_active" => 1
+
+
             ],
             [
                 "id_coin" => "193",
@@ -64,7 +82,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "TRX",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "20",
+                "payment_active" => 1
+
             ],
             [
                 "id_coin" => "194",
@@ -72,7 +92,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "USDC",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "195",
@@ -80,7 +100,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BNB",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "196",
@@ -88,7 +108,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BCH",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "197",
@@ -96,7 +116,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "DOGE",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "50",
+                "payment_active" => 1
+
             ],
             [
                 "id_coin" => "198",
@@ -104,7 +126,8 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "XMR",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "0.01",
+                "payment_active" => 1
             ],
             [
                 "id_coin" => "199",
@@ -112,7 +135,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "XLM",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "10",
+                "payment_active" => 1
+
             ],
             [
                 "id_coin" => "200",
@@ -120,7 +145,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "XTZ",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "1",
+                "payment_active" => 0
+
             ],
             [
                 "id_coin" => "201",
@@ -128,7 +155,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "EOS",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "1",
+                "payment_active" => 1
+
             ],
             [
                 "id_coin" => "202",
@@ -136,7 +165,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "SHIB",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "1000000",
+                "payment_active" => 1
+
             ],
             [
                 "id_coin" => "203",
@@ -144,7 +175,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "LINK",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "1",
+                "payment_active" => 0
+
             ],
             [
                 "id_coin" => "204",
@@ -152,7 +185,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BTG",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "205",
@@ -160,7 +193,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ETC",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "206",
@@ -168,7 +201,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "XRP",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "207",
@@ -176,7 +209,10 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ADA",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "1.5",
+                "payment_active" => 1
+
+
             ],
             [
                 "id_coin" => "208",
@@ -184,7 +220,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "DASH",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "0.01",
+                "payment_active" => 1
+
             ],
             [
                 "id_coin" => "209",
@@ -192,7 +230,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ZEC",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "210",
@@ -200,7 +238,9 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "SOL",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+                "min_deposit" => "0.1",
+                "payment_active" => 1
+
             ],
             [
                 "id_coin" => "211",
@@ -208,7 +248,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "APE",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "212",
@@ -216,7 +256,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "LUNC",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "213",
@@ -224,7 +264,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "MATIC",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "214",
@@ -232,7 +272,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "FIL",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "215",
@@ -240,7 +280,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "FLM",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "216",
@@ -248,7 +288,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "MDX",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "217",
@@ -256,7 +296,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "QTUM",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "218",
@@ -264,7 +304,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BICO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "219",
@@ -272,7 +312,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "MANA",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "220",
@@ -280,7 +320,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "SAND",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "221",
@@ -288,7 +328,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "YFI",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "222",
@@ -296,7 +336,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "SRM",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "223",
@@ -304,7 +344,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BOND",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "224",
@@ -312,7 +352,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "POWER",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "225",
@@ -320,7 +360,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "CHZ",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "226",
@@ -328,7 +368,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "SOL1",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "227",
@@ -336,7 +376,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "PAXG",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "228",
@@ -344,7 +384,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ARB",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "229",
@@ -352,7 +392,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "FIDA",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "230",
@@ -360,7 +400,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "POWR",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "231",
@@ -368,7 +408,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "PYR",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "232",
@@ -376,7 +416,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "NMR",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "233",
@@ -384,7 +424,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "EPX",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "234",
@@ -392,7 +432,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "PERP",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "235",
@@ -400,7 +440,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "STRAX",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "236",
@@ -408,7 +448,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BAKE",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "237",
@@ -416,7 +456,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "WING",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "238",
@@ -424,7 +464,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "MTL",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "239",
@@ -432,7 +472,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ALICE",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "240",
@@ -440,7 +480,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "COCOS",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "241",
@@ -448,7 +488,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ONT",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "242",
@@ -456,7 +496,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ADX",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "243",
@@ -464,7 +504,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "RARE",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "244",
@@ -472,7 +512,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "VOXEL",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "245",
@@ -480,7 +520,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BEAM",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "246",
@@ -488,7 +528,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "REP",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "247",
@@ -496,7 +536,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "DOCK",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "248",
@@ -504,7 +544,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "LSK",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "249",
@@ -512,7 +552,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "AKRO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "250",
@@ -520,7 +560,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "UMA",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "251",
@@ -528,7 +568,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "XVS",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "252",
@@ -536,7 +576,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BNT",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "253",
@@ -544,7 +584,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "AUDIO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "254",
@@ -552,7 +592,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "SCRT",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "255",
@@ -560,7 +600,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "FIO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "256",
@@ -568,7 +608,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "OXT",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "257",
@@ -576,7 +616,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "CELR",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "258",
@@ -584,7 +624,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "MITH",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "259",
@@ -592,7 +632,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "CRV",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "260",
@@ -600,7 +640,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "IOTX",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "261",
@@ -608,7 +648,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "CELO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "262",
@@ -616,7 +656,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "CFX",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "263",
@@ -624,7 +664,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ANKR",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "264",
@@ -632,7 +672,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "RAD",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "265",
@@ -640,7 +680,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "GALA",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "266",
@@ -648,7 +688,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "BAT",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "267",
@@ -656,7 +696,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "HNT",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "268",
@@ -664,7 +704,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "VITE",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "269",
@@ -672,7 +712,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "KEY",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "270",
@@ -680,7 +720,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "TOMO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "271",
@@ -688,7 +728,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "COMP",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "272",
@@ -696,7 +736,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "OCEAN",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "273",
@@ -704,7 +744,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "LOKA",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "274",
@@ -712,7 +752,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "NEXO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "275",
@@ -720,7 +760,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "ASTR",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "276",
@@ -728,7 +768,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "GNO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "277",
@@ -736,7 +776,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "GAL",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "278",
@@ -744,7 +784,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "WOO",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "279",
@@ -752,7 +792,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "RVN",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "280",
@@ -760,7 +800,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "TWT",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "281",
@@ -768,7 +808,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "NEAR",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
             [
                 "id_coin" => "282",
@@ -776,7 +816,7 @@ class CreateCoinsTable extends Migration
                 "simple_name" => "DOT",
                 "type_coin" => "coin",
                 "spread" => "0",
-                "payment_address" => "",
+
             ],
         ];
 
@@ -788,7 +828,8 @@ class CreateCoinsTable extends Migration
                         "simple_name" => $datum['simple_name'],
                         "type_coin" => "coin",
                         "spread" => $datum['spread'],
-                        "payment_address" => $datum['payment_address'],
+                        "min_deposit" => $datum['min_deposit'] ?? 0,
+                        "payment_active" => $datum['payment_active'] ?? 0,
                         "created_at" => date("Y-m-d H:i:s"),
                         "updated_at" => date("Y-m-d H:i:s"),
                     ]]
