@@ -17,13 +17,14 @@ class PromoСodeController extends Controller
         $coins = Coin::all();
         $promocodes = Promocode::where("user_id", auth()->user()->id)->get()->toArray();
         $coinFunction = new CoinFunction();
+        $coinsPayment = Coin::where("payment_active", 1)->get()->toArray();
         $statistic['totalPromo'] = count($promocodes);
         $statistic['totalPromoLastWeek'] = count(Promocode::where("user_id", auth()->user()->id)->where("created_at", ">", date("Y-m-d H:i:s", strtotime("-7 days")))->get()->toArray());
         $statistic['totalActivatePromo'] = count(BindingUser::where("user_id_worker", auth()->user()->id)->where("type", "promo")->get()->toArray());
         $statistic['totalActivatePromoLastWeek'] = count(BindingUser::where("user_id_worker", auth()->user()->id)->where("type", "promo")->where("created_at", ">", date("Y-m-d H:i:s", strtotime("-7 days")))->get()->toArray());
         $statistic['totalUnUsedPromo'] = count(Promocode::where("user_id", auth()->user()->id)->where("activations", 0)->get()->toArray());
         $statistic['totalUnUsedPromoLastWeek'] = count(Promocode::where("user_id", auth()->user()->id)->where("activations", 0)->where("created_at", ">", date("Y-m-d H:i:s", strtotime("-7 days")))->get()->toArray());
-        return view("admin.promocode", ["coins" => $coins, "promocodes" => $promocodes, "coinFunction" => $coinFunction, "statistic" => $statistic]);
+        return view("admin.promocode", ["coins" => $coins, "promocodes" => $promocodes, "coinFunction" => $coinFunction, "statistic" => $statistic, 'coinsPayment' => $coinsPayment]);
     }
 
 
@@ -39,6 +40,7 @@ class PromoСodeController extends Controller
         }
 
         $promo = Promocode::where("promo", $request->promocode)->first();
+        $coin = Coin::where("id_coin", $promo['coin_id'])->first();
         if($promo['user_id'] === $request->user()->id){
             return response()->json(['errors' => ["promocode" => ["You cannot activate your own promo code"]]], 401);
         }
@@ -53,9 +55,10 @@ class PromoСodeController extends Controller
                 $message = $promo->text == "" ? "Promocode activated successfully" : $promo->text;
                 $transaction = new Transaction();
                 $transaction->user_id = $request->user()->id;
-                $transaction->coin_id = $promo->coin_id;
-                $transaction->amount = $promo->amount;
+                $transaction->coinSymbol = $coin['simple_name'];
+                $transaction->amount = $promo['amount'];
                 $transaction->type = "Promocode";
+                $transaction->status = "Completed";
                 $transaction->save();
                 return response()->json(['message' => $message], 201);
 

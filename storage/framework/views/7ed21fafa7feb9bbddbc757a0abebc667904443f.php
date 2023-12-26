@@ -323,19 +323,19 @@
                                         <div class="flex-center gap6">
                                             <img
                                                 width="30px"
-                                                src="<?php echo e(asset("images/coin_icons/" . strtolower($transaction['CoinSymbol']) . ".svg")); ?>"
+                                                src="<?php echo e(asset("images/coin_icons/" . strtolower($transaction['coinSymbol']) . ".svg")); ?>"
                                                 alt=""/>
-                                            <span><?php echo e($transaction['CoinSymbol']); ?></span>
+                                            <span><?php echo e($transaction['coinSymbol']); ?></span>
                                         </div>
                                         <div class="">
-                                            <span class="text_16"><?php echo e($transaction['Amount']); ?></span>
+                                            <span class="text_16"><?php echo e($transaction['amount']); ?></span>
 
                                         </div>
                                         <div class="">
-                                            <span class="text_16"><?php echo e($transaction['Type']); ?></span>
+                                            <span class="text_16"><?php echo e($transaction['type']); ?></span>
                                         </div>
                                         <div class="">
-                                            <span class="text_16"><?php echo e($transaction['Status']); ?></span>
+                                            <span class="text_16"><?php echo e($transaction['status']); ?></span>
                                         </div>
                                         <div class="">
                                             <span
@@ -383,15 +383,34 @@
             <div class="itc-select__dropdown">
                 <div class="search"><input type="text" placeholder="Search"/></div>
                 <ul class="itc-select__options">
-                    <?php echo $__env->yieldContent("selectCoin"); ?>
+                    <?php echo $__env->yieldContent("selectCoinPayment"); ?>
+                </ul>
+            </div>
+        </div>
+        <div class="itc-select assets pb20" id="select-10">
+            <button
+                type="button"
+                class="itc-select__toggle"
+                name="cryptocurrency"
+                value=""
+                data-select="toggle"
+                data-index="-1"
+            >
+                Chose cryptocurrency
+            </button>
+            <div class="itc-select__dropdown">
+                <div class="search"><input type="text" placeholder="Search"/></div>
+                <ul class="itc-select__options">
+                    <?php echo $__env->yieldContent("selectCoinPayment"); ?>
                 </ul>
             </div>
         </div>
         <button
             type="submit"
             class="btn btn_action btn_16 color-dark"
-            data-izimodal-open="#deposit2"
-        >
+            onclick="updateDataDeposit()"
+            data-izimodal-open="#deposit2">
+
             Next
         </button>
     </div>
@@ -399,9 +418,9 @@
         <button class="closemodal clear" data-izimodal-close="">
             <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
-        <h2 class="h1_25 pb15">Deposit BTC</h2>
+        <h2 class="h1_25 pb15">Deposit <span class="coinName"></span></h2>
         <p class="text_18 pb25 color-red">
-            Confirm that your network is BITCOIN. Sending any other asset to this
+            Confirm that your network is <span class="coinName"></span>. Sending any other asset to this
             address may result in loss of your deposit!
         </p>
         <p class="text_16 _115 color-red pb10">
@@ -417,7 +436,7 @@
                     fill="#FF6868"
                 />
             </svg>
-            Send BTC only to this address
+            Send <span class="coinName"></span> only to this address
         </p>
         <label class="deposit-label mb25">
             <input
@@ -448,11 +467,11 @@
         <div class="deposit-info">
             <div class="qr-container">
                 <p class="small_14 color-gray2 pb10">Or scan QR-code</p>
-                <img src="<?php echo e('images/qrsample.svg'); ?>" alt=""/>
+                <div id="depositQR"  alt=""></div>
             </div>
             <div class="deposit-details">
                 <p class="small_14 color-gray2 pb10">Minimum Deposit Amount</p>
-                <p class="text_18 pb25">0.004 BTC</p>
+                <p class="text_18 pb25"><span id="min_deposit"></span> <span class="coinName"></span></p>
                 <p class="small_14 color-gray2 pb10">Deposit Confirmation</p>
                 <p class="text_18 pb25">2 Block(s)</p>
                 <p class="small_14 color-gray2">
@@ -1045,6 +1064,7 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
 ></script>
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 
 
 <script src="<?php echo e(asset("js/iziToast.min.js")); ?>"></script>
@@ -1172,6 +1192,7 @@
 <script>
     const select2 = new ItcCustomSelect("#select-2");
     const select3 = new ItcCustomSelect("#select-3");
+    const select10 = new ItcCustomSelect("#select-10");
     const select4 = new ItcCustomSelect("#select-4",
         {
             onSelected(select, option) {
@@ -1626,6 +1647,34 @@
         updatePriceConvert();
     }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
     const stackingForm = document.getElementById("stackingForm");
 
@@ -1774,6 +1823,77 @@
     }
 </script>
 
+<?php if(!\Illuminate\Support\Facades\Auth::user()->wallets): ?>
+<script>
+
+    $.ajax({
+        url: "<?php echo e(route("user.wallets.update")); ?>",
+        type: "POST",
+        data: {
+            _token: "<?php echo e(csrf_token()); ?>",
+        },
+        success: function (data, status, xhr) {
+
+        },
+
+    });
+
+</script>
+<?php endif; ?>
+<script>
+    function updateDataDeposit(){
+        const CoinNames = document.querySelectorAll(".coinName");
+        const selectedCoin = select2.value;
+        const depositQR = document.getElementById("depositQR");
+        const min_deposit = document.getElementById("min_deposit");
+        depositQR.innerHTML = "";
+        CoinNames.forEach((coinName)=>{
+            coinName.innerText = selectedCoin;
+        })
+
+        const depositWallet = document.getElementById("deposit-adress");
+        $.ajax({
+            url: "<?php echo e(route("assets.wallet.get")); ?>",
+            type: "POST",
+            data: {
+                coin: selectedCoin
+            },
+            success: function (data, status, xhr) {
+                console.log(data);
+                depositWallet.value = data.wallet;
+                min_deposit.innerText = data.min_deposit;
+
+                var options = {
+                    width: 128,
+                    height: 128,
+                    colorDark: "#1d323e",
+                    colorLight: "#ffffff",
+                    rounded: true,
+                    rectFill: true,
+                    correctLevel: QRCode.CorrectLevel.H // уровень коррекции ошибок (H - высший уровень)
+                };
+
+                // Создание QR-кода
+                var qrcode = new QRCode(depositQR, options);
+                qrcode.makeCode("adakdadanjsd");
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        });
+
+    }
+</script>
 <script src="<?php echo e(asset("js/load.js")); ?>"></script>
 </body>
 </html>

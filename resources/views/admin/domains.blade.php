@@ -29,7 +29,7 @@
     <!-- Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
-        <div >
+        <div    >
             <div class="row align-items-center mb-3">
                 <div class="col-sm mb-2 mb-sm-0">
                     <h1 class="page-header-title">Домены <span class="badge bg-soft-dark text-dark ms-2">0</span></h1>

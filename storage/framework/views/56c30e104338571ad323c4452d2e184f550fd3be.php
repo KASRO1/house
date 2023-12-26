@@ -215,22 +215,22 @@
                         <td class="table-column-pe-0">
 
                         </td>
-                        <td class="table-column-ps-0"><?php echo e($promocode['activations']); ?></td>
+                        <td class="table-column-ps-0 p-4 "><?php echo e($promocode['activations']); ?></td>
 
                         <td>
                             <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="apiKeyCode1" type="text" class="form-control" readonly
+                                <input id="apiKeyCode<?php echo e($promocode['id']); ?>" type="text" class="form-control" readonly
                                        value="<?php echo e($promocode['promo']); ?>">
                                 <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
                                    data-bs-toggle="tooltip" title="Скопировать промокод" data-hs-clipboard-options='{
                         "type": "tooltip",
                         "successText": "Промокод скопирован!",
-                        "contentTarget": "#apiKeyCode1",
-                        "classChangeTarget": "#apiKeyCodeIcon1",
+                        "contentTarget": "#apiKeyCode<?php echo e($promocode['id']); ?>",
+                        "classChangeTarget": "#apiKeyCodeIcon<?php echo e($promocode['id']); ?>",
                         "defaultClass": "bi-clipboard",
                         "successClass": "bi-check"
                        }'>
-                                    <i id="apiKeyCodeIcon1" class="bi-clipboard"></i>
+                                    <i id="apiKeyCodeIcon<?php echo e($promocode['id']); ?>" class="bi-clipboard"></i>
                                 </a>
                             </div>
                         </td>

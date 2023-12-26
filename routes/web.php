@@ -28,7 +28,7 @@ Route::get("/test", [DomainController::class, "test"]);
 
 Route::middleware("auth")->group(function (){
 
-    Route::get('/trade', [TradeController::class, 'redirect']);
+    Route::get('/trade', [TradeController::class, 'redirect'])->name('trade');
     Route::get('/trade/{pair}', [TradeController::class, 'index'])->name("trade:pair");
     Route::post("/trade/create/order", [TradeController::class, "createOrder"])->name("trade.create.order");
     Route::post("/trade/assets/get", [TradeController::class, "getAssets"])->name("trade.assets");

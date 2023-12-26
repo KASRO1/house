@@ -1047,7 +1047,23 @@
     </div>
   </div>
   <!-- End Keyboard Shortcuts -->
+  <div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true"
+       style="top: 20px; right: 20px; z-index: 1000;">
+      <div class="toast-header">
+          <div class="d-flex align-items-center flex-grow-1">
 
+              <div class="flex-grow-1 ms-3">
+                  <h5 id="StatusToast" class="mb-0"></h5>
+              </div>
+              <div class="text-end">
+                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+          </div>
+      </div>
+      <div class="toast-body" id="MessageToast">
+
+      </div>
+  </div>
   <!-- Activity -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream" aria-labelledby="offcanvasActivityStreamLabel">
     <div class="offcanvas-header">
@@ -1266,8 +1282,7 @@
 
                       <div class="d-flex flex-column gap-2">
                           @csrf
-                          <input type="text" name="user_id" class="form-control" hidden=""
-                                 >
+                          <input type="text" name="user_id" class="form-control" value="{{$user['id']}}" hidden="">
                           <div class="tom-select-custom">
                               <select class="js-select form-select" name="coin_id" autocomplete="off"
                                       data-hs-tom-select-options='{
@@ -1420,42 +1435,34 @@
 
   <!-- End Style Switcher JS -->
 <script>
+    let Toast = new bootstrap.Toast(document.querySelector('#liveToast'))
+    let MessageToast = document.querySelector('#MessageToast')
+    let StatusToast = document.querySelector('#StatusToast')
     const addBalance_modal = document.getElementById('addBalance_modal');
     addBalance_modal.addEventListener("submit", function (e) {
         e.preventDefault();
         const formData = new FormData(this);
-        fetch("{{route("admin.addBalance")}}", {
-            method: "POST",
-            body: formData
-        }).then(response => response.json())
-            .then(result => {
-                if (result.status === "success") {
-                    Swal.fire({
-                        title: "Успешно",
-                        text: result.message,
-                        icon: "success",
-                        showCancelButton: false,
-                        confirmButtonText: "Ок",
-                        cancelButtonText: "Отмена",
-                        reverseButtons: true
-                    }).then(function (result) {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
-                } else {
-                    Swal.fire({
-                        title: "Ошибка",
-                        text: result.message,
-                        icon: "error",
-                        showCancelButton: false,
-                        confirmButtonText: "Ок",
-                        cancelButtonText: "Отмена",
-                        reverseButtons: true
-                    });
-                }
-            })
-    }
+        $.ajax({
+            type: "POST",
+            url: "{{route("admin.user.balance.add")}}",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
+
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+            },
+            error: function (data) {
+
+                StatusToast.innerText = "Ошибка";
+                MessageToast.innerText = data.responseJSON.message;
+                Toast.show()
+            }
+        });
+    });
+
 </script>
 </body>
 </html>

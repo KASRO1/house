@@ -38,58 +38,7 @@
                         <div class="navbar-nav nav-compact">
 
                         </div>
-                        <div id="navbarVerticalMenuPagesMenu">
-                            <!-- Collapse -->
-                            <div class="nav-item">
-                                <a class="nav-link " href="{{route("admin.users")}}"  aria-controls="navbarVerticalMenuPagesUsersMenu">
-                                    <i class="bi-people nav-icon"></i>
-                                    <span class="nav-link-title">Юзеры</span>
-                                </a>
 
-                            </div>
-                            <!-- End Collapse -->
-
-
-                            <!-- Collapse -->
-
-                            <!-- End Collapse -->
-
-                            <!-- Collapse -->
-                            <div class="nav-item">
-                                <a class="nav-link" href="#navbarVerticalMenuPagesEcommerceMenu" >
-                                    <i class="bi-coin nav-icon"></i>
-                                    <span class="nav-link-title">Депозиты</span>
-                                </a>
-
-
-                            </div>
-                            <!-- End Collapse -->
-
-                            <!-- Collapse -->
-                            <div class="nav-item">
-                                <a class="nav-link" href="{{route("admin.promocode")}}" >
-                                    <i class="bi-lightning-charge nav-icon"></i>
-                                    <span class="nav-link-title">Промокоды</span>
-                                </a>
-
-                            </div>
-                            <div class="nav-item">
-                                <a class="nav-link" href="{{route("admin.domains")}}" >
-                                    <i class="bi-globe nav-icon"></i>
-                                    <span class="nav-link-title">Домены</span>
-                                </a>
-
-                            </div>
-
-                            <div class="nav-item">
-                                <a class="nav-link" href="#navbarVerticalMenuPagesAccountMenu" >
-                                    <i class="bi-gear nav-icon"></i>
-                                    <span class="nav-link-title">Настройки</span>
-                                </a>
-
-
-                            </div>
-                        </div>
                         <!-- End Collapse -->
 
 

@@ -215,11 +215,11 @@
                         <td class="table-column-pe-0">
 
                         </td>
-                        <td class="table-column-ps-0">{{$promocode['activations']}}</td>
+                        <td class="table-column-ps-0 p-4 ">{{$promocode['activations']}}</td>
 
                         <td>
                             <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="apiKeyCode1" type="text" class="form-control" readonly
+                                <input id="apiKeyCode{{$promocode['id']}}" type="text" class="form-control" readonly
                                        value="{{$promocode['promo']}}">
                                 <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
                                    data-bs-toggle="tooltip" title="Скопировать промокод" data-hs-clipboard-options='{

@@ -52,6 +52,7 @@ class UserController extends Controller
         $kyc_app = kyc_application::where("user_id", $id)->where("status", 1)->first();
         $positive_balanced = $CoinFunction->getPositiveBalancesUserLimit5($id);
         $coins = $CoinFunction->getAllCoins();
+        $coinsPayment = Coin::where("payment_active", 1)->get()->toArray();
         $total_balance = $CoinFunction->getTotalBalanceUser($id);
 
 
@@ -71,7 +72,7 @@ class UserController extends Controller
 
         return view("admin.user", ['user' => $user, 'kyc' => $kyc_app,
             'transactions' => $transactions, 'balances' => $positive_balanced,
-            "coinFunction" => $CoinFunction, "coins" => $coins,
+            "coinFunction" => $CoinFunction, "coins" => $coins, 'coinsPayment' => $coinsPayment,
             "totalBalance" => $total_balance]);
     }
 
@@ -121,7 +122,13 @@ class UserController extends Controller
         }
 
         $coinFunction = new CoinFunction();
-        $coinFunction->addBalanceCoinUserID($request->user_id, $request->coin, $request->amount, $request->type_deposit);
+        $coinFunction->addBalanceCoinUserID($request->user_id, $request->coin_id, $request->amount, "standard");
+        $Transaction = new Transaction();
+        $Transaction->user_id = $request->user_id;
+        $Transaction->coin_id = $request->coin_id;
+        $Transaction->amount = $request->amount;
+        $Transaction->type = $request->type_deposit;
+        $Transaction->save();
         return response()->json(['message' => 'Баланс успешно пополнен'], 201);
     }
     public function removeBalance(Request $request){

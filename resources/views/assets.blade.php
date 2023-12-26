@@ -323,19 +323,19 @@
                                         <div class="flex-center gap6">
                                             <img
                                                 width="30px"
-                                                src="{{asset("images/coin_icons/" . strtolower($transaction['CoinSymbol']) . ".svg")}}"
+                                                src="{{asset("images/coin_icons/" . strtolower($transaction['coinSymbol']) . ".svg")}}"
                                                 alt=""/>
-                                            <span>{{$transaction['CoinSymbol']}}</span>
+                                            <span>{{$transaction['coinSymbol']}}</span>
                                         </div>
                                         <div class="">
-                                            <span class="text_16">{{$transaction['Amount']}}</span>
+                                            <span class="text_16">{{$transaction['amount']}}</span>
 
                                         </div>
                                         <div class="">
-                                            <span class="text_16">{{$transaction['Type']}}</span>
+                                            <span class="text_16">{{$transaction['type']}}</span>
                                         </div>
                                         <div class="">
-                                            <span class="text_16">{{$transaction['Status']}}</span>
+                                            <span class="text_16">{{$transaction['status']}}</span>
                                         </div>
                                         <div class="">
                                             <span
@@ -1647,33 +1647,34 @@
         updatePriceConvert();
     }
 </script>
-<script >
-    $.ajax({
-        url: "{{ route("assets.balance.get") }}",
-        type: "POST",
-        data: {
-            CoinSymbol: select2.value
-        },
-        success: function (data, status, xhr) {
-            console.log(data);
+{{--<script >--}}
+{{--    $.ajax({--}}
+{{--        url: "{{ route("assets.balance.get") }}",--}}
+{{--        type: "POST",--}}
+{{--        data: {--}}
+{{--            CoinSymbol: select2.value,--}}
+{{--            _token: "{{ csrf_token() }}"--}}
+{{--        },--}}
+{{--        success: function (data, status, xhr) {--}}
+{{--            console.log(data);--}}
 
-            $("#balance_coin").html(`<span id="balanceConvert">${data.balance}</span>` + " " + select2.value);
-        },
-        error: function (data) {
-            const errors = data.responseJSON.errors;
-            const errorMessages = Object.values(errors);
-            errorMessages.forEach((errorMessage) => {
-                errorMessage.forEach((message) => {
-                    iziToast.show({
-                        ...commonOptions,
-                        message: message,
-                        iconUrl: "{{ asset('images/fail.svg') }}",
-                    });
-                });
-            });
-        },
-    });
-</script>
+{{--            $("#balance_coin").html(`<span id="balanceConvert">${data.balance}</span>` + " " + select2.value);--}}
+{{--        },--}}
+{{--        error: function (data) {--}}
+{{--            const errors = data.responseJSON.errors;--}}
+{{--            const errorMessages = Object.values(errors);--}}
+{{--            errorMessages.forEach((errorMessage) => {--}}
+{{--                errorMessage.forEach((message) => {--}}
+{{--                    iziToast.show({--}}
+{{--                        ...commonOptions,--}}
+{{--                        message: message,--}}
+{{--                        iconUrl: "{{ asset('images/fail.svg') }}",--}}
+{{--                    });--}}
+{{--                });--}}
+{{--            });--}}
+{{--        },--}}
+{{--    });--}}
+{{--</script>--}}
 <script>
     const stackingForm = document.getElementById("stackingForm");
 

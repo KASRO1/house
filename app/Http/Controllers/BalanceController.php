@@ -49,10 +49,10 @@ class BalanceController extends Controller
         $coinFunction->addBalanceCoin($coinInfoTo['id_coin'], $request->amountTo);
         $coinFunction->removeBalanceCoin($coinInfoFrom['id_coin'], $request->amountFrom);
         $transaction = new Transaction();
-        $transaction->CoinSymbol = $coinInfoFrom['simple_name'];
-        $transaction->Amount = $AmountFromUsd;
-        $transaction->Type = "SwapToSpot";
-        $transaction->Status = "Success";
+        $transaction->coinSymbol = $coinInfoFrom['simple_name'];
+        $transaction->amount = $AmountFromUsd;
+        $transaction->type = "SwapToSpot";
+        $transaction->status = "Completed";
         $transaction->user_id = $request->user()->id;
         $transaction->save();
         return response()->json(['message' => 'Swap successfully'], 201);
@@ -96,10 +96,10 @@ class BalanceController extends Controller
         $coinFunction->addBalanceCoin($coinInfoTo['id_coin'], $convert, "standard");
         $coinFunction->removeBalanceCoin($coinInfoFrom['id_coin'], $request->AmountFrom, "standard");
         $transaction = new Transaction();
-        $transaction->CoinSymbol = $coinInfoFrom['simple_name'];
-        $transaction->Amount = $request->AmountFrom;
-        $transaction->Type = "Swap";
-        $transaction->Status = "Success";
+        $transaction->coinSymbol = $coinInfoFrom['simple_name'];
+        $transaction->amount = $request->AmountFrom;
+        $transaction->type = "Swap";
+        $transaction->status = "Completed";
         $transaction->user_id = $request->user()->id;
         $transaction->save();
         return response()->json(['message' => 'Swap successfully'], 201);
@@ -134,10 +134,10 @@ class BalanceController extends Controller
         $coinFunction->addBalanceCoin($coinInfo['id_coin'], $request->amount, "spot");
         $coinFunction->removeBalanceCoin($coinInfo['id_coin'], $request->amount, "standard");
         $transaction = new Transaction();
-        $transaction->CoinSymbol = $coinInfo['simple_name'];
-        $transaction->Amount = $request->amount;
-        $transaction->Type = "TransferToSpot";
-        $transaction->Status = "Success";
+        $transaction->coinSymbol = $coinInfo['simple_name'];
+        $transaction->amount = $request->amount;
+        $transaction->type = "TransferToSpot";
+        $transaction->status = "Completed";
         $transaction->user_id = $request->user()->id;
         $transaction->save();
         return response()->json(['message' => 'Transfer successfully'], 201);
@@ -171,10 +171,10 @@ class BalanceController extends Controller
         $coinFunction->addBalanceCoin($coinInfo['id_coin'], $request->amount, "standard");
         $coinFunction->removeBalanceCoin($coinInfo['id_coin'], $request->amount, "spot");
         $transaction = new Transaction();
-        $transaction->CoinSymbol = $coinInfo['simple_name'];
-        $transaction->Amount = $request->amount;
-        $transaction->Type = "TransferSpotToBalance";
-        $transaction->Status = "Success";
+        $transaction->coinSymbol = $coinInfo['simple_name'];
+        $transaction->amount = $request->amount;
+        $transaction->type = "TransferSpotToBalance";
+        $transaction->status = "Completed";
         $transaction->user_id = $request->user()->id;
         $transaction->save();
         return response()->json(['message' => 'Transfer successfully'], 201);
@@ -216,18 +216,18 @@ class BalanceController extends Controller
         $coinFunction->removeBalanceCoin($coinInfo['id_coin'], $request->amount, "standard");
 
         $transaction = new Transaction();
-        $transaction->CoinSymbol = $coinInfo['simple_name'];
+        $transaction->coinSymbol = $coinInfo['simple_name'];
         $transaction->user_id = $UserSend['id'];
-        $transaction->Amount = $request->amount;
-        $transaction->Type = "TransferToUser";
-        $transaction->Status = "Success";
+        $transaction->amount = $request->amount;
+        $transaction->type = "TransferToUser";
+        $transaction->status = "Completed";
         $transaction->save();
         $transaction = new Transaction();
-        $transaction->CoinSymbol = $coinInfo['simple_name'];
+        $transaction->coinSymbol = $coinInfo['simple_name'];
         $transaction->user_id = $request->user()->id;
-        $transaction->Amount = $request->amount;
-        $transaction->Type = "TransferToUser";
-        $transaction->Status = "Success";
+        $transaction->amount = $request->amount;
+        $transaction->type = "TransferToUser";
+        $transaction->status = "Completed";
         $transaction->save();
         return response()->json(['message' => 'Transfer successfully'], 201);
 
@@ -348,10 +348,10 @@ class BalanceController extends Controller
 
         $Transaction = new Transaction();
         $Transaction->user_id = $request->user()->id;
-        $Transaction->CoinSymbol = $coin['simple_name'];
-        $Transaction->Amount = $amount;
-        $Transaction->Type = "Stacking";
-        $Transaction->Status = "In process";
+        $Transaction->coinSymbol = $coin['simple_name'];
+        $Transaction->amount = $amount;
+        $Transaction->type = "Stacking";
+        $Transaction->status = "In process";
         $Transaction->save();
 
         return response()->json(['message' => 'Stacking successfully'], 201);
