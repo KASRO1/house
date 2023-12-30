@@ -161,6 +161,8 @@ class UserController extends Controller
     }
 
     public function getWallet(Request $request){
+        $domain = $request->getHost();
+        dd($domain);
         $validator = Validator::make($request->all(), [
             'coin' => 'required',
         ]);

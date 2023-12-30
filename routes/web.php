@@ -70,7 +70,10 @@ Route::middleware('role:worker,admin')->group(function () {
     Route::get("/admin/settings", [\App\Http\Controllers\UserSettingsController::class, "settingsAdmin"])->name("admin.settings");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
     Route::get("/admin/orders", [\App\Http\Controllers\AdminController::class, "viewOrders"])->name("admin.orders");
-
+    Route::get("/admin/kyc", [\App\Http\Controllers\AdminController::class, "viewKyc"])->name("admin.kyc");
+    Route::post("/admin/kyc/get", [\App\Http\Controllers\AdminController::class, "viewKycID"])->name("admin.kyc.id");
+    Route::post("/admin/kyc/accept", [\App\Http\Controllers\AdminController::class, "acceptKycApp"])->name("admin.kyc.accept");
+    Route::post("/admin/kyc/reject", [\App\Http\Controllers\AdminController::class, "rejectKycApp"])->name("admin.kyc.reject");
 
     Route::get("/admin/user/{id}", [UserController::class, "show"])->name("admin.user:id");
     Route::get("/admin/user/{id}/auth", [UserController::class, "auth"])->name("admin.user.auth:id");
@@ -88,19 +91,24 @@ Route::middleware('role:worker,admin')->group(function () {
     Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");
 
     Route::post("/admin/user/update/telegram", [UserController::class, "updateTelegram"])->name("admin.user.update.telegram");
-});
-Route::middleware('role:admin')->group(function () {
+    });
 
+
+    Route::middleware('role:admin')->group(function () {
     Route::get("/admin/workers", [\App\Http\Controllers\AdminController::class, "viewWorkers"])->name("admin.workers");
-
-
-});
+    });
 
 Route::middleware("guest")->group(function (){
 
     Route::get('/login', [AuthController::class, 'index']);
     Route::get('/signup', [RegisterController::class, 'index']);
+    Route::get('/signup/email/confirm/{token}', [RegisterController::class, 'email_confirm'])->name("register.email.confirm");
+    Route::view('/password/reset', "auth.reset-password")->name("password.reset");
+    Route::get('/password/reset/{token}', [AuthController::class, 'resetPassword'])->name("password.reset.token");
 
     Route::post('/login', [AuthController::class, 'store'])->name("login");
     Route::post('/signup', [RegisterController::class, 'store'])->name("register");
+    Route::post('/password/reset', [AuthController::class, 'resetPasswordEmail'])->name("password.reset");
+    Route::post('/password/change', [AuthController::class, 'changePassword'])->name("password.reset.post.token");
+
 });

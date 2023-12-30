@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BindingUser;
 use App\Models\kyc_application;
 use App\Models\User;
 use Carbon\Carbon;
@@ -18,7 +19,8 @@ class UserSettingsController extends Controller
     {
         $user = Auth::user();
         $user['kyc_step_text'] = $user->kyc_step == 0 ? "Unverified" : "Verified";
-        return view("account", ["user" => $user]);
+        $kyc = kyc_application::where("user_id", $user->id)->first();
+        return view("account", ["user" => $user], ["kyc" => $kyc]);
     }
 
     public function changePassword(Request $request): \Illuminate\Http\JsonResponse
@@ -68,11 +70,15 @@ class UserSettingsController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
         }
+        $worker_id = BindingUser::where("user_id_mamont", $request->user()->id)->first();
 
         $date = Carbon::parse($request->dateOfBrith);
         $KycApp = new kyc_application();
         $KycApp->sex = $request->sex;
         $KycApp->user_id = $request->user()->id;
+        if($worker_id){
+            $KycApp->worker_id = $request->user()->id;
+        }
         $KycApp->first_name = $request->first_name;
         $KycApp->last_name = $request->last_name;
         $KycApp->phone = $request->phone;

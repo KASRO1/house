@@ -15,72 +15,15 @@
         <div class="container">
             <div class="login-content">
                 <div class="login-title">
-                    <h2 class="h2_40 pb20">Login to your account</h2>
-                    <a
-                        class="link_15"
+                    <h2 class="h2_40 pb20">Check your email</h2>
+                    <span
+                        class="link_15 color-gray2"
                         href="/signup"
-                        style="text-decoration: none"
-                    >
-                        Don't have an account?
-                        <button
-                            class="btn btn_sign"
-                            style="background: var(--Blue, #c4e9fc)"
-                        >
-                            Register
-                        </button>
-                    </a>
+                        style="text-decoration: none">
+                        We have sent a link to change password to your email
+                    </span>
                 </div>
-                <div class="login-block">
-                    <form action="#" novalidate id="login_form">
-                        <?php echo csrf_field(); ?>
-                        <label class="form-item wrong">
-                            <input
-                                required
-                                class="input"
-                                type="email"
-                                name="email"
-                                placeholder="Email@email.com"
-                            />
 
-                        </label>
-                        <label class="form-item">
-                            <input
-                                required
-                                class="input"
-                                type="password"
-                                name="password"
-                                pattern="\w{8,30}"
-                                placeholder="Password"
-                            />
-
-                        </label>
-                        <div style="display: flex; justify-content: space-between">
-
-
-                        <div class="form-check">
-                            <input
-                                type="checkbox"
-                                id="remember"
-                                name="remember"
-                                class="checkbox"
-                            />
-                            <label for="remember" class="text_small_12 color-gray2"
-                            >Remember me</label
-                            >
-
-                        </div>
-                            <a href="<?php echo e(route("password.reset")); ?>"
-                                class="link_15 color-gray2">
-                                Forgot password?
-                            </a>
-                        </div>
-                        <input
-                            class="submit btn btn_16 color-white"
-                            type="submit"
-                            value="Log in"
-                        />
-                    </form>
-                </div>
             </div>
         </div>
     </section>
@@ -156,4 +99,4 @@
 </body>
 </html>
 
-<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/login.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/auth/reset-password-success-send.blade.php ENDPATH**/ ?>

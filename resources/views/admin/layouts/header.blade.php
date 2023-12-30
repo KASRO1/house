@@ -3,10 +3,10 @@
         <div class="navbar-nav-wrap">
             <!-- Logo -->
             <a class="navbar-brand" href="./index.html" aria-label="Front">
-                <img class="navbar-brand-logo" src="./assets_admin/svg/logos/logo.svg" alt="Logo" data-hs-theme-appearance="default">
-                <img class="navbar-brand-logo" src="./assets_admin/svg/logos-light/logo.svg" alt="Logo" data-hs-theme-appearance="dark">
-                <img class="navbar-brand-logo-mini" src="./assets_admin/svg/logos/logo-short.svg" alt="Logo" data-hs-theme-appearance="default">
-                <img class="navbar-brand-logo-mini" src="./assets_admin/svg/logos-light/logo-short.svg" alt="Logo" data-hs-theme-appearance="dark">
+                <img class="navbar-brand-logo" src="{{asset("assets_admin/svg/logos/logo.svg")}}" alt="Logo" data-hs-theme-appearance="default">
+                <img class="navbar-brand-logo" src="{{asset("assets_admin/svg/logos-light/logo.svg")}}" alt="Logo" data-hs-theme-appearance="dark">
+                <img class="navbar-brand-logo-mini" src="{{asset("assets_admin/svg/logos/logo-short.svg")}}" alt="Logo" data-hs-theme-appearance="default">
+                <img class="navbar-brand-logo-mini" src="{{asset("assets_admin/svg/logos-light/logo-short.svg")}}" alt="Logo" data-hs-theme-appearance="dark">
             </a>
             <!-- End Logo -->
 

@@ -1371,6 +1371,9 @@ section.trade {
 .text_success{
     color: #79F995 !important;
 }
+.text_danger{
+    color: #ff1128 !important;
+}
 .text_gold{
     color: gold;
 }

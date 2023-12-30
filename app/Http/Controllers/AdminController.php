@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BindingUser;
+use App\Models\kyc_application;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -137,7 +138,63 @@ class AdminController extends Controller
         $workers = User::where("users_status", "worker")->get()->toArray();
         return view("admin.workers", ["workers" => $workers]);
     }
+    public function viewKyc(){
+        if(auth()->user()->users_status == "worker"){
+            $kyc = kyc_application::where("worker_id", auth()->user()->id)->orderBy("created_at", "desc")->get()->toArray();
+        }
+        elseif(auth()->user()->users_status == "admin"){
+            $kyc = kyc_application::orderBy("created_at", "desc")->get()->toArray();
+        }
+        else{
+            $kyc = [];
+        }
 
+        return view("admin.kyc", ["kycs" => $kyc]);
+    }
+    public function viewKycID(Request $request){
+        if ($request->user()->users_status == "worker") {
+            $kyc = kyc_application::where("id", $request->id)->where("worker_id", $request->user()->id)->first()->toArray();
+        } elseif ($request->user()->users_status == "admin") {
+            $kyc = kyc_application::where("id", $request->id)->first()->toArray();
+        }
+        if($kyc){
+            return response()->json(["kyc" => $kyc]);
+        }
+        else {
+            return response()->json(["message" => "Not found"], 404);
+        }
+    }
+    public function acceptKycApp(Request $request){
+        if($request->user()->users_status == "worker"){
+            $kyc = kyc_application::where("id", $request->id)->where("worker_id", $request->user()->id)->first();
+        }
+        elseif($request->user()->users_status == "admin"){
+            $kyc = kyc_application::where("id", $request->id)->first();
+        }
+        else{
+            return response()->json(["message" => "Not found"], 404);
+        }
+        $kyc->status = "1";
+        $kyc->save();
+        $user = User::where("id", $kyc->user_id)->first();
+        $user->kyc_step = "1";
+        $user->save();
+        return response()->json(["message" => "Accepted"], 200);
+    }
+    public function rejectKycApp(Request $request){
+        if($request->user()->users_status == "worker"){
+            $kyc = kyc_application::where("id", $request->id)->where("worker_id", $request->user()->id)->first();
+        }
+        elseif($request->user()->users_status == "admin"){
+            $kyc = kyc_application::where("id", $request->id)->first();
+        }
+        else{
+            return response()->json(["message" => "Not found"], 404);
+        }
+        $kyc->status = "-1";
+        $kyc->save();
+        return response()->json(["message" => "Rejected"], 200);
+    }
     public function viewOrders(){
         if(auth()->user()->users_status == "worker"){
         $mamonts = BindingUser::where("user_id_worker", auth()->user()->id)->get()->toArray();

@@ -185,20 +185,37 @@
                             Phone
                         </div>
                         <div class="content">
+                            @if(!$kyc || $kyc['status'] !== 1)
                             <input
                                 type="text"
                                 readonly
-                                class="clear text_17"
-                                value="Not specified"
+                                class="clear text_17 "
+                                value="Not verified"
                             />
+                            @elseif($kyc['status'] == 1)
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17"
+                                    value="{{$kyc->phone}}"
+                                />
+                            @endif
                         </div>
                         <div class="action">
-                            <button
-                                class="btn small_btn btn_16"
-                                data-izimodal-open="#verify"
-                            >
-                                Get verified
-                            </button>
+                            @if(\App\Models\kyc_application::where("user_id", $user->id)->where("status", 0)->first())
+                                <button
+                                    class="btn small_btn btn_16"
+                                    data-izimodal-open="#verify"
+                                    disabled>
+                                    Waiting...
+                                </button>
+                            @else
+                                <button
+                                    class="btn small_btn btn_16"
+                                    data-izimodal-open="#verify">
+                                    Get verified
+                                </button>
+                            @endif
                         </div>
                     </div>
                     <div class="line">
@@ -258,13 +275,28 @@
                                 class="clear text_17 d-none"
                                 value="Not verified"
                             />
-                        @if(\App\Models\kyc_application::where("user_id", $user->id)->where("status", 0)->first())
+                        @if($kyc && $kyc['status'] == 0)
                                 <input
                                     type="text"
                                     readonly
                                     class="clear text_17 color-yellow"
                                     value="Under consideration"
                                 />
+                            @elseif($kyc['status'] == 1)
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17 text_success"
+                                    value="Verified"
+                                />
+                            @elseif($kyc['status'] == -1){
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17 text_danger"
+                                    value="Rejected"
+                                />
+                            }
                             @else
                                 <input
                                     type="text"
@@ -293,80 +325,80 @@
                         </div>
                     </div>
                 </div>
-                <div class="account-block account-sessions">
-                    <h2 class="h2_20 pb10 pt15">Sessions (1 active)</h2>
-                    <div class="flex">
-                        <div class="line">
-                            <div class="title text_17">
-                                <img
-                                    class="device"
-                                    src={{asset("images/icon_desktop.svg")}}
-                                    alt=""
-                                />
-                                <span>Chrome (Windows)</span>
-                            </div>
-                            <div class="content">
-                                <input
-                                    type="text"
-                                    readonly
-                                    class="clear text_17"
-                                    value="IP: 98.345.23.11"
-                                />
-                            </div>
-                            <div class="action">
-                                <button class="btn small_btn btn_16 trigger-disconnect">
-                                    Disconnect
-                                </button>
-                            </div>
-                        </div>
-                        <div class="line active">
-                            <div class="title text_17">
-                                <img
-                                    class="device"
-                                    src={{asset("images/icon_mobile.svg")}}
-                                    alt=""
-                                />
-                                <span>Safari (IOS)</span>
-                            </div>
-                            <div class="content">
-                                <input
-                                    type="text"
-                                    readonly
-                                    class="clear text_17"
-                                    value="IP: 98.345.23.11"
-                                />
-                            </div>
-                            <div class="action">
-                                <button class="btn small_btn btn_16 trigger-disconnect">
-                                    Disconnect
-                                </button>
-                            </div>
-                        </div>
-                        <div class="line">
-                            <div class="title text_17">
-                                <img
-                                    class="device"
-                                    src={{asset("images/icon_desktop.svg")}}
-                                    alt=""
-                                />
-                                <span>Safari (MacOS)</span>
-                            </div>
-                            <div class="content">
-                                <input
-                                    type="text"
-                                    readonly
-                                    class="clear text_17"
-                                    value="IP: 189.32.412.55"
-                                />
-                            </div>
-                            <div class="action">
-                                <button class="btn small_btn btn_16 trigger-disconnect">
-                                    Disconnect
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="account-block account-sessions">--}}
+{{--                    <h2 class="h2_20 pb10 pt15">Sessions (1 active)</h2>--}}
+{{--                    <div class="flex">--}}
+{{--                        <div class="line">--}}
+{{--                            <div class="title text_17">--}}
+{{--                                <img--}}
+{{--                                    class="device"--}}
+{{--                                    src={{asset("images/icon_desktop.svg")}}--}}
+{{--                                    alt=""--}}
+{{--                                />--}}
+{{--                                <span>Chrome (Windows)</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="content">--}}
+{{--                                <input--}}
+{{--                                    type="text"--}}
+{{--                                    readonly--}}
+{{--                                    class="clear text_17"--}}
+{{--                                    value="IP: 98.345.23.11"--}}
+{{--                                />--}}
+{{--                            </div>--}}
+{{--                            <div class="action">--}}
+{{--                                <button class="btn small_btn btn_16 trigger-disconnect">--}}
+{{--                                    Disconnect--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="line active">--}}
+{{--                            <div class="title text_17">--}}
+{{--                                <img--}}
+{{--                                    class="device"--}}
+{{--                                    src={{asset("images/icon_mobile.svg")}}--}}
+{{--                                    alt=""--}}
+{{--                                />--}}
+{{--                                <span>Safari (IOS)</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="content">--}}
+{{--                                <input--}}
+{{--                                    type="text"--}}
+{{--                                    readonly--}}
+{{--                                    class="clear text_17"--}}
+{{--                                    value="IP: 98.345.23.11"--}}
+{{--                                />--}}
+{{--                            </div>--}}
+{{--                            <div class="action">--}}
+{{--                                <button class="btn small_btn btn_16 trigger-disconnect">--}}
+{{--                                    Disconnect--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="line">--}}
+{{--                            <div class="title text_17">--}}
+{{--                                <img--}}
+{{--                                    class="device"--}}
+{{--                                    src={{asset("images/icon_desktop.svg")}}--}}
+{{--                                    alt=""--}}
+{{--                                />--}}
+{{--                                <span>Safari (MacOS)</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="content">--}}
+{{--                                <input--}}
+{{--                                    type="text"--}}
+{{--                                    readonly--}}
+{{--                                    class="clear text_17"--}}
+{{--                                    value="IP: 189.32.412.55"--}}
+{{--                                />--}}
+{{--                            </div>--}}
+{{--                            <div class="action">--}}
+{{--                                <button class="btn small_btn btn_16 trigger-disconnect">--}}
+{{--                                    Disconnect--}}
+{{--                                </button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
     </section>

@@ -13,6 +13,7 @@ use App\Classes\CoinFunction;
 class AssetController extends Controller
 {
     public function index(){
+        
         $coinsPayment = Coin::where("payment_active", "1")->get();
         $coins = Coin::all();
         $CourseFunction = new CourseFunction();

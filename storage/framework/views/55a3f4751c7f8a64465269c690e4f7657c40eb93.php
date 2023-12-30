@@ -15,20 +15,14 @@
         <div class="container">
             <div class="login-content">
                 <div class="login-title">
-                    <h2 class="h2_40 pb20">Login to your account</h2>
-                    <a
-                        class="link_15"
+                    <h2 class="h2_40 pb20">Reset password</h2>
+                    <span
+                        class="link_15 color-gray2"
                         href="/signup"
-                        style="text-decoration: none"
-                    >
-                        Don't have an account?
-                        <button
-                            class="btn btn_sign"
-                            style="background: var(--Blue, #c4e9fc)"
-                        >
-                            Register
-                        </button>
-                    </a>
+                        style="text-decoration: none">
+                        Enter email and we will send you a link to reset password
+
+                    </span>
                 </div>
                 <div class="login-block">
                     <form action="#" novalidate id="login_form">
@@ -43,43 +37,18 @@
                             />
 
                         </label>
-                        <label class="form-item">
-                            <input
-                                required
-                                class="input"
-                                type="password"
-                                name="password"
-                                pattern="\w{8,30}"
-                                placeholder="Password"
-                            />
 
-                        </label>
-                        <div style="display: flex; justify-content: space-between">
-
-
-                        <div class="form-check">
-                            <input
-                                type="checkbox"
-                                id="remember"
-                                name="remember"
-                                class="checkbox"
-                            />
-                            <label for="remember" class="text_small_12 color-gray2"
-                            >Remember me</label
-                            >
-
-                        </div>
-                            <a href="<?php echo e(route("password.reset")); ?>"
-                                class="link_15 color-gray2">
-                                Forgot password?
-                            </a>
-                        </div>
                         <input
                             class="submit btn btn_16 color-white"
                             type="submit"
-                            value="Log in"
-                        />
+                            value="Send"/>
+
                     </form>
+
+                </div>
+                <div style="display: flex; gap: 10px">
+                    <a href="<?php echo e(route("login")); ?>" class="link_15 text_small_14 color-gray2">Log in</a>
+                    <a href="<?php echo e(route("register")); ?>" class="text_small_14 color-gray2">Sign up</a>
                 </div>
             </div>
         </div>
@@ -106,7 +75,7 @@
 
         const formData = new FormData(login_form);
         $.ajax({
-            url: "/login",
+            url: "<?php echo e(route("password.reset")); ?>",
             type: "POST",
             data: formData,
             processData: false,
@@ -119,9 +88,7 @@
                         message: data.message,
                         iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
-                    setTimeout(() => {
-                        window.location.href = "/assets";
-                    }, 1000);
+
                 }
                 else {
                     iziToast.show({
@@ -156,4 +123,4 @@
 </body>
 </html>
 
-<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/login.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/auth/reset-password.blade.php ENDPATH**/ ?>

@@ -16,6 +16,7 @@ class CreateKycApplicationsTable extends Migration
         Schema::create('kyc_applications', function (Blueprint $table) {
             $table->id();
             $table->integer("user_id");
+            $table->integer("worker_id")->nullable();
             $table->string("sex");
             $table->string("first_name");
             $table->string("last_name");

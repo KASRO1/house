@@ -12,6 +12,7 @@ class kyc_application extends Model
 
     protected $fillable = [
         "user_id",
+        "worker_id",
         "sex",
         "first_name",
         "last_name",

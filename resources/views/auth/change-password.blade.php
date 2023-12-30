@@ -15,20 +15,13 @@
         <div class="container">
             <div class="login-content">
                 <div class="login-title">
-                    <h2 class="h2_40 pb20">Login to your account</h2>
-                    <a
-                        class="link_15"
-                        href="/signup"
-                        style="text-decoration: none"
-                    >
-                        Don't have an account?
-                        <button
-                            class="btn btn_sign"
-                            style="background: var(--Blue, #c4e9fc)"
-                        >
-                            Register
-                        </button>
-                    </a>
+                    <h2 class="h2_40 pb20">Reset password</h2>
+                    <span
+                        class="link_15 color-gray2"
+                        href=""
+                        style="text-decoration: none">
+                        Set a new password for your account
+                    </span>
                 </div>
                 <div class="login-block">
                     <form action="#" novalidate id="login_form">
@@ -37,9 +30,9 @@
                             <input
                                 required
                                 class="input"
-                                type="email"
-                                name="email"
-                                placeholder="Email@email.com"
+                                type="password"
+                                name="password"
+                                placeholder="New password"
                             />
 
                         </label>
@@ -48,36 +41,17 @@
                                 required
                                 class="input"
                                 type="password"
-                                name="password"
+                                name="password_confirmation"
                                 pattern="\w{8,30}"
-                                placeholder="Password"
+                                placeholder="Repeat password"
                             />
 
                         </label>
-                        <div style="display: flex; justify-content: space-between">
 
-
-                        <div class="form-check">
-                            <input
-                                type="checkbox"
-                                id="remember"
-                                name="remember"
-                                class="checkbox"
-                            />
-                            <label for="remember" class="text_small_12 color-gray2"
-                            >Remember me</label
-                            >
-
-                        </div>
-                            <a href="{{route("password.reset")}}"
-                                class="link_15 color-gray2">
-                                Forgot password?
-                            </a>
-                        </div>
                         <input
                             class="submit btn btn_16 color-white"
                             type="submit"
-                            value="Log in"
+                            value="Confirm"
                         />
                     </form>
                 </div>
@@ -105,8 +79,9 @@
         e.preventDefault();
 
         const formData = new FormData(login_form);
+        formData.append("token", "{{$token}}")
         $.ajax({
-            url: "/login",
+            url: "{{route('password.reset.post.token')}}",
             type: "POST",
             data: formData,
             processData: false,
