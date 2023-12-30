@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\kyc_application;
 use App\Models\User;
+use Carbon\Carbon;
 use Cassandra\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,7 +69,7 @@ class UserSettingsController extends Controller
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
-
+        $date = Carbon::parse($request->dateOfBrith);
         $KycApp = new kyc_application();
         $KycApp->sex = $request->sex;
         $KycApp->user_id = $request->user()->id;
@@ -79,11 +80,15 @@ class UserSettingsController extends Controller
         $KycApp->city = $request->city;
         $KycApp->address = $request->address;
         $KycApp->zip_code = $request->zip_code;
-        $KycApp->data_of_birth = $request->dateOfBrith;
+        $KycApp->data_of_birth = $date->format("Y-m-d");
 
         $KycApp->save();
 
         return response()->json(['message' => 'Application created successfully'], 201);
 
+    }
+
+    public function settingsAdmin(){
+        return view("admin.settings");
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BindingUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -130,5 +131,12 @@ class AdminController extends Controller
 
         return $currentCount / $lastMonthCount * 100;
     }
+
+    public function viewWorkers(){
+        $workers = User::where("users_status", "worker")->get()->toArray();
+        return view("admin.workers", ["workers" => $workers]);
+    }
+
+
 
 }

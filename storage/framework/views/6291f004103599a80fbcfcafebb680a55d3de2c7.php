@@ -1,13 +1,12 @@
-@include("admin.layouts.header")
-@include("admin.layouts.aside")
-@include("admin.layouts.head")
-@include("admin.layouts.footer")
-@include("layouts.selectCoin")
+<?php echo $__env->make("admin.layouts.header", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.aside", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.head", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @yield("head")
-    <title>Cryptonix | Пользователь {{$user['email']}}</title>
+    <?php echo $__env->yieldContent("head"); ?>
+    <title>Настройки | Cryptonix</title>
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
@@ -16,443 +15,271 @@
   <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js"></script>
 
   <!-- ========== HEADER ========== -->
-
-  @yield("header")
-
+  <?php echo $__env->yieldContent("header"); ?>
   <!-- ========== END HEADER ========== -->
 
   <!-- ========== MAIN CONTENT ========== -->
   <!-- Navbar Vertical -->
 
-  @yield("aside")
+  <?php echo $__env->yieldContent("aside"); ?>
   <main id="content" role="main" class="main">
     <!-- Content -->
     <div class="content container-fluid">
-      <div class="row justify-content-lg-center">
-        <div class="col-lg-10">
-          <!-- Profile Cover -->
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="row align-items-end">
+          <div class="col-sm mb-2 mb-sm-0">
 
-          <!-- End Profile Cover -->
 
-          <!-- Profile Header -->
-          <div class="text-center mb-5">
-            <!-- Avatar -->
-
-            <!-- End Avatar -->
-
-            <h1 class="page-header-title">{{$user['email']}} <i class="bi-patch-check-fill fs-2 {{$user['kyc_step'] == 0 ? "text-secondary" : "text-primary"}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user['kyc_step'] == 0 ? "Пользователь не верифицирован" : "Пользователь верифицирован"}}"></i></h1>
-
-            <!-- List -->
-            <ul class="list-inline list-px-2">
-              <li class="list-inline-item">
-                <i class="bi-building me-1"></i>
-                <span>Htmlstream</span>
-              </li>
-
-              <li class="list-inline-item">
-                <i class="bi-geo-alt me-1"></i>
-                <a href="#">Москва,</a>
-                <a href="#">Россия</a>
-              </li>
-
-              <li class="list-inline-item">
-                <i class="bi-calendar-week me-1"></i>
-                <span>Зарегистрован {{\Carbon\Carbon::parse($user['created_at'])->format("d/m/y")}}</span>
-              </li>
-            </ul>
-            <!-- End List -->
+            <h1 class="page-header-title">Настройки</h1>
           </div>
-          <!-- End Profile Header -->
-
-          <!-- Nav -->
-          <div class="js-nav-scroller hs-nav-scroller-horizontal mb-5">
-            <span class="hs-nav-scroller-arrow-prev" style="display: none;">
-              <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-                <i class="bi-chevron-left"></i>
-              </a>
-            </span>
-
-            <span class="hs-nav-scroller-arrow-next" style="display: none;">
-              <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-                <i class="bi-chevron-right"></i>
-              </a>
-            </span>
-
-            <ul class="nav nav-tabs align-items-center">
-              <li class="nav-item">
-                <a class="nav-link active" href="{{route("admin.user:id", $user['id'])}}">Профиль</a>
-              </li>
-{{--              <li class="nav-item">--}}
-{{--                <a class="nav-link " href="./user-profile-teams.html">Кошельки</a>--}}
-{{--              </li>--}}
-{{--              <li class="nav-item">--}}
-{{--                <a class="nav-link " href="./user-profile-projects.html">Projects <span class="badge bg-soft-dark text-dark rounded-circle ms-1">3</span></a>--}}
-{{--              </li>--}}
-{{--              <li class="nav-item">--}}
-{{--                <a class="nav-link " href="./user-profile-connections.html">Connections</a>--}}
-{{--              </li>--}}
-
-              <li class="nav-item ms-auto">
-                <div class="d-flex gap-2">
-                  <!-- Form Check -->
-                  <div class="form-check form-check-switch">
-                      <a href="{{route("admin.user.auth:id", $user['id'])}}" class="form-check-default btn btn-sm btn-primary ">
-                        <i class="bi-person-plus-fill"></i> Войти под этим аккаунтом
-                      </a>
-                  </div>
-                  <!-- End Form Check -->
+          <!-- End Col -->
 
 
-                  <!-- Dropdown -->
-                  <div class="dropdown nav-scroller-dropdown">
-                    <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi-three-dots-vertical"></i>
-                    </button>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+      <!-- End Page Header -->
 
-                    <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
-                      <span class="dropdown-header">Настройки пользователя</span>
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <div class="navbar-expand-lg navbar-vertical mb-3 mb-lg-5">
+            <!-- Navbar Toggle -->
+            <!-- Navbar Toggle -->
+            <div class="d-grid">
+              <button type="button" class="navbar-toggler btn btn-white mb-3" data-bs-toggle="collapse" data-bs-target="#navbarVerticalNavMenu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbarVerticalNavMenu">
+                <span class="d-flex justify-content-between align-items-center">
+                  <span class="text-dark">Menu</span>
 
-                      <a class="dropdown-item" data-bs-toggle="modal"
-                         data-bs-target="#addBalanceUser">
-                        <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
-                      </a>
-                        <a class="dropdown-item" href="#">
-                        <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
-                      </a>
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-slash-circle dropdown-item-icon"></i>Заблокировать на бирже
-                      </a>
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                      </a>
+                  <span class="navbar-toggler-default">
+                    <i class="bi-list"></i>
+                  </span>
 
-                      <div class="dropdown-divider"></div>
+                  <span class="navbar-toggler-toggled">
+                    <i class="bi-x"></i>
+                  </span>
+                </span>
+              </button>
+            </div>
+            <!-- End Navbar Toggle -->
+            <!-- End Navbar Toggle -->
 
-                        @if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin")
-                            <span class="dropdown-header">Настройки админа</span>
-
-                            @if($user['users_status'] == "worker")
-                                <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
-                                    <i class="bi-flag dropdown-item-icon"></i> Снять админку
-                                </a>
-                            @else
-                                <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
-                                    <i class="bi-flag dropdown-item-icon"></i> Выдать админку
-                                </a>
-                            @endif
-
-                        @endif
-                    </div>
-                  </div>
-                  <!-- End Dropdown -->
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- End Nav -->
-
-          <div class="row">
-            <div class="col-lg-4">
-              <!-- Card -->
-
-              <!-- End Card -->
-{{--        <div class="card card-body mb-3 mb-lg-5">
-                <h5>Complete your profile</h5>
-
-                <!-- Progress -->
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="progress flex-grow-1">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <span class="ms-4">82%</span>
-                </div>
-                <!-- End Progress -->
-              </div>        --}}
-
-              <!-- Sticky Block Start Point -->
-              <div id="accountSidebarNav"></div>
-
-              <!-- Card -->
-              <div class="js-sticky-block card mb-3 mb-lg-5" data-hs-sticky-block-options='{
-                     "parentSelector": "#accountSidebarNav",
+            <!-- Navbar Collapse -->
+            <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
+              <ul id="navbarSettings" class="js-sticky-block js-scrollspy card card-navbar-nav nav nav-tabs nav-lg nav-vertical" data-hs-sticky-block-options='{
+                     "parentSelector": "#navbarVerticalNavMenu",
+                     "targetSelector": "#header",
                      "breakpoint": "lg",
-                     "startPoint": "#accountSidebarNav",
+                     "startPoint": "#navbarVerticalNavMenu",
                      "endPoint": "#stickyBlockEndPoint",
                      "stickyOffsetTop": 20
                    }'>
-                <!-- Header -->
-                <div class="card-header">
-                  <h4 class="card-header-title">Профиль</h4>
-                </div>
-                <!-- End Header -->
 
-                <!-- Body -->
-                <div class="card-body">
-                  <ul class="list-unstyled list-py-2 text-dark mb-0">
-                    <li class="pb-0"><span class="card-subtitle">О пользователе</span></li>
-                    <li><i class="bi-person dropdown-item-icon"></i> {{$kyc['first_name'] ." ". $kyc['last_name']}}</li>
-                    <li><i class="bi-briefcase dropdown-item-icon"></i> No department</li>
-                    <li><i class="bi-currency-dollar dropdown-item-icon"></i> {{$totalBalance}}</li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#telegramSection">
+                    <i class="bi-at nav-icon"></i> Telegram
+                  </a>
+                </li>
 
-                    <li class="pt-4 pb-0"><span class="card-subtitle">Контакты</span></li>
-                    <li><i class="bi-at dropdown-item-icon"></i> {{$user['email']}}</li>
-                    <li><i class="bi-phone dropdown-item-icon"></i> {{$kyc['phone']}}</li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#emailSection">
+                    <i class="bi bi-exclamation-triangle nav-icon"></i> Ошибки
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#preferencesSection">
+                    <i class="bi-gear nav-icon"></i> Настройки
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#twoStepVerificationSection">
+                    <i class="bi-shield nav-icon"></i> 2FA
+                  </a>
+                </li>
 
-                    <li class="pt-4 pb-0"><span class="card-subtitle">Teams</span></li>
-                    <li><i class="bi-people dropdown-item-icon"></i> Member of 7 teams</li>
-                    <li><i class="bi-stickies dropdown-item-icon"></i> Working on 8 projects</li>
-                  </ul>
-                </div>
-                <!-- End Body -->
-              </div>
-              <!-- End Card -->
+              </ul>
             </div>
-
-            <div class="col-lg-8">
-              <div class="d-grid gap-3 gap-lg-5">
-                <!-- Card -->
-                <div class="card">
-                  <!-- Header -->
-                  <div class="card-header card-header-content-between">
-                    <h4 class="card-header-title">Транзакции мамонта</h4>
-
-                    <!-- Dropdown -->
-                    <div class="dropdown">
-
-                      <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="contentActivityStreamDropdown">
-                        <span class="dropdown-header">Settings</span>
-
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-share-fill dropdown-item-icon"></i> Share connections
-                        </a>
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                        </a>
-
-                        <div class="dropdown-divider"></div>
-
-                        <span class="dropdown-header">Feedback</span>
-
-                        <a class="dropdown-item" href="#">
-                          <i class="bi-chat-left-dots dropdown-item-icon"></i> Report
-                        </a>
-                      </div>
-                    </div>
-                    <!-- End Dropdown -->
-                  </div>
-                  <!-- End Header -->
-
-                  <!-- Body -->
-                  <div class="card-body card-body-height" style="height: 30rem;">
-                    <!-- Step -->
-                    <ul class="step step-icon-xs mb-0">
-
-
-                      @foreach($transactions as $transaction)
-                            <li class="step-item">
-                                <div class="step-content-wrapper">
-                                    <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
-
-                                    <div class="step-content">
-                                        <h5 class="step-title">
-                                            <a class="text-dark" >{{$transaction['type']}}</a>
-                                        </h5>
-
-
-                                        <span class="text-muted small text-uppercase">{{$transaction['created_at']}}</span>
-                                    </div>
-                                </div>
-                            </li>
-
-                      @endforeach
-                        @if(count($transactions) === 0)
-                            <h1 style="text-align: center; width: 100%;">
-                                Not found
-                            </h1>
-                        @endif
-
-
-                      <!-- Step Item -->
-
-                      <!-- End Step Item -->
-                    </ul>
-                    <!-- End Step -->
-                  </div>
-                  <!-- End Body -->
-
-                  <!-- End Footer -->
-                </div>
-                <!-- End Card -->
-
-                <div class="row">
-                  <div class="col-sm-6 mb-3 mb-sm-0">
-                    <!-- Card -->
-                    <div class="card h-100">
-                      <!-- Header -->
-                      <div class="card-header">
-                        <h4 class="card-header-title">Балансы монет</h4>
-                      </div>
-                      <!-- End Header -->
-
-                      <!-- Body -->
-                      <div class="card-body">
-                        <ul class="list-unstyled list-py-3 mb-0">
-                          <!-- Item -->
-
-                            @foreach($balances as $balance)
-
-                            @php
-                                $coin_name = $coinFunction->getCoinInfo($balance['coin_id'])['simple_name'];
-                            @endphp
-
-                            <li>
-                            <div class="d-flex align-items-center">
-                              <a class="d-flex align-items-center me-2" >
-                                <div class="flex-shrink-0">
-                                  <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                      <img src="{{asset("/images/coin_icons/" . $coin_name . ".svg")}}">
-                                  </div>
-                                </div>
-                                <div class="flex-grow-1 ms-1">
-                                  <h5 class="text-hover-primary mb-0">{{$coin_name}}</h5>
-
-                                </div>
-                              </a>
-                              <div class="ms-auto">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch d-flex align-items-center">
-                                    <h5 class="align-items-center ">{{$balance['quantity']}}</h5>
-
-                                </div>
-                                <!-- End Form Check -->
-                              </div>
-                            </div>
-                          </li>
-                            @endforeach
-
-                          <!-- End Item -->
-                        </ul>
-                      </div>
-                      <!-- End Body -->
-
-                      <!-- Footer -->
-                      <a class="card-footer text-center" href="user-profile-connections.html">
-                        Посмотреть все <i class="bi-chevron-right"></i>
-                      </a>
-                      <!-- End Footer -->
-                    </div>
-                    <!-- End Card -->
-                  </div>
-
-                  <div class="col-sm-6">
-                    <!-- Card -->
-                    <div class="card h-100">
-                      <!-- Header -->
-                      <div class="card-header">
-                        <h4 class="card-header-title">Сессии</h4>
-                      </div>
-                      <!-- End Header -->
-
-                      <!-- Body -->
-                      <div class="card-body">
-                        <ul class="nav nav-pills card-nav card-nav-vertical nav-pills">
-                          <!-- Item -->
-                          <li>
-                            <a class="nav-link" >
-                              <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                  <i class="bi-people-fill nav-icon text-dark"></i>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">192.01.40.16</span>
-                                  <small class="d-block text-muted">19.10.2023</small>
-                                </div>
-                              </div>
-                            </a>
-                          </li>
-                          <!-- End Item -->
-
-
-                          <!-- End Item -->
-                        </ul>
-                      </div>
-                      <!-- End Body -->
-
-                      <!-- Footer -->
-
-                      <!-- End Footer -->
-                    </div>
-                    <!-- End Card -->
-                  </div>
-                </div>
-                <!-- End Row -->
-
-                <!-- Card -->
-
-
-                <div class="card">
-                  <!-- Header -->
-                  <div class="card-header card-header-content-between">
-                    <h4 class="card-header-title">Кошельки</h4>
-
-
-                  </div>
-                  <!-- End Header -->
-
-                  <!-- Table -->
-                  <div class="table-responsive">
-                    <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
-                      <thead class="thead-light">
-                        <tr>
-                          <th>Адрес</th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        @foreach($wallets as $key => $wallet)
-                            <tr>
-                                <td>
-                                    <div class="d-flex">
-                                        <img class="avatar avatar-xs" src="/images/coin_icons/{{$key}}.svg" alt="Image Description">
-                                        <div class="ms-3">
-                                            <h5 class="mb-0">{{$wallet}}</h5>
-
-                                        </div>
-                                    </div>
-                                </td>
-
-
-                            </tr>
-
-                        @endforeach
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- End Table -->
-
-                  <!-- Footer -->
-
-                </div>
-
-                <!-- End Card -->
-              </div>
-
-              <!-- Sticky Block End Point -->
-              <div id="stickyBlockEndPoint"></div>
-            </div>
+            <!-- End Navbar Collapse -->
           </div>
-          <!-- End Row -->
+          <!-- End Navbar -->
         </div>
-        <!-- End Col -->
+
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title h4">Telegram</h2>
+              </div>
+
+              <!-- Body -->
+              <div id="telegramSection" class="card-body">
+                <!-- Form -->
+                <form id="telegramForm">
+                    <?php echo csrf_field(); ?>
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="telegramUsername" class="col-sm-3 col-form-label form-label">Данные от Telegram <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Для того чтобы тебе приходили уведомления заполни данные от ТГ"></i></label>
+
+                    <div class="col-sm-9">
+                      <div class="input-group input-group-sm-vertical">
+                        <input type="text" class="form-control" name="telegram_username" id="telegramUsername" placeholder="Введи свой @username  телеграм" aria-label="Твой юзернейм в телеграме" value="<?php echo e(auth()->user()->telegram_username); ?>">
+                        <input type="text" class="form-control" name="telegram_chatID"  placeholder="Введи свой chatID от телеграм"  value="<?php echo e(auth()->user()->telegram_chat_id); ?>">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+                  <!-- Form -->
+
+                  <!-- End Form -->
+
+                  <!-- Form -->
+
+                  <!-- End Form -->
+
+
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                  </div>
+                </form>
+                <!-- End Form -->
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div id="emailSection" class="card">
+              <div class="card-header">
+                <h4 class="card-title">Ошибки</h4>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <p>Ошибка при выводе средства</p>
+
+                <!-- Form -->
+                <form>
+                  <!-- Form -->
+                  <div class="row mb-4">
+
+
+                    <div class="col-sm-9">
+                      <textarea type="text" class="form-control" name="error_withdraw" id="error_withdraw" placeholder="Введи текст ошибки которая будет выводится при попытке вывода средств" aria-label=""></textarea>
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                  </div>
+                </form>
+                <!-- End Form -->
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+
+
+            <!-- Card -->
+            <div id="preferencesSection" class="card">
+              <div class="card-header">
+                <h4 class="card-title">Настройки</h4>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <!-- Form -->
+                <form>
+                  <!-- Form -->
+
+                  <!-- End Form -->
+
+                  <!-- Form -->
+
+                  <!-- End Form -->
+
+                  <!-- Form Switch -->
+                  <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">
+                    <span class="col-8 col-sm-9 ms-0">
+                      <span class="d-block text-dark">Оповещения</span>
+                        <span class="d-block fs-5 text-muted">Получать оповещения в телеграм</span>
+                    </span>
+                    <span class="col-4 col-sm-3 text-end">
+                      <input type="checkbox" class="form-check-input" name="notification" id="accounrSettingsPreferencesSwitch1">
+                    </span>
+                  </label>
+                  <!-- End Form Switch -->
+                  <!-- Form Switch -->
+
+
+
+
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                  </div>
+                </form>
+                <!-- End Form -->
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div id="twoStepVerificationSection" class="card">
+              <div class="card-header">
+                <div class="d-flex align-items-center">
+                  <h4 class="mb-0">Двухкратная аунтификация</h4>
+                  <span class="badge bg-soft-primary text-primary ms-2">Включить</span>
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                  <p class="card-text">Ваш аутентификационный код: <strong> 295186224</strong>. Используйте этот код у <a href="https://123123">нашего бота</a> чтобы начать работу с ним.</p>
+
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+
+          </div>
+
+          <!-- Sticky Block End Point -->
+          <div id="stickyBlockEndPoint"></div>
+        </div>
       </div>
       <!-- End Row -->
     </div>
     <!-- End Content -->
+      <div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true"
+           style="top: 20px; right: 20px; z-index: 1000;">
+          <div class="toast-header">
+              <div class="d-flex align-items-center flex-grow-1">
 
+                  <div class="flex-grow-1 ms-3">
+                      <h5 id="StatusToast" class="mb-0"></h5>
+                  </div>
+                  <div class="text-end">
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+              </div>
+          </div>
+          <div class="toast-body" id="MessageToast">
+
+          </div>
+      </div>
     <!-- Footer -->
-
-      @yield("footer")
-
+    <?php echo $__env->yieldContent("footer"); ?>
     <!-- End Footer -->
   </main>
   <!-- ========== END MAIN CONTENT ========== -->
@@ -904,27 +731,11 @@
     </div>
   </div>
   <!-- End Keyboard Shortcuts -->
-  <div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true"
-       style="top: 20px; right: 20px; z-index: 1000;">
-      <div class="toast-header">
-          <div class="d-flex align-items-center flex-grow-1">
 
-              <div class="flex-grow-1 ms-3">
-                  <h5 id="StatusToast" class="mb-0"></h5>
-              </div>
-              <div class="text-end">
-                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-              </div>
-          </div>
-      </div>
-      <div class="toast-body" id="MessageToast">
-
-      </div>
-  </div>
   <!-- Activity -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream" aria-labelledby="offcanvasActivityStreamLabel">
     <div class="offcanvas-header">
-      <h4 id="offcanvasActivityStreamLabel" class="mb-0">Последние действия мамонта</h4>
+      <h4 id="offcanvasActivityStreamLabel" class="mb-0">Activity stream</h4>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -1121,84 +932,59 @@
   </div>
   <!-- End Activity -->
 
-  <!-- Create New API Key Modal -->
-  <div class="modal fade" id="addBalanceUser" tabindex="-1" aria-labelledby="addBalanceUserLabel" role="dialog"
-       aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-              <!-- Header -->
-              <div class="modal-header">
-                  <h4 class="modal-title" id="addBalanceUserLabel">Добавить баланс пользователю</h4>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <!-- End Header -->
-              <form id="addBalance_modal">
-                  <!-- Body -->
-                  <div class="modal-body">
-                      <!-- Form -->
+  <!-- Welcome Message Modal -->
+  <div class="modal fade" id="welcomeMessageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-close">
+          <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi-x-lg"></i>
+          </button>
+        </div>
+        <!-- End Header -->
 
-                      <div class="d-flex flex-column gap-2">
-                          @csrf
-                          <input type="text" name="user_id" class="form-control" value="{{$user['id']}}" hidden="">
-                          <div class="tom-select-custom">
-                              <select class="js-select form-select" name="coin_id" autocomplete="off"
-                                      data-hs-tom-select-options='{
-                                  "placeholder": "Выберите нужную монету...",
-                                  "hideSearch": false
-                                }'>
-                                  @yield("AdminSelectCoin")
-                              </select>
-                          </div>
-                          <div class="tom-select-custom">
-                              <select class="js-select form-select" name="type_deposit" autocomplete="off"
-                                      data-hs-tom-select-options='{
-                                  "placeholder": "Выберите тип транзакции...",
-                                  "hideSearch": false
-                                }'>
-                                  <option value="">Тип транзакции</option>
-                                  <option value="Swap">Swap</option>
-                                  <option value="TransferToUser">TransferToUser</option>
-                                  <option value="Spot">Spot</option>
-                                  <option value="Stacking">Stacking</option>
-                                  <option value="Support">Support</option>
-                                  <option value="Deposit">Deposit</option>
-                              </select>
-                          </div>
-                          <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
+        <!-- Body -->
+        <div class="modal-body p-sm-5">
+          <div class="text-center">
+            <div class="w-75 w-sm-50 mx-auto mb-4">
+              <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="default">
+              <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="dark">
+            </div>
 
-                      </div>
+            <h4 class="h1">Welcome to Front</h4>
 
-
-                      <!-- End Form -->
-                  </div>
-                  <!-- End Body -->
-
-                  <!-- Footer -->
-                  <div class="modal-footer">
-                      <div class="row align-items-sm-center flex-grow-1 mx-n2">
-                          <div class="col-sm mb-2 mb-sm-0">
-
-                          </div>
-                          <!-- End Col -->
-
-                          <div class="col-sm-auto">
-                              <div class="d-flex gap-3">
-                                  <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
-                                      Закрыть
-                                  </button>
-                                  <button type="submit" class="btn btn-primary">Создать</button>
-                              </div>
-                          </div>
-                          <!-- End Col -->
-                      </div>
-                      <!-- End Row -->
-                  </div>
-              </form>
-              <!-- End Footer -->
+            <p>We're happy to see you in our community.</p>
           </div>
+        </div>
+        <!-- End Body -->
+
+        <!-- Footer -->
+        <div class="modal-footer d-block text-center py-sm-5">
+          <small class="text-cap text-muted">Trusted by the world's best teams</small>
+
+          <div class="w-85 mx-auto">
+            <div class="row justify-content-between">
+              <div class="col">
+                <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg" alt="Image Description">
+              </div>
+              <div class="col">
+                <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg" alt="Image Description">
+              </div>
+              <div class="col">
+                <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg" alt="Image Description">
+              </div>
+              <div class="col">
+                <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg" alt="Image Description">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Footer -->
       </div>
+    </div>
   </div>
-  <!-- End Create New API Key Modal -->
+
   <!-- End Welcome Message Modal -->
   <!-- ========== END SECONDARY CONTENTS ========== -->
 
@@ -1211,8 +997,11 @@
   <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js"></script>
   <script src="/assets_admin/vendor/hs-form-search/dist/hs-form-search.min.js"></script>
 
-  <script src="/assets_admin/vendor/hs-nav-scroller/dist/hs-nav-scroller.min.js"></script>
+  <script src="/assets_admin/vendor/hs-file-attach/dist/hs-file-attach.min.js"></script>
   <script src="/assets_admin/vendor/hs-sticky-block/dist/hs-sticky-block.min.js"></script>
+  <script src="/assets_admin/vendor/hs-scrollspy/dist/hs-scrollspy.min.js"></script>
+  <script src="/assets_admin/vendor/imask/dist/imask.min.js"></script>
+  <script src="/assets_admin/vendor/tom-select/dist/js/tom-select.complete.min.js"></script>
 
   <!-- JS Front -->
   <script src="/assets_admin/js/theme.min.js"></script>
@@ -1238,15 +1027,38 @@
         HSBsDropdown.init()
 
 
-        // INITIALIZATION OF NAV SCROLLER
+        // INITIALIZATION OF SELECT
         // =======================================================
-        new HsNavScroller('.js-nav-scroller')
+        HSCore.components.HSTomSelect.init('.js-select')
+
+
+        // INITIALIZATION OF INPUT MASK
+        // =======================================================
+        HSCore.components.HSMask.init('.js-input-mask')
+
+
+        // INITIALIZATION OF FILE ATTACHMENT
+        // =======================================================
+        new HSFileAttach('.js-file-attach')
 
 
         // INITIALIZATION OF STICKY BLOCKS
         // =======================================================
         new HSStickyBlock('.js-sticky-block', {
           targetSelector: document.getElementById('header').classList.contains('navbar-fixed') ? '#header' : null
+        })
+
+
+        // SCROLLSPY
+        // =======================================================
+        new bootstrap.ScrollSpy(document.body, {
+          target: '#navbarSettings',
+          offset: 100
+        })
+
+        new HSScrollspy('#navbarVerticalNavMenu', {
+          breakpoint: 'lg',
+          scrollOffset: -20
         })
       }
     })()
@@ -1289,37 +1101,47 @@
         })
       })()
     </script>
-
-  <!-- End Style Switcher JS -->
-<script>
-    let Toast = new bootstrap.Toast(document.querySelector('#liveToast'))
-    let MessageToast = document.querySelector('#MessageToast')
-    let StatusToast = document.querySelector('#StatusToast')
-    const addBalance_modal = document.getElementById('addBalance_modal');
-    addBalance_modal.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        $.ajax({
-            type: "POST",
-            url: "{{route("admin.user.balance.add")}}",
+    <script>
+        let Toast = new bootstrap.Toast(document.querySelector('#liveToast'))
+        let MessageToast = document.querySelector('#MessageToast')
+        let StatusToast = document.querySelector('#StatusToast')
+        const telegramForm = document.getElementById('telegramForm');
+        telegramForm.addEventListener("submit", (e) =>{
+            e.preventDefault();
+            const formData = new FormData(telegramForm);
+            $.ajax({
+            url: '<?php echo e(route("admin.user.update.telegram")); ?>',
+            type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
-            success: (data) => {
+            success: function (data) {
+                console.log(data);
+                    StatusToast.innerText = "Успешно";
+                    MessageToast.innerText = data.message;
+                    Toast.show()
 
-                StatusToast.innerText = "Успешно";
-                MessageToast.innerText = data.message;
-                Toast.show()
-            },
-            error: function (data) {
+                },
+                error: function (data) {
+                    StatusToast.innerText = "Ошибка";
 
-                StatusToast.innerText = "Ошибка";
-                MessageToast.innerText = data.responseJSON.message;
-                Toast.show()
-            }
-        });
-    });
+                    const errors = data.responseJSON.errors;
 
-</script>
+                    const errorMessages = Object.values(errors);
+                    errorMessages.forEach((errorMessage) => {
+
+                        errorMessage.forEach((message) => {
+
+                            MessageToast.innerText = message;
+                        });
+                        Toast.show()
+                    });
+
+                }
+            });
+        })
+    </script>
+  <!-- End Style Switcher JS -->
 </body>
 </html>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/settings.blade.php ENDPATH**/ ?>

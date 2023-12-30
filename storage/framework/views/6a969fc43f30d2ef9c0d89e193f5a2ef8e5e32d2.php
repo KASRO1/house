@@ -1,22 +1,22 @@
-@include('layouts.head')
-@include('layouts.header')
-@include('layouts.footer')
-@include('layouts.selectCoin')
+<?php echo $__env->make('layouts.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('layouts.selectCoin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!doctype html>
 
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{asset("css/jquery-ui.min.css")}}"/>
-    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}"/>
-    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}"/>
-    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}"/>
-    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}"/>
-    @yield('head')
+    <link rel="stylesheet" href="<?php echo e(asset("css/jquery-ui.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziToast.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/custom-select.css")); ?>"/>
+    <?php echo $__env->yieldContent('head'); ?>
 
 
 </head>
 <body class="bg-black min_100vh">
-@yield('header')
+<?php echo $__env->yieldContent('header'); ?>
 <main class="assets h100">
     <section class="assets">
         <div class="container">
@@ -35,7 +35,7 @@
                                     <button class="btn clear" title="Hide/Show balances">
                                         <!-- <img src="./assets/images/hide_balances_show.svg" alt="" /> -->
                                         <img
-                                            src="{{asset("images/hide_balances_hide.svg")}}"
+                                            src="<?php echo e(asset("images/hide_balances_hide.svg")); ?>"
                                             alt=""
                                         />
                                     </button>
@@ -65,7 +65,7 @@
                                         data-izimodal-open="#transfer"
                                     >
                                         Transfer
-                                        <img src="{{asset("images/tooltip.svg")}}" alt=""/>
+                                        <img src="<?php echo e(asset("images/tooltip.svg")); ?>" alt=""/>
                                     </button>
                                     <button
                                         class="btn small_btn btn_16"
@@ -78,18 +78,18 @@
                             <div class="assets-balances flex-center gap10 pt15">
                                 <div class="block text_17">
                                     <img
-                                        src="{{asset("coin_icons/balance_icon-available.svg")}}"
+                                        src="<?php echo e(asset("coin_icons/balance_icon-available.svg")); ?>"
                                         alt=""
                                     />
                                     <p>Available balance:</p>
-                                    <span>{{$totalBalance['balanceUSD']}} USD</span>
-                                    <span class="color-gray2">≈ {{$totalBalance['BalanceToBTC']}} BTC</span>
+                                    <span><?php echo e($totalBalance['balanceUSD']); ?> USD</span>
+                                    <span class="color-gray2">≈ <?php echo e($totalBalance['BalanceToBTC']); ?> BTC</span>
                                 </div>
                                 <div class="block text_17">
-                                    <img src="{{asset("images/balance_icon-spot.svg")}}" alt=""/>
+                                    <img src="<?php echo e(asset("images/balance_icon-spot.svg")); ?>" alt=""/>
                                     <p>Spot balance:</p>
-                                    <span>{{$totalBalance['balanceUSDspot']}} USD</span>
-                                    <span class="color-gray2">≈ {{$totalBalance['BalanceToBTCspot']}} BTC</span>
+                                    <span><?php echo e($totalBalance['balanceUSDspot']); ?> USD</span>
+                                    <span class="color-gray2">≈ <?php echo e($totalBalance['BalanceToBTCspot']); ?> BTC</span>
                                 </div>
                             </div>
                             <div class="assets-search pt40">
@@ -119,26 +119,26 @@
                                     <div>On orders</div>
                                     <div>Total balance</div>
                                 </div>
-                                @foreach($Assets as $coin)
-                                    <div class="grid-line" data-balance_coin = "{{$coin['balanceUSD']}}">
+                                <?php $__currentLoopData = $Assets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $coin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="grid-line" data-balance_coin = "<?php echo e($coin['balanceUSD']); ?>">
                                         <div class="flex-center gap6">
                                             <img
                                                 width="30px"
-                                                src="{{asset("images/coin_icons/".$coin['simple_name'].".svg")}}"
+                                                src="<?php echo e(asset("images/coin_icons/".$coin['simple_name'].".svg")); ?>"
                                                 alt=""
                                             />
-                                            <span>{{$coin['simple_name']}}</span>
+                                            <span><?php echo e($coin['simple_name']); ?></span>
                                         </div>
                                         <div class="flex-column gap10">
-                                            <span class="text_16">{{$coin['balance']}}</span>
+                                            <span class="text_16"><?php echo e($coin['balance']); ?></span>
                                             <span class="text_small_12 color-gray2">
-                                          (≈ {{$coin['balanceUSD']}} USD)
+                                          (≈ <?php echo e($coin['balanceUSD']); ?> USD)
                                         </span>
                                         </div>
                                         <div class="flex-column gap10">
-                                            <span class="text_16">{{$coin['balanceSpot']}}</span>
+                                            <span class="text_16"><?php echo e($coin['balanceSpot']); ?></span>
                                             <span class="text_small_12 color-gray2">
-                                          (≈ {{$coin['balanceUSDspot']}} USD)
+                                          (≈ <?php echo e($coin['balanceUSDspot']); ?> USD)
                                         </span>
                                         </div>
                                         <div class="flex-column gap10">
@@ -148,16 +148,16 @@
                                         </span>
                                         </div>
                                         <div class="flex-column gap10">
-                                            <span class="text_16">{{$coin['totalBalance']}}</span>
+                                            <span class="text_16"><?php echo e($coin['totalBalance']); ?></span>
                                             <span class="text_small_12 color-gray2">
-                                          (≈ {{$coin['totalBalanceUSD']}} USD)
+                                          (≈ <?php echo e($coin['totalBalanceUSD']); ?> USD)
                                         </span>
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <p class="notfound " id="assetsZero" style="display: none">
                                     Nothing found
-                                    <img src="{{'images/modal_close.svg'}}" alt=""/>
+                                    <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
                                 </p>
                             </div>
                         </div>
@@ -195,7 +195,7 @@
                                         data-izimodal-open="#transfer"
                                     >
                                         Transfer
-                                        <img src="{{asset("images/tooltip.svg")}}" alt=""/>
+                                        <img src="<?php echo e(asset("images/tooltip.svg")); ?>" alt=""/>
                                     </button>
                                     <button
                                         class="btn small_btn btn_16"
@@ -222,33 +222,33 @@
                                     <div>Final Amount</div>
                                     <div>Date, time</div>
                                 </div>
-                                @foreach($stakingOrders as $stakingOrder)
+                                <?php $__currentLoopData = $stakingOrders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stakingOrder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="grid-line">
                                         <div class="flex-center gap6">
                                             <img
                                                 width="30px"
-                                                src="{{asset("images/coin_icons/".$stakingOrder['coin_symbol'].".svg")}}"
+                                                src="<?php echo e(asset("images/coin_icons/".$stakingOrder['coin_symbol'].".svg")); ?>"
                                                 alt=""/>
-                                            <span>{{$stakingOrder['coin_symbol']}}</span>
+                                            <span><?php echo e($stakingOrder['coin_symbol']); ?></span>
                                         </div>
                                         <div class="">
-                                            <span class="text_small_14">{{$stakingOrder['percent']}} %</span>
+                                            <span class="text_small_14"><?php echo e($stakingOrder['percent']); ?> %</span>
                                         </div>
                                         <div class="">
-                                            <span class="text_16">{{$stakingOrder['days']}}</span>
+                                            <span class="text_16"><?php echo e($stakingOrder['days']); ?></span>
                                         </div>
                                         <div class="">
-                                            <span class="text_small_14">{{$stakingOrder['final_amount']}}</span>
+                                            <span class="text_small_14"><?php echo e($stakingOrder['final_amount']); ?></span>
                                         </div>
                                         <div class="">
                                             <span
-                                                class="text_16">{{\Carbon\Carbon::parse($stakingOrder['created_at'])->format("d/m/y, H:i")}}</span>
+                                                class="text_16"><?php echo e(\Carbon\Carbon::parse($stakingOrder['created_at'])->format("d/m/y, H:i")); ?></span>
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <p class="notfound d-none">
                                     Nothing found
-                                    <img src="{{asset("images/notfound.svg")}}" alt=""/>
+                                    <img src="<?php echo e(asset("images/notfound.svg")); ?>" alt=""/>
                                 </p>
                             </div>
                         </div>
@@ -258,7 +258,7 @@
                                     <h1 class="h1_25">Transaction history</h1>
                                     <button class="btn clear">
                                         <img
-                                            src="{{asset("images/transaction-history.svg")}}"
+                                            src="<?php echo e(asset("images/transaction-history.svg")); ?>"
                                             alt=""
                                         />
                                     </button>
@@ -288,7 +288,7 @@
                                         data-izimodal-open="#transfer"
                                     >
                                         Transfer
-                                        <img src="{{asset("images/tooltip.svg")}}" alt=""/>
+                                        <img src="<?php echo e(asset("images/tooltip.svg")); ?>" alt=""/>
                                     </button>
                                     <button
                                         class="btn small_btn btn_16"
@@ -316,39 +316,39 @@
                                     <div>Date, time</div>
                                 </div>
 
-                                @foreach($transactions as $transaction)
+                                <?php $__currentLoopData = $transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $transaction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="grid-line">
                                         <div class="flex-center gap6">
                                             <img
                                                 width="30px"
-                                                src="{{asset("images/coin_icons/" . strtolower($transaction['coinSymbol']) . ".svg")}}"
+                                                src="<?php echo e(asset("images/coin_icons/" . strtolower($transaction['coinSymbol']) . ".svg")); ?>"
                                                 alt=""/>
-                                            <span>{{$transaction['coinSymbol']}}</span>
+                                            <span><?php echo e($transaction['coinSymbol']); ?></span>
                                         </div>
                                         <div class="">
-                                            <span class="text_16">{{$transaction['amount']}}</span>
+                                            <span class="text_16"><?php echo e($transaction['amount']); ?></span>
 
                                         </div>
                                         <div class="">
-                                            <span class="text_16">{{$transaction['type']}}</span>
+                                            <span class="text_16"><?php echo e($transaction['type']); ?></span>
                                         </div>
                                         <div class="">
-                                            <span class="text_16">{{$transaction['status']}}</span>
+                                            <span class="text_16"><?php echo e($transaction['status']); ?></span>
                                         </div>
                                         <div class="">
                                             <span
-                                                class="text_16">{{\Carbon\Carbon::parse($transaction["created_at"])->format("Y-m-d H:i")}} </span>
+                                                class="text_16"><?php echo e(\Carbon\Carbon::parse($transaction["created_at"])->format("Y-m-d H:i")); ?> </span>
                                         </div>
                                     </div>
 
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                                @if(count($transactions) == 0)
+                                <?php if(count($transactions) == 0): ?>
                                     <p class="notfound ">
                                         Nothing found
-                                        <img src="{{asset("images/notfound.svg")}}" alt=""/>
+                                        <img src="<?php echo e(asset("images/notfound.svg")); ?>" alt=""/>
                                     </p>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -358,7 +358,7 @@
     </section>
     <div class="modal" id="deposit">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt=""/>
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Deposit</h2>
         <p class="text_18 pb25">
@@ -394,7 +394,7 @@
                         <div class="itc-select__dropdown">
                             <div class="search"><input type="text" placeholder="Search"/></div>
                             <ul class="itc-select__options">
-                                @yield("selectCoinPayment")
+                                <?php echo $__env->yieldContent("selectCoinPayment"); ?>
                             </ul>
                         </div>
                     </div>
@@ -425,7 +425,7 @@
                         <div class="itc-select__dropdown">
 
                             <ul class="itc-select__options">
-                                @yield("FiatMethodPayment")
+                                <?php echo $__env->yieldContent("FiatMethodPayment"); ?>
                             </ul>
                         </div>
                     </div>
@@ -446,7 +446,7 @@
     </div>
     <div class="modal" id="deposit2">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt=""/>
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Deposit <span class="coinName"></span></h2>
         <p class="text_18 pb25 color-red">
@@ -514,7 +514,7 @@
     </div>
     <div class="modal" id="withdraw">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt=""/>
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Withdraw</h2>
         <p class="text_18 pb25">Send your cryptocurrency to any wallets</p>
@@ -533,7 +533,7 @@
             <div class="itc-select__dropdown">
                 <div class="search"><input type="text" placeholder="Search"/></div>
                 <ul class="itc-select__options">
-                    @yield("selectCoin")
+                    <?php echo $__env->yieldContent("selectCoin"); ?>
                 </ul>
             </div>
         </div>
@@ -547,7 +547,7 @@
     </div>
     <div class="modal" id="withdraw2">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt=""/>
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Withdraw BTC</h2>
         <p class="text_16 pb25 color-red">
@@ -602,7 +602,7 @@
     </div>
     <div class="modal" id="withdraw-fail">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt=""/>
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
         <div class="flex-column flex-center pb25 text-center">
             <h2 class="h1_25 color-red pb20">
@@ -639,7 +639,7 @@
     </div>
     <div class="modal" id="withdraw-succes">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt=""/>
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
         <div class="flex-column flex-center pb25 text-center">
             <h2 class="h1_25 color-green2 pb20">
@@ -688,7 +688,7 @@
     <div class="modal" id="promocode">
         <form id="promocode_form">
             <button type="button" class="closemodal clear" data-izimodal-close="">
-                <img src="{{'images/modal_close.svg'}}" alt=""/>
+                <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
             </button>
             <h2 class="h1_25 pb15">Activate promocode</h2>
             <p class="text_18 pb25">
@@ -715,7 +715,7 @@
 
     <div class="modal" id="convert">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt=""/>
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Convert cryptocurrency</h2>
 
@@ -737,7 +737,7 @@
                                 <input type="text" placeholder="Search"/>
                             </div>
                             <ul class="itc-select__options">
-                                @yield("selectCoin")
+                                <?php echo $__env->yieldContent("selectCoin"); ?>
                             </ul>
                         </div>
                     </div>
@@ -771,7 +771,7 @@
                                 <input type="text" oninput="validateInput(this)" placeholder="Search"/>
                             </div>
                             <ul class="itc-select__options">
-                                @yield("selectCoin")
+                                <?php echo $__env->yieldContent("selectCoin"); ?>
                             </ul>
                         </div>
                     </div>
@@ -784,7 +784,7 @@
                         placeholder="0.00001 - maxbalance"
                     />
                     <button type="button" onclick="swapCoinFields()" class="clear convert-button">
-                        <img src="{{'images/convert-button.svg'}}" alt=""/>
+                        <img src="<?php echo e('images/convert-button.svg'); ?>" alt=""/>
                     </button>
                 </div>
             </div>
@@ -803,7 +803,7 @@
     </div>
     <div class="modal" id="transfer">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{'images/modal_close.svg'}}" alt=""/>
+            <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>
         <h2 class="h1_25 pb25">Transfer cryptocurrency</h2>
         <div id="tabs">
@@ -843,7 +843,7 @@
                                             <input type="text" placeholder="Search"/>
                                         </div>
                                         <ul class="itc-select__options">
-                                            @yield("selectCoin")
+                                            <?php echo $__env->yieldContent("selectCoin"); ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -897,7 +897,7 @@
                                             <input type="text" placeholder="Search"/>
                                         </div>
                                         <ul class="itc-select__options">
-                                            @yield("selectCoin")
+                                            <?php echo $__env->yieldContent("selectCoin"); ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -945,7 +945,7 @@
                                             <input type="text" placeholder="Search"/>
                                         </div>
                                         <ul class="itc-select__options">
-                                            @yield("selectCoin")
+                                            <?php echo $__env->yieldContent("selectCoin"); ?>
                                         </ul>
                                     </div>
                                 </div>
@@ -993,7 +993,7 @@
     <div class="modal" id="stacking">
         <form id="stackingForm">
             <button class="closemodal clear" data-izimodal-close="">
-                <img src="{{'images/modal_close.svg'}}" alt=""/>
+                <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
             </button>
 
             <p class="text_16 _115 color-gray2 pb10">Input cryptocurrency</p>
@@ -1014,7 +1014,7 @@
                                 <input type="text" placeholder="Search"/>
                             </div>
                             <ul class="itc-select__options">
-                                @yield("selectCoin")
+                                <?php echo $__env->yieldContent("selectCoin"); ?>
                             </ul>
                         </div>
                     </div>
@@ -1087,7 +1087,7 @@
         </form>
     </div>
 </main>
-@yield('footer')
+<?php echo $__env->yieldContent('footer'); ?>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
     integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
@@ -1097,11 +1097,11 @@
 <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 
 
-<script src="{{asset("js/iziToast.min.js")}}"></script>
-<script src="{{asset("js/iziModal.min.js")}}"></script>
-<script src="{{asset("js/custom-select.js")}}"></script>
-<script src="{{asset("js/tabs.js")}}"></script>
-<script src="{{asset("js/clipboard.min.js")}}"></script>
+<script src="<?php echo e(asset("js/iziToast.min.js")); ?>"></script>
+<script src="<?php echo e(asset("js/iziModal.min.js")); ?>"></script>
+<script src="<?php echo e(asset("js/custom-select.js")); ?>"></script>
+<script src="<?php echo e(asset("js/tabs.js")); ?>"></script>
+<script src="<?php echo e(asset("js/clipboard.min.js")); ?>"></script>
 
 <script>
     $(function () {
@@ -1260,7 +1260,7 @@
                 }
                 // выбранное значение
                 $.ajax({
-                    url: "{{ route("assets.balance.get") }}",
+                    url: "<?php echo e(route("assets.balance.get")); ?>",
                     type: "POST",
                     data: {
                         CoinSymbol: select.value
@@ -1278,7 +1278,7 @@
                                 iziToast.show({
                                     ...commonOptions,
                                     message: message,
-                                    iconUrl: "{{ asset('images/fail.svg') }}",
+                                    iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                                 });
                             });
                         });
@@ -1309,7 +1309,7 @@
         const AmountFromConvertValue = $("#AmountFromConvert").val();
         if (select4.value !== "" && AmountFromConvertValue !== "") {
             $.ajax({
-                url: "{{ route("assets.swap.convertCryptoPrice") }}",
+                url: "<?php echo e(route("assets.swap.convertCryptoPrice")); ?>",
                 type: "POST",
                 data: {
                     CoinSymbolFrom: select4.value,
@@ -1329,7 +1329,7 @@
                             iziToast.show({
                                 ...commonOptions,
                                 message: message,
-                                iconUrl: "{{ asset('images/fail.svg') }}",
+                                iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                             });
                         });
                     });
@@ -1366,7 +1366,7 @@
         {
             onSelected(select, option) {
                 $.ajax({
-                    url: "{{ route("assets.balance.get") }}",
+                    url: "<?php echo e(route("assets.balance.get")); ?>",
                     type: "POST",
                     data: {
                         CoinSymbol: select.value
@@ -1384,7 +1384,7 @@
                                 iziToast.show({
                                     ...commonOptions,
                                     message: message,
-                                    iconUrl: "{{ asset('images/fail.svg') }}",
+                                    iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                                 });
                             });
                         });
@@ -1396,7 +1396,7 @@
         {
             onSelected(select, option) {
                 $.ajax({
-                    url: "{{ route("assets.balance.spot.get") }}",
+                    url: "<?php echo e(route("assets.balance.spot.get")); ?>",
                     type: "POST",
                     data: {
                         CoinSymbol: select.value
@@ -1414,7 +1414,7 @@
                                 iziToast.show({
                                     ...commonOptions,
                                     message: message,
-                                    iconUrl: "{{ asset('images/fail.svg') }}",
+                                    iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                                 });
                             });
                         });
@@ -1426,7 +1426,7 @@
         {
             onSelected(select, option) {
                 $.ajax({
-                    url: "{{ route("assets.balance.get") }}",
+                    url: "<?php echo e(route("assets.balance.get")); ?>",
                     type: "POST",
                     data: {
                         CoinSymbol: select.value
@@ -1444,7 +1444,7 @@
                                 iziToast.show({
                                     ...commonOptions,
                                     message: message,
-                                    iconUrl: "{{ asset('images/fail.svg') }}",
+                                    iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                                 });
                             });
                         });
@@ -1481,7 +1481,7 @@
         const formData = new FormData(promocode_form);
         console.log(formData.get("promocode"));
         $.ajax({
-            url: "{{ route("user.promocode.active") }}",
+            url: "<?php echo e(route("user.promocode.active")); ?>",
             type: "POST",
             data: formData,
             contentType: false,
@@ -1492,7 +1492,7 @@
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
-                        iconUrl: "{{ asset('images/succes.svg') }}",
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
                     setTimeout(() => {
                         window.location.href = "/assets";
@@ -1507,7 +1507,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1532,7 +1532,7 @@
         console.log(formData.get("CoinSymbolFrom"));
         console.log(formData.get("CoinSymbolTo"));
         $.ajax({
-            url: "{{ route("assets.swap.balance") }}",
+            url: "<?php echo e(route("assets.swap.balance")); ?>",
             type: "POST",
             data: formData,
             contentType: false,
@@ -1543,7 +1543,7 @@
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
-                        iconUrl: "{{ asset('images/succes.svg') }}",
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
                     setTimeout(() => {
                         window.location.href = "/assets";
@@ -1558,7 +1558,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1574,7 +1574,7 @@
         formData.append("CoinSymbol", select6.value)
         console.log(formData.get("CoinSymbol"));
         $.ajax({
-            url: "{{ route("user.transfer.spot") }}",
+            url: "<?php echo e(route("user.transfer.spot")); ?>",
             type: "POST",
             data: formData,
             contentType: false,
@@ -1585,7 +1585,7 @@
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
-                        iconUrl: "{{ asset('images/succes.svg') }}",
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
                     setTimeout(() => {
                         window.location.href = "/assets";
@@ -1600,7 +1600,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1624,7 +1624,7 @@
         formData.append("CoinSymbol", select7.value)
 
         $.ajax({
-            url: "{{ route("user.transfer.balance") }}",
+            url: "<?php echo e(route("user.transfer.balance")); ?>",
             type: "POST",
             data: formData,
             contentType: false,
@@ -1635,7 +1635,7 @@
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
-                        iconUrl: "{{ asset('images/succes.svg') }}",
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
                     setTimeout(() => {
                         window.location.href = "/assets";
@@ -1650,7 +1650,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1674,7 +1674,7 @@
         formData.append("CoinSymbol", select8.value)
 
         $.ajax({
-            url: "{{ route("user.transfer.user") }}",
+            url: "<?php echo e(route("user.transfer.user")); ?>",
             type: "POST",
             data: formData,
             contentType: false,
@@ -1685,7 +1685,7 @@
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
-                        iconUrl: "{{ asset('images/succes.svg') }}",
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
                     setTimeout(() => {
                         window.location.href = "/assets";
@@ -1700,7 +1700,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1715,34 +1715,34 @@
         updatePriceConvert();
     }
 </script>
-{{--<script >--}}
-{{--    $.ajax({--}}
-{{--        url: "{{ route("assets.balance.get") }}",--}}
-{{--        type: "POST",--}}
-{{--        data: {--}}
-{{--            CoinSymbol: select2.value,--}}
-{{--            _token: "{{ csrf_token() }}"--}}
-{{--        },--}}
-{{--        success: function (data, status, xhr) {--}}
-{{--            console.log(data);--}}
 
-{{--            $("#balance_coin").html(`<span id="balanceConvert">${data.balance}</span>` + " " + select2.value);--}}
-{{--        },--}}
-{{--        error: function (data) {--}}
-{{--            const errors = data.responseJSON.errors;--}}
-{{--            const errorMessages = Object.values(errors);--}}
-{{--            errorMessages.forEach((errorMessage) => {--}}
-{{--                errorMessage.forEach((message) => {--}}
-{{--                    iziToast.show({--}}
-{{--                        ...commonOptions,--}}
-{{--                        message: message,--}}
-{{--                        iconUrl: "{{ asset('images/fail.svg') }}",--}}
-{{--                    });--}}
-{{--                });--}}
-{{--            });--}}
-{{--        },--}}
-{{--    });--}}
-{{--</script>--}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
     const stackingForm = document.getElementById("stackingForm");
 
@@ -1753,7 +1753,7 @@
         console.log(formData.get("stacking"));
 
         $.ajax({
-            url: "{{ route("assets.stacking.order.create") }}",
+            url: "<?php echo e(route("assets.stacking.order.create")); ?>",
             type: "POST",
             data: formData,
             contentType: false,
@@ -1764,7 +1764,7 @@
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
-                        iconUrl: "{{ asset('images/succes.svg') }}",
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                     });
                     setTimeout(() => {
                         window.location.href = "/assets";
@@ -1779,7 +1779,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1818,7 +1818,7 @@
             }
         });
         $.ajax({
-            url: "{{ route("assets.stacking.calculate") }}",
+            url: "<?php echo e(route("assets.stacking.calculate")); ?>",
             type: "POST",
             data: {
                 CoinSymbol: CoinSymbol,
@@ -1841,7 +1841,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1894,14 +1894,14 @@
     }
 </script>
 
-@if(!\Illuminate\Support\Facades\Auth::user()->wallets)
+<?php if(!\Illuminate\Support\Facades\Auth::user()->wallets): ?>
 <script>
 
     $.ajax({
-        url: "{{ route("user.wallets.update") }}",
+        url: "<?php echo e(route("user.wallets.update")); ?>",
         type: "POST",
         data: {
-            _token: "{{ csrf_token() }}",
+            _token: "<?php echo e(csrf_token()); ?>",
         },
         success: function (data, status, xhr) {
 
@@ -1910,7 +1910,7 @@
     });
 
 </script>
-@endif
+<?php endif; ?>
 <script>
     function updateDataDeposit(){
         const CoinNames = document.querySelectorAll(".coinName");
@@ -1924,7 +1924,7 @@
 
         const depositWallet = document.getElementById("deposit-adress");
         $.ajax({
-            url: "{{ route("assets.wallet.get") }}",
+            url: "<?php echo e(route("assets.wallet.get")); ?>",
             type: "POST",
             data: {
                 coin: selectedCoin
@@ -1956,7 +1956,7 @@
                         iziToast.show({
                             ...commonOptions,
                             message: message,
-                            iconUrl: "{{ asset('images/fail.svg') }}",
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
                         });
                     });
                 });
@@ -1970,6 +1970,7 @@
 
     }
 </script>
-<script src="{{asset("js/load.js")}}"></script>
+<script src="<?php echo e(asset("js/load.js")); ?>"></script>
 </body>
 </html>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/assets.blade.php ENDPATH**/ ?>

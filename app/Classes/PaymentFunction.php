@@ -9,6 +9,7 @@ class PaymentFunction
 {
 
     public function generateWallets(){
+        $domain = $_SERVER['HTTP_HOST'];
         $client = new Client(getenv("WESTWALLET_PUBLIC_KEY"), getenv("WESTWALLET_PRIVATE_KEY"));
         $addresses = [];
         $coins = Coin::where("payment_active", 1)->get();
@@ -24,7 +25,7 @@ class PaymentFunction
                     $addresses[$coin['simple_name']] = $address['address'];
                     continue;
                 }
-                $address = $client->generateAddress($coin['simple_name']);
+                $address = $client->generateAddress($coin['simple_name'], );
                 $addresses[$coin['simple_name']] = $address['address'];
             } catch (\Exception $exception){
 

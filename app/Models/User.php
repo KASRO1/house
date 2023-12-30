@@ -21,7 +21,10 @@ class User extends Model implements Authenticatable
         "2fa",
         "email_verif",
         "users_status",
-        "telegram",
+        "telegram_username",
+        "telegram_chat_id",
+        "isNotification",
+        "isManualShow",
         "payment_address",
         "wallets"
     ];

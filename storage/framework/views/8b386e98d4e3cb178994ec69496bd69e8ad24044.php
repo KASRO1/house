@@ -1,13 +1,13 @@
-@include("admin.layouts.header")
-@include("admin.layouts.aside")
-@include("admin.layouts.head")
-@include("admin.layouts.footer")
-@include("layouts.selectCoin")
+<?php echo $__env->make("admin.layouts.header", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.aside", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.head", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("admin.layouts.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("layouts.selectCoin", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @yield("head")
-    <title>Cryptonix | Пользователь {{$user['email']}}</title>
+    <?php echo $__env->yieldContent("head"); ?>
+    <title>Cryptonix | Пользователь <?php echo e($user['email']); ?></title>
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
@@ -17,14 +17,14 @@
 
   <!-- ========== HEADER ========== -->
 
-  @yield("header")
+  <?php echo $__env->yieldContent("header"); ?>
 
   <!-- ========== END HEADER ========== -->
 
   <!-- ========== MAIN CONTENT ========== -->
   <!-- Navbar Vertical -->
 
-  @yield("aside")
+  <?php echo $__env->yieldContent("aside"); ?>
   <main id="content" role="main" class="main">
     <!-- Content -->
     <div class="content container-fluid">
@@ -40,7 +40,7 @@
 
             <!-- End Avatar -->
 
-            <h1 class="page-header-title">{{$user['email']}} <i class="bi-patch-check-fill fs-2 {{$user['kyc_step'] == 0 ? "text-secondary" : "text-primary"}}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{$user['kyc_step'] == 0 ? "Пользователь не верифицирован" : "Пользователь верифицирован"}}"></i></h1>
+            <h1 class="page-header-title"><?php echo e($user['email']); ?> <i class="bi-patch-check-fill fs-2 <?php echo e($user['kyc_step'] == 0 ? "text-secondary" : "text-primary"); ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo e($user['kyc_step'] == 0 ? "Пользователь не верифицирован" : "Пользователь верифицирован"); ?>"></i></h1>
 
             <!-- List -->
             <ul class="list-inline list-px-2">
@@ -57,7 +57,7 @@
 
               <li class="list-inline-item">
                 <i class="bi-calendar-week me-1"></i>
-                <span>Зарегистрован {{\Carbon\Carbon::parse($user['created_at'])->format("d/m/y")}}</span>
+                <span>Зарегистрован <?php echo e(\Carbon\Carbon::parse($user['created_at'])->format("d/m/y")); ?></span>
               </li>
             </ul>
             <!-- End List -->
@@ -80,23 +80,23 @@
 
             <ul class="nav nav-tabs align-items-center">
               <li class="nav-item">
-                <a class="nav-link active" href="{{route("admin.user:id", $user['id'])}}">Профиль</a>
+                <a class="nav-link active" href="<?php echo e(route("admin.user:id", $user['id'])); ?>">Профиль</a>
               </li>
-{{--              <li class="nav-item">--}}
-{{--                <a class="nav-link " href="./user-profile-teams.html">Кошельки</a>--}}
-{{--              </li>--}}
-{{--              <li class="nav-item">--}}
-{{--                <a class="nav-link " href="./user-profile-projects.html">Projects <span class="badge bg-soft-dark text-dark rounded-circle ms-1">3</span></a>--}}
-{{--              </li>--}}
-{{--              <li class="nav-item">--}}
-{{--                <a class="nav-link " href="./user-profile-connections.html">Connections</a>--}}
-{{--              </li>--}}
+
+
+
+
+
+
+
+
+
 
               <li class="nav-item ms-auto">
                 <div class="d-flex gap-2">
                   <!-- Form Check -->
                   <div class="form-check form-check-switch">
-                      <a href="{{route("admin.user.auth:id", $user['id'])}}" class="form-check-default btn btn-sm btn-primary ">
+                      <a href="<?php echo e(route("admin.user.auth:id", $user['id'])); ?>" class="form-check-default btn btn-sm btn-primary ">
                         <i class="bi-person-plus-fill"></i> Войти под этим аккаунтом
                       </a>
                   </div>
@@ -128,20 +128,20 @@
 
                       <div class="dropdown-divider"></div>
 
-                        @if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin")
+                        <?php if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin"): ?>
                             <span class="dropdown-header">Настройки админа</span>
 
-                            @if($user['users_status'] == "worker")
-                                <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
+                            <?php if($user['users_status'] == "worker"): ?>
+                                <a class="dropdown-item" href="<?php echo e(route("admin.user.change.status:id", $user['id'])); ?>">
                                     <i class="bi-flag dropdown-item-icon"></i> Снять админку
                                 </a>
-                            @else
-                                <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
+                            <?php else: ?>
+                                <a class="dropdown-item" href="<?php echo e(route("admin.user.change.status:id", $user['id'])); ?>">
                                     <i class="bi-flag dropdown-item-icon"></i> Выдать админку
                                 </a>
-                            @endif
+                            <?php endif; ?>
 
-                        @endif
+                        <?php endif; ?>
                     </div>
                   </div>
                   <!-- End Dropdown -->
@@ -156,18 +156,7 @@
               <!-- Card -->
 
               <!-- End Card -->
-{{--        <div class="card card-body mb-3 mb-lg-5">
-                <h5>Complete your profile</h5>
 
-                <!-- Progress -->
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="progress flex-grow-1">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <span class="ms-4">82%</span>
-                </div>
-                <!-- End Progress -->
-              </div>        --}}
 
               <!-- Sticky Block Start Point -->
               <div id="accountSidebarNav"></div>
@@ -190,13 +179,13 @@
                 <div class="card-body">
                   <ul class="list-unstyled list-py-2 text-dark mb-0">
                     <li class="pb-0"><span class="card-subtitle">О пользователе</span></li>
-                    <li><i class="bi-person dropdown-item-icon"></i> {{$kyc['first_name'] ." ". $kyc['last_name']}}</li>
+                    <li><i class="bi-person dropdown-item-icon"></i> <?php echo e($kyc['first_name'] ." ". $kyc['last_name']); ?></li>
                     <li><i class="bi-briefcase dropdown-item-icon"></i> No department</li>
-                    <li><i class="bi-currency-dollar dropdown-item-icon"></i> {{$totalBalance}}</li>
+                    <li><i class="bi-currency-dollar dropdown-item-icon"></i> <?php echo e($totalBalance); ?></li>
 
                     <li class="pt-4 pb-0"><span class="card-subtitle">Контакты</span></li>
-                    <li><i class="bi-at dropdown-item-icon"></i> {{$user['email']}}</li>
-                    <li><i class="bi-phone dropdown-item-icon"></i> {{$kyc['phone']}}</li>
+                    <li><i class="bi-at dropdown-item-icon"></i> <?php echo e($user['email']); ?></li>
+                    <li><i class="bi-phone dropdown-item-icon"></i> <?php echo e($kyc['phone']); ?></li>
 
                     <li class="pt-4 pb-0"><span class="card-subtitle">Teams</span></li>
                     <li><i class="bi-people dropdown-item-icon"></i> Member of 7 teams</li>
@@ -248,28 +237,28 @@
                     <ul class="step step-icon-xs mb-0">
 
 
-                      @foreach($transactions as $transaction)
+                      <?php $__currentLoopData = $transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $transaction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="step-item">
                                 <div class="step-content-wrapper">
                                     <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
 
                                     <div class="step-content">
                                         <h5 class="step-title">
-                                            <a class="text-dark" >{{$transaction['type']}}</a>
+                                            <a class="text-dark" ><?php echo e($transaction['type']); ?></a>
                                         </h5>
 
 
-                                        <span class="text-muted small text-uppercase">{{$transaction['created_at']}}</span>
+                                        <span class="text-muted small text-uppercase"><?php echo e($transaction['created_at']); ?></span>
                                     </div>
                                 </div>
                             </li>
 
-                      @endforeach
-                        @if(count($transactions) === 0)
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php if(count($transactions) === 0): ?>
                             <h1 style="text-align: center; width: 100%;">
                                 Not found
                             </h1>
-                        @endif
+                        <?php endif; ?>
 
 
                       <!-- Step Item -->
@@ -299,36 +288,36 @@
                         <ul class="list-unstyled list-py-3 mb-0">
                           <!-- Item -->
 
-                            @foreach($balances as $balance)
+                            <?php $__currentLoopData = $balances; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $balance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                            @php
+                            <?php
                                 $coin_name = $coinFunction->getCoinInfo($balance['coin_id'])['simple_name'];
-                            @endphp
+                            ?>
 
                             <li>
                             <div class="d-flex align-items-center">
                               <a class="d-flex align-items-center me-2" >
                                 <div class="flex-shrink-0">
                                   <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                      <img src="{{asset("/images/coin_icons/" . $coin_name . ".svg")}}">
+                                      <img src="<?php echo e(asset("/images/coin_icons/" . $coin_name . ".svg")); ?>">
                                   </div>
                                 </div>
                                 <div class="flex-grow-1 ms-1">
-                                  <h5 class="text-hover-primary mb-0">{{$coin_name}}</h5>
+                                  <h5 class="text-hover-primary mb-0"><?php echo e($coin_name); ?></h5>
 
                                 </div>
                               </a>
                               <div class="ms-auto">
                                 <!-- Form Check -->
                                 <div class="form-check form-check-switch d-flex align-items-center">
-                                    <h5 class="align-items-center ">{{$balance['quantity']}}</h5>
+                                    <h5 class="align-items-center "><?php echo e($balance['quantity']); ?></h5>
 
                                 </div>
                                 <!-- End Form Check -->
                               </div>
                             </div>
                           </li>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                           <!-- End Item -->
                         </ul>
@@ -409,13 +398,13 @@
                       </thead>
 
                       <tbody>
-                        @foreach($wallets as $key => $wallet)
+                        <?php $__currentLoopData = $wallets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $wallet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td>
                                     <div class="d-flex">
-                                        <img class="avatar avatar-xs" src="/images/coin_icons/{{$key}}.svg" alt="Image Description">
+                                        <img class="avatar avatar-xs" src="/images/coin_icons/<?php echo e($key); ?>.svg" alt="Image Description">
                                         <div class="ms-3">
-                                            <h5 class="mb-0">{{$wallet}}</h5>
+                                            <h5 class="mb-0"><?php echo e($wallet); ?></h5>
 
                                         </div>
                                     </div>
@@ -424,7 +413,7 @@
 
                             </tr>
 
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </tbody>
                     </table>
                   </div>
@@ -451,7 +440,7 @@
 
     <!-- Footer -->
 
-      @yield("footer")
+      <?php echo $__env->yieldContent("footer"); ?>
 
     <!-- End Footer -->
   </main>
@@ -1138,15 +1127,15 @@
                       <!-- Form -->
 
                       <div class="d-flex flex-column gap-2">
-                          @csrf
-                          <input type="text" name="user_id" class="form-control" value="{{$user['id']}}" hidden="">
+                          <?php echo csrf_field(); ?>
+                          <input type="text" name="user_id" class="form-control" value="<?php echo e($user['id']); ?>" hidden="">
                           <div class="tom-select-custom">
                               <select class="js-select form-select" name="coin_id" autocomplete="off"
                                       data-hs-tom-select-options='{
                                   "placeholder": "Выберите нужную монету...",
                                   "hideSearch": false
                                 }'>
-                                  @yield("AdminSelectCoin")
+                                  <?php echo $__env->yieldContent("AdminSelectCoin"); ?>
                               </select>
                           </div>
                           <div class="tom-select-custom">
@@ -1301,7 +1290,7 @@
         const formData = new FormData(this);
         $.ajax({
             type: "POST",
-            url: "{{route("admin.user.balance.add")}}",
+            url: "<?php echo e(route("admin.user.balance.add")); ?>",
             data: formData,
             processData: false,
             contentType: false,
@@ -1323,3 +1312,4 @@
 </script>
 </body>
 </html>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/user.blade.php ENDPATH**/ ?>

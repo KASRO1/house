@@ -23,7 +23,10 @@ class CreateUsersTable extends Migration
             $table->boolean("2fa")->default(0);
             $table->boolean("email_verif")->default(0);
             $table->string("users_status")->default("user");
-            $table->string("telegram")->nullable();
+            $table->string("telegram_username")->nullable();
+            $table->string("telegram_chat_id")->nullable();
+            $table->boolean("isNotification")->default(0);
+            $table->boolean("isManualShow")->default(0);
             $table->string("payment_address")->nullable();
             $table->json("wallets")->nullable();
             $table->string("balance")->default(0);

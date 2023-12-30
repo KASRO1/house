@@ -65,9 +65,10 @@ Route::middleware("auth")->group(function (){
 
 Route::middleware('role:worker,admin')->group(function () {
     Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
+    Route::get("/admin/settings", [\App\Http\Controllers\UserSettingsController::class, "settingsAdmin"])->name("admin.settings");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
 
-    Route::view("/admin/users", "admin.users")->name("admin.users");
+
     Route::get("/admin/user/{id}", [UserController::class, "show"])->name("admin.user:id");
     Route::get("/admin/user/{id}/auth", [UserController::class, "auth"])->name("admin.user.auth:id");
     Route::get("/admin/user/{id}/change/status", [UserController::class, "changeStatus"])->name("admin.user.change.status:id");
@@ -82,6 +83,14 @@ Route::middleware('role:worker,admin')->group(function () {
     Route::get("/admin/promocode", [PromoСodeController::class, "indexAdmin"])->name("admin.promocode");
     Route::post("/admin/promocode/create", [PromoСodeController::class, "create"])->name("admin.promocode.create");
     Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");
+
+    Route::post("/admin/user/update/telegram", [UserController::class, "updateTelegram"])->name("admin.user.update.telegram");
+});
+Route::middleware('role:admin')->group(function () {
+
+    Route::get("/admin/workers", [\App\Http\Controllers\AdminController::class, "viewWorkers"])->name("admin.workers");
+
+
 });
 
 Route::middleware("guest")->group(function (){
@@ -93,5 +102,4 @@ Route::middleware("guest")->group(function (){
     Route::post('/signup', [RegisterController::class, 'store'])->name("register");
 });
 
-
-
+Route::post('/payment/notificate', [AuthController::class, 'telegram'])->name("login.telegram");

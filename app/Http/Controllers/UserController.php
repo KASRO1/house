@@ -9,6 +9,7 @@ use App\Models\Coin;
 use App\Models\kyc_application;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use App\Classes\WorkerFunction;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,7 @@ class UserController extends Controller
         $coins = $CoinFunction->getAllCoins();
         $coinsPayment = Coin::where("payment_active", 1)->get()->toArray();
         $total_balance = $CoinFunction->getTotalBalanceUser($id);
+        $wallets = json_decode($user['wallets'], true);
 
 
         if(!$kyc_app){
@@ -73,7 +75,7 @@ class UserController extends Controller
         return view("admin.user", ['user' => $user, 'kyc' => $kyc_app,
             'transactions' => $transactions, 'balances' => $positive_balanced,
             "coinFunction" => $CoinFunction, "coins" => $coins, 'coinsPayment' => $coinsPayment,
-            "totalBalance" => $total_balance]);
+            "totalBalance" => $total_balance, "wallets" => $wallets]);
     }
 
     public function auth($id){
@@ -107,7 +109,15 @@ class UserController extends Controller
         $wallets = $paymentFunction->generateWallets();
         $user->wallets = $wallets;
         $user->save();
-        return response()->json(['message' => 'Кошельки успешно добавлены'], 201);
+        $wallets = json_decode($wallets, true);
+        foreach ($wallets as $key => $wallet){
+            $w = new Wallet();
+            $w->user_id = $user->id;
+            $w->currency = $key;
+            $w->wallet =$wallet;
+            $w->save();
+        }
+        return response()->json(['message' => 'success'], 201);
 
     }
     public function addBalance(Request $request){
@@ -169,5 +179,22 @@ class UserController extends Controller
         return response()->json(['wallet' => $wallets[$request->coin], "min_deposit" => $min_deposit], 201);
     }
 
+    public function updateTelegram(Request $request){
+        $validator = Validator::make($request->all(), [
+            'telegram_username' => 'required',
+            "telegram_chatID" => "required|int"
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $user = Auth::user();
+        if(!$user){
+            return response()->json(['errors' => ["email" => ["Пользователь не найден"]]], 401);
+        }
+        $user->telegram_username = $request->telegram_username;
+        $user->telegram_chat_id = $request->telegram_chatID;
+        $user->save();
+        return response()->json(['message' => 'Телеграм успешно обновлен'], 201);
+    }
 
 }

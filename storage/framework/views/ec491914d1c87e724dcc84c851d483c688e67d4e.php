@@ -1,13 +1,13 @@
-@section('aside')
+<?php $__env->startSection('aside'); ?>
     <aside class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered bg-white  ">
         <div class="navbar-vertical-container">
             <div class="navbar-vertical-footer-offset">
 
-                <a class="navbar-brand" href="{{route("admin")}}" aria-label="Front">
-                    <img class="navbar-brand-logo" src="{{asset("assets_admin/svg/logos/logo.svg")}}" alt="Logo" data-hs-theme-appearance="default">
-                    <img class="navbar-brand-logo" src="{{asset("assets_admin/svg/logos-light/logo.svg")}}" alt="Logo" data-hs-theme-appearance="dark">
-                    <img class="navbar-brand-logo-mini" src="{{asset("assets_admin/svg/logos/logo-short.svg")}}" alt="Logo" data-hs-theme-appearance="default">
-                    <img class="navbar-brand-logo-mini" src="{{asset("assets_admin/svg/logos-light/logo-short.svg")}}" alt="Logo" data-hs-theme-appearance="dark">
+                <a class="navbar-brand" href="<?php echo e(route("admin")); ?>" aria-label="Front">
+                    <img class="navbar-brand-logo" src="<?php echo e(asset("assets_admin/svg/logos/logo.svg")); ?>" alt="Logo" data-hs-theme-appearance="default">
+                    <img class="navbar-brand-logo" src="<?php echo e(asset("assets_admin/svg/logos-light/logo.svg")); ?>" alt="Logo" data-hs-theme-appearance="dark">
+                    <img class="navbar-brand-logo-mini" src="<?php echo e(asset("assets_admin/svg/logos/logo-short.svg")); ?>" alt="Logo" data-hs-theme-appearance="default">
+                    <img class="navbar-brand-logo-mini" src="<?php echo e(asset("assets_admin/svg/logos-light/logo-short.svg")); ?>" alt="Logo" data-hs-theme-appearance="dark">
                 </a>
 
                 <button type="button" class="js-navbar-vertical-aside-toggle-invoker navbar-aside-toggler">
@@ -22,7 +22,7 @@
                     <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
                         <!-- Collapse -->
                         <div class="nav-item">
-                            <a class="nav-link " href="{{route("admin")}}" >
+                            <a class="nav-link " href="<?php echo e(route("admin")); ?>" >
                                 <i class="bi-house-door nav-icon"></i>
                                 <span class="nav-link-title">Главная</span>
                             </a>
@@ -42,14 +42,14 @@
                         <!-- End Collapse -->
                         <div id="navbarVerticalMenuPagesMenu">
                             <!-- Collapse -->
-                            @if(auth()->user()->users_status === "admin")
+                            <?php if(auth()->user()->users_status === "admin"): ?>
                                 <div class="nav-item">
-                                    <a class="nav-link " href="{{route("admin.workers")}}"  aria-controls="navbarVerticalMenuPagesUsersMenu">
+                                    <a class="nav-link " href="<?php echo e(route("admin.workers")); ?>"  aria-controls="navbarVerticalMenuPagesUsersMenu">
                                         <i class="bi-people nav-icon"></i>
                                         <span class="nav-link-title">Воркеры</span>
                                     </a>
                                 </div>
-                            @endif
+                            <?php endif; ?>
                             <!-- End Collapse -->
                             <!-- Collapse -->
                             <!-- End Collapse -->
@@ -63,14 +63,14 @@
                             <!-- End Collapse -->
                             <!-- Collapse -->
                             <div class="nav-item">
-                                <a class="nav-link" href="{{route("admin.promocode")}}" >
+                                <a class="nav-link" href="<?php echo e(route("admin.promocode")); ?>" >
                                     <i class="bi-lightning-charge nav-icon"></i>
                                     <span class="nav-link-title">Промокоды</span>
                                 </a>
 
                             </div>
                             <div class="nav-item">
-                                <a class="nav-link" href="{{route("admin.domains")}}" >
+                                <a class="nav-link" href="<?php echo e(route("admin.domains")); ?>" >
                                     <i class="bi-globe nav-icon"></i>
                                     <span class="nav-link-title">Домены</span>
                                 </a>
@@ -78,7 +78,7 @@
                             </div>
 
                             <div class="nav-item">
-                                <a class="nav-link" href="{{route("admin.settings")}}" >
+                                <a class="nav-link" href="<?php echo e(route("admin.settings")); ?>" >
                                     <i class="bi-gear nav-icon"></i>
                                     <span class="nav-link-title">Настройки</span>
                                 </a>
@@ -155,4 +155,5 @@
         </div>
     </aside>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/layouts/aside.blade.php ENDPATH**/ ?>
