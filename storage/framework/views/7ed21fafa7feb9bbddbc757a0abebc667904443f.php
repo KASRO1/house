@@ -25,9 +25,7 @@
                     <div class="tabs assets-menu">
                         <span class="tab btn_16 assets-menu_btn">Overview</span>
                         <span class="tab btn_16 assets-menu_btn">Staking</span>
-                        <span class="tab btn_16 assets-menu_btn"
-                        >Transaction history</span
-                        >
+                        <span class="tab btn_16 assets-menu_btn">Transaction history</span>
                     </div>
                     <div class="tabs-content">
                         <div class="tab-item">
@@ -369,50 +367,82 @@
         <p class="text_16 _115 color-gray2 pb10">
             What cryptocurrency do you want to deposit?
         </p>
-        <div class="itc-select assets pb20" id="select-2">
-            <button
-                type="button"
-                class="itc-select__toggle"
-                name="cryptocurrency"
-                value=""
-                data-select="toggle"
-                data-index="-1"
-            >
-                Chose cryptocurrency
-            </button>
-            <div class="itc-select__dropdown">
-                <div class="search"><input type="text" placeholder="Search"/></div>
-                <ul class="itc-select__options">
-                    <?php echo $__env->yieldContent("selectCoinPayment"); ?>
-                </ul>
-            </div>
-        </div>
-        <div class="itc-select assets pb20" id="select-10">
-            <button
-                type="button"
-                class="itc-select__toggle"
-                name="cryptocurrency"
-                value=""
-                data-select="toggle"
-                data-index="-1"
-            >
-                Chose cryptocurrency
-            </button>
-            <div class="itc-select__dropdown">
-                <div class="search"><input type="text" placeholder="Search"/></div>
-                <ul class="itc-select__options">
-                    <?php echo $__env->yieldContent("selectCoinPayment"); ?>
-                </ul>
-            </div>
-        </div>
-        <button
-            type="submit"
-            class="btn btn_action btn_16 color-dark"
-            onclick="updateDataDeposit()"
-            data-izimodal-open="#deposit2">
+        <div id="tabsDeposit">
+            <ul class="tabs-navDeposit flex gap6 pb20">
+                <li>
+                    <a href="#tab-4" class="text_small_14 assets-menu_btn">Crypto</a>
+                </li>
+                <li>
+                    <a href="#tab-5" class="text_small_14 assets-menu_btn">Card</a>
+                </li>
 
-            Next
-        </button>
+            </ul>
+            <div class="tabs-itemsDeposit">
+
+                <div class="tabs-itemDeposit" id="tab-4">
+                    <div class="itc-select assets pb20" id="select-2">
+                        <button
+                            type="button"
+                            class="itc-select__toggle"
+                            name="cryptocurrency"
+                            value=""
+                            data-select="toggle"
+                            data-index="-1"
+                        >
+                            Chose cryptocurrency
+                        </button>
+                        <div class="itc-select__dropdown">
+                            <div class="search"><input type="text" placeholder="Search"/></div>
+                            <ul class="itc-select__options">
+                                <?php echo $__env->yieldContent("selectCoinPayment"); ?>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn_action btn_16 color-dark"
+                        onclick="updateDataDeposit()"
+                        data-izimodal-open="#deposit2">
+
+                        Next
+                    </button>
+                </div>
+
+                <div class="tabs-itemDeposit" id="tab-5">
+
+                    <div class="itc-select assets pb20" id="select-10">
+                        <button
+                            type="button"
+                            class="itc-select__toggle"
+                            name="cryptocurrency"
+                            value=""
+                            data-select="toggle"
+                            data-index="-1"
+                        >
+                            Chose method payment
+                        </button>
+                        <div class="itc-select__dropdown">
+
+                            <ul class="itc-select__options">
+                                <?php echo $__env->yieldContent("FiatMethodPayment"); ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <button
+                        onclick="hrefPaymentMethod()"
+                        type="submit"
+                        class="btn btn_action btn_16 color-dark">
+                        Next
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
     </div>
     <div class="modal" id="deposit2">
         <button class="closemodal clear" data-izimodal-close="">
@@ -957,7 +987,7 @@
             </div>
         </div>
 
-        <!-- disabled class="process" -->
+
 
     </div>
     <div class="modal" id="stacking">
@@ -1101,6 +1131,33 @@
             window.scrollTo(0, $("#".window.location.hash).offset().top);
         }
     });
+    $(function () {
+        var tab = $("#tabsDeposit .tabs-itemsDeposit > div");
+        tab.hide().filter(":first").show();
+
+        // Клики по вкладкам.
+        $("#tabsDeposit .tabs-navDeposit a")
+            .click(function () {
+                tab.hide();
+                tab.filter(this.hash).show();
+                $("#tabsDeposit .tabs-navDeposit a").removeClass("active");
+                $(this).addClass("active");
+                return false;
+            })
+            .filter(":first")
+            .click();
+
+        // Клики по якорным ссылкам.
+        $(".tabs-targetDeposit").click(function () {
+            $("#tabsDeposit .tabs-nav a[href=" + $(this).attr("href") + "]").click();
+        });
+
+        // Отрытие вкладки из хеша URL
+        if (window.location.hash) {
+            $("#tabs-navDeposit a[href=" + window.location.hash + "]").click();
+            window.scrollTo(0, $("#".window.location.hash).offset().top);
+        }
+    });
 </script>
 <script>
     $(".tabs-wrapper").each(function () {
@@ -1119,6 +1176,7 @@
             .eq(0)
             .addClass("active");
     });
+
 </script>
 <script>
     const modalOptions = {
@@ -1249,7 +1307,7 @@
 
     function updatePriceConvert() {
         const AmountFromConvertValue = $("#AmountFromConvert").val();
-        if (select4.value !== "" && select5.value !== "") {
+        if (select4.value !== "" && AmountFromConvertValue !== "") {
             $.ajax({
                 url: "<?php echo e(route("assets.swap.convertCryptoPrice")); ?>",
                 type: "POST",
@@ -1396,6 +1454,12 @@
         });
     const select9 = new ItcCustomSelect("#select-9", {
         onSelected(select, option) {
+            const stacking = document.getElementById("amountStaking");
+            let stackingValue = stacking.value;
+
+            if(stackingValue === ""){
+                return;
+            }
             calculateStaking();
         }
     });
@@ -1455,9 +1519,13 @@
 </script>
 
 <script>
+    const AmountFromConvert = document.getElementById("AmountFromConvert");
     const SwapCryptoCurrency = document.getElementById("SwapCryptoCurrency");
     SwapCryptoCurrency.addEventListener("submit", (e) => {
         e.preventDefault();
+        if(AmountFromConvert.value === ""){
+            return;
+        }
         const formData = new FormData(SwapCryptoCurrency);
         formData.append("CoinSymbolFrom", select4.value)
         formData.append("CoinSymbolTo", select5.value)
@@ -1736,6 +1804,9 @@
         if (CoinSymbol === "") {
             return;
         }
+        if(amount == ""){
+            return;
+        }
         var radioButtons = document.querySelectorAll('input[name="stacking"]');
 
 
@@ -1891,6 +1962,11 @@
                 });
             },
         });
+
+    }
+    function hrefPaymentMethod(){
+        const selectedMethod = select10.value;
+        window.open(selectedMethod, '_blank', 'noopener,noreferrer');
 
     }
 </script>

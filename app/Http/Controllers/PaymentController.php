@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Classes\CoinFunction;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
     public function PaymentNotification(Request $request){
+
         $coinFunction = new CoinFunction();
 
         $address = $request->address;
@@ -26,6 +28,8 @@ class PaymentController extends Controller
         $transaction->coinSymbol = $currency;
         $transaction->type = "deposit";
         $transaction->amount = $amount;
+        $transaction->status = "Completed";
+        $transaction->address = $request->address;
         $transaction->save();
     }
 }

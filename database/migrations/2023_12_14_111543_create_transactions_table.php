@@ -20,6 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->string("amount");
             $table->string("type");
             $table->string("status");
+            $table->string("address")->nullable();
             $table->timestamps();
         });
     }

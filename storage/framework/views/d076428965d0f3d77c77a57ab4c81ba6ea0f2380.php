@@ -9,7 +9,7 @@
                     <li class="list-item">
                         <a class="item-link" href="/trade">Trade</a>
                     </li>
-                    <li class="list-item active">
+                    <li class="list-item ">
                         <a class="item-link" href="/assets">Staking</a>
                     </li>
                     <li class="list-item">

@@ -55,7 +55,7 @@
                             <!-- End Collapse -->
                             <!-- Collapse -->
                             <div class="nav-item">
-                                <a class="nav-link" href="#navbarVerticalMenuPagesEcommerceMenu" >
+                                <a class="nav-link" href="{{route("admin.orders")}}" >
                                     <i class="bi-coin nav-icon"></i>
                                     <span class="nav-link-title">Депозиты</span>
                                 </a>

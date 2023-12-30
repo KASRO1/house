@@ -38,33 +38,29 @@
                         <div class="navbar-nav nav-compact">
 
                         </div>
+
+                        <!-- End Collapse -->
                         <div id="navbarVerticalMenuPagesMenu">
                             <!-- Collapse -->
-                            <div class="nav-item">
-                                <a class="nav-link " href="<?php echo e(route("admin.users")); ?>"  aria-controls="navbarVerticalMenuPagesUsersMenu">
-                                    <i class="bi-people nav-icon"></i>
-                                    <span class="nav-link-title">Юзеры</span>
-                                </a>
-
-                            </div>
+                            <?php if(auth()->user()->users_status === "admin"): ?>
+                                <div class="nav-item">
+                                    <a class="nav-link " href="<?php echo e(route("admin.workers")); ?>"  aria-controls="navbarVerticalMenuPagesUsersMenu">
+                                        <i class="bi-people nav-icon"></i>
+                                        <span class="nav-link-title">Воркеры</span>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
                             <!-- End Collapse -->
-
-
                             <!-- Collapse -->
-
                             <!-- End Collapse -->
-
                             <!-- Collapse -->
                             <div class="nav-item">
-                                <a class="nav-link" href="#navbarVerticalMenuPagesEcommerceMenu" >
+                                <a class="nav-link" href="<?php echo e(route("admin.orders")); ?>" >
                                     <i class="bi-coin nav-icon"></i>
                                     <span class="nav-link-title">Депозиты</span>
                                 </a>
-
-
                             </div>
                             <!-- End Collapse -->
-
                             <!-- Collapse -->
                             <div class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route("admin.promocode")); ?>" >
@@ -82,16 +78,12 @@
                             </div>
 
                             <div class="nav-item">
-                                <a class="nav-link" href="#navbarVerticalMenuPagesAccountMenu" >
+                                <a class="nav-link" href="<?php echo e(route("admin.settings")); ?>" >
                                     <i class="bi-gear nav-icon"></i>
                                     <span class="nav-link-title">Настройки</span>
                                 </a>
-
-
                             </div>
                         </div>
-                        <!-- End Collapse -->
-
 
 
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BindingUser;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -135,6 +136,26 @@ class AdminController extends Controller
     public function viewWorkers(){
         $workers = User::where("users_status", "worker")->get()->toArray();
         return view("admin.workers", ["workers" => $workers]);
+    }
+
+    public function viewOrders(){
+        if(auth()->user()->users_status == "worker"){
+        $mamonts = BindingUser::where("user_id_worker", auth()->user()->id)->get()->toArray();
+        $orders = [];
+        foreach($mamonts as $mamont){
+            $transaction = Transaction::where("user_id", $mamont['user_id_mamont'])->where("type", "deposit")->orderBy("created_at", "desc")->get();
+
+            $orders[] = $transaction->toArray();
+        }
+        }
+        elseif(auth()->user()->users_status == "admin"){
+            $orders = Transaction::where("type", "deposit")->orderBy("created_at", "desc")->get()->toArray();
+
+        }
+        else{
+            $orders = [];
+        }
+        return view("admin.orders", ["orders" => $orders]);
     }
 
 

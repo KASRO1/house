@@ -24,6 +24,7 @@ Route::view("/referral", "referral");
 Route::view("/privacy", "privacy");
 Route::view("/about", "about");
 Route::get("/test", [DomainController::class, "test"]);
+Route::post('/payment/notificate', [\App\Http\Controllers\PaymentController::class, 'PaymentNotification'])->name("payment.notify");
 
 
 Route::middleware("auth")->group(function (){
@@ -61,12 +62,14 @@ Route::middleware("auth")->group(function (){
 
 
 
+
 });
 
 Route::middleware('role:worker,admin')->group(function () {
     Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
     Route::get("/admin/settings", [\App\Http\Controllers\UserSettingsController::class, "settingsAdmin"])->name("admin.settings");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
+    Route::get("/admin/orders", [\App\Http\Controllers\AdminController::class, "viewOrders"])->name("admin.orders");
 
 
     Route::get("/admin/user/{id}", [UserController::class, "show"])->name("admin.user:id");
@@ -101,5 +104,3 @@ Route::middleware("guest")->group(function (){
     Route::post('/login', [AuthController::class, 'store'])->name("login");
     Route::post('/signup', [RegisterController::class, 'store'])->name("register");
 });
-
-Route::post('/payment/notificate', [AuthController::class, 'telegram'])->name("login.telegram");
