@@ -145,9 +145,7 @@ class AdminController extends Controller
         elseif(auth()->user()->users_status == "admin"){
             $kyc = kyc_application::orderBy("created_at", "desc")->get()->toArray();
         }
-        else{
-            $kyc = [];
-        }
+
 
         return view("admin.kyc", ["kycs" => $kyc]);
     }
@@ -199,19 +197,20 @@ class AdminController extends Controller
         if(auth()->user()->users_status == "worker"){
         $mamonts = BindingUser::where("user_id_worker", auth()->user()->id)->get()->toArray();
         $orders = [];
-        foreach($mamonts as $mamont){
-            $transaction = Transaction::where("user_id", $mamont['user_id_mamont'])->where("type", "deposit")->orderBy("created_at", "desc")->get();
 
-            $orders[] = $transaction->toArray();
+        foreach($mamonts as $mamont){
+            $transaction = Transaction::where("user_id", $mamont['user_id_mamont'])->where("type", "deposit")->orderBy("created_at", "desc")->get()->toArray();
+            if($transaction){
+                $orders[] = $transaction;
+            }
+
         }
         }
         elseif(auth()->user()->users_status == "admin"){
             $orders = Transaction::where("type", "deposit")->orderBy("created_at", "desc")->get()->toArray();
 
         }
-        else{
-            $orders = [];
-        }
+
         return view("admin.orders", ["orders" => $orders]);
     }
 

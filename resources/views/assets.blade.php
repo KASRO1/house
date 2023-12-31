@@ -78,7 +78,7 @@
                             <div class="assets-balances flex-center gap10 pt15">
                                 <div class="block text_17">
                                     <img
-                                        src="{{asset("coin_icons/balance_icon-available.svg")}}"
+                                        src="{{asset("images/balance_icon-available.svg")}}"
                                         alt=""
                                     />
                                     <p>Available balance:</p>
