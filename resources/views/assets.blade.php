@@ -321,7 +321,7 @@
                                         <div class="flex-center gap6">
                                             <img
                                                 width="30px"
-                                                src="{{asset("images/coin_icons/" . strtolower($transaction['coinSymbol']) . ".svg")}}"
+                                                src="{{asset("images/coin_icons/" . $transaction['coinSymbol'] . ".svg")}}"
                                                 alt=""/>
                                             <span>{{$transaction['coinSymbol']}}</span>
                                         </div>

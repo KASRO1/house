@@ -7,7 +7,7 @@
         data-value="{{$coin['simple_name']}}"
         data-index="{{$coin['id_coin']}}">
         <img
-            src="{{asset('/images/coin_icons/'.strtolower($coin['simple_name']).'.svg')}}"
+            src="{{asset('/images/coin_icons/'.$coin['simple_name'].'.svg')}}"
             alt=""
             class="select-img"
         />
@@ -25,7 +25,7 @@
             data-value="{{$coinPayment['simple_name']}}"
             data-index="{{$coinPayment['id_coin']}}">
             <img
-                src="{{asset('/images/coin_icons/'.strtolower($coinPayment['simple_name']).'.svg')}}"
+                src="{{asset('/images/coin_icons/'.$coinPayment['simple_name'].'.svg')}}"
                 alt=""
                 class="select-img"
             />
