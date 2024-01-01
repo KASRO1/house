@@ -476,7 +476,10 @@ a:hover {
   font-weight: 400;
   line-height: 100%;
 }
+.bg-danger{
+background-color: #FF6868 !important;
 
+}
 .btn:disabled {
   cursor: not-allowed;
   pointer-events: none;
@@ -1712,7 +1715,7 @@ button.clear {
 }
 
 #change2fa .qr {
-  padding-right: 40px;
+  margin: auto;
 }
 
 .trade-container {

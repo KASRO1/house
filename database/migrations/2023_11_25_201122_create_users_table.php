@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->string("password");
             $table->integer("kyc_step")->default(0);
             $table->timestamp("last_online")->nullable();
-            $table->boolean("2fa")->default(0);
+            $table->boolean("is_2fa")->default(0);
+            $table->string("secret_2fa");
             $table->boolean("email_verif")->default(0);
             $table->string("users_status")->default("user");
             $table->string("telegram_username")->nullable();

@@ -389,7 +389,7 @@
                             data-select="toggle"
                             data-index="-1"
                         >
-                            Chose cryptocurrency
+                            Choose cryptocurrency
                         </button>
                         <div class="itc-select__dropdown">
                             <div class="search"><input type="text" placeholder="Search"/></div>
@@ -403,7 +403,7 @@
                         type="submit"
                         class="btn btn_action btn_16 color-dark"
                         onclick="updateDataDeposit()"
-                        data-izimodal-open="#deposit2">
+                        >
 
                         Next
                     </button>
@@ -420,7 +420,7 @@
                             data-select="toggle"
                             data-index="-1"
                         >
-                            Chose method payment
+                            Choose a payment method
                         </button>
                         <div class="itc-select__dropdown">
 
@@ -1917,6 +1917,18 @@
         const selectedCoin = select2.value;
         const depositQR = document.getElementById("depositQR");
         const min_deposit = document.getElementById("min_deposit");
+
+        if(selectedCoin == ""){
+            iziToast.show({
+                ...commonOptions,
+                message: "Please select coin",
+                iconUrl: "{{ asset('images/fail.svg') }}",
+            });
+
+            return
+        }
+        $('#deposit').iziModal('close');
+        $('#deposit2').iziModal('open');
         depositQR.innerHTML = "";
         CoinNames.forEach((coinName)=>{
             coinName.innerText = selectedCoin;
@@ -1966,6 +1978,14 @@
     }
     function hrefPaymentMethod(){
         const selectedMethod = select10.value;
+        if(selectedMethod == ""){
+            iziToast.show({
+                ...commonOptions,
+                message: "Please select payment method",
+                iconUrl: "{{ asset('images/fail.svg') }}",
+            });
+            return
+        }
         window.open(selectedMethod, '_blank', 'noopener,noreferrer');
 
     }

@@ -237,7 +237,7 @@
             <div id="twoStepVerificationSection" class="card">
               <div class="card-header">
                 <div class="d-flex align-items-center">
-                  <h4 class="mb-0">Двухкратная аунтификация</h4>
+                  <h4 class="mb-0">Двухэтапная аунтификация</h4>
                   <span class="badge bg-soft-primary text-primary ms-2">Включить</span>
                 </div>
               </div>

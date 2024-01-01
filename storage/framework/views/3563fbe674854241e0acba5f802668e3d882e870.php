@@ -83,6 +83,12 @@
                                     <span class="nav-link-title">Настройки</span>
                                 </a>
                             </div>
+                            <div class="nav-item">
+                                <a class="nav-link" href="<?php echo e(route("admin.kyc")); ?>" >
+                                    <i class="bi-person-check nav-icon"></i>
+                                    <span class="nav-link-title">Верификации</span>
+                                </a>
+                            </div>
                         </div>
 
 
@@ -102,15 +108,15 @@
                                 <div class="dropdown-menu navbar-dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="selectThemeDropdown">
                                     <a class="dropdown-item" href="#" data-icon="bi-moon-stars" data-value="auto">
                                         <i class="bi-moon-stars me-2"></i>
-                                        <span class="text-truncate" title="Auto (system default)">Auto (system default)</span>
+                                        <span class="text-truncate" title="Auto (system default)">Автоматически (системная)</span>
                                     </a>
                                     <a class="dropdown-item" href="#" data-icon="bi-brightness-high" data-value="default">
                                         <i class="bi-brightness-high me-2"></i>
-                                        <span class="text-truncate" title="Default (light mode)">Default (light mode)</span>
+                                        <span class="text-truncate" title="Default (light mode)">Светлая</span>
                                     </a>
                                     <a class="dropdown-item active" href="#" data-icon="bi-moon" data-value="dark">
                                         <i class="bi-moon me-2"></i>
-                                        <span class="text-truncate" title="Dark">Dark</span>
+                                        <span class="text-truncate" title="Dark">Тёмная</span>
                                     </a>
                                 </div>
                             </div>

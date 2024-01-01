@@ -424,10 +424,7 @@
                     <thead class="thead-light">
                     <tr>
                         <th scope="col" class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="datatableCheckAll">
-                                <label class="form-check-label" for="datatableCheckAll"></label>
-                            </div>
+
                         </th>
                         <th class="table-column-ps-0">Почта</th>
                         <th>Статус</th>
@@ -443,10 +440,7 @@
                     @foreach($mamonts['data'] as $mamont)
                         <tr>
                             <td class="table-column-pe-0">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="usersDataCheck3">
-                                    <label class="form-check-label" for="usersDataCheck3"></label>
-                                </div>
+
                             </td>
                             <td class="table-column-ps-0">
                                 <a class="d-flex align-items-center" href="/admin/user/{{$mamont['mamontProfileInfo']['id']}}">
@@ -795,7 +789,7 @@
             zeroRecords: `<div class="text-center p-4">
               <img class="mb-3" src="./assets_admin/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
               <img class="mb-3" src="./assets_admin/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-            <p class="mb-0">Пользователи не найдены</p>
+            <p class="mb-0">Мамонты не найдены</p>
             </div>`
         }
     });

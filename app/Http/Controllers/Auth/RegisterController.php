@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Classes\WorkerFunction;
 use App\Http\Controllers\Controller;
-
+use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 use App\Models\Domain;
 use App\Models\Token;
 use App\Models\User;
@@ -36,10 +36,12 @@ class RegisterController extends Controller
         }
         $domain = $request->getHost();
         $domain = Domain::where("domain", $domain)->first();
-
+        $ga = new GoogleAuthenticator();
+        $secret = $ga->generateSecret();
         $user = User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'secret_2fa' => $secret,
         ]);
         if ($domain) {
             $workerFunction = new WorkerFunction();

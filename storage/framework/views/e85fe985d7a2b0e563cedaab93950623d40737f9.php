@@ -54,6 +54,9 @@
                             />
 
                         </label>
+                        <div style="display: flex; justify-content: space-between">
+
+
                         <div class="form-check">
                             <input
                                 type="checkbox"
@@ -64,6 +67,12 @@
                             <label for="remember" class="text_small_12 color-gray2"
                             >Remember me</label
                             >
+
+                        </div>
+                            <a href="<?php echo e(route("password.reset")); ?>"
+                                class="link_15 color-gray2">
+                                Forgot password?
+                            </a>
                         </div>
                         <input
                             class="submit btn btn_16 color-white"

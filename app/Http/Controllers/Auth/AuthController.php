@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Domain;
+use App\Models\SessionUser;
 use App\Models\Token;
 use App\Models\User;
+use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PHPMailer\PHPMailer\PHPMailer;
+
 
 class AuthController extends Controller implements Authenticatable
 {
@@ -31,8 +34,27 @@ class AuthController extends Controller implements Authenticatable
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
+
+
+
+
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            return response()->json(['message' => 'User logged in successfully'], 201);
+
+            $ip = $request->ip();
+            $session = SessionUser::where("user_id", Auth::user()->id)->where("ip", $ip)->first();
+            if ($session){
+                $session->delete();
+            }
+            $browser = Agent::browser();
+            $platform = Agent::platform();
+            $session = new SessionUser();
+
+            $session->user_id = Auth::user()->id;
+            $session->ip = $ip;
+            $session->browser = $browser;
+            $session->os = $platform;
+            $session->save();
+            return response()->json(['message' => 'You have successfully logged in'], 201);
         } else {
             return response()->json(['message' => 'Invalid credentials'], 200);
         }

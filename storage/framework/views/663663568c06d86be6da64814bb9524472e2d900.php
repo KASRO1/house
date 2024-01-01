@@ -525,46 +525,46 @@
         </div>
         <!-- End Card -->
 
-        <div class="row">
-
-            <div class="col-lg-6">
-                <!-- Card -->
-                <div class="card h-100">
-                    <!-- Header -->
-                    <div class="card-header card-header-content-between">
-                        <h4 class="card-header-title">Сумма до повышения процента</h4>
-
-                        <!-- Dropdown -->
-
-                        <!-- End Dropdown -->
-                    </div>
-                    <!-- End Header -->
-
-                    <!-- Body -->
-                    <div class="card-body">
-                        <span class="h1 d-block mb-4">$7,431.14 USD</span>
-
-                        <!-- Progress -->
-                        <div class="progress rounded-pill mb-2">
-                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" title="Gross value"></div>
-                            <div class="progress-bar opacity-50" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" title="Net volume from sales"></div>
-                            <div class="progress-bar opacity-25" role="progressbar" style="width: 9%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip" data-bs-placement="top" title="New volume from sales"></div>
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-4">
-                            <span>0%</span>
-                            <span>100%</span>
-                        </div>
-                        <!-- End Progress -->
 
 
-                        <!-- End Table -->
-                    </div>
-                    <!-- End Body -->
-                </div>
-                <!-- End Card -->
-            </div>
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
     <!-- End Content -->
 

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\BindingUser;
 use App\Models\kyc_application;
+use App\Models\SessionUser;
 use App\Models\User;
 use Carbon\Carbon;
 use Cassandra\Exception\ValidationException;
+use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +22,11 @@ class UserSettingsController extends Controller
         $user = Auth::user();
         $user['kyc_step_text'] = $user->kyc_step == 0 ? "Unverified" : "Verified";
         $kyc = kyc_application::where("user_id", $user->id)->first();
-        return view("account", ["user" => $user], ["kyc" => $kyc]);
+        $ga = new GoogleAuthenticator();
+        $ga_qrCode = $ga->getUrl($user->email,$_SERVER['HTTP_HOST'], $user['secret_2fa']);
+        $sessions = SessionUser::where("user_id", $user->id)->get();
+
+        return view("account", ["user" => $user,"kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions]);
     }
 
     public function changePassword(Request $request): \Illuminate\Http\JsonResponse
@@ -96,5 +102,40 @@ class UserSettingsController extends Controller
 
     public function settingsAdmin(){
         return view("admin.settings");
+    }
+
+    public function enable2FA(Request $request){
+        $validator = Validator::make($request->all(), [
+            'code' => 'required|numeric',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $ga = new GoogleAuthenticator();
+        $secret = $request->user()->secret_2fa;
+        $checkResult = $ga->checkCode($secret, $request->code);
+        if(!$checkResult){
+            return response()->json(['errors' => ["code" => ["Code is incorrect"]]], 401);
+        }
+        $user = $request->user();
+        $user->is_2fa = true;
+        $user->save();
+        return response()->json(['message' => '2FA enabled successfully'], 201);
+    }
+    public function disable2FA(){
+        $user = Auth::user();
+        $user->is_2fa = false;
+        $user->save();
+        return response()->json(['message' => '2FA disabled successfully'], 201);
+    }
+
+    public function deleteSession(Request $request){
+        $session = SessionUser::where("id", $request->session_id)->where("user_id", $request->user()->id)->first();
+        dd($request->session_id);
+        if($session){
+            $session->delete();
+            return response()->json(['message' => 'Session disconnected successfully'], 201);
+        }
+
     }
 }

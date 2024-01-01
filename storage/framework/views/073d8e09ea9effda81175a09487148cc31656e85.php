@@ -185,20 +185,37 @@
                             Phone
                         </div>
                         <div class="content">
+                            <?php if(!$kyc || $kyc['status'] !== 1): ?>
                             <input
                                 type="text"
                                 readonly
-                                class="clear text_17"
-                                value="Not specified"
+                                class="clear text_17 "
+                                value="Not verified"
                             />
+                            <?php elseif($kyc['status'] == 1): ?>
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17"
+                                    value="<?php echo e($kyc->phone); ?>"
+                                />
+                            <?php endif; ?>
                         </div>
                         <div class="action">
-                            <button
-                                class="btn small_btn btn_16"
-                                data-izimodal-open="#verify"
-                            >
-                                Get verified
-                            </button>
+                            <?php if(\App\Models\kyc_application::where("user_id", $user->id)->where("status", 0)->first()): ?>
+                                <button
+                                    class="btn small_btn btn_16"
+                                    data-izimodal-open="#verify"
+                                    disabled>
+                                    Waiting...
+                                </button>
+                            <?php else: ?>
+                                <button
+                                    class="btn small_btn btn_16"
+                                    data-izimodal-open="#verify">
+                                    Get verified
+                                </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="line">
@@ -222,16 +239,17 @@
                             <input
                                 type="text"
                                 readonly
-                                class="clear text_17"
-                                value="Disabled"
+                                class="clear <?php echo e($user->is_2fa ? "text_success" : ""); ?> text_17"
+                                value="<?php echo e($user->is_2fa ?  "Enabled" : "Disabled"); ?>"
                             />
                         </div>
                         <div class="action">
                             <button
-                                class="btn small_btn btn_16"
-                                data-izimodal-open="#change2fa"
-                            >
-                                Enable
+                                class="btn small_btn <?php echo e($user->is_2fa ? "bg-danger" : ""); ?>  btn_16"
+
+                                <?php echo e($user->is_2fa ? "onclick=disable2FA()" : "data-izimodal-open=#change2fa"); ?>>
+                                <?php echo e($user->is_2fa ? "Disable" : "Enable"); ?>
+
                             </button>
                         </div>
                     </div>
@@ -258,13 +276,28 @@
                                 class="clear text_17 d-none"
                                 value="Not verified"
                             />
-                        <?php if(\App\Models\kyc_application::where("user_id", $user->id)->where("status", 0)->first()): ?>
+                        <?php if($kyc && $kyc['status'] == 0): ?>
                                 <input
                                     type="text"
                                     readonly
                                     class="clear text_17 color-yellow"
                                     value="Under consideration"
                                 />
+                            <?php elseif($kyc && $kyc['status'] == 1): ?>
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17 text_success"
+                                    value="Verified"
+                                />
+                            <?php elseif($kyc && $kyc['status'] == -1): ?>{
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17 text_danger"
+                                    value="Rejected"
+                                />
+                            }
                             <?php else: ?>
                                 <input
                                     type="text"
@@ -294,80 +327,35 @@
                     </div>
                 </div>
                 <div class="account-block account-sessions">
-                    <h2 class="h2_20 pb10 pt15">Sessions (1 active)</h2>
+                    <h2 class="h2_20 pb10 pt15">Sessions </h2>
                     <div class="flex">
-                        <div class="line">
-                            <div class="title text_17">
-                                <img
-                                    class="device"
-                                    src=<?php echo e(asset("images/icon_desktop.svg")); ?>
+                        <?php $__currentLoopData = $sessions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="line">
+                                <div class="title text_17">
+                                    <img
+                                        class="device"
+                                        src=<?php echo e(asset("images/icon_desktop.svg")); ?>
 
                                     alt=""
-                                />
-                                <span>Chrome (Windows)</span>
+                                    />
+                                    <span><?php echo e($session['browser']); ?> (<?php echo e($session['os']); ?>)</span>
+                                </div>
+                                <div class="content">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="clear text_17"
+                                        value="IP: <?php echo e($session['ip']); ?>"
+                                    />
+                                </div>
+                                <div class="action">
+                                    <button class="btn small_btn btn_16 trigger-disconnect" onclick="deleteSession(<?php echo e($session['id']); ?>)">
+                                        Disconnect
+                                    </button>
+                                </div>
                             </div>
-                            <div class="content">
-                                <input
-                                    type="text"
-                                    readonly
-                                    class="clear text_17"
-                                    value="IP: 98.345.23.11"
-                                />
-                            </div>
-                            <div class="action">
-                                <button class="btn small_btn btn_16 trigger-disconnect">
-                                    Disconnect
-                                </button>
-                            </div>
-                        </div>
-                        <div class="line active">
-                            <div class="title text_17">
-                                <img
-                                    class="device"
-                                    src=<?php echo e(asset("images/icon_mobile.svg")); ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                                    alt=""
-                                />
-                                <span>Safari (IOS)</span>
-                            </div>
-                            <div class="content">
-                                <input
-                                    type="text"
-                                    readonly
-                                    class="clear text_17"
-                                    value="IP: 98.345.23.11"
-                                />
-                            </div>
-                            <div class="action">
-                                <button class="btn small_btn btn_16 trigger-disconnect">
-                                    Disconnect
-                                </button>
-                            </div>
-                        </div>
-                        <div class="line">
-                            <div class="title text_17">
-                                <img
-                                    class="device"
-                                    src=<?php echo e(asset("images/icon_desktop.svg")); ?>
-
-                                    alt=""
-                                />
-                                <span>Safari (MacOS)</span>
-                            </div>
-                            <div class="content">
-                                <input
-                                    type="text"
-                                    readonly
-                                    class="clear text_17"
-                                    value="IP: 189.32.412.55"
-                                />
-                            </div>
-                            <div class="action">
-                                <button class="btn small_btn btn_16 trigger-disconnect">
-                                    Disconnect
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -464,8 +452,8 @@
             <img src="<?php echo e(asset('images/modal_close.svg')); ?>" alt="" />
         </button>
         <div class="first">
-            <div class="flex">
-                <div class="text">
+            <div class="flex gap">
+                <div class="text " style="max-width: 300px">
                     <h2 class="h1_25 pb15">
                         Two-Factor Authentication is <b class="color-red">disabled</b>
                     </h2>
@@ -475,20 +463,21 @@
                     </p>
                 </div>
                 <div class="qr">
-                    <img src="<?php echo e(asset("images/qrsample.svg")); ?>" alt="" />
+                    <img width="100px" src="<?php echo e($qr_ga); ?>" alt="" />
                 </div>
             </div>
-            <form action="#">
+            <form id="ga_form" action="#">
                 <input
                     type="text"
                     class="input mb20"
+                    name="code"
+                    oninput="validateInput(this)"
                     placeholder="Enter 6-digit code"
                     required
                 />
                 <button
                     type="submit"
-                    class="btn btn_action btn_16 color-dark trigger-enable2fa"
-                >
+                    class="btn btn_action btn_16 color-dark trigger-enable2fa">
                     Confirm
                 </button>
             </form>
@@ -507,6 +496,7 @@
                 <input
                     type="text"
                     class="input mb20"
+                    name="code"
                     placeholder="Enter 6-digit code"
                     required
                 />
@@ -625,14 +615,7 @@
         iconUrl: "<?php echo e(asset("images/succes.svg")); ?>",
         close: false,
     };
-    $(".trigger-disconnect").on("click", function (event) {
-        event.preventDefault();
-        iziToast.show({
-            ...commonOptions,
-            message: "Session disconnected",
 
-        });
-    });
     $(".trigger-changemail").on("click", function (event) {
         event.preventDefault();
         $("#confirmMail").iziModal("close");
@@ -651,21 +634,7 @@
     //     });
     // });
 
-    $(".trigger-disable2fa").on("click", function (event) {
-        event.preventDefault();
-        $("#change2fa").iziModal("close");
-        iziToast.show({
-            ...commonOptions,
-            message: "Two-factor authentication disabled",
-        });
-    });
-    $(".trigger-enable2fa").on("click", function (event) {
-        event.preventDefault();
-        iziToast.show({
-            ...commonOptions,
-            message: "Two-factor authentication enabled",
-        });
-    });
+
 
 </script>
 <script>
@@ -783,6 +752,131 @@
             },
         })
     })
+</script>
+<script>
+    const ga_form = document.getElementById("ga_form")
+    ga_form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(ga_form);
+
+        $.ajax({
+            url: "<?php echo e(route("user.2fa.enable")); ?>",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                    });
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                }
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        })
+    })
+</script>
+<script>
+    function disable2FA() {
+        $.ajax({
+            url: "<?php echo e(route("user.2fa.disable")); ?>",
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                    });
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                }
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        })
+    }
+    function deleteSession(id){
+
+
+        $.ajax({
+            url: "<?php echo e(route("user.session.delete")); ?>",
+            type: 'POST',
+            data: {
+                session_id: id,
+                _token: "<?php echo e(csrf_token()); ?>"
+            },
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                    });
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                }
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        })
+    }
 </script>
 <script src="<?php echo e(asset("js/load.js")); ?>"></script>
 </body>

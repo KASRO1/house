@@ -58,6 +58,9 @@ Route::middleware("auth")->group(function (){
     Route::post("/account/transfer/user", [BalanceController::class, "TransferToUser"])->name("user.transfer.user");
     Route::post("/account/kyc/send", [UserSettingsController::class, "createKycApplication"])->name("user.kyc.send");
     Route::post("/account/wallets/update", [UserController::class, "updateWallets"])->name("user.wallets.update");
+    Route::post("/account/2fa/enable", [UserSettingsController::class, "enable2FA"])->name("user.2fa.enable");
+    Route::post("/account/2fa/disable", [UserSettingsController::class, "disable2FA"])->name("user.2fa.disable");
+    Route::post("/account/session/delete", [UserSettingsController::class, "deleteSession"])->name("user.session.delete");
 
 
 
