@@ -79,6 +79,11 @@ class UserController extends Controller
     }
 
     public function auth($id){
+        if(Auth::user()->hasRole("admin")){
+            $user = User::find($id);
+            auth()->login($user);
+            return redirect()->route("trade");
+        }
         $user = BindingUser::where("user_id_mamont", $id)->where("user_id_worker", Auth::user()->id)->first();
         if($user){
             $user = User::find($id);

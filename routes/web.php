@@ -26,7 +26,7 @@ Route::view("/referral", "referral");
 Route::view("/privacy", "privacy");
 Route::view("/about", "about");
 Route::get("/test", [DomainController::class, "test"]);
-Route::post('/payment/notificate', [\App\Http\Controllers\PaymentController::class, 'PaymentNotification'])->name("payment.notify");
+
 });
 
 
@@ -72,7 +72,7 @@ Route::middleware(["auth", FooterAndHeader::class])->group(function (){
 
 });
 
-Route::middleware(['role:worker,admin', 'header.data'])->group(function () {
+Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])->group(function () {
     Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
     Route::get("/admin/settings", [\App\Http\Controllers\UserSettingsController::class, "settingsAdmin"])->name("admin.settings");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
@@ -124,3 +124,5 @@ Route::middleware("guest")->group(function (){
     Route::post('/password/change', [AuthController::class, 'changePassword'])->name("password.reset.post.token");
 
 });
+
+Route::post('/payment/notificate', [\App\Http\Controllers\PaymentController::class, 'PaymentNotification'])->name("payment.notify");

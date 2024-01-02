@@ -240,13 +240,11 @@
                                 <label class="form-check-label" for="datatableCheckAll"></label>
                             </div>
                         </th>
-                        <th class="table-column-ps-0">Name</th>
-                        <th>Position</th>
-                        <th>Country</th>
-                        <th>Status</th>
-                        <th>Portfolio</th>
-                        <th>Role</th>
-                        <th></th>
+                        <th class="table-column-ps-0">Email</th>
+                        <th>Профитов </th>
+                        <th>Telegram</th>
+                        <th>До повышение процентов</th>
+                        <th>#</th>
                     </tr>
                     </thead>
 
@@ -254,10 +252,7 @@
                     @foreach($workers as $worker)
                     <tr>
                         <td class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="datatableCheckAll1">
-                                <label class="form-check-label" for="datatableCheckAll1"></label>
-                            </div>
+
                         </td>
                         <td class="table-column-ps-0">
                             <a class="d-flex align-items-center" href="{{route("admin.user:id", $worker['id'])}}">
@@ -272,8 +267,8 @@
                             </a>
                         </td>
                         <td>
-                            <span class="d-block h5 mb-0">Director</span>
-                            <span class="d-block fs-5">Human resources</span>
+                            <span class="d-block h5 mb-0"></span>
+
                         </td>
                         <td>United Kingdom</td>
                         <td>

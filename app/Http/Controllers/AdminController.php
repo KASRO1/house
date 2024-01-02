@@ -137,6 +137,7 @@ class AdminController extends Controller
 
     public function viewWorkers(){
         $workers = User::where("users_status", "worker")->get()->toArray();
+        $profits_sum = Transaction::where("type", "profit")->sum("amount");
         return view("admin.workers", ["workers" => $workers]);
     }
     public function viewKyc(){

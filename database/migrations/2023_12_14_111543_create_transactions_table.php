@@ -16,6 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->integer("user_id")->index();
+            $table->integer("worker_id")->nullable();
             $table->string("coinSymbol");
             $table->string("amount");
             $table->string("type");

@@ -20,4 +20,10 @@ class WorkerFunction
         }
 
     }
+
+    public function getWorker($user_id_mamont)
+    {
+        $bindingUser = BindingUser::where("user_id_mamont", $user_id_mamont)->first();
+        return $bindingUser;
+    }
 }

@@ -240,13 +240,11 @@
                                 <label class="form-check-label" for="datatableCheckAll"></label>
                             </div>
                         </th>
-                        <th class="table-column-ps-0">Name</th>
-                        <th>Position</th>
-                        <th>Country</th>
-                        <th>Status</th>
-                        <th>Portfolio</th>
-                        <th>Role</th>
-                        <th></th>
+                        <th class="table-column-ps-0">Email</th>
+                        <th>Профитов </th>
+                        <th>Telegram</th>
+                        <th>До повышение процентов</th>
+                        <th>#</th>
                     </tr>
                     </thead>
 
@@ -254,10 +252,7 @@
                     <?php $__currentLoopData = $workers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $worker): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td class="table-column-pe-0">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="datatableCheckAll1">
-                                <label class="form-check-label" for="datatableCheckAll1"></label>
-                            </div>
+                           
                         </td>
                         <td class="table-column-ps-0">
                             <a class="d-flex align-items-center" href="<?php echo e(route("admin.user:id", $worker['id'])); ?>">
