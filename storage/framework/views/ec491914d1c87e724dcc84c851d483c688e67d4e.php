@@ -50,6 +50,14 @@
                                     </a>
                                 </div>
                             <?php endif; ?>
+                            <?php if(auth()->user()->users_status === "admin"): ?>
+                                <div class="nav-item">
+                                    <a class="nav-link " href="<?php echo e(route("admin.news")); ?>"  aria-controls="navbarVerticalMenuPagesUsersMenu">
+                                        <i class="bi-bell nav-icon"></i>
+                                        <span class="nav-link-title">Новости</span>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
                             <!-- End Collapse -->
                             <!-- Collapse -->
                             <!-- End Collapse -->

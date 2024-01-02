@@ -20,7 +20,7 @@ class CreateDomainsTable extends Migration
             $table->string("ns");
             $table->string("zone_id");
             $table->string("title");
-            $table->string("logo");
+            $table->string("logo")->nullable();
             $table->string('stmp_host');
             $table->string("stmp_email");
             $table->string("stmp_password");

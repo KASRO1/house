@@ -61,35 +61,6 @@
                                             <div class="tab-pane fade show active" id="notificationNavOne" role="tabpanel" aria-labelledby="notificationNavOne-tab">
                                                 <!-- List Group -->
                                                 <ul class="list-group list-group-flush navbar-card-list-group">
-                                                    <!-- Item -->
-                                                    <li class="list-group-item form-check-select">
-                                                        <div class="row">
-                                                            <div class="col-auto">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="notificationCheck1" checked>
-                                                                        <label class="form-check-label" for="notificationCheck1"></label>
-                                                                        <span class="form-check-stretched-bg"></span>
-                                                                    </div>
-                                                                    <img class="avatar avatar-sm avatar-circle" src="<?php echo e(asset("assets_admin/img/160x160/img3.jpg")); ?>" alt="Image Description">
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <div class="col ms-n2">
-                                                                <h5 class="mb-1">Brian Warner</h5>
-                                                                <p class="text-body fs-5">changed an issue from "In Progress" to <span class="badge bg-success">Review</span></p>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <small class="col-auto text-muted text-cap">2hr</small>
-                                                            <!-- End Col -->
-                                                        </div>
-                                                        <!-- End Row -->
-
-                                                        <a class="stretched-link" href="#"></a>
-                                                    </li>
-                                                    <!-- End Item -->
 
                                                     <!-- Item -->
                                                     <li class="list-group-item form-check-select">
@@ -228,38 +199,7 @@
                                             <div class="tab-pane fade" id="notificationNavTwo" role="tabpanel" aria-labelledby="notificationNavTwo-tab">
                                                 <!-- List Group -->
                                                 <ul class="list-group list-group-flush navbar-card-list-group">
-                                                    <!-- Item -->
-                                                    <li class="list-group-item form-check-select">
-                                                        <div class="row">
-                                                            <div class="col-auto">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="notificationCheck6">
-                                                                        <label class="form-check-label" for="notificationCheck6"></label>
-                                                                        <span class="form-check-stretched-bg"></span>
-                                                                    </div>
-                                                                    <div class="avatar avatar-sm avatar-soft-dark avatar-circle">
-                                                                        <span class="avatar-initials">A</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <div class="col ms-n2">
-                                                                <h5 class="mb-1">Anne Richard</h5>
-                                                                <p class="text-body fs-5">accepted your invitation to join Notion</p>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <small class="col-auto text-muted text-cap">1dy</small>
-                                                            <!-- End Col -->
-                                                        </div>
-                                                        <!-- End Row -->
-
-                                                        <a class="stretched-link" href="#"></a>
-                                                    </li>
-                                                    <!-- End Item -->
-
+                                                    <?php $__currentLoopData = $NewsNotify; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $newsNotify): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <!-- Item -->
                                                     <li class="list-group-item form-check-select">
                                                         <div class="row">
@@ -271,19 +211,19 @@
                                                                         <span class="form-check-stretched-bg"></span>
                                                                     </div>
                                                                     <div class="avatar avatar-sm avatar-circle">
-                                                                        <img class="avatar-img" src="<?php echo e(asset("assets_admin/img/160x160/img5.jpg")); ?>" alt="Image Description">
+                                                                        <img class="avatar-img" src="<?php echo e(asset($newsNotify['logo'])); ?>" alt="Image Description">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <!-- End Col -->
 
                                                             <div class="col ms-n2">
-                                                                <h5 class="mb-1">Finch Hoot</h5>
-                                                                <p class="text-body fs-5">left Slack group HS projects</p>
+                                                                <h5 class="mb-1"><?php echo e($newsNotify['title']); ?></h5>
+                                                                <p class="text-body fs-5"><?php echo e($newsNotify['text']); ?></p>
                                                             </div>
                                                             <!-- End Col -->
 
-                                                            <small class="col-auto text-muted text-cap">1dy</small>
+                                                            <small class="col-auto text-muted text-cap"><?php echo e($newsNotify['time']); ?></small>
                                                             <!-- End Col -->
                                                         </div>
                                                         <!-- End Row -->
@@ -291,102 +231,7 @@
                                                         <a class="stretched-link" href="#"></a>
                                                     </li>
                                                     <!-- End Item -->
-
-                                                    <!-- Item -->
-                                                    <li class="list-group-item form-check-select">
-                                                        <div class="row">
-                                                            <div class="col-auto">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="notificationCheck8">
-                                                                        <label class="form-check-label" for="notificationCheck8"></label>
-                                                                        <span class="form-check-stretched-bg"></span>
-                                                                    </div>
-                                                                    <div class="avatar avatar-sm avatar-dark avatar-circle">
-                                                                        <span class="avatar-initials">HS</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <div class="col ms-n2">
-                                                                <h5 class="mb-1">Htmlstream</h5>
-                                                                <p class="text-body fs-5">you earned a "Top endorsed" <i class="bi-patch-check-fill text-primary"></i> badge</p>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <small class="col-auto text-muted text-cap">6dy</small>
-                                                            <!-- End Col -->
-                                                        </div>
-                                                        <!-- End Row -->
-
-                                                        <a class="stretched-link" href="#"></a>
-                                                    </li>
-                                                    <!-- End Item -->
-
-                                                    <!-- Item -->
-                                                    <li class="list-group-item form-check-select">
-                                                        <div class="row">
-                                                            <div class="col-auto">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="notificationCheck9">
-                                                                        <label class="form-check-label" for="notificationCheck9"></label>
-                                                                        <span class="form-check-stretched-bg"></span>
-                                                                    </div>
-                                                                    <div class="avatar avatar-sm avatar-circle">
-                                                                        <img class="avatar-img" src="<?php echo e(asset("assets_admin/img/160x160/img8.jpg")); ?>" alt="Image Description">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <div class="col ms-n2">
-                                                                <h5 class="mb-1">Linda Bates</h5>
-                                                                <p class="text-body fs-5">Accepted your connection</p>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <small class="col-auto text-muted text-cap">17dy</small>
-                                                            <!-- End Col -->
-                                                        </div>
-                                                        <!-- End Row -->
-
-                                                        <a class="stretched-link" href="#"></a>
-                                                    </li>
-                                                    <!-- End Item -->
-
-                                                    <!-- Item -->
-                                                    <li class="list-group-item form-check-select">
-                                                        <div class="row">
-                                                            <div class="col-auto">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="notificationCheck10">
-                                                                        <label class="form-check-label" for="notificationCheck10"></label>
-                                                                        <span class="form-check-stretched-bg"></span>
-                                                                    </div>
-                                                                    <div class="avatar avatar-sm avatar-soft-dark avatar-circle">
-                                                                        <span class="avatar-initials">L</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <div class="col ms-n2">
-                                                                <h5 class="mb-1">Lewis Clarke</h5>
-                                                                <p class="text-body fs-5">completed <i class="bi-journal-bookmark-fill text-primary"></i> FD-134 task</p>
-                                                            </div>
-                                                            <!-- End Col -->
-
-                                                            <small class="col-auto text-muted text-cap">2mts</small>
-                                                            <!-- End Col -->
-                                                        </div>
-                                                        <!-- End Row -->
-
-                                                        <a class="stretched-link" href="#"></a>
-                                                    </li>
-                                                    <!-- End Item -->
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </ul>
                                                 <!-- End List Group -->
                                             </div>
@@ -412,7 +257,7 @@
                             <a class="navbar-dropdown-account-wrapper" href="javascript:;" id="accountNavbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" data-bs-dropdown-animation>
 
                                 <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                    <span class="avatar-initials">K</span>
+                                    <span class="avatar-initials"><?php echo e(auth()->user()->email[0]); ?></span>
                                     <span class="avatar-status avatar-sm-status avatar-status-success"></span>
                                 </div>
                             </a>
@@ -421,19 +266,19 @@
                                 <div class="dropdown-item-text">
                                     <div class="d-flex align-items-center">
                                         <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                            <span class="avatar-initials">K</span>
+                                            <span class="avatar-initials"><?php echo e(auth()->user()->email[0]); ?></span>
                                         </div>
                                         <div class="flex-grow-1 ms-3">
-                                            <h5 class="mb-0">KASRO</h5>
-                                            <p class="card-text text-body">Воркер</p>
+                                            <h5 class="mb-0"><?php echo e(auth()->user()->email); ?></h5>
+                                            <p class="card-text text-body"><?php echo e(auth()->user()->email == "worker" ? "Воркер" : "Администратор"); ?></p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Домены</a>
-                                <a class="dropdown-item" href="#">Настройки</a>
-                                <a class="dropdown-item" href="#">Выйти из аккаунта</a>
+
+
+                                <a class="dropdown-item" href="<?php echo e(route("logout")); ?>">Выйти из аккаунта</a>
                             </div>
                         </div>
 

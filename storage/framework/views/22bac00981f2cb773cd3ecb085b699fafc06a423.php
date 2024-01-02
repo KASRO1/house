@@ -154,7 +154,7 @@
                             <div class="input-group-prepend input-group-text">
                                 <i class="bi-search"></i>
                             </div>
-                            <input id="datatableSearch" type="search" class="form-control" placeholder="Search users" aria-label="Search users">
+                            <input id="datatableSearch" type="search" class="form-control" placeholder="Поиск депозитов" aria-label="Поиск депозитов">
                         </div>
                         <!-- End Search -->
                     </form>
@@ -188,6 +188,7 @@
                         </thead>
 
                         <tbody>
+
                         <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr role="row" class="odd">
                             <td class="table-column-pe-0">
@@ -260,7 +261,7 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                         </tbody>
-                    </table><div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing 1 to 12 of 20 entries</div></div>
+                    </table><div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Показать с 1 по 12 из 20 записей</div></div>
             </div>
             <!-- End Table -->
 
@@ -269,7 +270,7 @@
                 <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
                     <div class="col-sm mb-2 mb-sm-0">
                         <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
-                            <span class="me-2">Showing:</span>
+                            <span class="me-2">Показать:</span>
 
                             <!-- Select -->
                             <div class="tom-select-custom">
@@ -285,7 +286,7 @@
                             </div>
                             <!-- End Select -->
 
-                            <span class="text-secondary me-2">of</span>
+                            <span class="text-secondary me-2">из</span>
 
                             <!-- Pagination Quantity -->
                             <span id="datatableWithPaginationInfoTotalQty">20</span>

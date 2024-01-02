@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BindingUser;
 use App\Models\kyc_application;
+use App\Models\News;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -76,7 +77,7 @@ class AdminController extends Controller
             elseif($mamont['type'] === "manually"){
                 $Mamonts['data'][$key]['type'] = "Ручная привязка";
             }
-            elseif($mamont['data']['type'] === "domain"){
+            elseif($mamont['type'] === "domain"){
                 $Mamonts['data'][$key]['type'] = "Домен";
             }
             $shortName = substr($mamontProfileInfo['email'], 0, 4);
@@ -212,6 +213,39 @@ class AdminController extends Controller
         }
 
         return view("admin.orders", ["orders" => $orders]);
+    }
+
+    public function viewNews(){
+        $news = News::all();
+        return view("admin.news", ['News' => $news]);
+    }
+
+    public function createNews(Request $request){
+        $request->validate([
+            "title" => "required",
+            "text" => "required",
+            "logo" => "required|image|mimes:jpeg,png,jpg,gif|max:2048",
+        ]);
+
+        $image = $request->file('logo');
+        $imageName = time() . '.' . $image->extension();
+        $image->move(public_path('images/news/logos'), $imageName);
+        $relativePath = 'images/news/logos/' . $imageName;
+
+        $news = new News();
+        $news->title = $request->title;
+        $news->text = $request->text;
+        $news->logo = $relativePath;
+        $news->save();
+        return response()->json(["message" => "Новость успешно добавлена"], 201);
+    }
+    public function deleteNews($id){
+        $news = News::where("id", $id)->first();
+        if($news){
+            $news->delete();
+
+        }
+        return redirect()->back();
     }
 
 

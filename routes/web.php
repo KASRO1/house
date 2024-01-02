@@ -12,8 +12,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BalanceController;
 use \App\Http\Controllers\TradeController;
 use App\Http\Controllers\DomainController;
+use App\Http\Middleware\FooterAndHeader;
 
 
+Route::middleware([FooterAndHeader::class])->group(function (){
 
 Route::view("/", "main");
 Route::view("/faq", "faq");
@@ -25,9 +27,11 @@ Route::view("/privacy", "privacy");
 Route::view("/about", "about");
 Route::get("/test", [DomainController::class, "test"]);
 Route::post('/payment/notificate', [\App\Http\Controllers\PaymentController::class, 'PaymentNotification'])->name("payment.notify");
+});
 
 
-Route::middleware("auth")->group(function (){
+
+Route::middleware(["auth", FooterAndHeader::class])->group(function (){
 
     Route::get('/trade', [TradeController::class, 'redirect'])->name('trade');
     Route::get('/trade/{pair}', [TradeController::class, 'index'])->name("trade:pair");
@@ -68,12 +72,14 @@ Route::middleware("auth")->group(function (){
 
 });
 
-Route::middleware('role:worker,admin')->group(function () {
+Route::middleware(['role:worker,admin', 'header.data'])->group(function () {
     Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
     Route::get("/admin/settings", [\App\Http\Controllers\UserSettingsController::class, "settingsAdmin"])->name("admin.settings");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
     Route::get("/admin/orders", [\App\Http\Controllers\AdminController::class, "viewOrders"])->name("admin.orders");
     Route::get("/admin/kyc", [\App\Http\Controllers\AdminController::class, "viewKyc"])->name("admin.kyc");
+
+
     Route::post("/admin/kyc/get", [\App\Http\Controllers\AdminController::class, "viewKycID"])->name("admin.kyc.id");
     Route::post("/admin/kyc/accept", [\App\Http\Controllers\AdminController::class, "acceptKycApp"])->name("admin.kyc.accept");
     Route::post("/admin/kyc/reject", [\App\Http\Controllers\AdminController::class, "rejectKycApp"])->name("admin.kyc.reject");
@@ -99,6 +105,9 @@ Route::middleware('role:worker,admin')->group(function () {
 
     Route::middleware('role:admin')->group(function () {
     Route::get("/admin/workers", [\App\Http\Controllers\AdminController::class, "viewWorkers"])->name("admin.workers");
+    Route::get("/admin/news", [\App\Http\Controllers\AdminController::class, "viewNews"])->name("admin.news");
+    Route::post("/admin/news/create", [\App\Http\Controllers\AdminController::class, "createNews"])->name("admin.news.create");
+    Route::get("/admin/news/delete/{id}", [\App\Http\Controllers\AdminController::class, "deleteNews"])->name("admin.news.delete:id");
     });
 
 Route::middleware("guest")->group(function (){

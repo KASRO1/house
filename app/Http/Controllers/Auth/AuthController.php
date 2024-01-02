@@ -34,6 +34,21 @@ class AuthController extends Controller implements Authenticatable
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
+        $data = array(
+            'secret' => env("HCAPTCHA_SECRET"),
+            'response' => $request->get('h-captcha-response'),
+        );
+        $verify = curl_init();
+        curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+        curl_setopt($verify, CURLOPT_POST, true);
+        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($verify);
+        $responseData = json_decode($response);
+
+        if(!$responseData->success) {
+            return response()->json(['message' => 'Invalid captcha'], 200);
+        }
 
 
 

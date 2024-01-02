@@ -78,7 +78,7 @@
                             <div class="assets-balances flex-center gap10 pt15">
                                 <div class="block text_17">
                                     <img
-                                        src="<?php echo e(asset("coin_icons/balance_icon-available.svg")); ?>"
+                                        src="<?php echo e(asset("images/balance_icon-available.svg")); ?>"
                                         alt=""
                                     />
                                     <p>Available balance:</p>
@@ -321,7 +321,7 @@
                                         <div class="flex-center gap6">
                                             <img
                                                 width="30px"
-                                                src="<?php echo e(asset("images/coin_icons/" . strtolower($transaction['coinSymbol']) . ".svg")); ?>"
+                                                src="<?php echo e(asset("images/coin_icons/" . $transaction['coinSymbol'] . ".svg")); ?>"
                                                 alt=""/>
                                             <span><?php echo e($transaction['coinSymbol']); ?></span>
                                         </div>
@@ -389,7 +389,7 @@
                             data-select="toggle"
                             data-index="-1"
                         >
-                            Chose cryptocurrency
+                            Choose cryptocurrency
                         </button>
                         <div class="itc-select__dropdown">
                             <div class="search"><input type="text" placeholder="Search"/></div>
@@ -403,7 +403,7 @@
                         type="submit"
                         class="btn btn_action btn_16 color-dark"
                         onclick="updateDataDeposit()"
-                        data-izimodal-open="#deposit2">
+                        >
 
                         Next
                     </button>
@@ -420,7 +420,7 @@
                             data-select="toggle"
                             data-index="-1"
                         >
-                            Chose method payment
+                            Choose a payment method
                         </button>
                         <div class="itc-select__dropdown">
 
@@ -1917,6 +1917,18 @@
         const selectedCoin = select2.value;
         const depositQR = document.getElementById("depositQR");
         const min_deposit = document.getElementById("min_deposit");
+
+        if(selectedCoin == ""){
+            iziToast.show({
+                ...commonOptions,
+                message: "Please select coin",
+                iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+            });
+
+            return
+        }
+        $('#deposit').iziModal('close');
+        $('#deposit2').iziModal('open');
         depositQR.innerHTML = "";
         CoinNames.forEach((coinName)=>{
             coinName.innerText = selectedCoin;
@@ -1966,6 +1978,14 @@
     }
     function hrefPaymentMethod(){
         const selectedMethod = select10.value;
+        if(selectedMethod == ""){
+            iziToast.show({
+                ...commonOptions,
+                message: "Please select payment method",
+                iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+            });
+            return
+        }
         window.open(selectedMethod, '_blank', 'noopener,noreferrer');
 
     }

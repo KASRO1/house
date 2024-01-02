@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{asset("css/iziToast.css")}}" />
     <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
     @yield('head')
+    <script src='https://www.hCaptcha.com/1/api.js' async defer></script>
 </head>
 <body>
 @yield('header')
@@ -86,6 +87,7 @@
                                 >
                             </label>
                         </div>
+                        <div class="h-captcha" data-sitekey="{{env("HCAPTCHA_SITEKEY")}}"></div>
                         <input id="btn_submit"
                             class="submit btn btn_16 color-white"
                             type="submit"

@@ -2,222 +2,204 @@
 @include("admin.layouts.aside")
 @include("admin.layouts.head")
 @include("admin.layouts.footer")
+
+
     <!DOCTYPE html>
 <html lang="en">
 <head>
     @yield("head")
-    <title>Домены</title>
+    <title>Cryptonix | Новости</title>
 </head>
-
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
-<script src="/assets_admin/js/hs.theme-appearance.js"></script>
-
-<script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js"></script>
-
-<!-- ========== HEADER ========== -->
-
 @yield("header")
-<!-- ========== END HEADER ========== -->
-
 <!-- ========== MAIN CONTENT ========== -->
-<!-- Navbar Vertical -->
-
 @yield("aside")
-
 <main id="content" role="main" class="main">
     <!-- Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
-        <div    >
-            <div class="row align-items-center mb-3">
+        <div class="page-header">
+            <div class="row align-items-end">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title">Домены <span class="badge bg-soft-dark text-dark ms-2">0</span></h1>
 
 
+                    <h1 class="page-header-title">Новости</h1>
                 </div>
                 <!-- End Col -->
 
                 <div class="col-sm-auto">
-                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDomainModal">Привязать домен</a>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#createAKIKeyModal">
+                        <i class="bi-plus me-1"></i> Создать новость
+                    </button>
                 </div>
                 <!-- End Col -->
             </div>
             <!-- End Row -->
-
-            <!-- Nav Scroller -->
-            <div class="js-nav-scroller hs-nav-scroller-horizontal">
-          <span class="hs-nav-scroller-arrow-prev" style="display: none;">
-            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-              <i class="bi-chevron-left"></i>
-            </a>
-          </span>
-
-                <span class="hs-nav-scroller-arrow-next" style="display: none;">
-            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-              <i class="bi-chevron-right"></i>
-            </a>
-          </span>
-
-                <!-- Nav -->
-
-                <!-- End Nav -->
-            </div>
-            <!-- End Nav Scroller -->
         </div>
         <!-- End Page Header -->
 
-        <div class="row justify-content-end mb-3">
-            <div class="col-lg">
-                <!-- Datatable Info -->
-                <div id="datatableCounterInfo" style="display: none;">
-                    <div class="d-sm-flex justify-content-lg-end align-items-sm-center">
-              <span class="d-block d-sm-inline-block fs-5 me-3 mb-2 mb-sm-0">
-                <span id="datatableCounter">0</span>
-                Selected
-              </span>
-                        <a class="btn btn-outline-danger btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-trash"></i> Delete
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-archive"></i> Archive
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-upload"></i> Publish
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0" href="javascript:;">
-                            <i class="bi-x-lg"></i> Unpublish
-                        </a>
-                    </div>
-                </div>
-                <!-- End Datatable Info -->
-            </div>
-        </div>
-        <!-- End Row -->
 
         <!-- Card -->
         <div class="card">
             <!-- Header -->
+            <div class="card-header card-header-content-sm-between">
+                <div class="mb-2 mb-sm-0">
+                    <h4 class="card-header-title">Новости</h4>
 
+                </div>
+
+                <div class="d-grid d-sm-flex justify-content-sm-between align-items-sm-center gap-2">
+                    <!-- Datatable Info -->
+                    <div id="datatableCounterInfo" style="display: none;">
+                        <div class="d-flex align-items-center">
+                <span class="fs-6 me-3">
+                  <span id="datatableCounter">0</span>
+                  Selected
+                </span>
+                            <a class="btn btn-outline-danger btn-sm" href="javascript:;"><i class="bi-trash"></i> Delete</a>
+                        </div>
+                    </div>
+                    <!-- End Datatable Info -->
+
+                    <!-- Dropdown -->
+
+                    <!-- End Dropdown -->
+                </div>
+            </div>
             <!-- End Header -->
 
             <!-- Table -->
             <div class="table-responsive datatable-custom">
-                <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                <table id="datatable"
+                       class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+                       data-hs-datatables-options='{
                    "columnDefs": [{
-                      "targets": [0, 4, 9],
-                      "width": "5%",
+                      "targets": [0, 1, 2, 3, 6],
                       "orderable": false
                     }],
                    "order": [],
-
+                   "info": {
+                     "totalQty": "#datatableWithPaginationInfoTotalQty"
+                   },
                    "search": "#datatableSearch",
                    "entries": "#datatableEntries",
-                   "pageLength": 12,
+                   "pageLength": 6,
                    "isResponsive": false,
                    "isShowPaging": false,
                    "pagination": "datatablePagination"
                  }'>
                     <thead class="thead-light">
                     <tr>
-                        <th scope="col" class="table-column-pe-0">
-                        </th>
-                        <th class="table-column-ps-0">Домен</th>
-                        <th>Заголовок</th>
-                        <th>Статус</th>
-                        <th>Ns записи</th>
-                        <th>STMP данные</th>
-                        <th>Статус cloudflare</th>
+                        <th class="table-column-pe-0">
 
-                        <th>Действия</th>
+                        </th>
+                        <th class="table-column-ps-0">ЗАГОЛОВОК</th>
+                        <th>ТЕКСТ</th>
+                        <th>Дата</th>
+                        <th>#</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    @foreach($domains as $domain)
-                        <tr class="" id="domainID{{$domain['id']}}">
-                            <td class="table-column-pe-0">
+                    @foreach($News as $news)
+                    <tr>
+                        <td class="table-column-pe-0">
 
-                            </td>
-                            <td class="table-column-ps-0">
-                                <a class="d-flex align-items-center" href="./ecommerce-product-details.html">
-{{--                                    <div class="flex-shrink-0">--}}
-{{--                                        <img class="avatar avatar-lg" src="{{asset($domain['logo'])}}" alt="Image Description">--}}
-{{--                                    </div>--}}
-                                    <div class="flex-grow-1 ms-3">
-                                        <h5 class="text-inherit mb-0">{{$domain['domain']}}</h5>
-                                    </div>
-                                </a>
-                            </td>
-                            <td>{{$domain['title']}}</td>
-
-                            <td>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="stocksCheckbox1" checked>
-                                    <label class="form-check-label" for="stocksCheckbox1"></label>
+                        </td>
+                        <td class="table-column-ps-0 p-4 ">
+                            <a class="d-flex align-items-center" href="./ecommerce-product-details.html">
+                                <div class="flex-shrink-0">
+                                    <img class="avatar avatar-lg" src="{{asset($news['logo'])}}" alt="Image Description">
                                 </div>
-                            </td>
-                            <td>{{$domain['ns']}}</td>
-                            <td>{{$domain['stmp_host'] . " - " . $domain['stmp_email'] . " - " . $domain['stmp_password']}}</td>
-                            <td class="transition " id="CfStatus{{$domain['id']}}">
-                                @if($domain['status'])
-
-                                    <span class="bi-clock"></span>
-                                    Pending
-                                @else
-                                    <span class="legend-indicator bg-success"></span>
-                                    Active
-                                @endif
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <a class="btn btn-white btn-sm" href="./ecommerce-product-details.html">
-                                        <i class="bi-pencil-fill me-1"></i> Изменить
-                                    </a>
-
-                                    <!-- Button Group -->
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty" id="productsEditDropdown1" data-bs-toggle="dropdown" aria-expanded="false"></button>
-
-                                        <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="productsEditDropdown1">
-                                            <a onclick="deleteDomain({{$domain['id']}})" class="dropdown-item" >
-                                                <i class="bi-trash dropdown-item-icon"></i> Удалить
-                                            </a>
-                                            <a id="updateStatusBlock{{$domain['id']}}" onclick="updateStatusCloudFlare({{$domain['id']}})" class="dropdown-item" href="#">
-                                                <i class="bi-arrow-clockwise dropdown-item-icon"></i> Обновить статус Cloudflare
-                                            </a>
-
-                                        </div>
-                                    </div>
-                                    <!-- End Button Group -->
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="text-inherit mb-0">{{$news['title']}}</h5>
                                 </div>
-                            </td>
-                        </tr>
+                            </a>
+                        </td>
+                        <td>
+                          {{$news['text']}}
+                        </td>
+                        <td>{{$news['created_at']}}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-white btn-sm" id="apiKeyDropdown1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Еще <i class="bi-chevron-down ms-1"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="apiKeyDropdown1">
 
+                                    <a class="dropdown-item text-danger" href="{{route("admin.news.delete:id", $news['id'])}}">Удалить новость</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                     @endforeach
-
-
 
                     </tbody>
                 </table>
             </div>
             <!-- End Table -->
 
+            <!-- Footer -->
+            <div class="card-footer">
+                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
+                    <div class="col-sm mb-2 mb-sm-0">
+                        <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                            <span class="me-2">Показать:</span>
 
+                            <!-- Select -->
+                            <div class="tom-select-custom">
+                                <select id="datatableEntries"
+                                        class="js-select form-select form-select-borderless w-auto" autocomplete="off"
+                                        data-hs-tom-select-options='{
+                            "searchInDropdown": false,
+                            "hideSearch": true
+                          }'>
+                                    <option value="4">4</option>
+                                    <option value="6" selected>6</option>
+                                    <option value="8" disabled>8</option>
+                                    <option value="12" disabled>12</option>
+                                </select>
+                            </div>
+                            <!-- End Select -->
+
+                            <span class="text-secondary me-2">записей</span>
+
+                            <!-- Pagination Quantity -->
+                            <span id="datatableWithPaginationInfoTotalQty"></span>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+
+                    <div class="col-sm-auto">
+                        <div class="d-flex justify-content-center justify-content-sm-end">
+                            <!-- Pagination -->
+                            <nav id="datatablePagination" aria-label="Activity pagination"></nav>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+            </div>
+            <!-- End Footer -->
         </div>
         <!-- End Card -->
     </div>
     <!-- End Content -->
 
     <!-- Footer -->
-    @yield("footer")
+
+@yield("footer")
     <!-- End Footer -->
 </main>
 <!-- ========== END MAIN CONTENT ========== -->
 
 <!-- ========== SECONDARY CONTENTS ========== -->
 <!-- Keyboard Shortcuts -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasKeyboardShortcuts" aria-labelledby="offcanvasKeyboardShortcutsLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasKeyboardShortcuts"
+     aria-labelledby="offcanvasKeyboardShortcutsLabel">
     <div class="offcanvas-header">
         <h4 id="offcanvasKeyboardShortcutsLabel" class="mb-0">Keyboard shortcuts</h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -235,7 +217,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">b</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">b</kbd>
                     </div>
                 </div>
                 <!-- End Row -->
@@ -249,7 +232,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">i</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">i</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -264,7 +248,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">u</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">u</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -279,7 +264,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                         <!-- End Col -->
                     </div>
                 </div>
@@ -294,7 +281,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -309,7 +297,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">e</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">e</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -435,7 +424,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">r</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">r</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -450,7 +440,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">n</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">n</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -465,7 +456,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">p</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">p</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -495,7 +487,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Tab</kbd>
+                        <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Tab</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -510,7 +503,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1"><i class="bi-arrow-up-short"></i></kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1"><i class="bi-arrow-up-short"></i></kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -525,7 +520,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1"><i class="bi-arrow-down-short fs-5"></i></kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1"><i class="bi-arrow-down-short fs-5"></i></kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -540,7 +537,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">m</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">m</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -555,7 +554,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">z</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">z</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -570,7 +570,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">y</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">y</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -591,7 +592,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">n</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">n</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -606,7 +609,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">p</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">p</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -621,7 +626,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -636,7 +643,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">o</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">o</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -651,7 +660,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">/</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">/</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -664,7 +675,8 @@
 <!-- End Keyboard Shortcuts -->
 
 <!-- Activity -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream" aria-labelledby="offcanvasActivityStreamLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream"
+     aria-labelledby="offcanvasActivityStreamLabel">
     <div class="offcanvas-header">
         <h4 id="offcanvasActivityStreamLabel" class="mb-0">Activity stream</h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -682,7 +694,8 @@
                     <div class="step-content">
                         <h5 class="mb-1">Iana Robinson</h5>
 
-                        <p class="fs-5 mb-1">Added 2 files to task <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fd-7</a></p>
+                        <p class="fs-5 mb-1">Added 2 files to task <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fd-7</a></p>
 
                         <ul class="list-group list-group-sm">
                             <!-- List Item -->
@@ -692,10 +705,13 @@
                                         <!-- Media -->
                                         <div class="d-flex">
                                             <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="/assets_admin/svg/brands/excel-icon.svg" alt="Image Description">
+                                                <img class="avatar avatar-xs"
+                                                     src="/assets_admin/svg/brands/excel-icon.svg"
+                                                     alt="Image Description">
                                             </div>
                                             <div class="flex-grow-1 text-truncate ms-2">
-                                                <span class="d-block fs-6 text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
+                                                <span class="d-block fs-6 text-dark text-truncate"
+                                                      title="weekly-reports.xls">weekly-reports.xls</span>
                                                 <span class="d-block small text-muted">12kb</span>
                                             </div>
                                         </div>
@@ -707,10 +723,13 @@
                                         <!-- Media -->
                                         <div class="d-flex">
                                             <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="/assets_admin/svg/brands/word-icon.svg" alt="Image Description">
+                                                <img class="avatar avatar-xs"
+                                                     src="/assets_admin/svg/brands/word-icon.svg"
+                                                     alt="Image Description">
                                             </div>
                                             <div class="flex-grow-1 text-truncate ms-2">
-                                                <span class="d-block fs-6 text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
+                                                <span class="d-block fs-6 text-dark text-truncate"
+                                                      title="weekly-reports.xls">weekly-reports.xls</span>
                                                 <span class="d-block small text-muted">4kb</span>
                                             </div>
                                         </div>
@@ -737,7 +756,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Bob Dean</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-6</a> as <span class="badge bg-soft-success text-success rounded-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-6</a> as <span
+                                class="badge bg-soft-success text-success rounded-pill"><span
+                                    class="legend-indicator bg-success"></span>"Completed"</span></p>
 
                         <span class="small text-muted text-uppercase">Today</span>
                     </div>
@@ -761,13 +783,16 @@
                             <li class="list-group-item list-group-item-light">
                                 <div class="row gx-1">
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-1.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-1.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-2.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-2.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-3.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-3.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col-auto align-self-center">
                                         <div class="text-center">
@@ -810,7 +835,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Rachel King</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-success text-success rounded-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span
+                                class="badge bg-soft-success text-success rounded-pill"><span
+                                    class="legend-indicator bg-success"></span>"Completed"</span></p>
 
                         <span class="small text-muted text-uppercase">Apr 29</span>
                     </div>
@@ -828,7 +856,8 @@
                     <div class="step-content">
                         <h5 class="mb-1">Finch Hoot</h5>
 
-                        <p class="fs-5 mb-1">Earned a "Top endorsed" <i class="bi-patch-check-fill text-primary"></i> badge</p>
+                        <p class="fs-5 mb-1">Earned a "Top endorsed" <i class="bi-patch-check-fill text-primary"></i>
+                            badge</p>
 
                         <span class="small text-muted text-uppercase">Apr 06</span>
                     </div>
@@ -846,7 +875,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Project status updated</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-primary text-primary rounded-pill"><span class="legend-indicator bg-primary"></span>"In progress"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span
+                                class="badge bg-soft-primary text-primary rounded-pill"><span
+                                    class="legend-indicator bg-primary"></span>"In progress"</span></p>
 
                         <span class="small text-muted text-uppercase">Feb 10</span>
                     </div>
@@ -869,7 +901,8 @@
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-close">
-                <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal"
+                        aria-label="Close">
                     <i class="bi-x-lg"></i>
                 </button>
             </div>
@@ -879,8 +912,10 @@
             <div class="modal-body p-sm-5">
                 <div class="text-center">
                     <div class="w-75 w-sm-50 mx-auto mb-4">
-                        <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="default">
-                        <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="dark">
+                        <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg"
+                             alt="Image Description" data-hs-theme-appearance="default">
+                        <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg"
+                             alt="Image Description" data-hs-theme-appearance="dark">
                     </div>
 
                     <h4 class="h1">Welcome to Front</h4>
@@ -897,16 +932,20 @@
                 <div class="w-85 mx-auto">
                     <div class="row justify-content-between">
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg"
+                                 alt="Image Description">
                         </div>
                     </div>
                 </div>
@@ -918,145 +957,33 @@
 
 <!-- End Welcome Message Modal -->
 
-<!-- Export Products Modal -->
-<div class="modal fade" id="exportProductsModal" tabindex="-1" aria-labelledby="exportProductsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header">
-                <h4 class="modal-title" id="exportProductsModalLabel">Export products</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- End Header -->
-
-            <!-- Body -->
-            <div class="modal-body">
-                <p>This CSV file can update all product information. To update just inventory quantites use the <a class="link" href="#">CSV file for inventory.</a></p>
-
-                <div class="mb-4">
-                    <label class="form-label">Export</label>
-
-                    <div class="d-grid gap-2">
-                        <!-- Form Check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio1" checked>
-                            <label class="form-check-label" for="exportProductsRadio1">
-                                Current page
-                            </label>
-                        </div>
-                        <!-- End Form Check -->
-
-                        <!-- Form Check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio2">
-                            <label class="form-check-label" for="exportProductsRadio2">
-                                All products
-                            </label>
-                        </div>
-                        <!-- End Form Check -->
-
-                        <!-- Form Check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio3">
-                            <label class="form-check-label" for="exportProductsRadio3">
-                                Selected: 20 products
-                            </label>
-                        </div>
-                        <!-- End Form Check -->
-                    </div>
-                </div>
-
-                <label class="form-label">Export as</label>
-
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exportProductsAsRadio" id="exportProductsAsRadio1" checked>
-                    <label class="form-check-label" for="exportProductsAsRadio1">
-                        CSV for Excel, Numbers, or other spreadsheet programs
-                    </label>
-                </div>
-                <!-- End Form Check -->
-
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exportProductsAsRadio" id="exportProductsAsRadio2">
-                    <label class="form-check-label" for="exportProductsAsRadio2">
-                        Plain CSV file
-                    </label>
-                </div>
-                <!-- End Form Check -->
-            </div>
-            <!-- End Body -->
-
-            <!-- Footer -->
-            <div class="modal-footer gap-3">
-                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" class="btn btn-primary">Export products</button>
-            </div>
-            <!-- End Footer -->
-        </div>
-    </div>
-</div>
-<!-- End Export Products Modal -->
-<div class="modal fade" id="addDomainModal" tabindex="-1" aria-labelledby="addDomainModalLabel" role="dialog"
+<!-- Create New API Key Modal -->
+<div class="modal fade" id="createAKIKeyModal" tabindex="-1" aria-labelledby="createAKIKeyModalLabel" role="dialog"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-header">
-                                <h4 class="modal-title" id="addDomainModalLabel">Привязать домен</h4>
+                <h4 class="modal-title" id="createAKIKeyModalLabel">Создание новости</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- End Header -->
-            <form id="addDomain">
+            <form id="news_modal">
                 <!-- Body -->
                 <div class="modal-body">
                     <!-- Form -->
 
                     <div class="d-flex flex-column gap-2">
                         @csrf
-                        <input type="text" name="domain" class="form-control" placeholder="Введите домен">
-                        <input class="form-control" type="text" name="stmp_host" placeholder="Введите STMP Host">
-                        <input class="form-control" type="text" name="stmp_email" placeholder="Введите STMP Email">
-                        <input class="form-control" type="text" name="stmp_password" placeholder="Введите STMP пароль">
-                        <input class="form-control" type="text" name="title" placeholder="Введите заголовок биржи">
-{{--                        <div class="form-attachment-btn btn btn-sm btn-primary">Загрузите логотип--}}
-{{--                            <input type="file" class="form-attachment-btn-label" accept="image/*" name="logo" id="fileUploader">--}}
-{{--                        </div>--}}
+                        <input type="text" name="title" class="form-control"
+                               placeholder="Введите заголовок">
+                        <textarea name="text" class="form-control" placeholder="Введите текст новости"
+                                  rows="4"></textarea>
 
-
-                        <div id="nsBlock1" class="d-none transition input-group input-group-sm input-group-merge table-input-group">
-                            <input id="nsCode1" type="text" class="form-control" readonly
-                                   value="12312">
-                            <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
-                               data-bs-toggle="tooltip" title="Скопировать NS-запись" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "NS запись скопирована!",
-                        "contentTarget": "#nsCode1",
-                        "classChangeTarget": "#nsCodeIcon1",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                <i id="nsCodeIcon1" class="bi-clipboard"></i>
-                            </a>
-                        </div>
-                        <div id="nsBlock2" class="d-none transition input-group  input-group-sm input-group-merge table-input-group">
-                            <input id="nsCode2" type="text" class="form-control" readonly
-                                   value="12312">
-                            <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
-                               data-bs-toggle="tooltip" title="Скопировать NS-запись" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "NS запись скопирована!",
-                        "contentTarget": "#nsCode2",
-                        "classChangeTarget": "#nsCodeIcon2",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                <i id="nsCodeIcon2" class="bi-clipboard"></i>
-                            </a>
+                        <div class="form-attachment-btn btn btn-sm btn-primary">Загрузите фото уведомления
+                            <input type="file" class="form-attachment-btn-label" accept="image/*" name="logo" id="fileUploader">
                         </div>
                     </div>
-
 
 
                     <!-- End Form -->
@@ -1076,9 +1003,7 @@
                                 <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
                                     Закрыть
                                 </button>
-                                <button type="submit" class="btn btn-primary d-flex gap-1 align-items-center" id="submitAddDomain">
-                                    Привязать
-                                </button>
+                                <button type="submit" class="btn btn-primary">Создать</button>
                             </div>
                         </div>
                         <!-- End Col -->
@@ -1087,60 +1012,11 @@
                 </div>
             </form>
             <!-- End Footer -->
-
         </div>
     </div>
 </div>
-<!-- Import Products Modal -->
-<div class="modal fade" id="importProductsModal" tabindex="-1" aria-labelledby="importProductsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header">
-                <h4 class="modal-title" id="importProductsModalLabel">Import products by CSV</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- End Header -->
-
-            <!-- Body -->
-            <div class="modal-body">
-                <p><a class="link" href="#">Download a sample CSV template</a> to see an example of the format required.</p>
-
-                <!-- Dropzone -->
-                <div id="attachFilesNewProjectLabel" class="js-dropzone dz-dropzone dz-dropzone-card mb-4">
-                    <div class="dz-message">
-                        <img class="avatar avatar-xl avatar-4x3 mb-3" src="/assets_admin/svg/illustrations/oc-browse.svg" alt="Image Description" data-hs-theme-appearance="default">
-                        <img class="avatar avatar-xl avatar-4x3 mb-3" src="/assets_admin/svg/illustrations-light/oc-browse.svg" alt="Image Description" data-hs-theme-appearance="dark">
-
-                        <h5>Drag and drop your file here</h5>
-
-                        <p class="mb-2">or</p>
-
-                        <span class="btn btn-white btn-sm">Browse files</span>
-                    </div>
-                </div>
-                <!-- End Dropzone -->
-
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="overwriteCurrentProductsCheckbox">
-                    <label class="form-check-label" for="overwriteCurrentProductsCheckbox">
-                        Overwrite any current products that have the same handle. Existing values will be used for any missing columns. <a href="#">Learn more</a>
-                    </label>
-                </div>
-                <!-- End Form Check -->
-            </div>
-            <!-- End Body -->
-
-            <!-- Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" class="btn btn-primary">Upload and continue</button>
-            </div>
-            <!-- End Footer -->
-        </div>
-    </div>
-</div>
+<!-- End Create New API Key Modal -->
+<!-- ========== END SECONDARY CONTENTS ========== -->
 <div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true"
      style="top: 20px; right: 20px; z-index: 1000;">
     <div class="toast-header">
@@ -1158,15 +1034,6 @@
 
     </div>
 </div>
-<!-- End Import Products Modal -->
-
-
-<!-- Create New API Key Modal -->
-
-<!-- End Create New API Key Modal -->
-<!-- End Product Filter Modal -->
-<!-- ========== END SECONDARY CONTENTS ========== -->
-
 <!-- JS Global Compulsory  -->
 <script src="/assets_admin/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/assets_admin/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
@@ -1176,12 +1043,20 @@
 <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js"></script>
 <script src="/assets_admin/vendor/hs-form-search/dist/hs-form-search.min.js"></script>
 
+<script src="/assets_admin/vendor/hs-counter/dist/hs-counter.min.js"></script>
 <script src="/assets_admin/vendor/clipboard/dist/clipboard.min.js"></script>
-<script src="/assets_admin/vendor/hs-nav-scroller/dist/hs-nav-scroller.min.js"></script>
-<script src="/assets_admin/vendor/tom-select/dist/js/tom-select.complete.min.js"></script>
 <script src="/assets_admin/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="/assets_admin/vendor/datatables.net.extensions/select/select.min.js"></script>
-<script src="/assets_admin/vendor/dropzone/dist/min/dropzone.min.js"></script>
+<script src="/assets_admin/vendor/appear/dist/appear.min.js"></script>
+<script src="/assets_admin/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/assets_admin/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="/assets_admin/vendor/jszip/dist/jszip.min.js"></script>
+<script src="/assets_admin/vendor/pdfmake/build/pdfmake.min.js"></script>
+<script src="/assets_admin/vendor/pdfmake/build/vfs_fonts.js"></script>
+<script src="/assets_admin/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/assets_admin/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/assets_admin/vendor/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<script src="/assets_admin/vendor/tom-select/dist/js/tom-select.complete.min.js"></script>
 
 <!-- JS Front -->
 <script src="/assets_admin/js/theme.min.js"></script>
@@ -1192,6 +1067,29 @@
         // INITIALIZATION OF DATATABLES
         // =======================================================
         HSCore.components.HSDatatables.init($('#datatable'), {
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    className: 'd-none'
+                },
+                {
+                    extend: 'excel',
+                    className: 'd-none'
+                },
+                {
+                    extend: 'csv',
+                    className: 'd-none'
+                },
+                {
+                    extend: 'pdf',
+                    className: 'd-none'
+                },
+                {
+                    extend: 'print',
+                    className: 'd-none'
+                },
+            ],
             select: {
                 style: 'multi',
                 selector: 'td:first-child input[type="checkbox"]',
@@ -1200,86 +1098,46 @@
                     counter: '#datatableCounter',
                     counterInfo: '#datatableCounterInfo'
                 }
-            },
-            language: {
-                zeroRecords: `<div class="text-center p-4">
-              <img class="mb-3" src="/assets_admin/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
-              <img class="mb-3" src="/assets_admin/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-            <p class="mb-0">No data to show</p>
-            </div>`
             }
         });
 
-        const datatable = HSCore.components.HSDatatables.getItem('datatable')
+        const datatable = HSCore.components.HSDatatables.getItem(0)
 
-        $('.js-datatable-filter').on('change', function() {
+        $('#export-copy').click(function () {
+            datatable.button('.buttons-copy').trigger()
+        });
+
+        $('#export-excel').click(function () {
+            datatable.button('.buttons-excel').trigger()
+        });
+
+        $('#export-csv').click(function () {
+            datatable.button('.buttons-csv').trigger()
+        });
+
+        $('#export-pdf').click(function () {
+            datatable.button('.buttons-pdf').trigger()
+        });
+
+        $('#export-print').click(function () {
+            datatable.button('.buttons-print').trigger()
+        });
+
+        $('.js-datatable-filter').on('change', function () {
             var $this = $(this),
                 elVal = $this.val(),
                 targetColumnIndex = $this.data('target-column-index');
 
             datatable.column(targetColumnIndex).search(elVal).draw();
         });
-
-        $('#datatableSearch').on('mouseup', function (e) {
-            var $input = $(this),
-                oldValue = $input.val();
-
-            if (oldValue == "") return;
-
-            setTimeout(function(){
-                var newValue = $input.val();
-
-                if (newValue == ""){
-                    // Gotcha
-                    datatable.search('').draw();
-                }
-            }, 1);
-        });
-
-        $('#toggleColumn_product').change(function (e) {
-            datatable.columns(1).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_type').change(function (e) {
-            datatable.columns(2).visible(e.target.checked)
-        })
-
-        datatable.columns(3).visible(false)
-
-        $('#toggleColumn_vendor').change(function (e) {
-            datatable.columns(3).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_stocks').change(function (e) {
-            datatable.columns(4).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_sku').change(function (e) {
-            datatable.columns(5).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_price').change(function (e) {
-            datatable.columns(6).visible(e.target.checked)
-        })
-
-        datatable.columns(7).visible(false)
-
-        $('#toggleColumn_quantity').change(function (e) {
-            datatable.columns(7).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_variants').change(function (e) {
-            datatable.columns(8).visible(e.target.checked)
-        })
     });
 </script>
 
 <!-- JS Plugins Init. -->
 <script>
-    (function() {
+    (function () {
         window.onload = function () {
 
-            HSCore.components.HSClipboard.init('.js-clipboard')
 
             // INITIALIZATION OF NAVBAR VERTICAL ASIDE
             // =======================================================
@@ -1301,15 +1159,14 @@
             HSCore.components.HSTomSelect.init('.js-select')
 
 
-            // INITIALIZATION OF NAV SCROLLER
+            // INITIALIZATION OF COUNTER
             // =======================================================
-            new HsNavScroller('.js-nav-scroller')
+            new HSCounter('.js-counter')
 
 
-            // INITIALIZATION OF DROPZONE
-            // =======================================================
-            HSCore.components.HSDropzone.init('.js-dropzone')
-
+            // INITIALIZATION OF CLIPBOARD
+            // ================================================
+            HSCore.components.HSClipboard.init('.js-clipboard')
         }
     })()
 </script>
@@ -1351,125 +1208,50 @@
         })
     })()
 </script>
+
 <script>
     let Toast = new bootstrap.Toast(document.querySelector('#liveToast'))
     let MessageToast = document.querySelector('#MessageToast')
     let StatusToast = document.querySelector('#StatusToast')
-    const addDomain = document.getElementById('addDomain');
-    const submitAddDomain = document.getElementById('submitAddDomain');
-    addDomain.addEventListener('submit', function (e) {
+    const news_modal = document.getElementById("news_modal");
+    news_modal.addEventListener("submit", function (e) {
         e.preventDefault();
-        submitAddDomain.disabled = true;
-        submitAddDomain.innerHTML = '<span class="spinner-border spinner-border-sm"> </span>Привязываем к cloudflare';
-        const formData = new FormData(addDomain);
+        const formData = new FormData(news_modal);
         $.ajax({
-            url: '{{route("backend.admin.domain.add")}}',
-            type: 'POST',
+            url: "{{route('admin.news.create')}}",
+            type: "POST",
             data: formData,
             processData: false,
             contentType: false,
             success: function (data, status, xhr) {
                 console.log(data)
-                submitAddDomain.disabled = false;
-                submitAddDomain.innerHTML = 'Привязать';
                 StatusToast.innerText = "Успешно";
                 MessageToast.innerText = data.message;
                 Toast.show()
-                const ns_list = data.ns_list;
-                const nsBlock1 = document.getElementById("nsBlock1");
-                const nsBlock2 = document.getElementById('nsBlock2');
-                const nsCode1 = document.getElementById('nsCode1');
-                const nsCode2 = document.getElementById('nsCode2');
-                nsCode1.value = ns_list[0]
-                nsCode2.value = ns_list[1];
-                nsBlock1.classList.remove("d-none");
-                nsBlock2.classList.remove("d-none");
-
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
             },
             error: function (data) {
-                console.log(data);
+                console.log(data)
                 StatusToast.innerText = "Ошибка";
-                submitAddDomain.disabled = false;
-                submitAddDomain.innerHTML = 'Привязать';
-                try {
 
-                    const errors = data.responseJSON.errors;
+                const errors = data.responseJSON.errors;
 
-                    const errorMessages = Object.values(errors);
-                    errorMessages.forEach((errorMessage) => {
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
 
-                            errorMessage.forEach((message) => {
+                    errorMessage.forEach((message) => {
 
-                                MessageToast.innerText = message;
-                            });
-                            Toast.show()
-                        }
-                    )
-                } catch (e) {
-                    MessageToast.innerText = data.responseJSON.message;
+                        MessageToast.innerText = message;
+                    });
                     Toast.show()
-                }
-
-
+                });
 
             },
-
-        });
-    });
-</script>
-<script>
-    function updateStatusCloudFlare(id){
-        const updateStatusBlock = document.getElementById('updateStatusBlock'+id);
-        updateStatusBlock.innerHTML = '<span class="spinner-border spinner-border-sm me-2"> </span>Проверяем статус в cloudflare'
-        const CfStatus = document.getElementById('CfStatus'+id);
-        CfStatus.innerHTML = '<span class="spinner-border spinner-border-sm me-2"> </span>Проверяем статус в cloudflare';
-        $.ajax({
-            url: '/admin/domain/update/status/'+id,
-            data: {
-                _token: '{{csrf_token()}}'
-            },
-            type: 'POST',
-            success: function (data, status, xhr) {
-                console.log(data);
-                const dataStatus = data.status;
-                if(dataStatus === 'active') {
-                    CfStatus.innerHTML = '<span class="badge bg-success"></span> Active'
-                }
-                else{
-                    CfStatus.innerHTML = '<span class="bi bi-clock"></span> Pending'
-                }
-                updateStatusBlock.innerHTML = '<i class="bi-arrow-clockwise dropdown-item-icon"></i> Обновить статус Cloudflare'
-
-
-            },
-            error: function (data) {
-                console.log(data);
-            },
-
-        });
-    }
-
-    function deleteDomain(id){
-        const domainID = document.getElementById('domainID'+id);
-
-        domainID.classList.add("pulse");
-        domainID.classList.add("transition");
-
-        $.ajax({
-            url: '/admin/domain/delete/'+id,
-            data: {
-                _token: '{{csrf_token()}}'
-            },
-            type: 'POST',
-            success: function (data, status, xhr) {
-                StatusToast.innerText = "Успешно";
-                MessageToast.innerText = data.message;
-                Toast.show()
-                domainID.remove();
-            }
-
         })
-    }
+
+    });
 </script>
 <!-- End Style Switcher JS -->
 </body>

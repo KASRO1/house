@@ -45,8 +45,8 @@
             <!-- List -->
             <ul class="list-inline list-px-2">
               <li class="list-inline-item">
-                <i class="bi-building me-1"></i>
-                <span>Htmlstream</span>
+                <i class="bi-geo me-1"></i>
+                <span>IP USER</span>
               </li>
 
               <li class="list-inline-item">
@@ -119,14 +119,12 @@
                         <a class="dropdown-item" href="#">
                         <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
                       </a>
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-slash-circle dropdown-item-icon"></i>Заблокировать на бирже
-                      </a>
-                      <a class="dropdown-item" href="#">
-                        <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                      </a>
 
-                      <div class="dropdown-divider"></div>
+
+
+
+
+
 
                         <?php if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin"): ?>
                             <span class="dropdown-header">Настройки админа</span>
@@ -180,16 +178,15 @@
                   <ul class="list-unstyled list-py-2 text-dark mb-0">
                     <li class="pb-0"><span class="card-subtitle">О пользователе</span></li>
                     <li><i class="bi-person dropdown-item-icon"></i> <?php echo e($kyc['first_name'] ." ". $kyc['last_name']); ?></li>
-                    <li><i class="bi-briefcase dropdown-item-icon"></i> No department</li>
                     <li><i class="bi-currency-dollar dropdown-item-icon"></i> <?php echo e($totalBalance); ?></li>
 
                     <li class="pt-4 pb-0"><span class="card-subtitle">Контакты</span></li>
                     <li><i class="bi-at dropdown-item-icon"></i> <?php echo e($user['email']); ?></li>
                     <li><i class="bi-phone dropdown-item-icon"></i> <?php echo e($kyc['phone']); ?></li>
 
-                    <li class="pt-4 pb-0"><span class="card-subtitle">Teams</span></li>
-                    <li><i class="bi-people dropdown-item-icon"></i> Member of 7 teams</li>
-                    <li><i class="bi-stickies dropdown-item-icon"></i> Working on 8 projects</li>
+
+
+
                   </ul>
                 </div>
                 <!-- End Body -->

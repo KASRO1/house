@@ -33,16 +33,16 @@ class DomainController extends Controller
             'stmp_email' => 'required',
             'stmp_password' => 'required',
             'title' => 'required',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+//            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
 
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
         }
-        $image = $request->file('logo');
-        $imageName = time() . '.' . $image->extension();
-        $image->move(public_path('images/users/logos'), $imageName);
-        $relativePath = 'images/users/logos/' . $imageName;
+//        $image = $request->file('logo');
+//        $imageName = time() . '.' . $image->extension();
+//        $image->move(public_path('images/users/logos'), $imageName);
+//        $relativePath = 'images/users/logos/' . $imageName;
 
 
         $cloudflareFunction = new CloudflareFunction();
@@ -57,7 +57,7 @@ class DomainController extends Controller
         $domain->stmp_password = $request->stmp_password;
         $domain->ns = json_encode($ns_list);
         $domain->title = $request->title;
-        $domain->logo = $relativePath;
+//        $domain->logo = $relativePath;
         $domain->user_id = $request->user()->id;
         $domain->zone_id = $zone_id;
 

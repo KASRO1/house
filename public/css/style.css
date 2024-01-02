@@ -687,7 +687,13 @@ background-color: #FF6868 !important;
 }
 
 .header-link {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+    gap:5px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
 }
 .header_mobile{
     display: none;
@@ -1068,8 +1074,18 @@ section.trade {
   display: flex;
   flex-direction: column;
   gap: 15px;
-}
 
+
+}
+.footer-logo a {
+    display: flex;
+    align-items: center;
+    gap:5px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+}
 .footer-links {
   display: grid;
   grid-template-columns: auto auto auto;
@@ -2574,6 +2590,7 @@ button.clear {
   .header-content .header-link {
     position: absolute;
     bottom: 50px;
+
   }
 
   .nav-list {

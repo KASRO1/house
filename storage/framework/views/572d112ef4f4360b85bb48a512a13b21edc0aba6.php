@@ -7,7 +7,7 @@
         data-value="<?php echo e($coin['simple_name']); ?>"
         data-index="<?php echo e($coin['id_coin']); ?>">
         <img
-            src="<?php echo e(asset('/images/coin_icons/'.strtolower($coin['simple_name']).'.svg')); ?>"
+            src="<?php echo e(asset('/images/coin_icons/'.$coin['simple_name'].'.svg')); ?>"
             alt=""
             class="select-img"
         />
@@ -26,7 +26,7 @@
             data-value="<?php echo e($coinPayment['simple_name']); ?>"
             data-index="<?php echo e($coinPayment['id_coin']); ?>">
             <img
-                src="<?php echo e(asset('/images/coin_icons/'.strtolower($coinPayment['simple_name']).'.svg')); ?>"
+                src="<?php echo e(asset('/images/coin_icons/'.$coinPayment['simple_name'].'.svg')); ?>"
                 alt=""
                 class="select-img"
             />
