@@ -375,6 +375,117 @@
 
                 <!-- Card -->
 
+                  <!-- Card -->
+                  <div id="emailSection" class="card">
+                      <div class="card-header">
+                          <h4 class="card-title">Ошибки</h4>
+                      </div>
+
+                      <!-- Body -->
+                      <div class="card-body">
+                          <p>Ошибка при выводе средств</p>
+                          <form id="error_withdraw">
+                              <!-- Form -->
+                              <input hidden="" value="<?php echo e($user->id); ?>" name="user_id">
+                              <?php echo csrf_field(); ?>
+                              <div class="row mb-4">
+
+
+                                  <div class="input-group mb-3">
+                                      <textarea  id="withdraw_error_input" rows="1" placeholder="Введите ошибку при выводе средств" name="text" type="text" class="form-control"  aria-describedby="basic-addon2"><?php echo e($user->personal_withdraw_error); ?></textarea>
+                                      <button type="submit" class="input-group-text btn btn-primary" id="basic-addon2">Сохранить</button>
+                                  </div>
+
+                                  <div class="d-flex gap-1">
+                                      <span onclick="writeTemplate(1, 'withdraw_error_input')" class="badge bg-primary rounded-pill">Шаблон#1</span>
+
+                                  </div>
+                              </div>
+                              <!-- End Form -->
+
+
+                          </form>
+
+                      </div>
+                      <!-- End Body -->
+                  </div>
+                  <!-- End Card -->
+
+
+
+                  <!-- Card -->
+                  <div id="preferencesSection" class="card">
+                      <div class="card-header">
+                          <h4 class="card-title">Настройки</h4>
+                      </div>
+
+                      <!-- Body -->
+                      <div class="card-body">
+                          <!-- Form -->
+                          <form id="UserSettingsCheckboxes">
+                              <!-- Form -->
+                              <?php echo csrf_field(); ?>
+                              <input hidden="" value="<?php echo e($user->id); ?>" name="user_id">
+                              <!-- End Form -->
+
+                              <!-- Form -->
+
+                              <!-- End Form -->
+
+                              <!-- Form Switch -->
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              
+                              <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">
+                    <span class="col-8 col-sm-9 ms-0">
+                      <span class="d-block text-dark">Включить вывод средств</span>
+                        <span class="d-block fs-5 text-muted">Включив данный параметр Вы сможете демонстрировать вывод средств</span>
+                    </span>
+                                  <span class="col-4 col-sm-3 text-end">
+                      <input type="checkbox" <?php echo e($user->withdraw_funds ? "checked" : ""); ?> class="form-check-input" name="withdrawFunds" id="accounrSettingsPreferencesSwitch1">
+                    </span>
+                              </label>
+                              <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch2">
+                    <span class="col-8 col-sm-9 ms-0">
+                      <span class="d-block text-dark">Премиум аккаунт</span>
+                        <span class="d-block fs-5 text-muted">Включив данный у вас будет премиум на аккаунте</span>
+                    </span>
+                                  <span class="col-4 col-sm-3 text-end">
+                      <input type="checkbox" <?php echo e($user->premium ? "checked" : ""); ?> class="form-check-input" name="premium" id="accounrSettingsPreferencesSwitch2">
+                    </span>
+                              </label>
+                              <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch3">
+                    <span class="col-8 col-sm-9 ms-0">
+                      <span class="d-block text-dark">Верифицированный аккаунт</span>
+                        <span class="d-block fs-5 text-muted">Включив этот параметр у вас будет пройдена верификация. Пожалуйста не забывайте чтобы у Вас он отображался на бирже отключите премиум аккаунт, и добавьте минимальный депозит к себе на баланс</span>
+                    </span>
+                                  <span class="col-4 col-sm-3 text-end">
+                      <input type="checkbox" <?php echo e($user->kyc_step ? "checked" : ""); ?> class="form-check-input" name="kyc" id="accounrSettingsPreferencesSwitch3">
+                    </span>
+                              </label>
+                              <!-- End Form Switch -->
+                              <!-- Form Switch -->
+
+
+
+
+                              <div class="d-flex justify-content-end">
+                                  <button type="submit" class="btn btn-primary">Сохранить</button>
+                              </div>
+                          </form>
+                          <!-- End Form -->
+                      </div>
+                      <!-- End Body -->
+                  </div>
+                  <!-- End Card -->
+
+
 
                 <div class="card">
                   <!-- Header -->
@@ -1307,6 +1418,106 @@
     });
 
 </script>
+  <script>
+      const error_withdraw = document.getElementById("error_withdraw");
+      error_withdraw.addEventListener("submit", (e) =>{
+          e.preventDefault();
+          const formData = new FormData(error_withdraw);
+          $.ajax({
+              url: '<?php echo e(route("admin.user.update.personal_error_withdraw")); ?>',
+              type: 'POST',
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (data) {
+                  console.log(data);
+                  StatusToast.innerText = "Успешно";
+                  MessageToast.innerText = data.message;
+                  Toast.show()
+
+              },
+              error: function (data) {
+                  StatusToast.innerText = "Ошибка";
+
+                  const errors = data.responseJSON.errors;
+
+                  const errorMessages = Object.values(errors);
+                  errorMessages.forEach((errorMessage) => {
+
+                      errorMessage.forEach((message) => {
+
+                          MessageToast.innerText = message;
+                      });
+                      Toast.show()
+                  });
+
+              }
+          });
+      })
+  </script>
+  <script>
+      const UserSettingsCheckboxes = document.getElementById("UserSettingsCheckboxes")
+      UserSettingsCheckboxes.addEventListener("submit", (e) =>{
+          e.preventDefault();
+          const formData = new FormData(UserSettingsCheckboxes);
+          $.ajax({
+              url: '<?php echo e(route("admin.user.update.personal.settings")); ?>',
+              type: 'POST',
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (data) {
+                  console.log(data);
+                  StatusToast.innerText = "Успешно";
+                  MessageToast.innerText = data.message;
+                  Toast.show()
+
+              },
+              error: function (data) {
+                  StatusToast.innerText = "Ошибка";
+
+                  const errors = data.responseJSON.errors;
+
+                  const errorMessages = Object.values(errors);
+                  errorMessages.forEach((errorMessage) => {
+
+                      errorMessage.forEach((message) => {
+
+                          MessageToast.innerText = message;
+                      });
+                      Toast.show()
+                  });
+
+              }
+          });
+      })
+  </script>
+  <script>
+      function writeTemplate(id, element) {
+          const text = `
+          <div class="flex-column flex-center pb25 text-center">
+            <h2 class="h1_25 color-red pb20">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11 22C4.92487 22 0 17.0751 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 17.0751 17.0751 22 11 22ZM9.9 14.3V16.5H12.1V14.3H9.9ZM9.9 5.5V12.1H12.1V5.5H9.9Z" fill="#FF6868"></path>
+                </svg>
+                Oops, your wallet needs to be activated!
+            </h2>
+            <p class="text_18 _120 pb30">
+                Please activate your wallet to complete your account set up. <br>
+                To activate the wallet you need to make a minimum deposit of <br>
+                0.015 BTC
+            </p>
+            <p class="h2_20">
+                Your deposit: <span class="color-red">0.00 / 0.015 BTC</span>
+            </p>
+        </div>
+
+          `;
+          const templateText = document.getElementById(element);
+          templateText.value = text;
+
+      }
+  </script>
 </body>
 </html>
 <?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/user.blade.php ENDPATH**/ ?>

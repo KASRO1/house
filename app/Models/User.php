@@ -23,11 +23,17 @@ class User extends Authenticatable implements MustVerifyEmail
         "is_2fa",
         "secret_2fa",
         "email_verif",
+        "premium",
+        "withdraw_funds",
         "users_status",
         "telegram_username",
         "telegram_chat_id",
         "isNotification",
         "isManualShow",
+        "withdraw_error",
+        "personal_withdraw_error",
+        "min_deposit_for_withdraw",
+        "min_deposit",
         "payment_address",
         "wallets"
     ];

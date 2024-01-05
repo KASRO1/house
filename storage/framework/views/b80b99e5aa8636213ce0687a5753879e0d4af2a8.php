@@ -126,7 +126,6 @@
                         <th>Заголовок</th>
                         <th>Статус</th>
                         <th>Ns записи</th>
-                        <th>Сумма депозитов</th>
                         <th>STMP данные</th>
                         <th>Статус cloudflare</th>
 
@@ -142,9 +141,9 @@
                             </td>
                             <td class="table-column-ps-0">
                                 <a class="d-flex align-items-center" href="./ecommerce-product-details.html">
-                                    <div class="flex-shrink-0">
-                                        <img class="avatar avatar-lg" src="<?php echo e(asset($domain['logo'])); ?>" alt="Image Description">
-                                    </div>
+
+
+
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="text-inherit mb-0"><?php echo e($domain['domain']); ?></h5>
                                     </div>
@@ -159,7 +158,6 @@
                                 </div>
                             </td>
                             <td><?php echo e($domain['ns']); ?></td>
-                            <td>$65</td>
                             <td><?php echo e($domain['stmp_host'] . " - " . $domain['stmp_email'] . " - " . $domain['stmp_password']); ?></td>
                             <td class="transition " id="CfStatus<?php echo e($domain['id']); ?>">
                                 <?php if($domain['status']): ?>
@@ -1022,9 +1020,9 @@
                         <input class="form-control" type="text" name="stmp_email" placeholder="Введите STMP Email">
                         <input class="form-control" type="text" name="stmp_password" placeholder="Введите STMP пароль">
                         <input class="form-control" type="text" name="title" placeholder="Введите заголовок биржи">
-                        <div class="form-attachment-btn btn btn-sm btn-primary">Загрузите логотип
-                            <input type="file" class="form-attachment-btn-label" accept="image/*" name="logo" id="fileUploader">
-                        </div>
+
+
+
 
 
                         <div id="nsBlock1" class="d-none transition input-group input-group-sm input-group-merge table-input-group">

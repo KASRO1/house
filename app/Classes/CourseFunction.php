@@ -9,6 +9,7 @@ class CourseFunction
     public function getCoinPrice($coin){
         $coinFunction = new CoinFunction();
         $coin = $coinFunction->getCoinInfo($coin);
+
         $url = "https://api.coincap.io/v2/assets/". strtolower($coin['full_name']);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

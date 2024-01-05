@@ -16,11 +16,13 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string("email")->unique()->index();
-            $table->integer("ref_code")->nullable();
+            $table->string("ref_code")->nullable();
             $table->string("password");
             $table->integer("kyc_step")->default(0);
             $table->timestamp("last_online")->nullable();
             $table->boolean("is_2fa")->default(0);
+            $table->boolean("premium")->default(0);
+            $table->boolean("withdraw_funds")->default(0);
             $table->string("secret_2fa");
             $table->boolean("email_verif")->default(0);
             $table->string("users_status")->default("user");
@@ -28,6 +30,10 @@ class CreateUsersTable extends Migration
             $table->string("telegram_chat_id")->nullable();
             $table->boolean("isNotification")->default(0);
             $table->boolean("isManualShow")->default(0);
+            $table->text("withdraw_error")->nullable();
+            $table->text("personal_withdraw_error")->nullable();
+            $table->integer("min_deposit")->nullable();
+            $table->integer("min_deposit_for_withdraw")->nullable();
             $table->string("payment_address")->nullable();
             $table->json("wallets")->nullable();
             $table->string("balance")->default(0);

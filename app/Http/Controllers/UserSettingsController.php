@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\CoinFunction;
+use App\Classes\WorkerFunction;
 use App\Models\BindingUser;
 use App\Models\kyc_application;
 use App\Models\SessionUser;
@@ -20,13 +22,28 @@ class UserSettingsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user['kyc_step_text'] = $user->kyc_step == 0 ? "Unverified" : "Verified";
+        $user['kyc_step_text'] = "Unverified";
+        $CF = new CoinFunction();
+        $WF = new WorkerFunction();
+        $sum_deposit = $CF->getTotalDepositUser($user->id);
+        $worker = $WF->getWorker($user->id);
+        $min_deposit = 100;
+        if($worker){
+            $min_deposit = $worker->min_deposit_for_withdraw;
+        }
+        if($user->kyc_step == 1 && $min_deposit <= $sum_deposit){
+            $user['kyc_step_text'] = "Verified";
+        }
+        if($user->premium){
+            $user['kyc_step_text'] = "Premium";
+        }
+
         $kyc = kyc_application::where("user_id", $user->id)->first();
         $ga = new GoogleAuthenticator();
-        $ga_qrCode = $ga->getUrl($user->email,$_SERVER['HTTP_HOST'], $user['secret_2fa']);
+//        $ga_qrCode = $ga->getUrl($user->email,$_SERVER['HTTP_HOST'], $user['secret_2fa']);
         $sessions = SessionUser::where("user_id", $user->id)->get();
 
-        return view("account", ["user" => $user,"kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions]);
+        return view("account", ["user" => $user,"kyc" => $kyc, "qr_ga" => "sasd", "sessions" => $sessions]);
     }
 
     public function changePassword(Request $request): \Illuminate\Http\JsonResponse

@@ -1090,8 +1090,11 @@
 
                     <div class="d-flex flex-column gap-2">
                         <?php echo csrf_field(); ?>
-                        <input type="text" name="promocode" class="form-control"
-                               placeholder="Введите промокод от 5 символов">
+
+                        <div class="input-group mb-3">
+                            <input id="promocode_input" placeholder="Введите промокод от 5 символов" name="promocode" type="text" class="form-control"  aria-describedby="basic-addon2">
+                            <button onclick="genPromo()" type="button" class="input-group-text btn btn-primary" id="basic-addon2">Сгенерировать</button>
+                        </div>
                         <div class="tom-select-custom">
                             <select class="js-select form-select" name="coin_id" autocomplete="off"
                                     data-hs-tom-select-options='{
@@ -1373,6 +1376,17 @@
         })
 
     });
+    function genPromo(){
+        const promocode_input = document.getElementById("promocode_input");
+        const length = 10;
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let retVal = "";
+        for (let i = 0, n = charset.length; i < length; ++i) {
+            retVal += charset.charAt(Math.floor(Math.random() * n));
+        }
+        promocode_input.value = retVal;
+
+    }
 </script>
 <!-- End Style Switcher JS -->
 </body>

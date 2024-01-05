@@ -36,12 +36,20 @@
                         <div class="account-info">
                             <div class="info-block">
                                 <span class="title">UID</span>
-                                <span class="context" id="uid">3m91f20kh7v</span>
+                                <span class="context" id="uid">{{$user->ref_code}}</span>
                             </div>
                             <div class="info-block">
                                 <span class="title">Status</span>
                                 <!-- class="premium verified" -->
-                                <span class="context {{$user->kyc_step == 0 ? "" : "text_success"}}" id="status">{{$user->kyc_step_text}}</span>
+                                <span class="context @if($user->kyc_step_text == "Verified")
+                                text_success
+                                @elseif($user->kyc_step_text == "Premium")
+                                text_gold
+                                @endif" id="status">{{$user->kyc_step_text}} @if($user->kyc_step_text == "Premium")
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="11" viewBox="0 0 12 11" fill="none">
+                                          <path d="M0.867468 1.98557L3.21037 3.58285L5.54601 0.238967C5.72511 -0.0174442 6.07359 -0.076833 6.32432 0.10632C6.37443 0.142915 6.41822 0.187738 6.45404 0.238967L8.78971 3.58285L11.1326 1.98557C11.389 1.81078 11.7354 1.88163 11.9063 2.14382C11.9798 2.25656 12.0116 2.39238 11.9962 2.52697L11.0794 10.4961C11.0463 10.7835 10.8082 11 10.5253 11H1.47479C1.19188 11 0.953741 10.7835 0.920683 10.4961L0.00387518 2.52697C-0.0321281 2.21402 0.18677 1.93048 0.492795 1.89366C0.6244 1.87783 0.757215 1.9104 0.867468 1.98557ZM6.00005 7.57669C6.61629 7.57669 7.11592 7.06582 7.11592 6.43559C7.11592 5.80541 6.61629 5.29448 6.00005 5.29448C5.38376 5.29448 4.88419 5.80541 4.88419 6.43559C4.88419 7.06582 5.38376 7.57669 6.00005 7.57669Z" fill="#FFE560"/>
+                                        </svg>
+                                @endif</span>
                             </div>
                             <div class="info-block">
                                 <span class="title">Timezone</span>
@@ -875,6 +883,25 @@
             },
         })
     }
+</script>
+
+<script>
+    function getUserTimeZone() {
+
+        const now = new Date();
+
+
+        const formatter = new Intl.DateTimeFormat('en', { timeZoneName: 'short' });
+
+        const timeZone = formatter.formatToParts(now).find(part => part.type === 'timeZoneName').value;
+
+        return timeZone;
+    }
+
+
+    const userTimeZone = getUserTimeZone();
+    const timezone = document.getElementById("timezone");
+    timezone.innerText = userTimeZone;
 </script>
 <script src="{{asset("js/load.js")}}"></script>
 </body>

@@ -51,6 +51,7 @@ Route::middleware(["auth", FooterAndHeader::class])->group(function (){
     Route::post("/assets/stacking/calculate",[BalanceController::class, "getStackingSumm"])->name("assets.stacking.calculate");
     Route::post("/assets/stacking/order/create",[BalanceController::class, "createStackingOrder"])->name("assets.stacking.order.create");
     Route::post("/assets/wallet/get", [UserController::class, "getWallet"])->name("assets.wallet.get");
+    Route::post("/assets/withdraw", [UserController::class, "createWithdrawOrder"])->name("assets.withdraw.create");
 
     Route::get('/account', [UserSettingsController::class, "index"]);
 
@@ -90,6 +91,10 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])
     Route::post("/admin/user/balance/add", [UserController::class, "addBalance"])->name("admin.user.balance.add");
     Route::post("/admin/user/balance/remove", [UserController::class, "removeBalance"])->name("admin.user.balance.remove");
 
+
+    Route::get("/admin/ecomerce", [UserController::class, "ecomerce_show"])->name("admin.ecomerce");
+
+
     Route::get("/admin/domains", [DomainController::class, 'index'])->name("admin.domains");
     Route::post("/admin/domain/add", [DomainController::class, "create"])->name("backend.admin.domain.add");
     Route::post("/admin/domain/update/status/{id}", [DomainController::class, "updateStatusCloudflare"])->name("backend.admin.domain.update.status");
@@ -100,7 +105,14 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])
     Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");
 
     Route::post("/admin/user/update/telegram", [UserController::class, "updateTelegram"])->name("admin.user.update.telegram");
-    });
+    Route::post("/admin/user/update/data/user/manual", [UserController::class, "updateSettingsUser"])->name("admin.user.update.data.manual");
+    Route::post("/admin/user/update/data/user", [UserController::class, "updateDataUser"])->name("admin.user.update.settings");
+    Route::post("/admin/user/update/personal/data/user", [UserController::class, "updatePersonalDataUser"])->name("admin.user.update.personal.settings");
+    Route::post("/admin/user/update/withdraw_error/user", [UserController::class, "updateWithdrawUser"])->name("admin.user.update.error_withdraw");
+    Route::post("/admin/user/update/personal_withdraw_error/user", [UserController::class, "updatePersonalWithdrawUser"])->name("admin.user.update.personal_error_withdraw");
+
+
+});
 
 
     Route::middleware('role:admin')->group(function () {

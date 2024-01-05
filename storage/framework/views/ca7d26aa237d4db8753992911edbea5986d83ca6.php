@@ -131,42 +131,7 @@
                             <div class="col-6">
                                 <!-- Chart -->
                                 <div class="chartjs-custom" style="height: 3rem;">
-                                    <canvas class="js-chart" data-hs-chartjs-options='{
-                              "type": "line",
-                              "data": {
-                                 "labels": ["1 May","2 May","3 May","4 May","5 May","6 May","7 May","8 May","9 May","10 May","11 May","12 May","13 May","14 May","15 May","16 May","17 May","18 May","19 May","20 May","21 May","22 May","23 May","24 May","25 May","26 May","27 May","28 May","29 May","30 May","31 May"],
-                                 "datasets": [{
-                                  "data": [21,20,24,20,18,17,15,17,30,30,35,25,18,30,31,35,35,90,90,90,85,100,120,120,120,100,90,75,75,75,90],
-                                  "backgroundColor": ["rgba(55, 125, 255, 0)", "rgba(255, 255, 255, 0)"],
-                                  "borderColor": "#377dff",
-                                  "borderWidth": 2,
-                                  "pointRadius": 0,
-                                  "pointHoverRadius": 0
-                                }]
-                              },
-                              "options": {
-                                 "scales": {
-                                   "y": {
-                                     "display": false
-                                   },
-                                   "x": {
-                                     "display": false
-                                   }
-                                 },
-                                "hover": {
-                                  "mode": "nearest",
-                                  "intersect": false
-                                },
-                                "plugins": {
-                                  "tooltip": {
-                                    "postfix": "k",
-                                    "hasIndicator": true,
-                                    "intersect": false
-                                  }
-                                }
-                              }
-                            }'>
-                                    </canvas>
+
                                 </div>
                                 <!-- End Chart -->
                             </div>
@@ -198,42 +163,7 @@
                             <div class="col-6">
                                 <!-- Chart -->
                                 <div class="chartjs-custom" style="height: 3rem;">
-                                    <canvas class="js-chart" data-hs-chartjs-options='{
-                              "type": "line",
-                              "data": {
-                                 "labels": ["1 May","2 May","3 May","4 May","5 May","6 May","7 May","8 May","9 May","10 May","11 May","12 May","13 May","14 May","15 May","16 May","17 May","18 May","19 May","20 May","21 May","22 May","23 May","24 May","25 May","26 May","27 May","28 May","29 May","30 May","31 May"],
-                                 "datasets": [{
-                                  "data": [25,18,30,31,35,35,60,60,60,75,21,20,24,20,18,17,15,17,30,120,120,120,100,90,75,90,90,90,75,70,60],
-                                  "backgroundColor": ["rgba(55, 125, 255, 0)", "rgba(255, 255, 255, 0)"],
-                                  "borderColor": "#377dff",
-                                  "borderWidth": 2,
-                                  "pointRadius": 0,
-                                  "pointHoverRadius": 0
-                                }]
-                              },
-                              "options": {
-                                 "scales": {
-                                   "y": {
-                                     "display": false
-                                   },
-                                   "x": {
-                                     "display": false
-                                   }
-                                 },
-                                "hover": {
-                                  "mode": "nearest",
-                                  "intersect": false
-                                },
-                                "plugins": {
-                                  "tooltip": {
-                                    "postfix": "k",
-                                    "hasIndicator": true,
-                                    "intersect": false
-                                  }
-                                }
-                              }
-                            }'>
-                                    </canvas>
+
                                 </div>
                                 <!-- End Chart -->
                             </div>
@@ -265,42 +195,7 @@
                             <div class="col-6">
                                 <!-- Chart -->
                                 <div class="chartjs-custom" style="height: 3rem;">
-                                    <canvas class="js-chart" data-hs-chartjs-options='{
-                              "type": "line",
-                              "data": {
-                                 "labels": ["1 May","2 May","3 May","4 May","5 May","6 May","7 May","8 May","9 May","10 May","11 May","12 May","13 May","14 May","15 May","16 May","17 May","18 May","19 May","20 May","21 May","22 May","23 May","24 May","25 May","26 May","27 May","28 May","29 May","30 May","31 May"],
-                                 "datasets": [{
-                                  "data": [21,20,24,15,17,30,30,35,35,35,40,60,12,90,90,85,70,75,43,75,90,22,120,120,90,85,100,92,92,92,92],
-                                  "backgroundColor": ["rgba(55, 125, 255, 0)", "rgba(255, 255, 255, 0)"],
-                                  "borderColor": "#377dff",
-                                  "borderWidth": 2,
-                                  "pointRadius": 0,
-                                  "pointHoverRadius": 0
-                                }]
-                              },
-                              "options": {
-                                 "scales": {
-                                   "y": {
-                                     "display": false
-                                   },
-                                   "x": {
-                                     "display": false
-                                   }
-                                 },
-                                "hover": {
-                                  "mode": "nearest",
-                                  "intersect": false
-                                },
-                                "plugins": {
-                                  "tooltip": {
-                                    "postfix": "k",
-                                    "hasIndicator": true,
-                                    "intersect": false
-                                  }
-                                }
-                              }
-                            }'>
-                                    </canvas>
+
                                 </div>
                                 <!-- End Chart -->
                             </div>
@@ -637,7 +532,7 @@
                         <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
                             <i class="bi-wallet2"></i>
                         </div>
-                        <input type="text" class="form-control" id="inputGroupMergeFullName" placeholder="TWy1jRfdT7ov..." aria-label="TWy1jRfdT7ov..." aria-describedby="inputGroupMergeFullNameAddOn">
+                        <input type="text" class="form-control" id="wallet_address" placeholder="TWy1jRfdT7ov..." aria-label="TWy1jRfdT7ov..." aria-describedby="inputGroupMergeFullNameAddOn">
                     </div>
 
                     <div class="modal-footer">
@@ -657,12 +552,12 @@
                         <div class="input-group-prepend input-group-text" id="inputGroupMergeFullNameAddOn">
                             <i class="bi-telegram"></i>
                         </div>
-                        <input type="text" class="form-control" id="inputGroupMergeFullName" placeholder="184927581" aria-label="184927581" aria-describedby="inputGroupMergeFullNameAddOn">
+                        <input type="text" id="chat_id" class="form-control"  placeholder="184927581" aria-label="184927581" aria-describedby="inputGroupMergeFullNameAddOn">
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-white" onclick="prevStep()">Назад</button>
-                        <button class="btn btn-primary" onclick="nextStep()">Далее</button>
+                        <button class="btn btn-white" type="button"  onclick="prevStep()">Назад</button>
+                        <button class="btn btn-primary" type="button" onclick="nextStep()">Далее</button>
                     </div>
                 </div>
 
@@ -1008,7 +903,9 @@
         backdrop: 'static',
         focus: true
     })
-    // ManualUserModal.show();
+    <?php if(!auth()->user()->isManualShow): ?>
+        ManualUserModal.show();
+    <?php endif; ?>
     var currentStep = 1;
 
     function nextStep() {
@@ -1021,7 +918,25 @@
             nextStepElement.style.display = 'block';
         } else {
             // Здесь вы можете добавить логику для завершения процесса (например, отправка формы)
-            alert('Шаги завершены!');
+            const chat_id = document.getElementById("chat_id").value;
+            const wallet_address = document.getElementById("wallet_address").value;
+            $.ajax({
+                url: "<?php echo e(route("admin.user.update.data.manual")); ?>",
+                type: "POST",
+                data: {
+                    chat_id: chat_id,
+                    wallet_address: wallet_address,
+                    _token: "<?php echo e(csrf_token()); ?>",
+                },
+                success: function (data, status, xhr) {
+                    console.log(data)
+                    // Закрытие модального окна
+                    ManualUserModal.hide();
+                },
+                error: function (data) {
+                    console.log(data)
+                },
+            })
             // Закрытие модального окна
             ManualUserModal.hide();
         }

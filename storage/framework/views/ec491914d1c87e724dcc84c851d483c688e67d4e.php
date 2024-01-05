@@ -29,6 +29,14 @@
 
 
                         </div>
+                        <div class="nav-item">
+                            <a class="nav-link " href="<?php echo e(route("admin.ecomerce")); ?>" >
+                                <i class="bi-wallet nav-icon"></i>
+                                <span class="nav-link-title">Кошелек</span>
+                            </a>
+
+
+                        </div>
                         <!-- End Collapse -->
 
                         <span class="dropdown-header mt-4">Основное</span>

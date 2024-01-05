@@ -1127,7 +1127,10 @@ section.trade {
   justify-content: space-between;
   gap: 60px;
 }
-
+.h-captcha{
+    display: flex;
+    justify-content: center;
+}
 .about-grid .about-block:first-child {
   width: 52%;
 }
@@ -1394,7 +1397,7 @@ section.trade {
     color: #ff1128 !important;
 }
 .text_gold{
-    color: gold;
+    color: gold !important;
 }
 .form-item.wrong .form-item_sub {
   visibility: visible;

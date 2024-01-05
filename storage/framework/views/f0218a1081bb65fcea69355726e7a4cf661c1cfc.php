@@ -36,12 +36,20 @@
                         <div class="account-info">
                             <div class="info-block">
                                 <span class="title">UID</span>
-                                <span class="context" id="uid">3m91f20kh7v</span>
+                                <span class="context" id="uid"><?php echo e($user->ref_code); ?></span>
                             </div>
                             <div class="info-block">
                                 <span class="title">Status</span>
                                 <!-- class="premium verified" -->
-                                <span class="context <?php echo e($user->kyc_step == 0 ? "" : "text_success"); ?>" id="status"><?php echo e($user->kyc_step_text); ?></span>
+                                <span class="context <?php if($user->kyc_step_text == "Verified"): ?>
+                                text_success
+                                <?php elseif($user->kyc_step_text == "Premium"): ?>
+                                text_gold
+                                <?php endif; ?>" id="status"><?php echo e($user->kyc_step_text); ?> <?php if($user->kyc_step_text == "Premium"): ?>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="11" viewBox="0 0 12 11" fill="none">
+                                          <path d="M0.867468 1.98557L3.21037 3.58285L5.54601 0.238967C5.72511 -0.0174442 6.07359 -0.076833 6.32432 0.10632C6.37443 0.142915 6.41822 0.187738 6.45404 0.238967L8.78971 3.58285L11.1326 1.98557C11.389 1.81078 11.7354 1.88163 11.9063 2.14382C11.9798 2.25656 12.0116 2.39238 11.9962 2.52697L11.0794 10.4961C11.0463 10.7835 10.8082 11 10.5253 11H1.47479C1.19188 11 0.953741 10.7835 0.920683 10.4961L0.00387518 2.52697C-0.0321281 2.21402 0.18677 1.93048 0.492795 1.89366C0.6244 1.87783 0.757215 1.9104 0.867468 1.98557ZM6.00005 7.57669C6.61629 7.57669 7.11592 7.06582 7.11592 6.43559C7.11592 5.80541 6.61629 5.29448 6.00005 5.29448C5.38376 5.29448 4.88419 5.80541 4.88419 6.43559C4.88419 7.06582 5.38376 7.57669 6.00005 7.57669Z" fill="#FFE560"/>
+                                        </svg>
+                                <?php endif; ?></span>
                             </div>
                             <div class="info-block">
                                 <span class="title">Timezone</span>
@@ -239,16 +247,17 @@
                             <input
                                 type="text"
                                 readonly
-                                class="clear text_17"
-                                value="Disabled"
+                                class="clear <?php echo e($user->is_2fa ? "text_success" : ""); ?> text_17"
+                                value="<?php echo e($user->is_2fa ?  "Enabled" : "Disabled"); ?>"
                             />
                         </div>
                         <div class="action">
                             <button
-                                class="btn small_btn btn_16"
-                                data-izimodal-open="#change2fa"
-                            >
-                                Enable
+                                class="btn small_btn <?php echo e($user->is_2fa ? "bg-danger" : ""); ?>  btn_16"
+
+                                <?php echo e($user->is_2fa ? "onclick=disable2FA()" : "data-izimodal-open=#change2fa"); ?>>
+                                <?php echo e($user->is_2fa ? "Disable" : "Enable"); ?>
+
                             </button>
                         </div>
                     </div>
@@ -282,14 +291,14 @@
                                     class="clear text_17 color-yellow"
                                     value="Under consideration"
                                 />
-                            <?php elseif($kyc['status'] == 1): ?>
+                            <?php elseif($kyc && $kyc['status'] == 1): ?>
                                 <input
                                     type="text"
                                     readonly
                                     class="clear text_17 text_success"
                                     value="Verified"
                                 />
-                            <?php elseif($kyc['status'] == -1): ?>{
+                            <?php elseif($kyc && $kyc['status'] == -1): ?>{
                                 <input
                                     type="text"
                                     readonly
@@ -325,80 +334,38 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <div class="account-block account-sessions">
+                    <h2 class="h2_20 pb10 pt15">Sessions </h2>
+                    <div class="flex">
+                        <?php $__currentLoopData = $sessions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="line">
+                                <div class="title text_17">
+                                    <img
+                                        class="device"
+                                        src=<?php echo e(asset("images/icon_desktop.svg")); ?>
+
+                                    alt=""
+                                    />
+                                    <span><?php echo e($session['browser']); ?> (<?php echo e($session['os']); ?>)</span>
+                                </div>
+                                <div class="content">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="clear text_17"
+                                        value="IP: <?php echo e($session['ip']); ?>"
+                                    />
+                                </div>
+                                <div class="action">
+                                    <button class="btn small_btn btn_16 trigger-disconnect" onclick="deleteSession(<?php echo e($session['id']); ?>)">
+                                        Disconnect
+                                    </button>
+                                </div>
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -493,8 +460,8 @@
             <img src="<?php echo e(asset('images/modal_close.svg')); ?>" alt="" />
         </button>
         <div class="first">
-            <div class="flex">
-                <div class="text">
+            <div class="flex gap">
+                <div class="text " style="max-width: 300px">
                     <h2 class="h1_25 pb15">
                         Two-Factor Authentication is <b class="color-red">disabled</b>
                     </h2>
@@ -504,20 +471,21 @@
                     </p>
                 </div>
                 <div class="qr">
-                    <img src="<?php echo e(asset("images/qrsample.svg")); ?>" alt="" />
+                    <img width="100px" src="<?php echo e($qr_ga); ?>" alt="" />
                 </div>
             </div>
-            <form action="#">
+            <form id="ga_form" action="#">
                 <input
                     type="text"
                     class="input mb20"
+                    name="code"
+                    oninput="validateInput(this)"
                     placeholder="Enter 6-digit code"
                     required
                 />
                 <button
                     type="submit"
-                    class="btn btn_action btn_16 color-dark trigger-enable2fa"
-                >
+                    class="btn btn_action btn_16 color-dark trigger-enable2fa">
                     Confirm
                 </button>
             </form>
@@ -536,6 +504,7 @@
                 <input
                     type="text"
                     class="input mb20"
+                    name="code"
                     placeholder="Enter 6-digit code"
                     required
                 />
@@ -654,14 +623,7 @@
         iconUrl: "<?php echo e(asset("images/succes.svg")); ?>",
         close: false,
     };
-    $(".trigger-disconnect").on("click", function (event) {
-        event.preventDefault();
-        iziToast.show({
-            ...commonOptions,
-            message: "Session disconnected",
 
-        });
-    });
     $(".trigger-changemail").on("click", function (event) {
         event.preventDefault();
         $("#confirmMail").iziModal("close");
@@ -680,21 +642,7 @@
     //     });
     // });
 
-    $(".trigger-disable2fa").on("click", function (event) {
-        event.preventDefault();
-        $("#change2fa").iziModal("close");
-        iziToast.show({
-            ...commonOptions,
-            message: "Two-factor authentication disabled",
-        });
-    });
-    $(".trigger-enable2fa").on("click", function (event) {
-        event.preventDefault();
-        iziToast.show({
-            ...commonOptions,
-            message: "Two-factor authentication enabled",
-        });
-    });
+
 
 </script>
 <script>
@@ -812,6 +760,150 @@
             },
         })
     })
+</script>
+<script>
+    const ga_form = document.getElementById("ga_form")
+    ga_form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(ga_form);
+
+        $.ajax({
+            url: "<?php echo e(route("user.2fa.enable")); ?>",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                    });
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                }
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        })
+    })
+</script>
+<script>
+    function disable2FA() {
+        $.ajax({
+            url: "<?php echo e(route("user.2fa.disable")); ?>",
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                    });
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                }
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        })
+    }
+    function deleteSession(id){
+
+
+        $.ajax({
+            url: "<?php echo e(route("user.session.delete")); ?>",
+            type: 'POST',
+            data: {
+                session_id: id,
+                _token: "<?php echo e(csrf_token()); ?>"
+            },
+            processData: false,
+            contentType: false,
+            success: function (data, status,xhr) {
+
+                if(xhr.status === 201){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: data.message,
+                        iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
+                    });
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+
+                }
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                        });
+                    });
+                });
+            },
+        })
+    }
+</script>
+
+<script>
+    function getUserTimeZone() {
+
+        const now = new Date();
+
+
+        const formatter = new Intl.DateTimeFormat('en', { timeZoneName: 'short' });
+
+        const timeZone = formatter.formatToParts(now).find(part => part.type === 'timeZoneName').value;
+
+        return timeZone;
+    }
+
+
+    const userTimeZone = getUserTimeZone();
+    const timezone = document.getElementById("timezone");
+    timezone.innerText = userTimeZone;
 </script>
 <script src="<?php echo e(asset("js/load.js")); ?>"></script>
 </body>

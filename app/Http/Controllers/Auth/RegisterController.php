@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Classes\WorkerFunction;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 use App\Models\Domain;
 use App\Models\Token;
@@ -58,6 +59,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'secret_2fa' => $secret,
+            'ref_code' => Str::random(10),
         ]);
         if ($domain) {
             $workerFunction = new WorkerFunction();

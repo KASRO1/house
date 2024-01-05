@@ -1,3 +1,4 @@
+
 @include("admin.layouts.header")
 @include("admin.layouts.aside")
 @include("admin.layouts.head")
@@ -8,7 +9,7 @@
 <head>
 
     @yield('head')
-    <title>Cryptonix | Главная</title>
+    <title>Cryptonix | Кошелек</title>
 </head>
 
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
@@ -32,13 +33,13 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h1 class="page-header-title">Главная</h1>
+                    <h1 class="page-header-title">Кошелек</h1>
                 </div>
                 <!-- End Col -->
 
                 <div class="col-auto">
                     <a class="btn btn-primary" href="javascript:;" data-bs-toggle="modal" data-bs-target="#inviteUserModal">
-                        <i class="bi-person-plus-fill me-1"></i> Привязать мамонта
+                        <i class="bi-cash-coin me-1"></i> Вывести средства
                     </a>
                 </div>
                 <!-- End Col -->
@@ -53,162 +54,115 @@
                 <!-- Card -->
                 <a class="card card-hover-shadow h-100" href="#">
                     <div class="card-body">
-                        <h6 class="card-subtitle">Всего мамонтов</h6>
+                        <h6 class="card-subtitle">Общий баланс</h6>
 
                         <div class="row align-items-center gx-2 mb-1">
                             <div class="col-6">
-                                <h2 class="card-title text-inherit">{{count($mamonts['data'])}}</h2>
+                                <h2 class="card-title text-inherit">{{$total}}$</h2>
                             </div>
                             <!-- End Col -->
 
-                            <div class="col-6">
-                                <!-- Chart -->
-                                <div class="chartjs-custom" style="height: 3rem;">
-                                    <canvas class="js-chart" data-hs-chartjs-options='{
-                              "type": "line",
-                              "data": {
-                                 "labels": [{{$mamonts['statistic']['total_mamont']['labels']}}, "02 Dec"],
-                                 "datasets": [{
-                                  "data": [{{$mamonts['statistic']['total_mamont']['data']}}],
-                                  "backgroundColor": ["rgba(55, 125, 255, 0)", "rgba(255, 255, 255, 0)"],
-                                  "borderColor": "#377dff",
-                                  "borderWidth": 2,
-                                  "pointRadius": 0,
-                                  "pointHoverRadius": 0
-                                }]
-                              },
-                              "options": {
-                                 "scales": {
-                                   "y": {
-                                     "display": false
-                                   },
-                                   "x": {
-                                     "display": false
-                                   }
-                                 },
-                                "hover": {
-                                  "mode": "nearest",
-                                  "intersect": false
-                                },
-                                "plugins": {
-                                  "tooltip": {
-
-                                    "hasIndicator": true,
-                                    "intersect": false
-                                  }
-                                }
-                              }
-                            }'>
-                                    </canvas>
-                                </div>
-                                <!-- End Chart -->
-                            </div>
-                            <!-- End Col -->
                         </div>
                         <!-- End Row -->
 
-                        <span class="badge bg-soft-success text-success">
-                <i class="bi-graph-up"></i> 100%
-              </span>
-                        <span class="text-body fs-6 ms-1">За прошлый месяц 0</span>
                     </div>
                 </a>
                 <!-- End Card -->
             </div>
 
-            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
-                <!-- Card -->
-                <a class="card card-hover-shadow h-100" href="#">
-                    <div class="card-body">
-                        <h6 class="card-subtitle">Верифицированные</h6>
+{{--            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">--}}
+{{--                <!-- Card -->--}}
+{{--                <a class="card card-hover-shadow h-100" href="#">--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h6 class="card-subtitle">Верифицированные</h6>--}}
 
-                        <div class="row align-items-center gx-2 mb-1">
-                            <div class="col-6">
-                                <h2 class="card-title text-inherit">0%</h2>
-                            </div>
-                            <!-- End Col -->
+{{--                        <div class="row align-items-center gx-2 mb-1">--}}
+{{--                            <div class="col-6">--}}
+{{--                                <h2 class="card-title text-inherit">0%</h2>--}}
+{{--                            </div>--}}
+{{--                            <!-- End Col -->--}}
 
-                            <div class="col-6">
-                                <!-- Chart -->
-                                <div class="chartjs-custom" style="height: 3rem;">
+{{--                            <div class="col-6">--}}
+{{--                                <!-- Chart -->--}}
+{{--                                <div class="chartjs-custom" style="height: 3rem;">--}}
 
-                                </div>
-                                <!-- End Chart -->
-                            </div>
-                            <!-- End Col -->
-                        </div>
-                        <!-- End Row -->
+{{--                                </div>--}}
+{{--                                <!-- End Chart -->--}}
+{{--                            </div>--}}
+{{--                            <!-- End Col -->--}}
+{{--                        </div>--}}
+{{--                        <!-- End Row -->--}}
 
-                        <span class="badge bg-soft-secondary text-secondary">
-                <i class="bi-graph-up"></i> 0%
-              </span>
-                        <span class="text-body fs-6 ms-1">За прошлый месяц 0%</span>
-                    </div>
-                </a>
-                <!-- End Card -->
-            </div>
+{{--                        <span class="badge bg-soft-secondary text-secondary">--}}
+{{--                <i class="bi-graph-up"></i> 0%--}}
+{{--              </span>--}}
+{{--                        <span class="text-body fs-6 ms-1">За прошлый месяц 0%</span>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--                <!-- End Card -->--}}
+{{--            </div>--}}
 
-            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
-                <!-- Card -->
-                <a class="card card-hover-shadow h-100" href="#">
-                    <div class="card-body">
-                        <h6 class="card-subtitle">Депозитнувшие</h6>
+{{--            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">--}}
+{{--                <!-- Card -->--}}
+{{--                <a class="card card-hover-shadow h-100" href="#">--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h6 class="card-subtitle">Депозитнувшие</h6>--}}
 
-                        <div class="row align-items-center gx-2 mb-1">
-                            <div class="col-6">
-                                <h2 class="card-title text-inherit">0%</h2>
-                            </div>
-                            <!-- End Col -->
+{{--                        <div class="row align-items-center gx-2 mb-1">--}}
+{{--                            <div class="col-6">--}}
+{{--                                <h2 class="card-title text-inherit">0%</h2>--}}
+{{--                            </div>--}}
+{{--                            <!-- End Col -->--}}
 
-                            <div class="col-6">
-                                <!-- Chart -->
-                                <div class="chartjs-custom" style="height: 3rem;">
+{{--                            <div class="col-6">--}}
+{{--                                <!-- Chart -->--}}
+{{--                                <div class="chartjs-custom" style="height: 3rem;">--}}
 
-                                </div>
-                                <!-- End Chart -->
-                            </div>
-                            <!-- End Col -->
-                        </div>
-                        <!-- End Row -->
+{{--                                </div>--}}
+{{--                                <!-- End Chart -->--}}
+{{--                            </div>--}}
+{{--                            <!-- End Col -->--}}
+{{--                        </div>--}}
+{{--                        <!-- End Row -->--}}
 
-                        <span class="badge bg-soft-secondary text-secondary">
-                <i class="bi-graph-down"></i> 0%
-              </span>
-                        <span class="text-body fs-6 ms-1">За прошлый месяц 0</span>
-                    </div>
-                </a>
-                <!-- End Card -->
-            </div>
+{{--                        <span class="badge bg-soft-secondary text-secondary">--}}
+{{--                <i class="bi-graph-down"></i> 0%--}}
+{{--              </span>--}}
+{{--                        <span class="text-body fs-6 ms-1">За прошлый месяц 0</span>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--                <!-- End Card -->--}}
+{{--            </div>--}}
 
-            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">
-                <!-- Card -->
-                <a class="card card-hover-shadow h-100" href="#">
-                    <div class="card-body">
-                        <h6 class="card-subtitle">Заблокированные</h6>
+{{--            <div class="col-sm-6 col-lg-3 mb-3 mb-lg-5">--}}
+{{--                <!-- Card -->--}}
+{{--                <a class="card card-hover-shadow h-100" href="#">--}}
+{{--                    <div class="card-body">--}}
+{{--                        <h6 class="card-subtitle">Заблокированные</h6>--}}
 
-                        <div class="row align-items-center gx-2 mb-1">
-                            <div class="col-6">
-                                <h2 class="card-title text-inherit">0%</h2>
-                            </div>
-                            <!-- End Col -->
+{{--                        <div class="row align-items-center gx-2 mb-1">--}}
+{{--                            <div class="col-6">--}}
+{{--                                <h2 class="card-title text-inherit">0%</h2>--}}
+{{--                            </div>--}}
+{{--                            <!-- End Col -->--}}
 
-                            <div class="col-6">
-                                <!-- Chart -->
-                                <div class="chartjs-custom" style="height: 3rem;">
+{{--                            <div class="col-6">--}}
+{{--                                <!-- Chart -->--}}
+{{--                                <div class="chartjs-custom" style="height: 3rem;">--}}
 
-                                </div>
-                                <!-- End Chart -->
-                            </div>
-                            <!-- End Col -->
-                        </div>
-                        <!-- End Row -->
+{{--                                </div>--}}
+{{--                                <!-- End Chart -->--}}
+{{--                            </div>--}}
+{{--                            <!-- End Col -->--}}
+{{--                        </div>--}}
+{{--                        <!-- End Row -->--}}
 
-                        <span class="badge bg-soft-secondary text-body">0.0%</span>
-                        <span class="text-body fs-6 ms-1">За прошлый месяц 0</span>
-                    </div>
-                </a>
-                <!-- End Card -->
-            </div>
+{{--                        <span class="badge bg-soft-secondary text-body">0.0%</span>--}}
+{{--                        <span class="text-body fs-6 ms-1">За прошлый месяц 0</span>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--                <!-- End Card -->--}}
+{{--            </div>--}}
         </div>
         <!-- End Stats -->
 
@@ -222,7 +176,7 @@
                 <div class="row justify-content-between align-items-center flex-grow-1">
                     <div class="col-md">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="card-header-title">Мамонты</h4>
+                            <h4 class="card-header-title">Монеты</h4>
 
                             <!-- Datatable Info -->
                             <div id="datatableCounterInfo" style="display: none;">
@@ -241,55 +195,6 @@
                     </div>
                     <!-- End Col -->
 
-                    <div class="col-auto">
-                        <!-- Filter -->
-                        <div class="row align-items-sm-center">
-                            <div class="col-sm-auto">
-                                <div class="row align-items-center gx-0">
-                                    <div class="col">
-                                        <span class="text-secondary me-2">Статус:</span>
-                                    </div>
-                                    <!-- End Col -->
-
-                                    <div class="col-auto">
-                                        <!-- Select -->
-                                        <div class="tom-select-custom tom-select-custom-end">
-                                            <select class="js-select js-datatable-filter form-select form-select-sm form-select-borderless" data-target-column-index="2" data-target-table="datatable" autocomplete="off" data-hs-tom-select-options='{
-                                  "searchInDropdown": false,
-                                  "hideSearch": true,
-                                  "dropdownWidth": "10rem"
-                                }'>
-                                                <option value="null" selected>Все</option>
-                                                <option value="Онлайн">Онлайн</option>
-                                                <option value="Оффлайн">Оффлайн</option>
-                                            </select>
-                                        </div>
-                                        <!-- End Select -->
-                                    </div>
-                                    <!-- End Col -->
-                                </div>
-                                <!-- End Row -->
-                            </div>
-                            <!-- End Col -->
-
-
-
-                            <div class="col-md">
-                                <form>
-                                    <!-- Search -->
-                                    <div class="input-group input-group-merge input-group-flush">
-                                        <div class="input-group-prepend input-group-text">
-                                            <i class="bi-search"></i>
-                                        </div>
-                                        <input id="datatableSearch" type="search" class="form-control" placeholder="Поиск юзера" aria-label="Поиск юзера">
-                                    </div>
-                                    <!-- End Search -->
-                                </form>
-                            </div>
-                            <!-- End Col -->
-                        </div>
-                        <!-- End Filter -->
-                    </div>
                     <!-- End Col -->
                 </div>
                 <!-- End Row -->
@@ -321,43 +226,39 @@
                         <th scope="col" class="table-column-pe-0">
 
                         </th>
-                        <th class="table-column-ps-0">Почта</th>
-                        <th>Статус</th>
-                        <th>Тип привязкаи</th>
-                        <th>Последний онлайн</th>
-                        <th>Дата регистрации</th>
-                        <th>Общий баланс</th>
+                        <th class="table-column-ps-0">Монета</th>
+                        <th>Баланс</th>
+                        <th>Баланс в USD</th>
+
                     </tr>
                     </thead>
 
                     <tbody>
 
-                    @foreach($mamonts['data'] as $mamont)
+                    @foreach($balances as $balance)
                         <tr>
                             <td class="table-column-pe-0">
 
                             </td>
                             <td class="table-column-ps-0">
-                                <a class="d-flex align-items-center" href="/admin/user/{{$mamont['mamontProfileInfo']['id']}}">
+                                <a class="d-flex align-items-center" href="">
                                     <div class="flex-shrink-0">
                                         <div class="avatar avatar-sm avatar-soft-primary avatar-circle">
-                                            <span class="avatar-initials">{{$mamont['mamontProfileInfo']['email'][0]}}</span>
+                                            <img class="avatar-initials" src="/images/coin_icons/{{$balance['coin']['simple_name']}}.svg"></img>
                                         </div>
                                     </div>
                                     <div class="flex-grow-1 ms-3">
-                                        <h5 class="text-inherit mb-0">{{$mamont['mamontProfileInfo']['email']}}</h5>
+                                        <h5 class="text-inherit mb-0">{{$balance['coin']['full_name']}}</h5>
                                     </div>
                                 </a>
                             </td>
                             <td>
-                                <span class="legend-indicator {{$mamont['mamontProfileInfo']['status_online'] ? "bg-success" : "bg-gray" }}"></span>{{$mamont['mamontProfileInfo']['status_online'] ? "Онлайн" : "Оффлайн" }}
+                               {{$balance['quantity'] }}
                             </td>
                             <td>
-                                {{$mamont['type']}}
+                               {{$balance['usd'] }}$
                             </td>
-                            <td>{{$mamont['mamontProfileInfo']['last_online']}}</td>
-                            <td>{{$mamont['mamontProfileInfo']['created_at']}}</td>
-                            <td>{{$mamont['mamontProfileInfo']['balance']}} $</td>
+
                         </tr>
                     @endforeach
 
@@ -471,26 +372,31 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="inviteUserModalLabel">Привязать пользователя</h4>
+                <h4 class="modal-title" id="inviteUserModalLabel">Вывод средств</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="BindingMamontForm">
+            <form id="WithdrawMoney">
             <div class="modal-body">
-                <div class="mb-4">
-                    <div class="input-group mb-2 mb-sm-0">
-
-                            @csrf
-                        <input type="text" class="form-control" name="user_id_mamont" placeholder="Найти пользователя по почте/id" aria-label="Найти пользователя по почте/id">
-
-                        <div class="input-group-append input-group-append-last-sm-down-none">
-
-                            <button type="submit" class="btn btn-primary d-none d-sm-inline-block" href="javascript:;">Привязать</button>
+                <div class="mb-2">
+                    @csrf
+                    <div class="tom-select-custom">
+                            <select class="js-select form-select" autocomplete="off"
+                                    data-hs-tom-select-options='{
+                                      "placeholder": "Выберите доступную монету...",
+                                      "hideSearch": true
+                                    }'>
+                                <option value="">Выбрать монету...</option>
+                                @foreach($balances as $balance)
+                                    <option value="{{$balance['coin']['id']}}">{{$balance['coin']['simple_name']}}</option>
+                                @endforeach
+                            </select>
                         </div>
-
-                    </div>
-
-
                 </div>
+                <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Вывести</button>
+                </div>
+            </div>
             </form>
 
 
@@ -682,9 +588,9 @@
         },
         language: {
             zeroRecords: `<div class="text-center p-4">
-              <img class="mb-3" src="./assets_admin/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
-              <img class="mb-3" src="./assets_admin/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-            <p class="mb-0">Мамонты не найдены</p>
+              <img class="mb-3" src="/assets_admin/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
+              <img class="mb-3" src="/assets_admin/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
+            <p class="mb-0">Балансы не найдены</p>
             </div>`
         }
     });

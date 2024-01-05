@@ -252,7 +252,7 @@
                     <?php $__currentLoopData = $workers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $worker): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td class="table-column-pe-0">
-                           
+
                         </td>
                         <td class="table-column-ps-0">
                             <a class="d-flex align-items-center" href="<?php echo e(route("admin.user:id", $worker['id'])); ?>">
@@ -267,8 +267,8 @@
                             </a>
                         </td>
                         <td>
-                            <span class="d-block h5 mb-0">Director</span>
-                            <span class="d-block fs-5">Human resources</span>
+                            <span class="d-block h5 mb-0"></span>
+
                         </td>
                         <td>United Kingdom</td>
                         <td>

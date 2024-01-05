@@ -32,13 +32,13 @@
                             <div class="assets-title-block">
                                 <div class="assets-title-block_start">
                                     <h1 class="h1_25">Assets overview</h1>
-                                    <button class="btn clear" title="Hide/Show balances">
-                                        <!-- <img src="./assets/images/hide_balances_show.svg" alt="" /> -->
-                                        <img
-                                            src="{{asset("images/hide_balances_hide.svg")}}"
-                                            alt=""
-                                        />
-                                    </button>
+{{--                                    <button class="btn clear" title="Hide/Show balances">--}}
+{{--                                        <!-- <img src="./assets/images/hide_balances_show.svg" alt="" /> -->--}}
+{{--                                        <img--}}
+{{--                                            src="{{asset("images/hide_balances_hide.svg")}}"--}}
+{{--                                            alt=""--}}
+{{--                                        />--}}
+{{--                                    </button>--}}
                                 </div>
                                 <div class="assets-title-block_end flex-center gap10">
                                     <button
@@ -83,7 +83,7 @@
                                     />
                                     <p>Available balance:</p>
                                     <span>{{$totalBalance['balanceUSD']}} USD</span>
-                                    <span class="color-gray2">≈ {{$totalBalance['BalanceToBTC']}} BTC</span>
+                                    <span class="color-gray2">≈ {{$totalBalance['BalanceToBTC']}} <span id=""></span></span>
                                 </div>
                                 <div class="block text_17">
                                     <img src="{{asset("images/balance_icon-spot.svg")}}" alt=""/>
@@ -526,8 +526,7 @@
                 name="cryptocurrency"
                 value=""
                 data-select="toggle"
-                data-index="-1"
-            >
+                data-index="1">
                 Chose cryptocurrency
             </button>
             <div class="itc-select__dropdown">
@@ -540,19 +539,20 @@
         <button
             type="submit"
             class="btn btn_action btn_16 color-dark"
-            data-izimodal-open="#withdraw2"
+            onclick="nextWithdrawSelectCoin()"
         >
             Next
         </button>
     </div>
     <div class="modal" id="withdraw2">
-        <button class="closemodal clear" data-izimodal-close="">
+        <form id="withdraw_form"></form>
+        <button type="button" class="closemodal clear" data-izimodal-close="">
             <img src="{{'images/modal_close.svg'}}" alt=""/>
         </button>
-        <h2 class="h1_25 pb15">Withdraw BTC</h2>
+        <h2 class="h1_25 pb15">Withdraw <span class="CoinNameWithdraw"></span></h2>
         <p class="text_16 pb25 color-red">
-            Do not send BTC unless you are certain the destination supports
-            BITCOIN transactions. If it does not, you could permanently lose
+            Do not send <span class="CoinNameWithdraw"></span> unless you are certain the destination supports
+            <span class="CoinNameWithdraw"></span> transactions. If it does not, you could permanently lose
             access to your coins
         </p>
         <p class="text_16 _115 color-gray2 pb10">Enter wallet address</p>
@@ -565,45 +565,40 @@
                 placeholder="0x0000"
             />
         </label>
-        <p class="text_16 _115 color-gray2 pb10">Quantity BTC</p>
+        <p class="text_16 _115 color-gray2 pb10">Quantity <span class="CoinNameWithdraw"></span></p>
         <label class="withdraw-label mb25">
             <input
                 type="text"
                 class="input withdraw-input"
-                id="withdraw-value"
-                value=""
+                id="amountWithdraw"
+                oninput="validateInput(this);updateDataWithdraw()"
                 placeholder="0.1234"
             />
         </label>
         <div class="withdraw-info flex-center flex-between pb25">
             <div class="fees">
                 <span class="text_small_14 color-gray2">Fees</span>
-                <span class="text_18">0.0005 BTC</span>
+                <span class="text_18" id="fees">0.5%</span>
             </div>
             <div class="receive">
                 <span class="text_small_14 color-gray2">You will receive</span>
-                <span class="text_18">0.00000 BTC</span>
+                <span class="text_18" id="reciveWithdraw"></span>
             </div>
         </div>
         <button
             type="submit"
             class="btn btn_action btn_16 color-dark"
-            data-izimodal-open="#withdraw-succes"
+            onclick="nextWithdrawInputData()"
         >
             Withdraw
         </button>
-        <button
-            type="submit"
-            class="btn btn_action btn_16 color-dark d-none"
-            data-izimodal-open="#withdraw-fail"
-        >
-            Fail
-        </button>
+
     </div>
     <div class="modal" id="withdraw-fail">
         <button class="closemodal clear" data-izimodal-close="">
             <img src="{{'images/modal_close.svg'}}" alt=""/>
         </button>
+        @if(!$withdraw_error)
         <div class="flex-column flex-center pb25 text-center">
             <h2 class="h1_25 color-red pb20">
                 <svg
@@ -629,6 +624,11 @@
                 Your deposit: <span class="color-red">0.00 / 0.015 BTC</span>
             </p>
         </div>
+        @else
+            <div class="text_18">
+                {!! $withdraw_error !!}
+            </div>
+        @endif
         <button
             type="submit"
             class="btn btn_action btn_16 color-dark"
@@ -664,17 +664,17 @@
             <div class="withdraw-status_container pb25 flex-between">
                 <div class="status">
                     <span class="smal_14 color-gray2">Withdrawal status</span>
-                    <span class="text_18 color-orange">In processing</span>
+                    <span class="text_18 color-green2">Success</span>
                 </div>
                 <div class="transaction">
                     <span class="smal_14 color-gray2">Transaction ID</span>
-                    <span class="text_18 color-orange">738492831</span>
+                    <span class="text_18 color-green2">{{rand(738492831, 99999999999)}}</span>
                 </div>
             </div>
-            <p class="text_18 _110">
-                Contact online support for <br/>
-                additional information
-            </p>
+    {{--            <p class="text_18 _110">--}}
+    {{--                Contact online support for <br/>--}}
+    {{--                additional information--}}
+    {{--            </p>--}}
         </div>
         <button
             type="submit"
@@ -1987,6 +1987,123 @@
             return
         }
         window.open(selectedMethod, '_blank', 'noopener,noreferrer');
+
+    }
+
+    function updateDataWithdraw(){
+        const CoinNames = document.querySelectorAll(".coinNameWithdraw");
+        const selectedCoin = select3.value;
+        const amount = document.getElementById("amountWithdraw");
+        const withdrawWallet = document.getElementById("withdraw-adress");
+        const withdrawFee = document.getElementById("withdraw-fee");
+        const recive = document.getElementById("reciveWithdraw");
+        const reciveValue = parseFloat(amount.value) / 100 * 0.5;
+        if(isNaN(reciveValue)){
+            recive.innerText = "0.000";
+            return
+        }
+        recive.innerText = parseFloat(amount.value) - reciveValue;
+
+
+
+
+
+    }
+    function nextWithdrawSelectCoin(){
+        const withdraw2 = document.getElementById("withdraw2");
+        if(select3.value == ""){
+            iziToast.show({
+                ...commonOptions,
+                message: "Please select coin",
+                iconUrl: "{{ asset('images/fail.svg') }}",
+            });
+            return false;
+        }
+        $('#withdraw').iziModal('close');
+        $('#withdraw2').iziModal('open');
+
+    }
+    function nextWithdrawInputData(){
+        const amount = document.getElementById("amountWithdraw");
+        $.ajax({
+            url: "{{ route("assets.balance.get") }}",
+            type: "POST",
+            data: {
+                CoinSymbol: select3.value,
+
+            },
+            success: function (data, status, xhr) {
+                if(parseFloat(amount.value) > parseFloat(data.balance)){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: "Insufficient funds",
+                        iconUrl: "{{ asset('images/fail.svg') }}",
+                    });
+                    return false;
+                }
+                const withdrawWallet = document.getElementById("withdraw-adress");
+                if(amount.value == "" || withdrawWallet.value == ""){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: "Please fill all fields",
+                        iconUrl: "{{ asset('images/fail.svg') }}",
+                    });
+                    return false;
+                }
+                $('#withdraw2').iziModal('close');
+                $('{{$withdraw_aviability ? "#withdraw-succes" : "#withdraw-fail"}}').iziModal('open');
+                @if($withdraw_aviability)
+
+                    createWithdrawOrder(select3.value, amount.value, withdrawWallet.value);
+                @endif
+
+
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "{{ asset('images/fail.svg') }}",
+                        });
+                    });
+                });
+            },
+        });
+
+
+    }
+    function createWithdrawOrder(symbol, amount, wallet){
+        $.ajax({
+            url: "{{ route("assets.withdraw.create") }}",
+            type: "POST",
+            data: {
+                CoinSymbol: symbol,
+                amount: amount,
+                wallet: wallet
+            },
+            success: function (data, status, xhr) {
+                console.log(data);
+
+            },
+            error: function (data) {
+                const errors = data.responseJSON.errors;
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+                    errorMessage.forEach((message) => {
+                        $('{{$withdraw_aviability ? "#withdraw-succes" : "#withdraw-fail"}}').iziModal('close');
+                        iziToast.show({
+                            ...commonOptions,
+                            message: message,
+                            iconUrl: "{{ asset('images/fail.svg') }}",
+                        });
+                    });
+                });
+            },
+        });
 
     }
 </script>

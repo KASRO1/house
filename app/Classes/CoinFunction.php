@@ -4,6 +4,8 @@ namespace App\Classes;
 use App\Classes\CourseFunction;
 use App\Models\Coin;
 use App\Models\Balance;
+use App\Models\Transaction;
+use App\Models\WorkerBalances;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -11,6 +13,7 @@ class CoinFunction
 {
     public function getCoinInfo($symbol_or_id_or_fullName){
         $coin = Coin::where("simple_name", $symbol_or_id_or_fullName)->orWhere("id_coin", $symbol_or_id_or_fullName)->orWhere("full_name", $symbol_or_id_or_fullName)->first();
+
         return $coin;
     }
     public function getAllCoins(){
@@ -162,6 +165,46 @@ class CoinFunction
     }
     public function removeBalanceUser($user_id, $coin_id, $quantity, $type_balance){
         $balance = Balance::where("user_id", $user_id)->where("coin_id", $coin_id)->where("type_balance", $type_balance)->first();
+        if($balance && $balance->quantity >= $quantity){
+            $balance->quantity -= $quantity;
+            $balance->save();
+            return true;
+        }
+        return false;
+    }
+
+    public function getTotalDepositUser($user_id){
+        $transactions = Transaction::where("user_id", $user_id)->where("type", "deposit")->get();
+        $total = 0;
+        foreach ($transactions as $transaction){
+            $coin = $this->getCoinInfo($transaction['coinSymbol']);
+
+            $courseFunction = new CourseFunction();
+            $total += $courseFunction->getBalanceCoinToEquivalentUsd($coin['full_name'], $transaction['amount']);
+
+        }
+        return $total;
+    }
+
+    public function addBalanceCoinWorker($coin_id, $quantity){
+        $balance = WorkerBalances::where("user_id", auth()->user()->id)->where("coin_id", $coin_id)->first();
+        if($balance){
+            $balance->quantity += $quantity;
+            $balance->save();
+            return true;
+        }
+        else{
+            $balance = new WorkerBalances();
+            $balance->user_id = auth()->user()->id;
+            $balance->coin_id = $coin_id;
+            $balance->quantity = $quantity;
+            $balance->save();
+            return true;
+        }
+
+    }
+    public function removeBalanceCoinWorker($coin_id, $quantity){
+        $balance = WorkerBalances::where("user_id", auth()->user()->id)->where("coin_id", $coin_id)->first();
         if($balance && $balance->quantity >= $quantity){
             $balance->quantity -= $quantity;
             $balance->save();

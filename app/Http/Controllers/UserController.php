@@ -10,6 +10,7 @@ use App\Models\kyc_application;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Models\WithdrawMamont;
 use Illuminate\Http\Request;
 use App\Classes\WorkerFunction;
 use Illuminate\Support\Facades\Auth;
@@ -137,12 +138,14 @@ class UserController extends Controller
         }
 
         $coinFunction = new CoinFunction();
+        $coin = $coinFunction->getCoinInfo($request->coin_id);
         $coinFunction->addBalanceCoinUserID($request->user_id, $request->coin_id, $request->amount, "standard");
         $Transaction = new Transaction();
         $Transaction->user_id = $request->user_id;
-        $Transaction->coin_id = $request->coin_id;
+        $Transaction->coinSymbol = $coin['simple_name'];
         $Transaction->amount = $request->amount;
         $Transaction->type = $request->type_deposit;
+        $Transaction->status = "Completed";
         $Transaction->save();
         return response()->json(['message' => 'Баланс успешно пополнен'], 201);
     }
@@ -203,5 +206,157 @@ class UserController extends Controller
         $user->save();
         return response()->json(['message' => 'Телеграм успешно обновлен'], 201);
     }
+    public function updateDataUser(Request $request){
 
+        $user = Auth::user();
+        if(!$user){
+            return response()->json(['errors' => ["email" => ["Пользователь не найден"]]], 401);
+        }
+        if($request->premium){
+            $user->premium = true;
+        }
+        else{
+            $user->premium = false;
+        }
+        if($request->kyc){
+            $user->kyc_step = 1;
+        }
+        else{
+            $user->kyc_step = 0;
+        }
+        if($request->withdrawFunds){
+            $user->withdraw_funds = true;
+        }
+        else{
+            $user->withdraw_funds = false;
+        }
+        $user->save();
+        return response()->json(['message' => 'Данные успешно обновлены'], 201);
+    }
+    public function updatePersonalDataUser(Request $request){
+        $user = $request->user_id;
+        $user = User::find($user);
+        $WF = new WorkerFunction();
+        if(!$WF->eligibleMamont($user->id)){
+            return response()->json(['errors' => ["user_id" => ["Пользователь не привязан"]]], 401);
+        }
+        if(!$user){
+            return response()->json(['errors' => ["email" => ["Пользователь не найден"]]], 401);
+        }
+
+        if($request->premium){
+            $user->premium = true;
+        }
+        else{
+            $user->premium = false;
+        }
+        if($request->kyc){
+            $user->kyc_step = 1;
+        }
+        else{
+            $user->kyc_step = 0;
+        }
+        if($request->withdrawFunds){
+            $user->withdraw_funds = true;
+        }
+        else{
+            $user->withdraw_funds = false;
+        }
+        $user->save();
+        return response()->json(['message' => 'Данные успешно обновлены'], 201);
+    }
+
+    public function updateSettingsUser(Request $request){
+        $validator = Validator::make($request->all(), [
+            "chat_id" => "required|int"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $user = Auth::user();
+        $user->telegram_chat_id = $request->chat_id;
+        $user->isManualShow = 1;
+        $user->save();
+        return response()->json(['message' => 'Данные успешно обновлены'], 201);
+    }
+    public function updateWithdrawUser(Request $request){
+        $validator = Validator::make($request->all(), [
+            "text" => "required"
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $user = Auth::user();
+        if(!$user){
+            return response()->json(['errors' => ["email" => ["Пользователь не найден"]]], 401);
+        }
+        $user->withdraw_error = $request->text;
+
+        $user->save();
+        return response()->json(['message' => 'Данные успешно обновлены'], 201);
+    }
+    public function updatePersonalWithdrawUser(Request $request){
+        $validator = Validator::make($request->all(), [
+            "text" => "required",
+            "user_id" => "required|exists:users,id"
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $WF = new WorkerFunction();
+        if(!$WF->eligibleMamont($request->user_id)){
+            return response()->json(['errors' => ["user_id" => ["Пользователь не привязан"]]], 401);
+        }
+        $user = User::find($request->user_id);
+        $user->personal_withdraw_error = $request->text;
+        $user->save();
+        return response()->json(['message' => 'Данные успешно обновлены'], 201);
+    }
+
+    public function createWithdrawOrder(Request $request){
+        $validator = Validator::make($request->all(), [
+            "CoinSymbol" => "required",
+            "amount" => "required|numeric",
+            "wallet" => "required",
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $coinFunction = new CoinFunction();
+        $coin = $coinFunction->getCoinInfo($request->CoinSymbol);
+        $user = $request->user();
+        if(!$user){
+            return response()->json(['errors' => ["email" => ["Пользователь не найден"]]], 401);
+        }
+        $balance = $coinFunction->getBalanceCoin($coin['id_coin']);
+        if($balance < $request->amount){
+            return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
+        }
+        $CF = new CoinFunction();
+
+        $CF->removeBalanceCoin($coin['id_coin'], $request->amount, "standard");
+
+        $Transaction = new Transaction();
+        $Transaction->user_id = $user->id;
+        $Transaction->coinSymbol = $coin['simple_name'];
+        $Transaction->amount = $request->amount;
+        $Transaction->type = "Withdraw";
+        $Transaction->status = "Completed";
+        $Transaction->address = $request->wallet;
+        $Transaction->save();
+
+
+        return response()->json(['message' => "Success"], 201);
+    }
+
+
+    public function ecomerce_show(){
+        $WF = new WorkerFunction();
+        $balances = $WF->getPositiveBalancesWorker();
+        $total = $WF->getTotalBalanceWorker();
+        return view("admin.ecomerce", ["balances" => $balances, "total" => $total]);
+    }
 }
