@@ -94,10 +94,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">${{$coins_prices['BTC']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-green">27%</span>
+                            <span class="text_18 color-green">{{$coins_prices['BTC']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -122,10 +122,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">${{$coins_prices['ETH']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-green">27%</span>
+                            <span class="text_18 color-green">{{$coins_prices['ETH']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -150,10 +150,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">${{$coins_prices['BCH']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">27%</span>
+                            <span class="text_18 color-red">{{$coins_prices['BCH']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -178,10 +178,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">${{$coins_prices['LTC']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">27%</span>
+                            <span class="text_18 color-red">{{$coins_prices['LTC']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -206,10 +206,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">${{$coins_prices['ADA']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">27%</span>
+                            <span class="text_18 color-red">{{$coins_prices['ADA']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -234,10 +234,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">${{$coins_prices['DASH']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-green">27%</span>
+                            <span class="text_18 ">{{$coins_prices['DASH']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -369,6 +369,26 @@
 
 <script src="{{asset("js/landing.js")}}"></script>
 <script src="{{asset("js/load.js")}}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elements = document.querySelectorAll('.change');
 
+        elements.forEach(function (element) {
+            var span = element.querySelector('span');
+
+            if (span) {
+                var percentage = parseFloat(span.textContent);
+
+                if (!isNaN(percentage)) {
+                    if (percentage < 0) {
+                        span.classList.add('color-red');
+                    } else if (percentage > 0) {
+                        span.classList.add('color-green');
+                    }
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

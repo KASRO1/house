@@ -13,11 +13,17 @@ use App\Http\Controllers\BalanceController;
 use \App\Http\Controllers\TradeController;
 use App\Http\Controllers\DomainController;
 use App\Http\Middleware\FooterAndHeader;
+use App\Classes\CourseFunction;
 
 
 Route::middleware([FooterAndHeader::class])->group(function (){
 
-Route::view("/", "main");
+Route::get("/", [function(){
+    $CF = new CourseFunction();
+    $coins = ["bitcoin", "ethereum", "bitcoin-cash", "litecoin", "cardano", "dash"];
+    $coins_prices = $CF->getCoinsPrices($coins);
+    return view("main", ["coins_prices" => $coins_prices]);
+}]);
 Route::view("/faq", "faq");
 Route::view("/terms", "terms");
 Route::view("/security", "security");

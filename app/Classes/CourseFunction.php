@@ -5,7 +5,24 @@ use App\Classes\CoinFunction;
 
 class CourseFunction
 {
+    public function getCoinsPrices($coins){
+        $coins_str = join(",", $coins);
+        $url = "https://api.coincap.io/v2/assets?ids=". $coins_str;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = json_decode(curl_exec($ch));
+        curl_close($ch);
+        $coins = [];
+        foreach ($output->data as $coin){
 
+            $coins[$coin->symbol] = [
+                'price' => number_format((float)$coin->priceUsd, 2),
+                'percent' => number_format((float)$coin->changePercent24Hr, 6)
+            ];
+        }
+        return $coins;
+    }
     public function getCoinPrice($coin){
         $coinFunction = new CoinFunction();
         $coin = $coinFunction->getCoinInfo($coin);
