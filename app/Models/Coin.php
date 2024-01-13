@@ -37,6 +37,7 @@ class Coin extends Model
         "staking_percent",
         "spread",
         "min_deposit",
+        "id_coingaps",
         "payment_active"
     ];
 

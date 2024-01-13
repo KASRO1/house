@@ -27,7 +27,7 @@ class CourseFunction
         $coinFunction = new CoinFunction();
         $coin = $coinFunction->getCoinInfo($coin);
 
-        $url = "https://api.coincap.io/v2/assets/". strtolower($coin['full_name']);
+        $url = "https://api.coincap.io/v2/assets/". strtolower($coin['id_coingap']);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

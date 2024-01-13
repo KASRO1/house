@@ -17,6 +17,9 @@ use App\Http\Middleware\FooterAndHeader;
 use App\Classes\CourseFunction;
 
 
+if (env('APP_ENV') == 'production') {
+    \URL::forceScheme('https');
+}
 Route::middleware([FooterAndHeader::class])->group(function (){
 
 Route::get("/", [function(){
