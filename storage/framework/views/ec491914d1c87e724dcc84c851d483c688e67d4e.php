@@ -76,8 +76,16 @@
                                     <span class="nav-link-title">Депозиты</span>
                                 </a>
                             </div>
+                            <div class="nav-item">
+                                <a class="nav-link" href="<?php echo e(route("admin.domains")); ?>" >
+                                    <i class="bi-globe nav-icon"></i>
+                                    <span class="nav-link-title">Домены</span>
+                                </a>
+
+                            </div>
                             <!-- End Collapse -->
                             <!-- Collapse -->
+
                             <div class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route("admin.promocode")); ?>" >
                                     <i class="bi-lightning-charge nav-icon"></i>
@@ -86,23 +94,21 @@
 
                             </div>
                             <div class="nav-item">
-                                <a class="nav-link" href="<?php echo e(route("admin.domains")); ?>" >
-                                    <i class="bi-globe nav-icon"></i>
-                                    <span class="nav-link-title">Домены</span>
+                                <a class="nav-link" href="<?php echo e(route("admin.kyc")); ?>" >
+                                    <i class="bi-person-check nav-icon"></i>
+                                    <span class="nav-link-title">Верификации</span>
                                 </a>
-
                             </div>
-
+                            <div class="nav-item">
+                                <a class="nav-link" href="<?php echo e(route("admin.tickets")); ?>" >
+                                    <i class="bi-chat nav-icon"></i>
+                                    <span class="nav-link-title">Тикеты</span>
+                                </a>
+                            </div>
                             <div class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route("admin.settings")); ?>" >
                                     <i class="bi-gear nav-icon"></i>
                                     <span class="nav-link-title">Настройки</span>
-                                </a>
-                            </div>
-                            <div class="nav-item">
-                                <a class="nav-link" href="<?php echo e(route("admin.kyc")); ?>" >
-                                    <i class="bi-person-check nav-icon"></i>
-                                    <span class="nav-link-title">Верификации</span>
                                 </a>
                             </div>
                         </div>

@@ -11,6 +11,7 @@ use \App\Http\Controllers\PromoСodeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BalanceController;
 use \App\Http\Controllers\TradeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DomainController;
 use App\Http\Middleware\FooterAndHeader;
 use App\Classes\CourseFunction;
@@ -53,6 +54,7 @@ Route::middleware(["auth", FooterAndHeader::class])->group(function (){
     Route::post("/assets/balance/standard/get",[BalanceController::class, "getBalanceCoin"])->name("assets.balance.get");
     Route::post("/assets/balance/spot/get",[BalanceController::class, "getBalanceCoinSpot"])->name("assets.balance.spot.get");
     Route::post("/assets/swap/coin", [BalanceController::class, "swapBalanceCoin"])->name("assets.swap.balance");
+
     Route::post("/assets/swap/price", [BalanceController::class, "convertCryptoPrice"])->name("assets.swap.convertCryptoPrice");
     Route::post("/assets/stacking/calculate",[BalanceController::class, "getStackingSumm"])->name("assets.stacking.calculate");
     Route::post("/assets/stacking/order/create",[BalanceController::class, "createStackingOrder"])->name("assets.stacking.order.create");
@@ -73,6 +75,12 @@ Route::middleware(["auth", FooterAndHeader::class])->group(function (){
     Route::post("/account/2fa/disable", [UserSettingsController::class, "disable2FA"])->name("user.2fa.disable");
     Route::post("/account/session/delete", [UserSettingsController::class, "deleteSession"])->name("user.session.delete");
 
+    Route::post("/chat/message/send", [UserController::class, "sendMessage"])->name("chat.message.send");
+    Route::post("/chat/ticket/create", [UserController::class, "createTicket"])->name("chat.ticket.create");
+    Route::post("/chat/ticket/change/status", [UserController::class, "changeStatusTicket"])->name("chat.ticket.status.change");
+    Route::post("/chat/ticket/change/read", [UserController::class, "messageRead"])->name("chat.ticket.status.read");
+    Route::get("/chat/message/get", [UserController::class, "getMessages"])->name("chat.message.get");
+
 
 
 
@@ -86,6 +94,8 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])
     Route::get("/admin/orders", [\App\Http\Controllers\AdminController::class, "viewOrders"])->name("admin.orders");
     Route::get("/admin/kyc", [\App\Http\Controllers\AdminController::class, "viewKyc"])->name("admin.kyc");
 
+    Route::get("/tickets", [AdminController::class, "viewTickects"])->name("admin.tickets");
+    Route::get("/ticket/{ticket_id}", [AdminController::class, "viewTickect"])->name("admin.ticket:id");
 
     Route::post("/admin/kyc/get", [\App\Http\Controllers\AdminController::class, "viewKycID"])->name("admin.kyc.id");
     Route::post("/admin/kyc/accept", [\App\Http\Controllers\AdminController::class, "acceptKycApp"])->name("admin.kyc.accept");

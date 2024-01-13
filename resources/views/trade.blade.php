@@ -26,6 +26,10 @@
         opacity: 1;
         transform: translateY(0);
     }
+    .grid-line.create{
+        opacity: 1;
+        transform: translateY(0);
+    }
 </style>
 <main class="trade h100">
     <section class="trade">
@@ -183,7 +187,7 @@
                                     </div>
                                     <div class="overflow" id="openOrders">
 
-                                        <div class="grid-line">
+                                        <div class="grid-line ">
                                             <div>05/21/23, 13:43:57</div>
                                             <div>BTC/USDT</div>
                                             <div>Limit</div>
@@ -457,27 +461,27 @@
                                         <div>Quantity (BTC)</div>
                                         <div>Time</div>
                                     </div>
-                                    <div class="grid-line">
+                                    <div class="grid-line create">
                                         <div class="color-red">31,113.04</div>
                                         <div class="color-white">0.229460</div>
                                         <div class="color-gray2">15:23:57</div>
                                     </div>
-                                    <div class="grid-line">
+                                    <div class="grid-line create">
                                         <div class="color-green2">31,113.04</div>
                                         <div class="color-white">0.229460</div>
                                         <div class="color-gray2">15:23:57</div>
                                     </div>
-                                    <div class="grid-line">
+                                    <div class="grid-line create">
                                         <div class="color-red">31,113.04</div>
                                         <div class="color-white">0.229460</div>
                                         <div class="color-gray2">15:23:57</div>
                                     </div>
-                                    <div class="grid-line">
+                                    <div class="grid-line create">
                                         <div class="color-green2">31,113.04</div>
                                         <div class="color-white">0.229460</div>
                                         <div class="color-gray2">15:23:57</div>
                                     </div>
-                                    <div class="grid-line">
+                                    <div class="grid-line create">
                                         <div class="color-red">31,113.04</div>
                                         <div class="color-white">0.229460</div>
                                         <div class="color-gray2">15:23:57</div>
@@ -773,21 +777,21 @@
                 if (lastPrice < data.lastPrice) {
                     valueInfo_price.classList.remove('color-red');
                     valueInfo_price.classList.add('color-green');
-                    valueInfo_price.innerHTML = data.lastPrice + '<img class="price-img" src="http://laravel.house/images/priceUp.svg" alt="">';
+                    valueInfo_price.innerHTML = data.lastPrice + '<img class="price-img" src="/images/priceUp.svg" alt="">';
                 } else {
                     valueInfo_price.classList.remove('color-green');
                     valueInfo_price.classList.add('color-red');
-                    valueInfo_price.innerHTML = data.lastPrice + '<img class="price-img" src="http://laravel.house/images/priceDown.svg" alt="">';
+                    valueInfo_price.innerHTML = data.lastPrice + '<img class="price-img" src="/images/priceDown.svg" alt="">';
                 }
 
                 if (change < data.priceChangePercent) {
                     valueInfo_change.classList.remove('color-red');
                     valueInfo_change.classList.add('color-green');
-                    valueInfo_change.innerHTML = data.priceChangePercent + '<img class="price-img" src="http://laravel.house/images/priceUp.svg" alt="">';
+                    valueInfo_change.innerHTML = data.priceChangePercent + '<img class="price-img" src="/images/priceUp.svg" alt="">';
                 } else {
                     valueInfo_change.classList.remove('color-green');
                     valueInfo_change.classList.add('color-red');
-                    valueInfo_change.innerHTML = data.priceChangePercent + '<img class="price-img" src="http://laravel.house/images/priceDown.svg" alt="">';
+                    valueInfo_change.innerHTML = data.priceChangePercent + '<img class="price-img" src="/images/priceDown.svg" alt="">';
                 }
                 valueInfo_high.innerHTML = data.highPrice;
                 valueInfo_low.innerHTML = data.lowPrice;

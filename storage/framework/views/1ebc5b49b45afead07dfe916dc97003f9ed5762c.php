@@ -4,6 +4,11 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="<?php echo e(asset("css/jquery-ui.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziToast.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/custom-select.css")); ?>"/>
     <?php echo $__env->yieldContent('head'); ?>
 </head>
 <body>
@@ -20,7 +25,7 @@
                         The world’s most trusted and most secure platform to buy, sell
                         and manage crypto
                     </p>
-                    <button class="btn btn_start btn_18">Start trading</button>
+                    <a href="<?php echo e(route('assets')); ?>" class="btn btn_start btn_18">Start trading</a>
                 </div>
             </div>
         </div>
@@ -94,10 +99,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">$<?php echo e($coins_prices['BTC']['price']); ?></span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-green">27%</span>
+                            <span class="text_18 color-green"><?php echo e($coins_prices['BTC']['percent']); ?>%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -122,10 +127,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">$<?php echo e($coins_prices['ETH']['price']); ?></span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-green">27%</span>
+                            <span class="text_18 color-green"><?php echo e($coins_prices['ETH']['percent']); ?>%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -150,10 +155,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">$<?php echo e($coins_prices['BCH']['price']); ?></span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">27%</span>
+                            <span class="text_18 color-red"><?php echo e($coins_prices['BCH']['percent']); ?>%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -178,10 +183,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">$<?php echo e($coins_prices['LTC']['price']); ?></span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">27%</span>
+                            <span class="text_18 color-red"><?php echo e($coins_prices['LTC']['percent']); ?>%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -206,10 +211,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">$<?php echo e($coins_prices['ADA']['price']); ?></span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">27%</span>
+                            <span class="text_18 color-red"><?php echo e($coins_prices['ADA']['percent']); ?>%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -234,10 +239,10 @@
                             >
                         </div>
                         <div class="line-item last">
-                            <span class="text_18">$29,084.21</span>
+                            <span class="text_18">$<?php echo e($coins_prices['DASH']['price']); ?></span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-green">27%</span>
+                            <span class="text_18 "><?php echo e($coins_prices['DASH']['percent']); ?>%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -297,7 +302,7 @@
                     </div>
                 </div>
                 <div class="trade-preview-image">
-                    <a class="btn btn_start btn_18" href="#">Get started</a>
+                    <a class="btn btn_start btn_18" href="<?php echo e(route("assets")); ?>">Get started</a>
                     <img
                         class="trade-preview_img"
                         src="<?php echo e(asset("images/trade-preview_img.png")); ?>"
@@ -369,7 +374,27 @@
 
 <script src="<?php echo e(asset("js/landing.js")); ?>"></script>
 <script src="<?php echo e(asset("js/load.js")); ?>"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elements = document.querySelectorAll('.change');
 
+        elements.forEach(function (element) {
+            var span = element.querySelector('span');
+
+            if (span) {
+                var percentage = parseFloat(span.textContent);
+
+                if (!isNaN(percentage)) {
+                    if (percentage < 0) {
+                        span.classList.add('color-red');
+                    } else if (percentage > 0) {
+                        span.classList.add('color-green');
+                    }
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>
 <?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/main.blade.php ENDPATH**/ ?>

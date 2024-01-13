@@ -482,7 +482,7 @@
                     <div class="input-group mb-2 mb-sm-0">
 
                             <?php echo csrf_field(); ?>
-                        <input type="text" class="form-control" name="user_id_mamont" placeholder="Найти пользователя по почте/id" aria-label="Найти пользователя по почте/id">
+                        <input type="text" class="form-control" name="user_id_mamont" placeholder="Найти пользователя по почте" aria-label="Найти пользователя по почте/id">
 
                         <div class="input-group-append input-group-append-last-sm-down-none">
 

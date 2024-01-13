@@ -24,7 +24,8 @@ declare namespace DataTables {
     }
 
     interface ButtonStaticFunctions {
-        new (dt: Api<any>, settings: boolean | string[] | ButtonsSettings | ButtonSettings[]): undefined;
+        new(dt: Api<any>, settings: boolean | string[] | ButtonsSettings | ButtonSettings[]): undefined;
+
         version: string;
         defaults: ButtonsSettings;
     }
@@ -36,11 +37,12 @@ declare namespace DataTables {
     interface Api<T> {
         /**
          * Select a single button from the button instances attached to a DataTable.
-         * 
+         *
          * @param groupSelector Button group (instance) selector. Provides the ability to select a button from a specific instance of the Buttons class.
          * @param buttonSelector Selector to obtain the button that should be acted upon.
          */
         button(groupSelector?: number | string | Array<number | string>, buttonSelector?: null | number | string | Node | JQuery<HTMLElement> | Array<null | number | string | Node | JQuery<HTMLElement>>): ButtonApi;
+
         buttons: ButtonsGlobalApi;
     }
 
@@ -49,29 +51,29 @@ declare namespace DataTables {
 
         /**
          * Resize the Flash movie clips to take account of the current button dimensions.
-         * 
+         *
          * @returns Unmodified DataTable API instance for chaining
          */
         resize(): Api<any>;
 
         /**
          * Display / hide an information message to the end user to indicate that something has happened.
-         * 
+         *
          * @returns DataTables API instance for chaining.
          */
         info(title: string, message?: string, time?: number): Api<any>;
 
         /**
          * Get meta information that is common to many different button types.
-         * 
+         *
          * @returns An object with properties which contain the filename, messageTop, messageBottom and title.
          */
         exportInfo(options?: ButtonsApiExportInfoParameter): ButtonsApiExportInfoReturn;
 
         /**
          * Obtain data from a DataTable that is suitable for exporting by saving into a file or copying to clipboard.
-         * 
-         * @returns An object with 3 properties, one each for the data in the header, body and footer. 
+         *
+         * @returns An object with 3 properties, one each for the data in the header, body and footer.
          */
         exportData(options?: ButtonsApiExportDataParameter): ButtonsApiExportDataReturn;
     }
@@ -79,14 +81,14 @@ declare namespace DataTables {
     interface ButtonApi {
         /**
          * Get the action function for the selected button.
-         * 
+         *
          * @returns The action function for the selected button.
          */
         action(): FunctionButtonAction;
 
         /**
          * Set the action function for the selected button.
-         * 
+         *
          * @param set the function that is to be triggered on an action.
          * @returns DataTables Api for chaining
          */
@@ -94,84 +96,84 @@ declare namespace DataTables {
 
         /**
          * Get the active state for the selected button.
-         * 
+         *
          * @returns true if currently active, otherwise false.
          */
         active(): boolean;
 
         /**
          * Set the active state for the selected button.
-         * 
+         *
          * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
          */
         active(state: boolean): Api<any>;
 
         /**
          * Create a new button, adding it to the selected button instance and inserting immediately into the document.
-         * 
+         *
          * @returns New DataTables API instance with the result set containing the newly created button. This means it is possible to immediately using the chaining API to manipulate the button.
          */
-        add(index: number | string, config: string|FunctionButtom|ButtonSettings): Api<any>;
+        add(index: number | string, config: string | FunctionButtom | ButtonSettings): Api<any>;
 
         /**
          * Disable the selected buttons.
-         * 
+         *
          * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
          */
         disable(): Api<any>;
 
         /**
          * Set the enabled state for the selected button.
-         * 
+         *
          * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
          */
         enable(state?: boolean): Api<any>;
 
         /**
          * Get a jQuery object that contains a reference to the node for the selected button.
-         * 
+         *
          * @returns A jQuery object that contains the node of the selected button
          */
         node(): JQuery;
 
         /**
          * Determine if a button is currently in the processing state or not.
-         * 
+         *
          * @returns true if the button is currently in its processing state, false otherwise.
          */
         processing(): boolean;
 
         /**
          * Set the processing state for the selected button.
-         * 
+         *
          * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the buttons.
          */
         processing(set: boolean): Api<any>;
 
         /**
          * Remove the selected button from the display. The button is destroyed and can no longer be used once removed.
-         * 
+         *
          * @returns DataTables API instance.
          */
         remove(): Api<any>;
 
         /**
          * Get the display text for the selected button
-         * 
+         *
          * @returns The current display string from the button.
          */
         text(): string;
 
         /**
          * Set the display text for the selected button
-         * 
+         *
          * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the buttons.
          */
         text(title: string | FunctionButtonText): Api<any>;
 
         /**
          * Programmatically trigger the action of the selected button.
-         * 
+         *
          * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
          */
         trigger(): Api<any>;
@@ -180,14 +182,14 @@ declare namespace DataTables {
     interface ButtonsApi {
         /**
          * Get the action function for the selected button.
-         * 
+         *
          * @returns DataTables API instance which contains the action functions for the selected buttons
          */
         action(): Api<Array<FunctionButtonAction>>;
 
         /**
          * Set the action function for the selected button.
-         * 
+         *
          * @param set the function that is to be triggered on an action.
          * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
          */
@@ -195,14 +197,14 @@ declare namespace DataTables {
 
         /**
          * Get the active state for the selected button.
-         * 
+         *
          * @returns API instance which contains true if currently active, otherwise false for each selected button in the result set.
          */
         active(): Api<Array<boolean>>;
 
         /**
          * Set the active state for the selected button.
-         * 
+         *
          * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
          */
         active(state: boolean): Api<Array<any>>;
@@ -214,70 +216,70 @@ declare namespace DataTables {
 
         /**
          * Get a jQuery instance that contains a reference to the button container instances.
-         * 
+         *
          * @returns jQuery instance that contains the container elements for the selected button instances.
          */
         containers(): JQuery;
 
         /**
          * Destroy the selected button instances, removing the container and all button elements from the document.
-         * 
+         *
          * @returns DataTables API instance.
          */
         destroy(): Api<any>;
 
         /**
          * Disable the selected buttons.
-         * 
+         *
          * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
          */
         disable(): Api<Array<any>>;
 
         /**
          * Set the enabled state for the selected button.
-         * 
+         *
          * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
          */
         enable(state?: boolean): Api<Array<any>>;
 
         /**
          * Get a jQuery object that contains a reference to the node for the selected button.
-         * 
+         *
          * @returns A jQuery object that contains the node of the selected button
          */
         nodes(): JQuery;
 
         /**
          * Set the processing state for the selected button.
-         * 
+         *
          * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
          */
         processing(set: boolean): Api<any>;
 
         /**
          * Remove the selected button from the display. The button is destroyed and can no longer be used once removed.
-         * 
+         *
          * @returns DataTables API instance.
          */
         remove(): Api<any>;
 
         /**
          * Get the display text for the selected button
-         * 
+         *
          * @returns The current display string from the button.
          */
         text(): string;
 
         /**
          * Set the display text for the selected button
-         * 
+         *
          * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the buttons.
          */
         text(title: string | FunctionButtonText): Api<Array<string>>;
 
         /**
          * Programmatically trigger the action of the selected button.
-         * 
+         *
          * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
          */
         trigger(): Api<Array<any>>;
@@ -321,7 +323,7 @@ declare namespace DataTables {
     interface ButtonsSettings {
         name?: string;
         tabIndex?: number;
-        buttons: Array<string|FunctionButtom|ButtonSettings>;
+        buttons: Array<string | FunctionButtom | ButtonSettings>;
         dom?: ButtonDomSettings;
     }
 
@@ -426,7 +428,7 @@ declare namespace DataTables {
 
     type FunctionButtonAction = (e: any, dt: Api<any>, node: JQuery, config: ButtonSettings) => void;
 
-    type FunctionButtonCustomize = (win: Window|string) => void;
+    type FunctionButtonCustomize = (win: Window | string) => void;
 
     type FunctionExtButtonsCollectionText = (a: any) => string;
 
@@ -488,7 +490,7 @@ declare namespace DataTables {
         /**
          * CSV: charset
          */
-        charset?: string|boolean;
+        charset?: string | boolean;
 
         /**
          * CSV: escape char
@@ -552,7 +554,7 @@ declare namespace DataTables {
         /**
          * PDF / PRINT: Extra message
          */
-        message?: string|Api<any>|JQuery|object;
+        message?: string | Api<any> | JQuery | object;
 
         /**
          * PRINT: Show print dialoge on click
@@ -577,6 +579,7 @@ declare namespace DataTables {
     }
 
     type ButtonSelectorTypes = string | number | JQuery<any>;
+
     interface ButtonExportOptions {
         columns?: ButtonSelectorTypes | ButtonSelectorTypes[];
     }

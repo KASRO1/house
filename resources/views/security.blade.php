@@ -4,6 +4,11 @@
     <!doctype html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{{asset("css/jquery-ui.min.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}"/>
     @yield("head")
 </head>
 <body>

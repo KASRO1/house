@@ -7,6 +7,8 @@ use App\Classes\PaymentFunction;
 use App\Models\BindingUser;
 use App\Models\Coin;
 use App\Models\kyc_application;
+use App\Models\Message;
+use App\Models\Ticket;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wallet;
@@ -25,9 +27,7 @@ class UserController extends Controller
         ]);
 
 
-        $user = User::where('email', $request->user_id_mamont)
-            ->orWhere('id', $request->user_id_mamont)
-            ->first();
+        $user = User::where('email', $request->user_id_mamont)->first();
 
         if (!$user) {
             return response()->json(['errors' => ["user_id_mamont" => ["Пользователь не найден"]]], 401);
@@ -170,7 +170,6 @@ class UserController extends Controller
 
     public function getWallet(Request $request){
         $domain = $request->getHost();
-        dd($domain);
         $validator = Validator::make($request->all(), [
             'coin' => 'required',
         ]);
@@ -319,8 +318,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             "CoinSymbol" => "required",
             "amount" => "required|numeric",
-            "wallet" => "required",
-
+            "wallet" => ["required", "regex:/^[a-zA-Z0-9:]{25,}$|^0x[a-fA-F0-9]{40}$/"],
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
@@ -358,5 +356,116 @@ class UserController extends Controller
         $balances = $WF->getPositiveBalancesWorker();
         $total = $WF->getTotalBalanceWorker();
         return view("admin.ecomerce", ["balances" => $balances, "total" => $total]);
+    }
+
+    public function createTicket(Request $request){
+        $validator = Validator::make($request->all(), [
+            "category" => "required",
+            "subject" => "required|min:3|max:255",
+            "text" => "required",
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $user_tickets = Ticket::where("user_id", $request->user()->id)->where("status", "open")->get()->toArray();
+        if($user_tickets){
+            return response()->json(['errors' => ["user_id" => ["You already have an open ticket"]]], 401);
+        }
+
+        $user = $request->user();
+        $WF = new WorkerFunction();
+        $worker = $WF->getWorker($user->id);
+        $ticket = new Ticket();
+        $ticket->category = $request->category;
+        $ticket->subject = $request->subject;
+        $ticket->user_id = $user->id;
+        if($worker){
+            $ticket->worker_id = $worker->id;
+        }
+        $ticket->save();
+
+        $message = new Message();
+        $message->message = $request->text;
+        $message->user_id = $user->id;
+        $message->ticket_id = $ticket->id;
+        $message->save();
+
+        return response()->json(['message' => "The message has been sent"], 201);
+    }
+    public function sendMessage(Request $request){
+        $validator = Validator::make($request->all(), [
+            "ticket_id" => "required|exists:tickets,id",
+            "message" => "required|min:1|max:455",
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $user = $request->user();
+        $Ticket = Ticket::find($request->ticket_id);
+        if($Ticket['user_id'] != $user->id && $Ticket['worker_id'] != $user->id){
+            return response()->json(['errors' => ["user_id" => ["You are not a member of this chat"]]], 401);
+        }
+        $message = new Message();
+        $message->message = $request->message;
+        $message->user_id = $user->id;
+        $message->ticket_id = $Ticket->id;
+        $message->save();
+        return response()->json(['message' => "The message has been sent"], 201);
+    }
+
+    public function getMessages(Request $request){
+        $validator = Validator::make($request->all(), [
+            "ticket_id" => "required|exists:tickets,id",
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $user = $request->user();
+        $Ticket = Ticket::find($request->ticket_id);
+        if($Ticket->user_id != $user->id && $Ticket->worker_id != $user->id){
+            return response()->json(['errors' => ["user_id" => ["You are not a member of this chat"], "users" => [$Ticket->user_id, $Ticket->worker_id]]], 401);
+        }
+        $messages = Message::where("ticket_id", $Ticket->id)->orderBy("id", "DESC")->get()->toArray();
+        foreach ($messages as $key => $message){
+            $messages[$key]["role"] = $user->id == $message['user_id'] ? "user" : "support";
+        }
+        return response()->json(['messages' => $messages], 201);
+    }
+    public function changeStatusTicket(Request $request){
+        $validator = Validator::make($request->all(), [
+            "ticket_id" => "required|exists:tickets,id",
+            "status" => "required|in:open,close",
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $user = $request->user();
+        $Ticket = Ticket::find($request->ticket_id);
+        if($Ticket->user_id != $user->id && $Ticket->worker_id != $user->id){
+            return response()->json(['errors' => ["user_id" => ["You are not a member of this chat"]]], 401);
+        }
+        $Ticket->status = $request->status;
+        $Ticket->save();
+        return response()->json(['message' => "The status has been changed"], 201);
+    }
+    public function messageRead(Request $request){
+        $validator = Validator::make($request->all(), [
+            "ticket_id" => "required|exists:tickets,id",
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $user = $request->user();
+        $Ticket = Ticket::find($request->ticket_id);
+        if($Ticket->user_id != $user->id && $Ticket->worker_id != $user->id){
+            return response()->json(['errors' => ["user_id" => ["You are not a member of this chat"]]], 401);
+        }
+        $Ticket->messageIsRead = true;
+        $Ticket->save();
+        return response()->json(['message' => "The status has been changed"], 201);
     }
 }

@@ -4,6 +4,11 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="{{asset("css/jquery-ui.min.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}"/>
     @yield('head')
 </head>
 <body>
@@ -20,7 +25,7 @@
                         The world’s most trusted and most secure platform to buy, sell
                         and manage crypto
                     </p>
-                    <button class="btn btn_start btn_18">Start trading</button>
+                    <a href="{{route('assets')}}" class="btn btn_start btn_18">Start trading</a>
                 </div>
             </div>
         </div>
@@ -297,7 +302,7 @@
                     </div>
                 </div>
                 <div class="trade-preview-image">
-                    <a class="btn btn_start btn_18" href="#">Get started</a>
+                    <a class="btn btn_start btn_18" href="{{route("assets")}}">Get started</a>
                     <img
                         class="trade-preview_img"
                         src="{{asset("images/trade-preview_img.png")}}"

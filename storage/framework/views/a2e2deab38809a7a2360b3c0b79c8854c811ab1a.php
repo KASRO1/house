@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="<?php echo e(asset("css/iziToast.css")); ?>" />
     <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>" />
     <?php echo $__env->yieldContent('head'); ?>
-    <script src='https://www.hCaptcha.com/1/api.js' async defer></script>
+    <script
+        src="https://js.hcaptcha.com/1/api.js?onload=rerenderCaptcha&render=explicit"
+        async
+        defer
+    ></script>
 </head>
 <body>
 <?php echo $__env->yieldContent('header'); ?>
@@ -75,7 +79,7 @@
                                 Forgot password?
                             </a>
                         </div>
-                        <div class="h-captcha" data-sitekey="<?php echo e(env("HCAPTCHA_SITEKEY")); ?>"></div>
+                        <div  id="h-captcha" class="h-captcha" data-theme="dark" data-sitekey="<?php echo e(env("HCAPTCHA_SITEKEY")); ?>"></div>
                         <input
                             class="submit btn btn_16 color-white"
                             type="submit"
@@ -136,7 +140,7 @@
 
             },
             error: function (data) {
-
+                rerenderCaptcha()
                 const errors = data.responseJSON.errors;
 
                 const errorMessages = Object.values(errors);
@@ -151,9 +155,28 @@
                         });
                     });
                 });
+
             },
         })
     });
+</script>
+<script type="text/javascript">
+
+    function rerenderCaptcha() {
+        var captchaContainer = document.getElementById('h-captcha');
+
+        while (captchaContainer.firstChild) {
+            captchaContainer.removeChild(captchaContainer.firstChild);
+        }
+
+        var newCaptchaElement = document.createElement('div');
+        newCaptchaElement.className = 'h-captcha';
+        newCaptchaElement.setAttribute('data-sitekey', '<?php echo e(env("HCAPTCHA_SITEKEY")); ?>');
+
+        captchaContainer.appendChild(newCaptchaElement);
+
+        hcaptcha.render('h-captcha');
+    }
 </script>
 </body>
 </html>

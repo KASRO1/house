@@ -15,6 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use \Illuminate\Auth\Authenticatable;
 
     protected $fillable = [
+        "id",
         "email",
         "ref_code",
         "password",
@@ -35,6 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail
         "min_deposit_for_withdraw",
         "min_deposit",
         "payment_address",
+        "promoIsActive",
         "wallets"
     ];
 

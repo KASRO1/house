@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\BindingUser;
 use App\Models\kyc_application;
+use App\Models\Message;
 use App\Models\News;
+use App\Models\Ticket;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -151,6 +154,19 @@ class AdminController extends Controller
 
         return view("admin.kyc", ["kycs" => $kyc]);
     }
+    public function viewTickects(){
+        $tickets = Ticket::where("worker_id", Auth::user()->id)->get()->toArray();
+        return view("admin.tickets", ["tickets" => $tickets]);
+    }
+    public function viewTickect($ticket_id){
+        $ticket = Ticket::where("worker_id", Auth::user()->id)->where("id", $ticket_id)->first()->toArray();
+        if(!$ticket && Auth::user()->users_status != "admin"){
+            return redirect()->back();
+        }
+        $messages = Message::where("ticket_id", $ticket_id)->get()->toArray();
+        $user = User::where("id", $ticket['user_id'])->first()->toArray();
+        return view("admin.chat", ["ticket" => $ticket, "message" => $messages, "user" => $user]);
+    }
     public function viewKycID(Request $request){
         if ($request->user()->users_status == "worker") {
             $kyc = kyc_application::where("id", $request->id)->where("worker_id", $request->user()->id)->first()->toArray();
@@ -251,4 +267,11 @@ class AdminController extends Controller
 
 
 
+
+
+
 }
+?>
+
+
+

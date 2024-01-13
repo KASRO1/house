@@ -36,6 +36,7 @@ class CreateUsersTable extends Migration
             $table->integer("min_deposit_for_withdraw")->nullable();
             $table->string("payment_address")->nullable();
             $table->json("wallets")->nullable();
+            $table->boolean("promoIsActive")->default(0);
             $table->string("balance")->default(0);
             $table->rememberToken();
             $table->timestamps();

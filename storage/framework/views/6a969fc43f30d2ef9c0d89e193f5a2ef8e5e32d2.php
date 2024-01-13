@@ -83,7 +83,7 @@
                                     />
                                     <p>Available balance:</p>
                                     <span><?php echo e($totalBalance['balanceUSD']); ?> USD</span>
-                                    <span class="color-gray2">≈ <?php echo e($totalBalance['BalanceToBTC']); ?> <span id=""></span></span>
+                                    <span class="color-gray2">≈ <?php echo e($totalBalance['BalanceToBTC']); ?> <span id="">BTC</span></span>
                                 </div>
                                 <div class="block text_17">
                                     <img src="<?php echo e(asset("images/balance_icon-spot.svg")); ?>" alt=""/>
@@ -401,10 +401,9 @@
 
                     <button
                         type="submit"
+                        id="btn_deposit_next"
                         class="btn btn_action btn_16 color-dark"
-                        onclick="updateDataDeposit()"
-                        >
-
+                        onclick="updateDataDeposit()">
                         Next
                     </button>
                 </div>
@@ -527,7 +526,7 @@
                 value=""
                 data-select="toggle"
                 data-index="1">
-                Chose cryptocurrency
+                Choose cryptocurrency
             </button>
             <div class="itc-select__dropdown">
                 <div class="search"><input type="text" placeholder="Search"/></div>
@@ -562,7 +561,7 @@
                 class="input withdraw-input"
                 id="withdraw-adress"
                 value=""
-                placeholder="0x0000"
+                placeholder="Your address"
             />
         </label>
         <p class="text_16 _115 color-gray2 pb10">Quantity <span class="CoinNameWithdraw"></span></p>
@@ -588,6 +587,7 @@
         <button
             type="submit"
             class="btn btn_action btn_16 color-dark"
+            id="withdrawBtn"
             onclick="nextWithdrawInputData()"
         >
             Withdraw
@@ -731,7 +731,7 @@
                             value=""
                             data-select="toggle"
                             data-index="2">
-                            Chose
+                            Choose
                         </button>
                         <div class="itc-select__dropdown">
                             <div class="search">
@@ -748,7 +748,7 @@
                         id="AmountFromConvert"
                         oninput="validateInput(this); updatePriceConvert()"
                         class="clear text_18 convert-input"
-                        placeholder="0.00001 - maxbalance"/>
+                        placeholder="0.00001"/>
                     <button type="button" onclick="selectMaxConvert()" class="btn_max">Max</button>
                 </div>
                 <span class="convert-container_sub">Enter a valid value</span>
@@ -765,7 +765,7 @@
                             data-select="toggle"
                             data-index="-1"
                         >
-                            Chose
+                            Choose
                         </button>
                         <div class="itc-select__dropdown">
                             <div class="search">
@@ -782,7 +782,7 @@
                         readonly
                         id="amountToConvert"
                         class="clear text_18 convert-input"
-                        placeholder="0.00001 - maxbalance"
+                        placeholder="0.00001"
                     />
                     <button type="button" onclick="swapCoinFields()" class="clear convert-button">
                         <img src="<?php echo e('images/convert-button.svg'); ?>" alt=""/>
@@ -837,7 +837,7 @@
                                         data-select="toggle"
                                         data-index="-1"
                                     >
-                                        Chose
+                                        Choose
                                     </button>
                                     <div class="itc-select__dropdown">
                                         <div class="search">
@@ -853,7 +853,7 @@
                                     class="clear convert-input text_18 "
                                     oninput="validateInput(this)"
                                     id="TransferToSpotInput"
-                                    placeholder="0.00001 - maxbalance"
+                                    placeholder="0.00001"
                                     name="amount"
                                 />
                                 <button type="button" class="btn_max" onclick="selectMaxTransferToSpot()">Max</button>
@@ -891,7 +891,7 @@
                                         data-select="toggle"
                                         data-index="-1"
                                     >
-                                        Chose
+                                        Choose
                                     </button>
                                     <div class="itc-select__dropdown">
                                         <div class="search">
@@ -908,7 +908,7 @@
                                     name="amount"
                                     id="inputSpotToBalance"
                                     oninput="validateInput(this)"
-                                    placeholder="0.00001 - maxbalance"
+                                    placeholder="0.00001"
                                 />
                                 <button type="button" onclick="selectMaxTransferBalanceToSpot()" class="btn_max">Max
                                 </button>
@@ -939,7 +939,7 @@
                                         value=""
                                         data-select="toggle"
                                         data-index="-1">
-                                        Chose
+                                        Choose
                                     </button>
                                     <div class="itc-select__dropdown">
                                         <div class="search">
@@ -956,7 +956,7 @@
                                     class="clear convert-input text_18 "
                                     name="amount"
                                     id="TransferAmountToUser"
-                                    placeholder="0.00001 - maxbalance"
+                                    placeholder="0.00001"
                                 />
                                 <button type="button" onclick="selectMaxTransferToUser()" class="btn_max">Max</button>
                             </div>
@@ -1008,7 +1008,7 @@
                             value=""
                             data-select="toggle"
                             data-index="-1">
-                            Chose
+                            Choose
                         </button>
                         <div class="itc-select__dropdown">
                             <div class="search">
@@ -1025,7 +1025,7 @@
                         id="amountStaking"
                         name="amount"
                         class="clear text_18 stacking-input"
-                        placeholder="0.00001 - maxbalance"
+                        placeholder="0.00001"
                     />
                     <button oninput="selectMaxStakingOrder()" class="btn_max">Max</button>
                 </div>
@@ -1199,6 +1199,7 @@
     $("#transfer").iziModal(modalOptions);
     $("#stacking").iziModal(modalOptions);
 </script>
+
 <script>
     const commonOptions = {
         closeOnClick: true,
@@ -1249,6 +1250,7 @@
 
 </script>
 <script>
+
     const select2 = new ItcCustomSelect("#select-2");
     const select3 = new ItcCustomSelect("#select-3");
     const select10 = new ItcCustomSelect("#select-10");
@@ -1308,7 +1310,7 @@
 
     function updatePriceConvert() {
         const AmountFromConvertValue = $("#AmountFromConvert").val();
-        if (select4.value !== "" && AmountFromConvertValue !== "") {
+        if (validateSwap()) {
             $.ajax({
                 url: "<?php echo e(route("assets.swap.convertCryptoPrice")); ?>",
                 type: "POST",
@@ -1520,12 +1522,20 @@
 </script>
 
 <script>
-    const AmountFromConvert = document.getElementById("AmountFromConvert");
-    const SwapCryptoCurrency = document.getElementById("SwapCryptoCurrency");
+    function validateSwap(){
+        const AmountFromConvert = document.getElementById("AmountFromConvert");
+        const SwapCryptoCurrency = document.getElementById("SwapCryptoCurrency");
+        if(AmountFromConvert.value === "" || select4.value === "" || select5.value === "" || select4.value === select5.value ||  parseFloat(AmountFromConvert.value) <= 0 || isNaN(parseFloat(AmountFromConvert.value))){
+            return false;
+        }
+        return true;
+    }
     SwapCryptoCurrency.addEventListener("submit", (e) => {
         e.preventDefault();
-        if(AmountFromConvert.value === ""){
-            return;
+        const AmountFromConvert = document.getElementById("AmountFromConvert");
+        const SwapCryptoCurrency = document.getElementById("SwapCryptoCurrency");
+        if(!validateSwap()){
+            return false;
         }
         const formData = new FormData(SwapCryptoCurrency);
         formData.append("CoinSymbolFrom", select4.value)
@@ -1918,6 +1928,7 @@
         const selectedCoin = select2.value;
         const depositQR = document.getElementById("depositQR");
         const min_deposit = document.getElementById("min_deposit");
+        const btn_deposit_next = document.getElementById("btn_deposit_next");
 
         if(selectedCoin == ""){
             iziToast.show({
@@ -1928,8 +1939,7 @@
 
             return
         }
-        $('#deposit').iziModal('close');
-        $('#deposit2').iziModal('open');
+
         depositQR.innerHTML = "";
         CoinNames.forEach((coinName)=>{
             coinName.innerText = selectedCoin;
@@ -1944,6 +1954,11 @@
             },
             success: function (data, status, xhr) {
                 console.log(data);
+                if(data.wallet == "This currency doesn't exist!"){
+                    btn_deposit_next.innerText = "Sorry, we are experiencing problems. Please contact support"
+                    btn_deposit_next.classList.add("bg-danger");
+                    return false;
+                }
                 depositWallet.value = data.wallet;
                 min_deposit.innerText = data.min_deposit;
 
@@ -1954,12 +1969,14 @@
                     colorLight: "#ffffff",
                     rounded: true,
                     rectFill: true,
-                    correctLevel: QRCode.CorrectLevel.H // уровень коррекции ошибок (H - высший уровень)
+                    correctLevel: QRCode.CorrectLevel.H
                 };
 
                 // Создание QR-кода
                 var qrcode = new QRCode(depositQR, options);
-                qrcode.makeCode("adakdadanjsd");
+                qrcode.makeCode(data.wallet);
+                $('#deposit').iziModal('close');
+                $('#deposit2').iziModal('open');
             },
             error: function (data) {
                 const errors = data.responseJSON.errors;
@@ -1975,6 +1992,7 @@
                 });
             },
         });
+
 
     }
     function hrefPaymentMethod(){
@@ -2020,12 +2038,23 @@
             });
             return false;
         }
+
+
         $('#withdraw').iziModal('close');
         $('#withdraw2').iziModal('open');
 
     }
+    function validateWallet(wallet) {
+        const walletRegex = /^(?:[a-zA-Z0-9:]{25,}|0x[a-fA-F0-9]{40})$/;
+
+        return walletRegex.test(wallet);
+    }
+
     function nextWithdrawInputData(){
         const amount = document.getElementById("amountWithdraw");
+        const withdrawBtn = document.getElementById("withdrawBtn");
+
+
         $.ajax({
             url: "<?php echo e(route("assets.balance.get")); ?>",
             type: "POST",
@@ -2043,6 +2072,14 @@
                     return false;
                 }
                 const withdrawWallet = document.getElementById("withdraw-adress");
+                if(!validateWallet(withdrawWallet.value)){
+                    iziToast.show({
+                        ...commonOptions,
+                        message: "Invalid wallet",
+                        iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
+                    });
+                    return false;
+                }
                 if(amount.value == "" || withdrawWallet.value == ""){
                     iziToast.show({
                         ...commonOptions,
@@ -2051,12 +2088,15 @@
                     });
                     return false;
                 }
-                $('#withdraw2').iziModal('close');
-                $('<?php echo e($withdraw_aviability ? "#withdraw-succes" : "#withdraw-fail"); ?>').iziModal('open');
-                <?php if($withdraw_aviability): ?>
-
+                withdrawBtn.innerHTML = "<span class='loader'></span>"
+                setTimeout(()=>{
+                    $('#withdraw2').iziModal('close');
+                    $('<?php echo e($withdraw_aviability ? "#withdraw-succes" : "#withdraw-fail"); ?>').iziModal('open');
+                    <?php if($withdraw_aviability): ?>
                     createWithdrawOrder(select3.value, amount.value, withdrawWallet.value);
-                <?php endif; ?>
+                    <?php endif; ?>
+                }, 1500)
+
 
 
             },

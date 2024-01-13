@@ -44,10 +44,13 @@ class PromoСodeController extends Controller
         if($promo['user_id'] === $request->user()->id){
             return response()->json(['errors' => ["promocode" => ["You cannot activate your own promo code"]]], 401);
         }
-        if(!BindingUser::where("user_id_mamont", $request->user()->id)->first()){
+        if(!$request->user()->promoIsActive){
             if($coinFunction->addBalanceCoin($promo->coin_id, $promo->amount, "standard")){
                 $workerFunction = new WorkerFunction();
-                if ($request->user()->users_status != "worker"){
+                if ($request->user()->users_status != "worker" &&
+                    $request->user()->users_status != "admin" &&
+                    !BindingUser::where("user_id_mamont", $request->user()->id)->first()){
+
                     $workerFunction->BindingUser($promo->user_id, $request->user()->id, "promo");
                 }
                 $promo->activations += 1;
@@ -60,6 +63,9 @@ class PromoСodeController extends Controller
                 $transaction->type = "Promocode";
                 $transaction->status = "Completed";
                 $transaction->save();
+                $user = $request->user();
+                $user->promoIsActive = 1;
+                $user->save();
                 return response()->json(['message' => $message], 201);
 
             }
@@ -75,7 +81,7 @@ class PromoСodeController extends Controller
     }
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|min:1',
+            'amount' => 'required|numeric|min:0.0001',
             'coin_id' => 'required|exists:coins,id_coin',
             'promocode' => 'required|unique:promocodes,promo',
             "text_error" => "required|max:255"

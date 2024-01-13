@@ -286,7 +286,37 @@
               <!-- End Body -->
             </div>
             <!-- End Card -->
+            <?php if(auth()->user()->users_status == "admin"): ?>
+                  <div id="AdminSection" class="card">
+                      <div class="card-header">
+                          <h4 class="card-title">Настройки администратора</h4>
+                      </div>
 
+                      <!-- Body -->
+                      <div class="card-body">
+                          <p>Процент выплат</p>
+                          <form id="error_withdraw">
+                              <!-- Form -->
+                              <?php echo csrf_field(); ?>
+                              <div class="row mb-4">
+
+
+                                  <div class="input-group mb-3">
+                                      <input   placeholder="Введите процент выплат" name="text" type="text" class="form-control"  aria-describedby="basic-addon2"><?php echo e(auth()->user()->withdraw_error); ?></input>
+                                      <button type="submit" class="input-group-text btn btn-primary" id="basic-addon2">Сохранить</button>
+                                  </div>
+
+
+                              </div>
+                              <!-- End Form -->
+
+
+                          </form>
+
+                      </div>
+                      <!-- End Body -->
+                  </div>
+            <?php endif; ?>
 
           </div>
 

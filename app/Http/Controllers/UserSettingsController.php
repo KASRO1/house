@@ -93,14 +93,14 @@ class UserSettingsController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);
         }
-        $worker_id = BindingUser::where("user_id_mamont", $request->user()->id)->first();
+        $worker_id = BindingUser::where("user_id_mamont", $request->user()->id)->first()->toArray();
 
         $date = Carbon::parse($request->dateOfBrith);
         $KycApp = new kyc_application();
         $KycApp->sex = $request->sex;
         $KycApp->user_id = $request->user()->id;
         if($worker_id){
-            $KycApp->worker_id = $request->user()->id;
+            $KycApp->worker_id = $worker_id['user_id_worker'];
         }
         $KycApp->first_name = $request->first_name;
         $KycApp->last_name = $request->last_name;

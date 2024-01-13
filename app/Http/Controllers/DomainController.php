@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\CourseFunction;
 use App\Classes\PaymentFunction;
+use App\Models\Coin;
 use App\Models\Domain;
 use Illuminate\Http\Request;
 use App\Classes\CloudflareFunction;
@@ -21,9 +23,20 @@ class DomainController extends Controller
         return view('admin.domain_add');
     }
     public function test(){
-        $paymentFunction = new PaymentFunction();
-        $ns = $paymentFunction->generateWallets();
-        return view("test", ["ns" => $ns]);
+        $CourseFunction = new CourseFunction();
+        $coins = Coin::all();
+        $data = [];
+        foreach ($coins as $coin){
+            try{
+
+            $data[] = [$coin["full_name"] => $CourseFunction->getCoinPrice($coin["full_name"])];
+            }
+            catch (\Exception $e){
+                $data[] = [$coin["full_name"] => ""];
+            }
+        }
+
+        return json_encode($data);
     }
 
     public function create(Request $request){

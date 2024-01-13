@@ -17,9 +17,7 @@ class CheckRole
      */
     public function handle($request, Closure $next, ...$roles)
     {
-        // Проверяем, аутентифицирован ли пользователь
         if (Auth::check()) {
-            // Проверяем, имеет ли пользователь хотя бы одну из заданных ролей
             foreach ($roles as $role) {
                 if (Auth::user()->hasRole($role)) {
                     return $next($request);

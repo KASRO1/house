@@ -250,7 +250,7 @@
                             </div>
                             <!-- End Select -->
 
-                            <span class="text-secondary me-2">of</span>
+                            <span class="text-secondary me-2">из</span>
 
                             <!-- Pagination Quantity -->
                             <span id="datatableWithPaginationInfoTotalQty">20</span>
@@ -432,7 +432,7 @@
                 zeroRecords: `<div class="text-center p-4">
               <img class="mb-3" src="/assets_admin/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
               <img class="mb-3" src="/assets_admin/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-            <p class="mb-0">Транзакции не найдены</p>
+            <p class="mb-0">KYC не найдены</p>
             </div>`
             }
         })

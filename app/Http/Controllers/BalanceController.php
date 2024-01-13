@@ -62,8 +62,8 @@ class BalanceController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'AmountFrom' => 'required|regex:/^\d+(\.\d{1,2})?$/|min:1',
-            'amountTo' => 'required|regex:/^\d+(\.\d{1,2})?$/|min:1',
+            'AmountFrom' => 'required|regex:/^\d+(\.\d{1,2})?$/|min:0.0000001',
+            'amountTo' => 'required|regex:/^\d+(\.\d{1,2})?$/|min:0.0000001',
             'CoinSymbolFrom' => 'required|string|min:1',
             'CoinSymbolTo' => 'required|string|min:1',
         ]);
