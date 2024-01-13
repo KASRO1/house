@@ -20,7 +20,7 @@ class CreateTicketsTable extends Migration
             $table->string("user_id");
             $table->string("worker_id")->nullable();
             $table->string("status")->default("open");
-            $table->string("messageIsRead")->default(fasle);
+            $table->string("messageIsRead")->default(0);
             $table->timestamps();
         });
     }
