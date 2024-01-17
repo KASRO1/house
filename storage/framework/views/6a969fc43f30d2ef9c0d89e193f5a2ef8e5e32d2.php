@@ -443,7 +443,7 @@
 
 
     </div>
-    <div class="modal" id="deposit2">
+    <div class="modal" style="overflow: hidden;" id="deposit2">
         <button class="closemodal clear" data-izimodal-close="">
             <img src="<?php echo e('images/modal_close.svg'); ?>" alt=""/>
         </button>

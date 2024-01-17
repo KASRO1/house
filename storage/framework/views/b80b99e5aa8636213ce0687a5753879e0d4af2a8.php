@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <?php echo $__env->yieldContent("head"); ?>
-    <title>Домены</title>
+    <title>Cryptonix | Домены</title>
 </head>
 
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
@@ -1015,7 +1015,7 @@
 
                     <div class="d-flex flex-column gap-2">
                         <?php echo csrf_field(); ?>
-                        <input type="text" name="domain" class="form-control" placeholder="Введите домен">
+                        <input type="text" name="domain" class="form-control" placeholder="Введите домен без https://">
                         <input class="form-control" type="text" name="stmp_host" placeholder="Введите STMP Host">
                         <input class="form-control" type="text" name="stmp_email" placeholder="Введите STMP Email">
                         <input class="form-control" type="text" name="stmp_password" placeholder="Введите STMP пароль">
@@ -1384,6 +1384,8 @@
                 nsCode2.value = ns_list[1];
                 nsBlock1.classList.remove("d-none");
                 nsBlock2.classList.remove("d-none");
+                submitAddDomain.disabled = true;
+                submitAddDomain.innerText = "Привязал"
 
             },
             error: function (data) {

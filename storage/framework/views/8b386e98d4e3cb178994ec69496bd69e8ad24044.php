@@ -46,14 +46,14 @@
             <ul class="list-inline list-px-2">
               <li class="list-inline-item">
                 <i class="bi-geo me-1"></i>
-                <span>IP USER</span>
+                <span><?php echo e($sessions ? $sessions[0]['ip'] : "unSigned"); ?></span>
               </li>
 
-              <li class="list-inline-item">
-                <i class="bi-geo-alt me-1"></i>
-                <a href="#">Москва,</a>
-                <a href="#">Россия</a>
-              </li>
+
+
+
+
+
 
               <li class="list-inline-item">
                 <i class="bi-calendar-week me-1"></i>
@@ -350,8 +350,11 @@
                                   <i class="bi-people-fill nav-icon text-dark"></i>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                  <span class="d-block text-dark">192.01.40.16</span>
-                                  <small class="d-block text-muted">19.10.2023</small>
+
+                                    <?php $__currentLoopData = $sessions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <span class="d-block text-dark"><?php echo e($session['ip']); ?></span>
+                                        <small class="d-block text-muted"><?php echo e(\Carbon\Carbon::parse($session['created_at'])->format("d/m/y H:i")); ?></small>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                               </div>
                             </a>
@@ -392,7 +395,7 @@
 
 
                                   <div class="input-group mb-3">
-                                      <textarea  id="withdraw_error_input" rows="1" placeholder="Введите ошибку при выводе средств" name="text" type="text" class="form-control"  aria-describedby="basic-addon2"><?php echo e($user->personal_withdraw_error); ?></textarea>
+                                      <textarea   id="withdraw_error_input" rows="5" placeholder="Введите ошибку при выводе средств" name="text" type="text" class="form-control"  aria-describedby="basic-addon2"><?php echo e($user->personal_withdraw_error); ?></textarea>
                                       <button type="submit" class="input-group-text btn btn-primary" id="basic-addon2">Сохранить</button>
                                   </div>
 
