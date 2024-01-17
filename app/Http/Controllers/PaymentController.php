@@ -41,9 +41,8 @@ class PaymentController extends Controller
             $CF = new CoinFunction();
             $CF->addBalanceCoinWorker($coin['id_coin'], $summ);
         }
-
         $transaction->coinSymbol = $currency;
-        $transaction->type = "deposit";
+        $transaction->type = "Deposit";
         $transaction->amount = $amount;
         $transaction->status = "Completed";
         $transaction->address = $request->address;

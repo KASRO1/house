@@ -16,7 +16,7 @@ class CreateCoinsTable extends Migration
     {
         Schema::create('coins', function (Blueprint $table) {
             $table->id("id_coin");
-            $table->string("id_coingap");
+            $table->string("id_coingap")->nullable();
             $table->string("full_name")->nullable();
             $table->string("simple_name")->nullable()->index();
             $table->string("type_coin")->nullable();
@@ -87,6 +87,7 @@ class CreateCoinsTable extends Migration
                 "full_name" => "Tron",
                 "simple_name" => "TRX",
                 "type_coin" => "coin",
+                "id_coingap" => "tron",
                 "spread" => "0",
                 "min_deposit" => "20",
                 "payment_active" => 1
@@ -438,6 +439,7 @@ class CreateCoinsTable extends Migration
                         "full_name" => $datum['full_name'],
                         "simple_name" => $datum['simple_name'],
                         "type_coin" => "coin",
+                        "id_coingap" => $datum['id_coingap'],
                         "spread" => $datum['spread'],
                         "min_deposit" => $datum['min_deposit'] ?? 0,
                         "payment_active" => $datum['payment_active'] ?? 0,

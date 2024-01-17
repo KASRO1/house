@@ -48,11 +48,13 @@
     <script>
         const selectSupport = new ItcCustomSelect("#selectSupport")
         let lastData = "";
+        let ticketId = <?php echo e($ticket ? $ticket->id : 0); ?>;
         function renderMessage(audioBoolean) {
             const message_container = document.getElementById("message-container");
 
-            ticketId = <?php echo e($ticket ? $ticket->id : 0); ?>;
-
+            if(ticketId === 0){
+                return;
+            }
             $.ajax({
                 url: '<?php echo e(route("chat.message.get")); ?>',
                 type: 'GET',
@@ -148,9 +150,17 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    const message = document.getElementById("ticketMessage");
-                    message.value = '';
+                    const ticketForm = document.getElementById("ticketForm");
+                    const chat_container = document.getElementById("chat_container");
+                    ticketForm.style.display = "none";
+                    chat_container.style.display = "";
+                    ticketId = data.id;
+                    const ticket_id = document.getElementById("ticket_id");
+                    ticket_id.value = data.id;
                     renderMessage(false);
+
+
+
 
                 },
                 error: function (data) {

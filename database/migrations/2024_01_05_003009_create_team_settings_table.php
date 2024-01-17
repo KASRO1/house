@@ -18,6 +18,12 @@ class CreateTeamSettingsTable extends Migration
             $table->integer("percent_profit")->default(75);
             $table->timestamps();
         });
+
+        DB::table('team_settings')->insert([
+            'percent_profit' => 75,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 
     /**

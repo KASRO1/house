@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\BindingUser;
+use App\Models\kyc_application;
 use App\Models\News;
 use App\Models\User;
 use Carbon\Carbon;

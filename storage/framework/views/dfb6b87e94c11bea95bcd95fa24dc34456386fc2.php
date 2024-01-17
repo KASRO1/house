@@ -164,14 +164,14 @@
                     </button>
                 </form>
 
-                <div style="<?php echo e($ticket ? "" : "display:none;"); ?>" class="chat-container">
+                <div style="<?php echo e($ticket ? "" : "display:none;"); ?>" id="chat_container" class="chat-container">
                     <div id="message-container" class="message-container">
 
                     </div>
                     <form id="sendMessageForm" >
                         <div class="message-send">
                             <div class="message-send-content">
-                                <input type="hidden" name="ticket_id" value="<?php echo e($ticket ? $ticket->id : 0); ?>">
+                                <input type="hidden" id="ticket_id" name="ticket_id" value="<?php echo e($ticket ? $ticket->id : 0); ?>">
                                 <input class="input-send_message" id="sendMessageInput" type="text" name="message" placeholder="Your message">
                                 <button type="submit" class="button-send_message">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">

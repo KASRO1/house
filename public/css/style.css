@@ -231,7 +231,9 @@ a:hover {
     background: var(--Dark_3, #1D323E);
     padding: 10px;
 }
-
+button[name="selectPair"] img{
+    display: none;
+}
 .chat-container {
     display: flex;
     flex-direction: column;

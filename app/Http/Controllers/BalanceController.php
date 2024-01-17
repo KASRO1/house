@@ -82,9 +82,10 @@ class BalanceController extends Controller
         $coinInfoTo = Coin::where('simple_name', $request->CoinSymbolTo)->first();
 
         $Balance = Balance::where("coin_id", $coinInfoFrom['id_coin'])->first();
-        if (!$Balance) {
+        if ($Balance['quantity'] < $request->AmountFrom) {
             return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
         }
+
         $BalanceUSD = $courseFunction->getBalanceCoinToEquivalentUsd($Balance['coin_id'], $Balance['balances']);
         $convert = $courseFunction->convertCryptoPrice($request->AmountFrom, $request->CoinSymbolFrom, $request->CoinSymbolTo);
         $AmountToUsd = $courseFunction->getBalanceCoinToEquivalentUsd($coinInfoTo['id_coin'], $request->amountTo);
@@ -281,7 +282,7 @@ class BalanceController extends Controller
     public function convertCryptoPrice(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/|min:1',
+            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/|min:0.000000001',
             'CoinSymbolFrom' => 'required|string|min:1',
             'CoinSymbolTo' => 'required|string|min:1',
         ]);
@@ -292,8 +293,8 @@ class BalanceController extends Controller
             return response()->json(['errors' => ["CoinSymbolFrom" => ["Coins must be different"]]], 401);
         }
         $courseFunction = new CourseFunction();
-
         $price = $courseFunction->convertCryptoPrice($request->amount, $request->CoinSymbolFrom, $request->CoinSymbolTo);
+        
 
         return response()->json(['price' => $price], 201);
 

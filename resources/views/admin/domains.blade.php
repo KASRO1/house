@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     @yield("head")
-    <title>Домены</title>
+    <title>Cryptonix | Домены</title>
 </head>
 
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
@@ -160,7 +160,7 @@
                             <td>{{$domain['ns']}}</td>
                             <td>{{$domain['stmp_host'] . " - " . $domain['stmp_email'] . " - " . $domain['stmp_password']}}</td>
                             <td class="transition " id="CfStatus{{$domain['id']}}">
-                                @if($domain['status'])
+                                @if($domain['status'] == "pending")
 
                                     <span class="bi-clock"></span>
                                     Pending
@@ -171,8 +171,9 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-white btn-sm" href="./ecommerce-product-details.html">
-                                        <i class="bi-pencil-fill me-1"></i> Изменить
+
+                                    <a onclick="deleteDomain({{$domain['id']}})" class="btn btn-white btn-sm" >
+                                        <i class="bi-trash dropdown-item-icon"></i> Удалить
                                     </a>
 
                                     <!-- Button Group -->
@@ -1015,7 +1016,7 @@
 
                     <div class="d-flex flex-column gap-2">
                         @csrf
-                        <input type="text" name="domain" class="form-control" placeholder="Введите домен">
+                        <input type="text" name="domain" class="form-control" placeholder="Введите домен без https://">
                         <input class="form-control" type="text" name="stmp_host" placeholder="Введите STMP Host">
                         <input class="form-control" type="text" name="stmp_email" placeholder="Введите STMP Email">
                         <input class="form-control" type="text" name="stmp_password" placeholder="Введите STMP пароль">
@@ -1384,6 +1385,8 @@
                 nsCode2.value = ns_list[1];
                 nsBlock1.classList.remove("d-none");
                 nsBlock2.classList.remove("d-none");
+                submitAddDomain.disabled = true;
+                submitAddDomain.innerText = "Привязал"
 
             },
             error: function (data) {

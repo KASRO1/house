@@ -13,6 +13,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Models\WithdrawMamont;
+use App\Models\SessionUser;
 use Illuminate\Http\Request;
 use App\Classes\WorkerFunction;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,7 @@ class UserController extends Controller
         $coinsPayment = Coin::where("payment_active", 1)->get()->toArray();
         $total_balance = $CoinFunction->getTotalBalanceUser($id);
         $wallets = json_decode($user['wallets'], true);
+        $sessions = SessionUser::where("user_id", $id)->get()->toArray();
 
 
         if(!$kyc_app){
@@ -76,7 +78,7 @@ class UserController extends Controller
         return view("admin.user", ['user' => $user, 'kyc' => $kyc_app,
             'transactions' => $transactions, 'balances' => $positive_balanced,
             "coinFunction" => $CoinFunction, "coins" => $coins, 'coinsPayment' => $coinsPayment,
-            "totalBalance" => $total_balance, "wallets" => $wallets]);
+            "totalBalance" => $total_balance, "wallets" => $wallets, "sessions" => $sessions]);
     }
 
     public function auth($id){
@@ -380,7 +382,7 @@ class UserController extends Controller
         $ticket->subject = $request->subject;
         $ticket->user_id = $user->id;
         if($worker){
-            $ticket->worker_id = $worker->id;
+            $ticket->worker_id = $worker['user_id_worker'];
         }
         $ticket->save();
 
@@ -390,7 +392,7 @@ class UserController extends Controller
         $message->ticket_id = $ticket->id;
         $message->save();
 
-        return response()->json(['message' => "The message has been sent"], 201);
+        return response()->json(['message' => "The message has been sent", "id" => $ticket->id], 201);
     }
     public function sendMessage(Request $request){
         $validator = Validator::make($request->all(), [

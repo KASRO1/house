@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     @yield("head")
-    <title>Cryptonix | Пользователи</title>
+    <title>Cryptonix | Депозиты</title>
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
