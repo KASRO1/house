@@ -192,26 +192,26 @@
 
 
 
-            <!-- Card -->
-            <div id="preferencesSection" class="card">
-              <div class="card-header">
-                <h4 class="card-title">Настройки</h4>
-              </div>
+{{--            <!-- Card -->--}}
+{{--            <div id="preferencesSection" class="card">--}}
+{{--              <div class="card-header">--}}
+{{--                <h4 class="card-title">Настройки</h4>--}}
+{{--              </div>--}}
 
-              <!-- Body -->
-              <div class="card-body">
-                <!-- Form -->
-                <form id="UserSettingsCheckboxes">
-                  <!-- Form -->
-                    @csrf
+{{--              <!-- Body -->--}}
+{{--              <div class="card-body">--}}
+{{--                <!-- Form -->--}}
+{{--                <form id="UserSettingsCheckboxes">--}}
+{{--                  <!-- Form -->--}}
+{{--                    @csrf--}}
 
-                  <!-- End Form -->
+{{--                  <!-- End Form -->--}}
 
-                  <!-- Form -->
+{{--                  <!-- Form -->--}}
 
-                  <!-- End Form -->
+{{--                  <!-- End Form -->--}}
 
-                  <!-- Form Switch -->
+{{--                  <!-- Form Switch -->--}}
 {{--                  <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">--}}
 {{--                    <span class="col-8 col-sm-9 ms-0">--}}
 {{--                      <span class="d-block text-dark">Оповещения</span>--}}
@@ -221,48 +221,48 @@
 {{--                      <input type="checkbox" class="form-check-input" name="notification" id="accounrSettingsPreferencesSwitch1">--}}
 {{--                    </span>--}}
 {{--                  </label>--}}
-                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">
-                    <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Включить вывод средств</span>
-                        <span class="d-block fs-5 text-muted">Включив данный параметр Вы сможете демонстрировать вывод средств</span>
-                    </span>
-                    <span class="col-4 col-sm-3 text-end">
-                      <input type="checkbox" {{auth()->user()->withdraw_funds ? "checked" : "" }} class="form-check-input" name="withdrawFunds" id="accounrSettingsPreferencesSwitch1">
-                    </span>
-                  </label>
-                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch2">
-                    <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Премиум аккаунт</span>
-                        <span class="d-block fs-5 text-muted">Включив данный у вас будет премиум на аккаунте</span>
-                    </span>
-                    <span class="col-4 col-sm-3 text-end">
-                      <input type="checkbox" {{auth()->user()->premium ? "checked" : "" }} class="form-check-input" name="premium" id="accounrSettingsPreferencesSwitch2">
-                    </span>
-                  </label>
-                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch3">
-                    <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Верифицированный аккаунт</span>
-                        <span class="d-block fs-5 text-muted">Включив этот параметр у вас будет пройдена верификация. Пожалуйста не забывайте чтобы у Вас он отображался на бирже отключите премиум аккаунт, и добавьте минимальный депозит к себе на баланс</span>
-                    </span>
-                    <span class="col-4 col-sm-3 text-end">
-                      <input type="checkbox" {{auth()->user()->kyc_step ? "checked" : "" }} class="form-check-input" name="kyc" id="accounrSettingsPreferencesSwitch3">
-                    </span>
-                  </label>
-                  <!-- End Form Switch -->
-                  <!-- Form Switch -->
+{{--                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">--}}
+{{--                    <span class="col-8 col-sm-9 ms-0">--}}
+{{--                      <span class="d-block text-dark">Включить вывод средств</span>--}}
+{{--                        <span class="d-block fs-5 text-muted">Включив данный параметр Вы сможете демонстрировать вывод средств</span>--}}
+{{--                    </span>--}}
+{{--                    <span class="col-4 col-sm-3 text-end">--}}
+{{--                      <input type="checkbox" {{auth()->user()->withdraw_funds ? "checked" : "" }} class="form-check-input" name="withdrawFunds" id="accounrSettingsPreferencesSwitch1">--}}
+{{--                    </span>--}}
+{{--                  </label>--}}
+{{--                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch2">--}}
+{{--                    <span class="col-8 col-sm-9 ms-0">--}}
+{{--                      <span class="d-block text-dark">Премиум аккаунт</span>--}}
+{{--                        <span class="d-block fs-5 text-muted">Включив данный у вас будет премиум на аккаунте</span>--}}
+{{--                    </span>--}}
+{{--                    <span class="col-4 col-sm-3 text-end">--}}
+{{--                      <input type="checkbox" {{auth()->user()->premium ? "checked" : "" }} class="form-check-input" name="premium" id="accounrSettingsPreferencesSwitch2">--}}
+{{--                    </span>--}}
+{{--                  </label>--}}
+{{--                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch3">--}}
+{{--                    <span class="col-8 col-sm-9 ms-0">--}}
+{{--                      <span class="d-block text-dark">Верифицированный аккаунт</span>--}}
+{{--                        <span class="d-block fs-5 text-muted">Включив этот параметр у вас будет пройдена верификация. Пожалуйста не забывайте чтобы у Вас он отображался на бирже отключите премиум аккаунт, и добавьте минимальный депозит к себе на баланс</span>--}}
+{{--                    </span>--}}
+{{--                    <span class="col-4 col-sm-3 text-end">--}}
+{{--                      <input type="checkbox" {{auth()->user()->kyc_step ? "checked" : "" }} class="form-check-input" name="kyc" id="accounrSettingsPreferencesSwitch3">--}}
+{{--                    </span>--}}
+{{--                  </label>--}}
+{{--                  <!-- End Form Switch -->--}}
+{{--                  <!-- Form Switch -->--}}
 
 
 
 
-                  <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                  </div>
-                </form>
-                <!-- End Form -->
-              </div>
-              <!-- End Body -->
-            </div>
-            <!-- End Card -->
+{{--                  <div class="d-flex justify-content-end">--}}
+{{--                    <button type="submit" class="btn btn-primary">Сохранить</button>--}}
+{{--                  </div>--}}
+{{--                </form>--}}
+{{--                <!-- End Form -->--}}
+{{--              </div>--}}
+{{--              <!-- End Body -->--}}
+{{--            </div>--}}
+{{--            <!-- End Card -->--}}
 
             <!-- Card -->
             <div id="twoStepVerificationSection" class="card">

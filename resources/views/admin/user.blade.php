@@ -8,6 +8,7 @@
 <head>
     @yield("head")
     <title>Cryptonix | Пользователь {{$user['email']}}</title>
+
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
@@ -116,7 +117,8 @@
                          data-bs-target="#addBalanceUser">
                         <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
                       </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" data-bs-toggle="modal"
+                           data-bs-target="#removeBalanceUser">
                         <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
                       </a>
 {{--                      <a class="dropdown-item" href="#">--}}
@@ -333,9 +335,7 @@
                       <!-- End Body -->
 
                       <!-- Footer -->
-                      <a class="card-footer text-center" href="user-profile-connections.html">
-                        Посмотреть все <i class="bi-chevron-right"></i>
-                      </a>
+
                       <!-- End Footer -->
                     </div>
                     <!-- End Card -->
@@ -1309,6 +1309,82 @@
           </div>
       </div>
   </div>
+  <div class="modal fade" id="removeBalanceUser" tabindex="-1" aria-labelledby="removeBalanceUserLabel" role="dialog"
+       aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <!-- Header -->
+              <div class="modal-header">
+                  <h4 class="modal-title" id="removeBalanceUserLabel">Отнять баланс пользователя пользователю</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- End Header -->
+              <form id="removeBalance_modal">
+                  <!-- Body -->
+                  <div class="modal-body">
+                      <!-- Form -->
+
+                      <div class="d-flex flex-column gap-2">
+                          @csrf
+                          <input type="text" name="user_id" class="form-control" value="{{$user['id']}}" hidden="">
+                          <div class="tom-select-custom">
+                              <select class="js-select form-select" name="coin_id" autocomplete="off"
+                                      data-hs-tom-select-options='{
+                                  "placeholder": "Выберите нужную монету...",
+                                  "hideSearch": false
+                                }'>
+                                  @yield("AdminSelectCoin")
+                              </select>
+                          </div>
+                          <div class="tom-select-custom">
+                              <select class="js-select form-select" name="type_deposit" autocomplete="off"
+                                      data-hs-tom-select-options='{
+                                  "placeholder": "Выберите тип транзакции...",
+                                  "hideSearch": false
+                                }'>
+                                  <option value="">Тип транзакции</option>
+                                  <option value="Swap">Swap</option>
+                                  <option value="TransferToUser">TransferToUser</option>
+                                  <option value="Spot">Spot</option>
+                                  <option value="Stacking">Stacking</option>
+                                  <option value="Support">Support</option>
+                                  <option value="Deposit">Deposit</option>
+                              </select>
+                          </div>
+                          <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
+
+                      </div>
+
+
+                      <!-- End Form -->
+                  </div>
+                  <!-- End Body -->
+
+                  <!-- Footer -->
+                  <div class="modal-footer">
+                      <div class="row align-items-sm-center flex-grow-1 mx-n2">
+                          <div class="col-sm mb-2 mb-sm-0">
+
+                          </div>
+                          <!-- End Col -->
+
+                          <div class="col-sm-auto">
+                              <div class="d-flex gap-3">
+                                  <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
+                                      Закрыть
+                                  </button>
+                                  <button type="submit" class="btn btn-primary">Создать</button>
+                              </div>
+                          </div>
+                          <!-- End Col -->
+                      </div>
+                      <!-- End Row -->
+                  </div>
+              </form>
+              <!-- End Footer -->
+          </div>
+      </div>
+  </div>
   <!-- End Create New API Key Modal -->
   <!-- End Welcome Message Modal -->
   <!-- ========== END SECONDARY CONTENTS ========== -->
@@ -1430,7 +1506,30 @@
             }
         });
     });
+    const removeBalance_modal = document.getElementById('removeBalance_modal');
+    removeBalance_modal.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: "{{route("admin.user.balance.remove")}}",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
 
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+            },
+            error: function (data) {
+
+                StatusToast.innerText = "Ошибка";
+                MessageToast.innerText = data.responseJSON.message;
+                Toast.show()
+            }
+        });
+    });
 </script>
   <script>
       const error_withdraw = document.getElementById("error_withdraw");

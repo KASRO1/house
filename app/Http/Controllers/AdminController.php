@@ -228,7 +228,7 @@ class AdminController extends Controller
             $orders = Transaction::where("type", "deposit")->orderBy("created_at", "desc")->get()->toArray();
 
         }
-
+//        dd($orders);
         return view("admin.orders", ["orders" => $orders]);
     }
 

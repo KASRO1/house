@@ -50,8 +50,7 @@ class WorkerFunction
     }
 
     public function getPositiveBalancesWorker(){
-        $balances = WorkerBalances::where("user_id", auth()->user()->id)->where("quantity", ">", 0)->get()->toArray();
-
+        $balances = WorkerBalances::where("user_id", auth()->user()->id)->get()->toArray();
         $CF = new CoinFunction();
         $CourseFunction = new CourseFunction();
         foreach ($balances as $key => $balance){

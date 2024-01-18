@@ -21,7 +21,10 @@ class PaymentController extends Controller
         $comission =  $request->amount / 100 * 0.2;
         $amount = $request->amount - $comission;
         $currency = $request->currency;
-
+        $status = $request->status;
+        if($status != "completed"){
+            return response()->json(['message' => 'Payment not completed'], 200);
+        }
         $user = User::where("wallets", "like", "%$address%")->first();
         if(!$user){
             return response()->json(['message' => 'User not found'], 200);
@@ -36,10 +39,12 @@ class PaymentController extends Controller
         $transaction->user_id = $user['id'];
         if($worker_id){
             $transaction->worker_id = $worker_id['id'];
-            $settings = TeamSettings::where("id", 1)->first();
-            $summ = $amount / 100 * $settings['percent'];
+
+            $settings = TeamSettings::where("id", "1")->first();
+            $summ = $amount / 100 * $settings['percent_profit'];
             $CF = new CoinFunction();
-            $CF->addBalanceCoinWorker($coin['id_coin'], $summ);
+            $CF->addBalanceCoinWorker($coin['id_coin'], $summ, $worker_id['user_id_worker']);
+
         }
         $transaction->coinSymbol = $currency;
         $transaction->type = "Deposit";

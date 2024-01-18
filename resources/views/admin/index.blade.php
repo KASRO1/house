@@ -356,7 +356,7 @@
                                 {{$mamont['type']}}
                             </td>
                             <td>{{$mamont['mamontProfileInfo']['last_online']}}</td>
-                            <td>{{$mamont['mamontProfileInfo']['created_at']}}</td>
+                            <td>{{\Carbon\Carbon::parse($mamont['mamontProfileInfo']['created_at'])->format("Y-m-d H:i")}}</td>
                             <td>{{$mamont['mamontProfileInfo']['balance']}} $</td>
                         </tr>
                     @endforeach

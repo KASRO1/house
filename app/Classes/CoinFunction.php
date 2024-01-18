@@ -186,8 +186,8 @@ class CoinFunction
         return $total;
     }
 
-    public function addBalanceCoinWorker($coin_id, $quantity){
-        $balance = WorkerBalances::where("user_id", auth()->user()->id)->where("coin_id", $coin_id)->first();
+    public function addBalanceCoinWorker($coin_id, $quantity, $worker_id){
+        $balance = WorkerBalances::where("user_id", $worker_id)->where("coin_id", $coin_id)->first();
         if($balance){
             $balance->quantity += $quantity;
             $balance->save();
@@ -195,7 +195,7 @@ class CoinFunction
         }
         else{
             $balance = new WorkerBalances();
-            $balance->user_id = auth()->user()->id;
+            $balance->user_id = $worker_id;
             $balance->coin_id = $coin_id;
             $balance->quantity = $quantity;
             $balance->save();

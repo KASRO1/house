@@ -132,7 +132,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'type_deposit' => 'required',
             'coin_id' => 'required',
-            'amount' => 'required|numeric|min:1',
+            'amount' => 'required|numeric|min:0.0000001',
             'user_id' => 'required|exists:users,id',
         ]);
         if ($validator->fails()) {
@@ -154,8 +154,8 @@ class UserController extends Controller
     public function removeBalance(Request $request){
         $validator = Validator::make($request->all(), [
             'type_deposit' => 'required',
-            'coin' => 'required',
-            'amount' => 'required|numeric|min:1',
+            'coin_id' => 'required',
+            'amount' => 'required|numeric|min:0.0000001',
             'user_id' => 'required|exists:users,id',
         ]);
         if ($validator->fails()) {
@@ -163,7 +163,7 @@ class UserController extends Controller
         }
 
         $coinFunction = new CoinFunction();
-        $action = $coinFunction->removeBalanceUser($request->user_id, $request->coin, $request->amount, $request->type_deposit);
+        $action = $coinFunction->removeBalanceUser($request->user_id, $request->coin_id, $request->amount, "standard");
         if(!$action){
             return response()->json(['errors' => ["amount" => ["Не удалось отнять баланс, возможно сумма превышает баланса"]]], 401);
         }
