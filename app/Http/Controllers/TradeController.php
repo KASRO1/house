@@ -69,8 +69,8 @@ class TradeController extends Controller
 
 
         $coin = Coin::where("simple_name", $request->coin_symbol)->first();
-
         $balanceCoin = $coinFunction->getBalanceCoinSpot($coin['id_coin']);
+
         if($balanceCoin){
             $balanceCoin = $balanceCoin['quantity'];
         }

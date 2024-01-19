@@ -76,23 +76,9 @@
                                     <span class="nav-link-title">Депозиты</span>
                                 </a>
                             </div>
-                            <div class="nav-item">
-                                <a class="nav-link" href="<?php echo e(route("admin.domains")); ?>" >
-                                    <i class="bi-globe nav-icon"></i>
-                                    <span class="nav-link-title">Домены</span>
-                                </a>
 
-                            </div>
                             <!-- End Collapse -->
                             <!-- Collapse -->
-
-                            <div class="nav-item">
-                                <a class="nav-link" href="<?php echo e(route("admin.promocode")); ?>" >
-                                    <i class="bi-lightning-charge nav-icon"></i>
-                                    <span class="nav-link-title">Промокоды</span>
-                                </a>
-
-                            </div>
                             <div class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route("admin.kyc")); ?>" >
                                     <i class="bi-person-check nav-icon"></i>
@@ -104,6 +90,22 @@
                                     <i class="bi-chat nav-icon"></i>
                                     <span class="nav-link-title">Тикеты</span>
                                 </a>
+                            </div>
+                            <div class="nav-item">
+                                <a class="nav-link" href="<?php echo e(route("admin.promocode")); ?>" >
+                                    <i class="bi-lightning-charge nav-icon"></i>
+                                    <span class="nav-link-title">Промокоды</span>
+                                </a>
+
+                            </div>
+
+
+                            <div class="nav-item">
+                                <a class="nav-link" href="<?php echo e(route("admin.domains")); ?>" >
+                                    <i class="bi-globe nav-icon"></i>
+                                    <span class="nav-link-title">Домены</span>
+                                </a>
+
                             </div>
                             <div class="nav-item">
                                 <a class="nav-link" href="<?php echo e(route("admin.settings")); ?>" >

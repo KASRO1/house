@@ -184,7 +184,9 @@
                         <thead class="thead-light">
                         <tr role="row"><th class="table-column-pe-0 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 24px;">
 
-                            </th><th class="table-column-ps-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Order: activate to sort column ascending" style="width: 70px;">ID транзакции</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 161px;">Дата</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 130px;">Пользователь</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment status: activate to sort column ascending" style="width: 124px;">Статус</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment method: activate to sort column ascending" style="width: 142px;">Кошелек</th></tr>
+                            </th><th class="table-column-ps-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Order: activate to sort column ascending" style="width: 70px;">ID транзакции</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 161px;">Дата</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 130px;">Пользователь</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment status: activate to sort column ascending" style="width: 124px;">Статус</th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment method: activate to sort column ascending" style="width: 142px;">Сумма</th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment method: activate to sort column ascending" style="width: 142px;">Кошелек</th></tr>
                         </thead>
 
                         <tbody>
@@ -208,6 +210,11 @@
                             </td>
 
                             <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="text-dark">{{$order['amount'] . " " .$order['coinSymbol']}}</span>
+
+                                </div>
+                            </td><td>
                                 <div class="d-flex align-items-center">
                                     <img class="avatar avatar-xss avatar-4x3 me-2" src="/images/coin_icons/{{$order['coinSymbol']}}.svg" alt="Image Description">
                                     <span class="text-dark">{{$order['address']}}</span>

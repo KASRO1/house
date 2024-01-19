@@ -105,6 +105,7 @@
 
 
                   <!-- Dropdown -->
+                    @if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin")
                   <div class="dropdown nav-scroller-dropdown">
                     <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="bi-three-dots-vertical"></i>
@@ -113,20 +114,20 @@
                     <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
                       <span class="dropdown-header">Настройки пользователя</span>
 
-                      <a class="dropdown-item" data-bs-toggle="modal"
-                         data-bs-target="#addBalanceUser">
-                        <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
-                      </a>
-                        <a class="dropdown-item" data-bs-toggle="modal"
-                           data-bs-target="#removeBalanceUser">
-                        <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
-                      </a>
-{{--                      <a class="dropdown-item" href="#">--}}
+{{--                      <a class="dropdown-item" data-bs-toggle="modal"--}}
+{{--                         data-bs-target="#addBalanceUser">--}}
+{{--                        <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс--}}
+{{--                      </a>--}}
+{{--                        <a class="dropdown-item" data-bs-toggle="modal"--}}
+{{--                           data-bs-target="#removeBalanceUser">--}}
+{{--                        <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс--}}
+{{--                      </a>--}}
+{{--                      <a class="dropdown-item" href="">--}}
 {{--                        <i class="bi-slash-circle dropdown-item-icon"></i>Заблокировать на бирже--}}
 {{--                      </a>--}}
 
 
-{{--                      <div class="dropdown-divider"></div>--}}
+                      <div class="dropdown-divider"></div>
 
                         @if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin")
                             <span class="dropdown-header">Настройки админа</span>
@@ -143,7 +144,9 @@
 
                         @endif
                     </div>
+
                   </div>
+                    @endif
                   <!-- End Dropdown -->
                 </div>
               </li>
@@ -288,8 +291,46 @@
                     <!-- Card -->
                     <div class="card h-100">
                       <!-- Header -->
-                      <div class="card-header">
+                      <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="card-header-title">Балансы монет</h4>
+                          <!-- Dropdown -->
+                          <div class="dropdown nav-scroller-dropdown">
+                              <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="bi-three-dots-vertical"></i>
+                              </button>
+
+                              <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
+                                  <span class="dropdown-header">Настройки пользователя</span>
+
+                                  <a class="dropdown-item" data-bs-toggle="modal"
+                                     data-bs-target="#addBalanceUser">
+                                      <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
+                                  </a>
+                                  <a class="dropdown-item" data-bs-toggle="modal"
+                                     data-bs-target="#removeBalanceUser">
+                                      <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
+                                  </a>
+
+
+                                  <div class="dropdown-divider"></div>
+
+                                  @if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin")
+                                      <span class="dropdown-header">Настройки админа</span>
+
+                                      @if($user['users_status'] == "worker")
+                                          <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
+                                              <i class="bi-flag dropdown-item-icon"></i> Снять админку
+                                          </a>
+                                      @else
+                                          <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
+                                              <i class="bi-flag dropdown-item-icon"></i> Выдать админку
+                                          </a>
+                                      @endif
+
+                                  @endif
+                              </div>
+                          </div>
+                          <!-- End Dropdown -->
                       </div>
                       <!-- End Header -->
 
@@ -458,8 +499,9 @@
                               {{--                  </label>--}}
                               <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">
                     <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Включить вывод средств</span>
-                        <span class="d-block fs-5 text-muted">Включив данный параметр Вы сможете демонстрировать вывод средств</span>
+                      <span class="d-block text-dark"> Включить "Успешный вывод"</span>
+                        <span class="d-block fs-5 text-muted">Если включено, то при выводе будет выдавать "успешную табличку".
+</span>
                     </span>
                                   <span class="col-4 col-sm-3 text-end">
                       <input type="checkbox" {{$user->withdraw_funds ? "checked" : "" }} class="form-check-input" name="withdrawFunds" id="accounrSettingsPreferencesSwitch1">
@@ -467,8 +509,8 @@
                               </label>
                               <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch2">
                     <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Премиум аккаунт</span>
-                        <span class="d-block fs-5 text-muted">Включив данный у вас будет премиум на аккаунте</span>
+                      <span class="d-block text-dark">Статус "Премиум"</span>
+                        <span class="d-block fs-5 text-muted">Меняет статус аккаунта на "Премиум".</span>
                     </span>
                                   <span class="col-4 col-sm-3 text-end">
                       <input type="checkbox" {{$user->premium ? "checked" : "" }} class="form-check-input" name="premium" id="accounrSettingsPreferencesSwitch2">
@@ -476,8 +518,8 @@
                               </label>
                               <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch3">
                     <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Верифицированный аккаунт</span>
-                        <span class="d-block fs-5 text-muted">Включив этот параметр у вас будет пройдена верификация. Пожалуйста не забывайте чтобы у Вас он отображался на бирже отключите премиум аккаунт, и добавьте минимальный депозит к себе на баланс</span>
+                      <span class="d-block text-dark">Статус "Верифицирован"</span>
+                        <span class="d-block fs-5 text-muted">Меняет статус аккаунта на "Верифицирован". Не забывайте чтобы у Вас он отображался на бирже отключите премиум аккаунт, и добавьте минимальный депозит к себе на баланс</span>
                     </span>
                                   <span class="col-4 col-sm-3 text-end">
                       <input type="checkbox" {{$user->kyc_step ? "checked" : "" }} class="form-check-input" name="kyc" id="accounrSettingsPreferencesSwitch3">

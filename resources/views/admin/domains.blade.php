@@ -32,7 +32,7 @@
         <div    >
             <div class="row align-items-center mb-3">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title">Домены <span class="badge bg-soft-dark text-dark ms-2">0</span></h1>
+                    <h1 class="page-header-title">Домены <span class="badge bg-soft-dark text-dark ms-2">{{count($domains)}}</span></h1>
 
 
                 </div>
@@ -1385,8 +1385,9 @@
                 nsCode2.value = ns_list[1];
                 nsBlock1.classList.remove("d-none");
                 nsBlock2.classList.remove("d-none");
-                submitAddDomain.disabled = true;
-                submitAddDomain.innerText = "Привязал"
+                submitAddDomain.innerText = "Привязал NS-записи"
+                submitAddDomain.setAttribute('onclick', 'reload_page()' );
+
 
             },
             error: function (data) {
@@ -1419,6 +1420,9 @@
 
         });
     });
+    function reload_page(){
+        location.reload();
+    }
 </script>
 <script>
     function updateStatusCloudFlare(id){

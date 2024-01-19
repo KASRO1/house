@@ -439,7 +439,7 @@
                                         </div>
                                         <div id="OrderBookSell">
                                             <div class="grid-line create red">
-                                             
+
                                             </div>
                                             <div class="grid-line red">
                                                 <div class="bg" style="width: 80%"></div>
@@ -751,7 +751,7 @@
                 type: "POST",
                 data: {
                     CoinSymbolFrom: coin,
-                    CoinSymbolTo: "USDT",
+                    CoinSymbolTo: "USDT TRC-20",
                     amount: amount
                 },
                 success: function(data, status, xhr) {
@@ -951,7 +951,7 @@
 
         CreateOrderBuy.addEventListener("submit", (e) => {
             e.preventDefault();
-            const coin = "USDT";
+            const coin = "USDT TRC-20";
             const type_order = "market";
             const type_trade = "buy";
             const formData = new FormData(CreateOrderBuy);
@@ -1136,7 +1136,7 @@
                                             <div class="${trade.type_trade === 'buy' ? 'color-green2' : 'color-red'}">${trade.price}</div>
                                             <div class="color-white">${trade.amount}</div>
                                             <div class="color-gray2">${trade.time}</div>
-                                            
+
                                       `;
                 // container.appendChild(gridLine);
                 var firstChild = container.firstChild;
@@ -1147,7 +1147,7 @@
             })
 
         }
-       
+
         function orderBook(renderFull, type) {
             const actualPrice = document.getElementById("valueInfo_price").textContent;
             trades = [];

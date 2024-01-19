@@ -8,6 +8,7 @@
 <head>
     <?php echo $__env->yieldContent("head"); ?>
     <title>Cryptonix | Пользователь <?php echo e($user['email']); ?></title>
+
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
@@ -104,6 +105,7 @@
 
 
                   <!-- Dropdown -->
+                    <?php if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin"): ?>
                   <div class="dropdown nav-scroller-dropdown">
                     <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="bi-three-dots-vertical"></i>
@@ -112,19 +114,20 @@
                     <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
                       <span class="dropdown-header">Настройки пользователя</span>
 
-                      <a class="dropdown-item" data-bs-toggle="modal"
-                         data-bs-target="#addBalanceUser">
-                        <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
-                      </a>
-                        <a class="dropdown-item" href="#">
-                        <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
-                      </a>
 
 
 
 
 
 
+
+
+
+
+
+
+
+                      <div class="dropdown-divider"></div>
 
                         <?php if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin"): ?>
                             <span class="dropdown-header">Настройки админа</span>
@@ -141,7 +144,9 @@
 
                         <?php endif; ?>
                     </div>
+
                   </div>
+                    <?php endif; ?>
                   <!-- End Dropdown -->
                 </div>
               </li>
@@ -275,8 +280,46 @@
                     <!-- Card -->
                     <div class="card h-100">
                       <!-- Header -->
-                      <div class="card-header">
+                      <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="card-header-title">Балансы монет</h4>
+                          <!-- Dropdown -->
+                          <div class="dropdown nav-scroller-dropdown">
+                              <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="bi-three-dots-vertical"></i>
+                              </button>
+
+                              <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
+                                  <span class="dropdown-header">Настройки пользователя</span>
+
+                                  <a class="dropdown-item" data-bs-toggle="modal"
+                                     data-bs-target="#addBalanceUser">
+                                      <i class="bi-plus-circle dropdown-item-icon"></i> Добавить баланс
+                                  </a>
+                                  <a class="dropdown-item" data-bs-toggle="modal"
+                                     data-bs-target="#removeBalanceUser">
+                                      <i class="bi-dash-circle dropdown-item-icon"></i> Отнять баланс
+                                  </a>
+
+
+                                  <div class="dropdown-divider"></div>
+
+                                  <?php if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin"): ?>
+                                      <span class="dropdown-header">Настройки админа</span>
+
+                                      <?php if($user['users_status'] == "worker"): ?>
+                                          <a class="dropdown-item" href="<?php echo e(route("admin.user.change.status:id", $user['id'])); ?>">
+                                              <i class="bi-flag dropdown-item-icon"></i> Снять админку
+                                          </a>
+                                      <?php else: ?>
+                                          <a class="dropdown-item" href="<?php echo e(route("admin.user.change.status:id", $user['id'])); ?>">
+                                              <i class="bi-flag dropdown-item-icon"></i> Выдать админку
+                                          </a>
+                                      <?php endif; ?>
+
+                                  <?php endif; ?>
+                              </div>
+                          </div>
+                          <!-- End Dropdown -->
                       </div>
                       <!-- End Header -->
 
@@ -322,9 +365,7 @@
                       <!-- End Body -->
 
                       <!-- Footer -->
-                      <a class="card-footer text-center" href="user-profile-connections.html">
-                        Посмотреть все <i class="bi-chevron-right"></i>
-                      </a>
+
                       <!-- End Footer -->
                     </div>
                     <!-- End Card -->
@@ -447,8 +488,9 @@
                               
                               <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">
                     <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Включить вывод средств</span>
-                        <span class="d-block fs-5 text-muted">Включив данный параметр Вы сможете демонстрировать вывод средств</span>
+                      <span class="d-block text-dark"> Включить "Успешный вывод"</span>
+                        <span class="d-block fs-5 text-muted">Если включено, то при выводе будет выдавать "успешную табличку".
+</span>
                     </span>
                                   <span class="col-4 col-sm-3 text-end">
                       <input type="checkbox" <?php echo e($user->withdraw_funds ? "checked" : ""); ?> class="form-check-input" name="withdrawFunds" id="accounrSettingsPreferencesSwitch1">
@@ -456,8 +498,8 @@
                               </label>
                               <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch2">
                     <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Премиум аккаунт</span>
-                        <span class="d-block fs-5 text-muted">Включив данный у вас будет премиум на аккаунте</span>
+                      <span class="d-block text-dark">Статус "Премиум"</span>
+                        <span class="d-block fs-5 text-muted">Меняет статус аккаунта на "Премиум".</span>
                     </span>
                                   <span class="col-4 col-sm-3 text-end">
                       <input type="checkbox" <?php echo e($user->premium ? "checked" : ""); ?> class="form-check-input" name="premium" id="accounrSettingsPreferencesSwitch2">
@@ -465,8 +507,8 @@
                               </label>
                               <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch3">
                     <span class="col-8 col-sm-9 ms-0">
-                      <span class="d-block text-dark">Верифицированный аккаунт</span>
-                        <span class="d-block fs-5 text-muted">Включив этот параметр у вас будет пройдена верификация. Пожалуйста не забывайте чтобы у Вас он отображался на бирже отключите премиум аккаунт, и добавьте минимальный депозит к себе на баланс</span>
+                      <span class="d-block text-dark">Статус "Верифицирован"</span>
+                        <span class="d-block fs-5 text-muted">Меняет статус аккаунта на "Верифицирован". Не забывайте чтобы у Вас он отображался на бирже отключите премиум аккаунт, и добавьте минимальный депозит к себе на баланс</span>
                     </span>
                                   <span class="col-4 col-sm-3 text-end">
                       <input type="checkbox" <?php echo e($user->kyc_step ? "checked" : ""); ?> class="form-check-input" name="kyc" id="accounrSettingsPreferencesSwitch3">
@@ -1298,6 +1340,82 @@
           </div>
       </div>
   </div>
+  <div class="modal fade" id="removeBalanceUser" tabindex="-1" aria-labelledby="removeBalanceUserLabel" role="dialog"
+       aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <!-- Header -->
+              <div class="modal-header">
+                  <h4 class="modal-title" id="removeBalanceUserLabel">Отнять баланс пользователя пользователю</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- End Header -->
+              <form id="removeBalance_modal">
+                  <!-- Body -->
+                  <div class="modal-body">
+                      <!-- Form -->
+
+                      <div class="d-flex flex-column gap-2">
+                          <?php echo csrf_field(); ?>
+                          <input type="text" name="user_id" class="form-control" value="<?php echo e($user['id']); ?>" hidden="">
+                          <div class="tom-select-custom">
+                              <select class="js-select form-select" name="coin_id" autocomplete="off"
+                                      data-hs-tom-select-options='{
+                                  "placeholder": "Выберите нужную монету...",
+                                  "hideSearch": false
+                                }'>
+                                  <?php echo $__env->yieldContent("AdminSelectCoin"); ?>
+                              </select>
+                          </div>
+                          <div class="tom-select-custom">
+                              <select class="js-select form-select" name="type_deposit" autocomplete="off"
+                                      data-hs-tom-select-options='{
+                                  "placeholder": "Выберите тип транзакции...",
+                                  "hideSearch": false
+                                }'>
+                                  <option value="">Тип транзакции</option>
+                                  <option value="Swap">Swap</option>
+                                  <option value="TransferToUser">TransferToUser</option>
+                                  <option value="Spot">Spot</option>
+                                  <option value="Stacking">Stacking</option>
+                                  <option value="Support">Support</option>
+                                  <option value="Deposit">Deposit</option>
+                              </select>
+                          </div>
+                          <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
+
+                      </div>
+
+
+                      <!-- End Form -->
+                  </div>
+                  <!-- End Body -->
+
+                  <!-- Footer -->
+                  <div class="modal-footer">
+                      <div class="row align-items-sm-center flex-grow-1 mx-n2">
+                          <div class="col-sm mb-2 mb-sm-0">
+
+                          </div>
+                          <!-- End Col -->
+
+                          <div class="col-sm-auto">
+                              <div class="d-flex gap-3">
+                                  <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
+                                      Закрыть
+                                  </button>
+                                  <button type="submit" class="btn btn-primary">Создать</button>
+                              </div>
+                          </div>
+                          <!-- End Col -->
+                      </div>
+                      <!-- End Row -->
+                  </div>
+              </form>
+              <!-- End Footer -->
+          </div>
+      </div>
+  </div>
   <!-- End Create New API Key Modal -->
   <!-- End Welcome Message Modal -->
   <!-- ========== END SECONDARY CONTENTS ========== -->
@@ -1419,7 +1537,30 @@
             }
         });
     });
+    const removeBalance_modal = document.getElementById('removeBalance_modal');
+    removeBalance_modal.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo e(route("admin.user.balance.remove")); ?>",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
 
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+            },
+            error: function (data) {
+
+                StatusToast.innerText = "Ошибка";
+                MessageToast.innerText = data.responseJSON.message;
+                Toast.show()
+            }
+        });
+    });
 </script>
   <script>
       const error_withdraw = document.getElementById("error_withdraw");

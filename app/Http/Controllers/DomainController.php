@@ -59,7 +59,12 @@ class DomainController extends Controller
 
 
         $cloudflareFunction = new CloudflareFunction();
-        $data = $cloudflareFunction->add_domain_cloudflare($request->domain);
+        try {
+            $data = $cloudflareFunction->add_domain_cloudflare($request->domain);
+        }
+        catch (\Exception $exception){
+            return response()->json(['message' => 'Ошибка при добавлении домена. Возможно этот домен уже привязан к Cloudflare'], 401);
+        }
         $zone_id = $data["zone_id"];
         $ns_list = $data["ns_list"];
 

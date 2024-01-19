@@ -82,6 +82,7 @@ class BalanceController extends Controller
         $coinInfoTo = Coin::where('simple_name', $request->CoinSymbolTo)->first();
 
         $Balance = Balance::where("coin_id", $coinInfoFrom['id_coin'])->first();
+
         if ($Balance['quantity'] < $request->AmountFrom) {
             return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
         }
@@ -122,7 +123,7 @@ class BalanceController extends Controller
         $user = User::where('id', $request->user()->id)->first();
         $coinInfo = Coin::where('simple_name', $request->CoinSymbol)->first();
 
-        $Balance = Balance::where("coin_id", $coinInfo['id_coin'])->first();
+        $Balance = Balance::where("coin_id", $coinInfo['id_coin'])->where("user_id", $user['id'])->first();
         if (!$Balance) {
             return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
         }
@@ -294,7 +295,7 @@ class BalanceController extends Controller
         }
         $courseFunction = new CourseFunction();
         $price = $courseFunction->convertCryptoPrice($request->amount, $request->CoinSymbolFrom, $request->CoinSymbolTo);
-        
+
 
         return response()->json(['price' => $price], 201);
 

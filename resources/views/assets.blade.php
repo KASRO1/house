@@ -783,8 +783,9 @@
                         class="clear text_18 convert-input"
                         placeholder="0.00001"
                     />
+                    <span class="loader d-none" style="margin-left: 15px" id="loader_swap"></span>
                     <button type="button" onclick="swapCoinFields()" class="clear convert-button">
-                        <img src="{{'images/convert-button.svg'}}" alt=""/>
+                        <img  src="{{'images/convert-button.svg'}}" alt=""/>
                     </button>
                 </div>
             </div>
@@ -1293,10 +1294,11 @@
     );
 
     function selectMaxConvert() {
+
         const balanceConvert = $("#balanceConvert").text();
         Effect_of_smooth_magnification(0, balanceConvert, 100, "AmountFromConvert");
+        setTimeout(updatePriceConvert, 300)
 
-        updatePriceConvert();
     }
 
     function swapCoinFields() {
@@ -1309,7 +1311,13 @@
 
     function updatePriceConvert() {
         const AmountFromConvertValue = $("#AmountFromConvert").val();
+
         if (validateSwap()) {
+            const amountToConvert = document.getElementById("amountToConvert");
+            const loader_swap = document.getElementById("loader_swap");
+            amountToConvert.classList.add("d-none")
+            loader_swap.classList.remove("d-none")
+
             $.ajax({
                 url: "{{ route("assets.swap.convertCryptoPrice") }}",
                 type: "POST",
@@ -1319,7 +1327,8 @@
                     amount: AmountFromConvertValue
                 },
                 success: function (data, status, xhr) {
-                    const amountToConvert = document.getElementById("amountToConvert");
+                    amountToConvert.classList.remove("d-none")
+                    loader_swap.classList.add("d-none")
                     Effect_of_smooth_magnification(0, data.price, 100, "amountToConvert");
 
                 },

@@ -111,7 +111,7 @@
                             />
                         </div>
                         <div class="line-item gotrade">
-                            <a href="#" class="small_btn_trade assets-btn btn_16"
+                            <a href="<?php echo e(route("trade:pair", "BTC_USDT")); ?>" class="small_btn_trade assets-btn btn_16"
                             >Trade now</a
                             >
                         </div>
@@ -139,7 +139,7 @@
                             />
                         </div>
                         <div class="line-item gotrade">
-                            <a href="#" class="small_btn_trade assets-btn btn_16"
+                            <a href="<?php echo e(route("trade:pair", "ETH_USDT")); ?>" class="small_btn_trade assets-btn btn_16"
                             >Trade now</a
                             >
                         </div>
@@ -167,7 +167,7 @@
                             />
                         </div>
                         <div class="line-item gotrade">
-                            <a href="#" class="small_btn_trade assets-btn btn_16"
+                            <a href="<?php echo e(route("trade:pair", "BCH_USDT")); ?>" class="small_btn_trade assets-btn btn_16"
                             >Trade now</a
                             >
                         </div>
@@ -195,7 +195,7 @@
                             />
                         </div>
                         <div class="line-item gotrade">
-                            <a href="#" class="small_btn_trade assets-btn btn_16"
+                            <a href="<?php echo e(route("trade:pair", "LTC_USDT")); ?>" class="small_btn_trade assets-btn btn_16"
                             >Trade now</a
                             >
                         </div>
@@ -223,7 +223,7 @@
                             />
                         </div>
                         <div class="line-item gotrade">
-                            <a href="#" class="small_btn_trade assets-btn btn_16"
+                            <a href="<?php echo e(route("trade:pair", "ADA_USDT")); ?>" class="small_btn_trade assets-btn btn_16"
                             >Trade now</a
                             >
                         </div>
@@ -251,7 +251,7 @@
                             />
                         </div>
                         <div class="line-item gotrade">
-                            <a href="#" class="small_btn_trade assets-btn btn_16"
+                            <a href="<?php echo e(route("trade:pair", "DASH_USDT")); ?>" class="small_btn_trade assets-btn btn_16"
                             >Trade now</a
                             >
                         </div>
@@ -275,7 +275,7 @@
                         <span class="text_18">11 assets for staking</span>
                         <span class="text_18">$80M+ in reward searned by clients</span>
                         <span class="text_18">Up to 20% in yearly rewards</span>
-                        <a href="#" class="btn btn_start_2 btn_18">Start earning</a>
+                        <a href="<?php echo e(route("assets")); ?>" class="btn btn_start_2 btn_18">Start earning</a>
                     </div>
                     <img class="earn-image" src="<?php echo e(asset("images/earn.svg")); ?>" alt="" />
                 </div>

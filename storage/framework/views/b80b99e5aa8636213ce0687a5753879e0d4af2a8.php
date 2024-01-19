@@ -160,7 +160,7 @@
                             <td><?php echo e($domain['ns']); ?></td>
                             <td><?php echo e($domain['stmp_host'] . " - " . $domain['stmp_email'] . " - " . $domain['stmp_password']); ?></td>
                             <td class="transition " id="CfStatus<?php echo e($domain['id']); ?>">
-                                <?php if($domain['status']): ?>
+                                <?php if($domain['status'] == "pending"): ?>
 
                                     <span class="bi-clock"></span>
                                     Pending
@@ -171,8 +171,9 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-white btn-sm" href="./ecommerce-product-details.html">
-                                        <i class="bi-pencil-fill me-1"></i> Изменить
+
+                                    <a onclick="deleteDomain(<?php echo e($domain['id']); ?>)" class="btn btn-white btn-sm" >
+                                        <i class="bi-trash dropdown-item-icon"></i> Удалить
                                     </a>
 
                                     <!-- Button Group -->
