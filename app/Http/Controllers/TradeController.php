@@ -15,7 +15,7 @@ class TradeController extends Controller
     public function index($pair){
         $coinFunction = new CoinFunction();
         $courseFunction = new CourseFunction();
-        $coins = Coin::all();
+        $coins = Coin::where("trade_active", "1")->get()->toArray();
         $coin = explode("_", $pair);
         $coin = $coin[0];
         $coin = Coin::where("simple_name", $coin)->first();
@@ -64,31 +64,52 @@ class TradeController extends Controller
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
+
+
+
         $courseFunction = new CourseFunction();
         $coinFunction = new CoinFunction();
 
-
         $coin = Coin::where("simple_name", $request->coin_symbol)->first();
-        $balanceCoin = $coinFunction->getBalanceCoinSpot($coin['id_coin']);
+        if($request->type_trade == "buy"){
+            $coinPrice = $courseFunction->getCoinPrice($coin['simple_name']);
+            $total = $request->amount / $coinPrice;
+            $balanceCoin = $coinFunction->getBalanceCoinSpot(192);
+            if($balanceCoin){
+                $balanceCoin = $balanceCoin['quantity'];
+            }
+            else{
+                $balanceCoin = 0;
+            }
+            if($balanceCoin < $request->amount){
+                return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
+            }
 
-        if($balanceCoin){
-            $balanceCoin = $balanceCoin['quantity'];
+            $coinFunction->removeBalanceCoin("192", $request->amount, "spot");
         }
         else{
-            $balanceCoin = 0;
+            $balanceCoin = $coinFunction->getBalanceCoinSpot($coin['id_coin']);
+            $total = $request->amount;
+            if($balanceCoin){
+                $balanceCoin = $balanceCoin['quantity'];
+            }
+            else{
+                $balanceCoin = 0;
+            }
+
+            if($balanceCoin < $request->amount){
+                return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
+            }
+            $coinFunction->removeBalanceCoin($coin['id_coin'], $request->amount, "spot");
         }
 
-        if($balanceCoin < $request->amount){
-            return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
-        }
-        $coinFunction->removeBalanceCoin($coin['id_coin'], $request->amount, "spot");
         $order = new Order();
         $order->user_id = $request->user()->id;
         $order->type_order = $request->type_order;
         $order->type_trade = $request->type_trade;
         $order->symbol = $coin['simple_name'];
         $order->open_order_price = $courseFunction->getCoinPrice($coin['simple_name']);
-        $order->amount = $request->amount;
+        $order->amount = $total;
         $order->status = "open";
 
         if($order->save()){
@@ -137,7 +158,9 @@ class TradeController extends Controller
     public function getHistoryTrade(){
         $openOrders = Order::where("user_id", auth()->user()->id)->where("status", "open")->get()->toArray();
         $closeOrders = Order::where("user_id", auth()->user()->id)->where("status", "!=", "open")->get()->toArray();
-
+//        foreach ($openOrders as $key => $openOrder){
+//            $openOrders[$key]['amount'] = ;
+//        }
         $array = ["OpenOrder" => $openOrders, "CloseOrder" => $closeOrders];
         return response()->json($array, 200);
     }

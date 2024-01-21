@@ -29,6 +29,7 @@ class Coin extends Model
     /**
      * @var mixed|string
      */
+    protected $primaryKey = 'id_coin';
     public $type_coin;
     protected $fillable = [
         "id_coin",

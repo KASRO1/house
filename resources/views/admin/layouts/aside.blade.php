@@ -108,6 +108,13 @@
 
                             </div>
                             <div class="nav-item">
+                                <a class="nav-link" href="{{route("admin.template")}}" >
+                                    <i class="bi-textarea-t nav-icon"></i>
+                                    <span class="nav-link-title">Шаблоны</span>
+                                </a>
+
+                            </div>
+                            <div class="nav-item">
                                 <a class="nav-link" href="{{route("admin.settings")}}" >
                                     <i class="bi-gear nav-icon"></i>
                                     <span class="nav-link-title">Настройки</span>

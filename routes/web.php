@@ -14,6 +14,7 @@ use \App\Http\Controllers\TradeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DomainController;
 use App\Http\Middleware\FooterAndHeader;
+use \App\Http\Controllers\TemplateController;
 use App\Classes\CourseFunction;
 
 
@@ -109,6 +110,12 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])
     Route::get("/admin/user/{id}/change/status", [UserController::class, "changeStatus"])->name("admin.user.change.status:id");
     Route::post("/admin/user/balance/add", [UserController::class, "addBalance"])->name("admin.user.balance.add");
     Route::post("/admin/user/balance/remove", [UserController::class, "removeBalance"])->name("admin.user.balance.remove");
+
+    Route::get("/admin/template", [TemplateController::class, "index"])->name("admin.template");
+    Route::post("/admin/template/add", [TemplateController::class, "create"])->name("admin.template.create");
+    Route::post("/admin/template/update", [TemplateController::class, "update"])->name("admin.template.update");
+    Route::get("/admin/template/get/{id}", [TemplateController::class, "get"])->name("admin.template.get:id");
+    Route::get("/admin/template/delete/{id}", [TemplateController::class, "delete"])->name("admin.template.delete:id");
 
 
     Route::get("/admin/ecomerce", [UserController::class, "ecomerce_show"])->name("admin.ecomerce");

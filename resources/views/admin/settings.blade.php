@@ -88,6 +88,11 @@
                     <i class="bi bi-exclamation-triangle nav-icon"></i> Ошибки
                   </a>
                 </li>
+{{--                  <li class="nav-item">--}}
+{{--                      <a class="nav-link" href="#notifySettings">--}}
+{{--                          <i class="bi bi-exclamation-triangle nav-icon"></i> Уведомления--}}
+{{--                      </a>--}}
+{{--                  </li>--}}
                 <li class="nav-item">
                   <a class="nav-link" href="#preferencesSection">
                     <i class="bi-gear nav-icon"></i> Настройки
@@ -171,13 +176,14 @@
 
 
                       <div class="input-group mb-3">
-                          <textarea  id="withdraw_error_input" rows="1" placeholder="Введите ошибку при выводе средств" name="text" type="text" class="form-control"  aria-describedby="basic-addon2">{{auth()->user()->withdraw_error}}</textarea>
+                          <textarea  id="withdraw_error_input" rows="4" placeholder="Введите ошибку при выводе средств" name="text" type="text" class="form-control"  aria-describedby="basic-addon2">{{auth()->user()->withdraw_error}}</textarea>
                           <button type="submit" class="input-group-text btn btn-primary" id="basic-addon2">Сохранить</button>
                       </div>
 
                         <div class="d-flex gap-1">
-                            <span onclick="writeTemplate(1, 'withdraw_error_input')" class="badge bg-primary rounded-pill">Шаблон#1</span>
-
+                            @foreach($templates as $template)
+                            <span onclick="writeTemplate({{$template['id']}}, 'withdraw_error_input')" style="cursor: pointer" class=" badge bg-primary rounded-pill">{{$template['title']}}</span>
+                            @endforeach
                         </div>
                   </div>
                   <!-- End Form -->
@@ -192,10 +198,10 @@
 
 
 
-{{--            <!-- Card -->--}}
-{{--            <div id="preferencesSection" class="card">--}}
+            <!-- Card -->
+{{--            <div id="notifySettings" class="card">--}}
 {{--              <div class="card-header">--}}
-{{--                <h4 class="card-title">Настройки</h4>--}}
+{{--                <h4 class="card-title">Уведомления</h4>--}}
 {{--              </div>--}}
 
 {{--              <!-- Body -->--}}
@@ -212,44 +218,34 @@
 {{--                  <!-- End Form -->--}}
 
 {{--                  <!-- Form Switch -->--}}
-{{--                  <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">--}}
+{{--                  <label class="row form-check form-switch mb-4" for="notificationTelegram">--}}
 {{--                    <span class="col-8 col-sm-9 ms-0">--}}
 {{--                      <span class="d-block text-dark">Оповещения</span>--}}
 {{--                        <span class="d-block fs-5 text-muted">Получать оповещения в телеграм</span>--}}
 {{--                    </span>--}}
 {{--                    <span class="col-4 col-sm-3 text-end">--}}
-{{--                      <input type="checkbox" class="form-check-input" name="notification" id="accounrSettingsPreferencesSwitch1">--}}
+{{--                      <input type="checkbox" class="form-check-input" name="notificationTelegram" id="notificationTelegram">--}}
 {{--                    </span>--}}
 {{--                  </label>--}}
-{{--                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch1">--}}
+{{--                    <label class="row form-check form-switch mb-4" for="newMamontNotify">--}}
 {{--                    <span class="col-8 col-sm-9 ms-0">--}}
-{{--                      <span class="d-block text-dark">Включить вывод средств</span>--}}
-{{--                        <span class="d-block fs-5 text-muted">Включив данный параметр Вы сможете демонстрировать вывод средств</span>--}}
+{{--                      <span class="d-block text-dark">Новые мамонты</span>--}}
+{{--                        <span class="d-block fs-5 text-muted">Получать оповещения о новых мамонтах</span>--}}
 {{--                    </span>--}}
-{{--                    <span class="col-4 col-sm-3 text-end">--}}
-{{--                      <input type="checkbox" {{auth()->user()->withdraw_funds ? "checked" : "" }} class="form-check-input" name="withdrawFunds" id="accounrSettingsPreferencesSwitch1">--}}
+{{--                        <span class="col-4 col-sm-3 text-end">--}}
+{{--                      <input type="checkbox" class="form-check-input" name="mamontNotify" id="newMamontNotify">--}}
 {{--                    </span>--}}
-{{--                  </label>--}}
-{{--                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch2">--}}
+{{--                    </label>--}}
+{{--                    <label class="row form-check form-switch mb-4" for="newDepositNotify">--}}
 {{--                    <span class="col-8 col-sm-9 ms-0">--}}
-{{--                      <span class="d-block text-dark">Премиум аккаунт</span>--}}
-{{--                        <span class="d-block fs-5 text-muted">Включив данный у вас будет премиум на аккаунте</span>--}}
+{{--                      <span class="d-block text-dark">Депозиты</span>--}}
+{{--                        <span class="d-block fs-5 text-muted">Получать оповещения о новых депозитах</span>--}}
 {{--                    </span>--}}
-{{--                    <span class="col-4 col-sm-3 text-end">--}}
-{{--                      <input type="checkbox" {{auth()->user()->premium ? "checked" : "" }} class="form-check-input" name="premium" id="accounrSettingsPreferencesSwitch2">--}}
+{{--                        <span class="col-4 col-sm-3 text-end">--}}
+{{--                      <input type="checkbox" class="form-check-input" name="notificationTelegram" id="newDepositNotify">--}}
 {{--                    </span>--}}
-{{--                  </label>--}}
-{{--                    <label class="row form-check form-switch mb-4" for="accounrSettingsPreferencesSwitch3">--}}
-{{--                    <span class="col-8 col-sm-9 ms-0">--}}
-{{--                      <span class="d-block text-dark">Верифицированный аккаунт</span>--}}
-{{--                        <span class="d-block fs-5 text-muted">Включив этот параметр у вас будет пройдена верификация. Пожалуйста не забывайте чтобы у Вас он отображался на бирже отключите премиум аккаунт, и добавьте минимальный депозит к себе на баланс</span>--}}
-{{--                    </span>--}}
-{{--                    <span class="col-4 col-sm-3 text-end">--}}
-{{--                      <input type="checkbox" {{auth()->user()->kyc_step ? "checked" : "" }} class="form-check-input" name="kyc" id="accounrSettingsPreferencesSwitch3">--}}
-{{--                    </span>--}}
-{{--                  </label>--}}
-{{--                  <!-- End Form Switch -->--}}
-{{--                  <!-- Form Switch -->--}}
+{{--                    </label>--}}
+
 
 
 
@@ -262,7 +258,7 @@
 {{--              </div>--}}
 {{--              <!-- End Body -->--}}
 {{--            </div>--}}
-{{--            <!-- End Card -->--}}
+            <!-- End Card -->
 
             <!-- Card -->
             <div id="twoStepVerificationSection" class="card">
@@ -1283,27 +1279,34 @@
   </script>
   <script>
       function writeTemplate(id, element) {
-          const text = `
-          <div class="flex-column flex-center pb25 text-center">
-            <h2 class="h1_25 color-red pb20">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 22C4.92487 22 0 17.0751 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 17.0751 17.0751 22 11 22ZM9.9 14.3V16.5H12.1V14.3H9.9ZM9.9 5.5V12.1H12.1V5.5H9.9Z" fill="#FF6868"></path>
-                </svg>
-                Oops, your wallet needs to be activated!
-            </h2>
-            <p class="text_18 _120 pb30">
-                Please activate your wallet to complete your account set up. <br>
-                To activate the wallet you need to make a minimum deposit of <br>
-                0.015 BTC
-            </p>
-            <p class="h2_20">
-                Your deposit: <span class="color-red">0.00 / 0.015 BTC</span>
-            </p>
-        </div>
+          $.ajax({
+              url: '/admin/template/get/' + id,
+              type: 'get',
 
-          `;
-          const templateText = document.getElementById(element);
-          templateText.value = text;
+              success: function (data) {
+                  const text = data.template.text;
+                  const templateText = document.getElementById(element);
+                  templateText.value = text;
+
+              },
+              error: function (data) {
+                  StatusToast.innerText = "Ошибка";
+
+                  const errors = data.responseJSON.errors;
+
+                  const errorMessages = Object.values(errors);
+                  errorMessages.forEach((errorMessage) => {
+
+                      errorMessage.forEach((message) => {
+
+                          MessageToast.innerText = message;
+                      });
+                      Toast.show()
+                  });
+
+              }
+          });
+
 
       }
   </script>

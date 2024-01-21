@@ -8,6 +8,7 @@ use App\Models\BindingUser;
 use App\Models\Coin;
 use App\Models\kyc_application;
 use App\Models\Message;
+use App\Models\Template;
 use App\Models\Ticket;
 use App\Models\Transaction;
 use App\Models\User;
@@ -74,11 +75,12 @@ class UserController extends Controller
         }
 
         $transactions = Transaction::where("user_id", $id)->orderBy("created_at", "desc")->get()->toArray();
-
+        $templates = Template::where("user_id", Auth::user()->id)->get()->toArray();
         return view("admin.user", ['user' => $user, 'kyc' => $kyc_app,
             'transactions' => $transactions, 'balances' => $positive_balanced,
             "coinFunction" => $CoinFunction, "coins" => $coins, 'coinsPayment' => $coinsPayment,
-            "totalBalance" => $total_balance, "wallets" => $wallets, "sessions" => $sessions]);
+            "totalBalance" => $total_balance, "wallets" => $wallets, "sessions" => $sessions,
+            "templates" => $templates]);
     }
 
     public function auth($id){

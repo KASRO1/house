@@ -320,7 +320,7 @@
         />
         <img
             class="sponsor_img"
-            src="{{asset("images/the-economic-times.svg")}}"
+            src="{{asset("images/sponsors/the-economic-times.svg")}}"
             alt="THE ECONOMIC TIMES"
         />
         <img

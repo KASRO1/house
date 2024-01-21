@@ -6,9 +6,11 @@
 <html lang="en">
 <head>
     <?php echo $__env->yieldContent("head"); ?>
-    <title>Cryptonix | Домены</title>
-</head>
+    <title>Cryptonix | Шаблоны</title>
+    <link rel="stylesheet" href="/assets_admin/vendor/quill/dist/quill.snow.css">
+    <script src="/assets_admin/vendor/quill/dist/quill.min.js"></script>
 
+</head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
 <script src="/assets_admin/js/hs.theme-appearance.js"></script>
@@ -18,195 +20,210 @@
 <!-- ========== HEADER ========== -->
 
 <?php echo $__env->yieldContent("header"); ?>
+
 <!-- ========== END HEADER ========== -->
 
 <!-- ========== MAIN CONTENT ========== -->
 <!-- Navbar Vertical -->
+<?php
+    function timeElapsedString($date) {
+            $carbonDate = \Carbon\Carbon::parse($date);
+            $now = \Carbon\Carbon::now();
+            $diff = $now->diffForHumans($carbonDate);
 
+            return $diff;
+        }
+?>
 <?php echo $__env->yieldContent("aside"); ?>
-
 <main id="content" role="main" class="main">
     <!-- Content -->
     <div class="content container-fluid">
-        <!-- Page Header -->
-        <div    >
-            <div class="row align-items-center mb-3">
-                <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title">Домены <span class="badge bg-soft-dark text-dark ms-2"><?php echo e(count($domains)); ?></span></h1>
+        <div class="row justify-content-lg-center">
+            <div class="col-lg-10">
 
 
-                </div>
-                <!-- End Col -->
 
-                <div class="col-sm-auto">
-                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDomainModal">Привязать домен</a>
-                </div>
-                <!-- End Col -->
-            </div>
-            <!-- End Row -->
 
-            <!-- Nav Scroller -->
-            <div class="js-nav-scroller hs-nav-scroller-horizontal">
-          <span class="hs-nav-scroller-arrow-prev" style="display: none;">
-            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-              <i class="bi-chevron-left"></i>
-            </a>
-          </span>
 
-                <span class="hs-nav-scroller-arrow-next" style="display: none;">
-            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-              <i class="bi-chevron-right"></i>
-            </a>
-          </span>
 
-                <!-- Nav -->
+                <!-- Filter -->
+                <div class="row align-items-center mb-5">
+                    <div class="col ">
+                        <h3 class="mb-0">Шаблоны
+                            <span class="badge bg-soft-info text-info ms-2"><?php echo e(count($templates)); ?></span>
+                        </h3>
 
-                <!-- End Nav -->
-            </div>
-            <!-- End Nav Scroller -->
-        </div>
-        <!-- End Page Header -->
-
-        <div class="row justify-content-end mb-3">
-            <div class="col-lg">
-                <!-- Datatable Info -->
-                <div id="datatableCounterInfo" style="display: none;">
-                    <div class="d-sm-flex justify-content-lg-end align-items-sm-center">
-              <span class="d-block d-sm-inline-block fs-5 me-3 mb-2 mb-sm-0">
-                <span id="datatableCounter">0</span>
-                Selected
-              </span>
-                        <a class="btn btn-outline-danger btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-trash"></i> Delete
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-archive"></i> Archive
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-upload"></i> Publish
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0" href="javascript:;">
-                            <i class="bi-x-lg"></i> Unpublish
-                        </a>
                     </div>
-                </div>
-                <!-- End Datatable Info -->
-            </div>
-        </div>
-        <!-- End Row -->
+                    <!-- End Col -->
 
-        <!-- Card -->
-        <div class="card">
-            <!-- Header -->
+                    <div class="col-auto">
 
-            <!-- End Header -->
+                        <!-- Nav -->
+                        <div class="d-flex gap-2 align-items-center">
 
-            <!-- Table -->
-            <div class="table-responsive datatable-custom">
-                <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
-                   "columnDefs": [{
-                      "targets": [0, 4, 9],
-                      "width": "5%",
-                      "orderable": false
-                    }],
-                   "order": [],
+                            <button class="nav-link border-0 btn-primary btn" style="font-size: .8125rem;padding: 0.5rem 0.8125rem; border-radius: 0.5rem;" title="Создать шаблон" data-bs-toggle="modal" data-bs-target="#createAKIKeyModal">
+                                <i class="bi-plus text-white"></i>
+                            </button>
 
-                   "search": "#datatableSearch",
-                   "entries": "#datatableEntries",
-                   "pageLength": 12,
-                   "isResponsive": false,
-                   "isShowPaging": false,
-                   "pagination": "datatablePagination"
-                 }'>
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col" class="table-column-pe-0">
-                        </th>
-                        <th class="table-column-ps-0">Домен</th>
-                        <th>Заголовок</th>
-                        <th>Статус</th>
-                        <th>Ns записи</th>
-                        <th>STMP данные</th>
-                        <th>Статус cloudflare</th>
+                        <ul class="nav nav-segment" id="projectsTab" role="tablist">
 
-                        <th>Действия</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <?php $__currentLoopData = $domains; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $domain): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr class="" id="domainID<?php echo e($domain['id']); ?>">
-                            <td class="table-column-pe-0">
-
-                            </td>
-                            <td class="table-column-ps-0">
-                                <a class="d-flex align-items-center" href="./ecommerce-product-details.html">
-
-
-
-                                    <div class="flex-grow-1 ms-3">
-                                        <h5 class="text-inherit mb-0"><?php echo e($domain['domain']); ?></h5>
-                                    </div>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="grid-tab" data-bs-toggle="tab" href="#grid" role="tab" aria-controls="grid" aria-selected="true" title="Column view">
+                                    <i class="bi-grid"></i>
                                 </a>
-                            </td>
-                            <td><?php echo e($domain['title']); ?></td>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="list-tab" data-bs-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false" title="List view">
+                                    <i class="bi-view-list"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        </div>
+                        <!-- End Nav -->
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Filter -->
 
-                            <td>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="stocksCheckbox1" checked>
-                                    <label class="form-check-label" for="stocksCheckbox1"></label>
+                <!-- Tab Content -->
+                <div class="tab-content" id="projectsTabContent">
+                    <div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
+                        <div class="row row-cols-1 row-cols-md-2">
+
+                            <?php $__currentLoopData = $templates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $template): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                <div class="col mb-3 mb-lg-5">
+                                    <!-- Card -->
+                                    <div class="card card-hover-shadow text-center h-100">
+                                        <!-- Progress -->
+                                        <div class="card-progress-wrap">
+                                            <div class="progress card-progress">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <!-- End Progress -->
+
+                                        <!-- Body -->
+                                        <div class="card-body">
+                                            <div class="row align-items-center text-start mb-4">
+
+                                                <div class="col">
+                                                    <span class="badge bg-soft-success text-success p-2"><?php echo e(timeElapsedString($template['created_at'])); ?></span>
+                                                </div>
+
+                                                <div class="col-auto">
+                                                    <!-- Dropdown -->
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm card-dropdown-btn rounded-circle" id="projectsGridDropdown3" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="bi-three-dots-vertical"></i>
+                                                        </button>
+
+                                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="projectsGridDropdown3">
+                                                            <a class="dropdown-item" href="#" onclick="updateTemplate(<?php echo e($template['id']); ?>)" data-bs-toggle="modal" data-bs-target="#updateTemplate">Изменить</a>
+
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item text-danger" href="<?php echo e(route("admin.template.delete:id", $template['id'])); ?>">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- End Dropdown -->
+                                                </div>
+                                                <!-- End Col -->
+                                            </div>
+
+
+                                            <div class="mb-4">
+                                                <h2 class="mb-1"><?php echo e($template['title']); ?></h2>
+
+                                            </div>
+
+                                            <small class="card-subtitle"><?php echo e($template['text']); ?></small>
+
+
+
+                                            <a class="stretched-link" href="#"></a>
+                                        </div>
+                                        <!-- End Body -->
+
+                                        <!-- Footer -->
+                                        <!-- End Footer -->
+                                    </div>
+                                    <!-- End Card -->
                                 </div>
-                            </td>
-                            <td><?php echo e($domain['ns']); ?></td>
-                            <td><?php echo e($domain['stmp_host'] . " - " . $domain['stmp_email'] . " - " . $domain['stmp_password']); ?></td>
-                            <td class="transition " id="CfStatus<?php echo e($domain['id']); ?>">
-                                <?php if($domain['status'] == "pending"): ?>
 
-                                    <span class="bi-clock"></span>
-                                    Pending
-                                <?php else: ?>
-                                    <span class="legend-indicator bg-success"></span>
-                                    Active
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group">
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                        <!-- End Row -->
+                    </div>
 
-                                    <a onclick="deleteDomain(<?php echo e($domain['id']); ?>)" class="btn btn-white btn-sm" >
-                                        <i class="bi-trash dropdown-item-icon"></i> Удалить
-                                    </a>
+                    <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
+                        <div class="row row-cols-1">
+                            <?php $__currentLoopData = $templates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $template): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="col mb-3 mb-lg-5">
+                                <!-- Card -->
+                                <div class="card card-body">
+                                    <div class="d-flex">
 
-                                    <!-- Button Group -->
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty" id="productsEditDropdown1" data-bs-toggle="dropdown" aria-expanded="false"></button>
 
-                                        <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="productsEditDropdown1">
-                                            <a onclick="deleteDomain(<?php echo e($domain['id']); ?>)" class="dropdown-item" >
-                                                <i class="bi-trash dropdown-item-icon"></i> Удалить
-                                            </a>
-                                            <a id="updateStatusBlock<?php echo e($domain['id']); ?>" onclick="updateStatusCloudFlare(<?php echo e($domain['id']); ?>)" class="dropdown-item" href="#">
-                                                <i class="bi-arrow-clockwise dropdown-item-icon"></i> Обновить статус Cloudflare
-                                            </a>
+                                        <div class="flex-grow-1 ms-3">
+                                            <div class="row align-items-sm-center">
+                                                <div class="col">
+                                                    <span class="badge bg-soft-success text-success p-2 mb-2"><?php echo e(timeElapsedString($template['created_at'])); ?></span>
 
+                                                    <h3 class="mb-1"><?php echo e($template['title']); ?></h3>
+                                                </div>
+                                                <!-- End Col -->
+
+
+                                                <div class="col-auto">
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm card-dropdown-btn rounded-circle" id="projectsGridDropdown3" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="bi-three-dots-vertical"></i>
+                                                        </button>
+
+                                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="projectsGridDropdown3">
+                                                            <a class="dropdown-item" href="#" onclick="updateTemplate(<?php echo e($template['id']); ?>)" data-bs-toggle="modal" data-bs-target="#updateTemplate">Изменить</a>
+
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item text-danger" href="<?php echo e(route("admin.template.delete:id", $template['id'])); ?>">Удалить</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Row -->
+
+                                            <!-- Stats -->
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item">
+                                                    <span class="fs-5">Категория:</span>
+                                                    <span class="fw-semibold text-dark">Ошибки вывода</span>
+                                                </li>
+
+                                            </ul>
+                                            <!-- End Stats -->
+
+                                            <!-- Progress -->
+                                            <div class="progress card-progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <!-- End Progress -->
+
+                                            <a class="stretched-link" href="#"></a>
                                         </div>
                                     </div>
-                                    <!-- End Button Group -->
                                 </div>
-                            </td>
-                        </tr>
+                                <!-- End Card -->
+                            </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-
-
-                    </tbody>
-                </table>
+                        </div>
+                        <!-- End Row -->
+                    </div>
+                </div>
+                <!-- End Tab Content -->
             </div>
-            <!-- End Table -->
-
-
+            <!-- End Col -->
         </div>
-        <!-- End Card -->
+        <!-- End Row -->
     </div>
     <!-- End Content -->
 
@@ -663,11 +680,27 @@
     </div>
 </div>
 <!-- End Keyboard Shortcuts -->
+<div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true"
+     style="top: 20px; right: 20px; z-index: 1000;">
+    <div class="toast-header">
+        <div class="d-flex align-items-center flex-grow-1">
 
+            <div class="flex-grow-1 ms-3">
+                <h5 id="StatusToast" class="mb-0"></h5>
+            </div>
+            <div class="text-end">
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-body" id="MessageToast">
+
+    </div>
+</div>
 <!-- Activity -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream" aria-labelledby="offcanvasActivityStreamLabel">
     <div class="offcanvas-header">
-        <h4 id="offcanvasActivityStreamLabel" class="mb-0">Activity stream</h4>
+        <h4 id="offcanvasActivityStreamLabel" class="mb-0">Последние действия мамонта</h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -863,201 +896,41 @@
     </div>
 </div>
 <!-- End Activity -->
-
-<!-- Welcome Message Modal -->
-<div class="modal fade" id="welcomeMessageModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-close">
-                <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="bi-x-lg"></i>
-                </button>
-            </div>
-            <!-- End Header -->
-
-            <!-- Body -->
-            <div class="modal-body p-sm-5">
-                <div class="text-center">
-                    <div class="w-75 w-sm-50 mx-auto mb-4">
-                        <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="default">
-                        <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="dark">
-                    </div>
-
-                    <h4 class="h1">Welcome to Front</h4>
-
-                    <p>We're happy to see you in our community.</p>
-                </div>
-            </div>
-            <!-- End Body -->
-
-            <!-- Footer -->
-            <div class="modal-footer d-block text-center py-sm-5">
-                <small class="text-cap text-muted">Trusted by the world's best teams</small>
-
-                <div class="w-85 mx-auto">
-                    <div class="row justify-content-between">
-                        <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg" alt="Image Description">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg" alt="Image Description">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg" alt="Image Description">
-                        </div>
-                        <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg" alt="Image Description">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Footer -->
-        </div>
-    </div>
-</div>
-
-<!-- End Welcome Message Modal -->
-
-<!-- Export Products Modal -->
-<div class="modal fade" id="exportProductsModal" tabindex="-1" aria-labelledby="exportProductsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header">
-                <h4 class="modal-title" id="exportProductsModalLabel">Export products</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- End Header -->
-
-            <!-- Body -->
-            <div class="modal-body">
-                <p>This CSV file can update all product information. To update just inventory quantites use the <a class="link" href="#">CSV file for inventory.</a></p>
-
-                <div class="mb-4">
-                    <label class="form-label">Export</label>
-
-                    <div class="d-grid gap-2">
-                        <!-- Form Check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio1" checked>
-                            <label class="form-check-label" for="exportProductsRadio1">
-                                Current page
-                            </label>
-                        </div>
-                        <!-- End Form Check -->
-
-                        <!-- Form Check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio2">
-                            <label class="form-check-label" for="exportProductsRadio2">
-                                All products
-                            </label>
-                        </div>
-                        <!-- End Form Check -->
-
-                        <!-- Form Check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio3">
-                            <label class="form-check-label" for="exportProductsRadio3">
-                                Selected: 20 products
-                            </label>
-                        </div>
-                        <!-- End Form Check -->
-                    </div>
-                </div>
-
-                <label class="form-label">Export as</label>
-
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exportProductsAsRadio" id="exportProductsAsRadio1" checked>
-                    <label class="form-check-label" for="exportProductsAsRadio1">
-                        CSV for Excel, Numbers, or other spreadsheet programs
-                    </label>
-                </div>
-                <!-- End Form Check -->
-
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exportProductsAsRadio" id="exportProductsAsRadio2">
-                    <label class="form-check-label" for="exportProductsAsRadio2">
-                        Plain CSV file
-                    </label>
-                </div>
-                <!-- End Form Check -->
-            </div>
-            <!-- End Body -->
-
-            <!-- Footer -->
-            <div class="modal-footer gap-3">
-                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" class="btn btn-primary">Export products</button>
-            </div>
-            <!-- End Footer -->
-        </div>
-    </div>
-</div>
-<!-- End Export Products Modal -->
-<div class="modal fade" id="addDomainModal" tabindex="-1" aria-labelledby="addDomainModalLabel" role="dialog"
+<div class="modal fade" id="createAKIKeyModal" tabindex="-1" aria-labelledby="createAKIKeyModalLabel" role="dialog"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-header">
-                                <h4 class="modal-title" id="addDomainModalLabel">Привязать домен</h4>
+                <h4 class="modal-title" id="createAKIKeyModalLabel">Создать шаблон</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- End Header -->
-            <form id="addDomain">
+            <form id="template_modal">
                 <!-- Body -->
                 <div class="modal-body">
                     <!-- Form -->
 
                     <div class="d-flex flex-column gap-2">
                         <?php echo csrf_field(); ?>
-                        <input type="text" name="domain" class="form-control" placeholder="Введите домен без https://">
-                        <input class="form-control" type="text" name="stmp_host" placeholder="Введите STMP Host">
-                        <input class="form-control" type="text" name="stmp_email" placeholder="Введите STMP Email">
-                        <input class="form-control" type="text" name="stmp_password" placeholder="Введите STMP пароль">
-                        <input class="form-control" type="text" name="title" placeholder="Введите заголовок биржи">
+
+
+                        <input class="form-control" type="text" name="title" placeholder="Заголовок шаблона">
+                        <textarea rows="6" class="form-control" type="text" name="text" placeholder="HTML код шаблона"></textarea>
 
 
 
 
 
-                        <div id="nsBlock1" class="d-none transition input-group input-group-sm input-group-merge table-input-group">
-                            <input id="nsCode1" type="text" class="form-control" readonly
-                                   value="12312">
-                            <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
-                               data-bs-toggle="tooltip" title="Скопировать NS-запись" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "NS запись скопирована!",
-                        "contentTarget": "#nsCode1",
-                        "classChangeTarget": "#nsCodeIcon1",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                <i id="nsCodeIcon1" class="bi-clipboard"></i>
-                            </a>
-                        </div>
-                        <div id="nsBlock2" class="d-none transition input-group  input-group-sm input-group-merge table-input-group">
-                            <input id="nsCode2" type="text" class="form-control" readonly
-                                   value="12312">
-                            <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
-                               data-bs-toggle="tooltip" title="Скопировать NS-запись" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "NS запись скопирована!",
-                        "contentTarget": "#nsCode2",
-                        "classChangeTarget": "#nsCodeIcon2",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                <i id="nsCodeIcon2" class="bi-clipboard"></i>
-                            </a>
-                        </div>
+
+
+
+
+
+
+
+
                     </div>
-
 
 
                     <!-- End Form -->
@@ -1077,9 +950,7 @@
                                 <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
                                     Закрыть
                                 </button>
-                                <button type="submit" class="btn btn-primary d-flex gap-1 align-items-center" id="submitAddDomain">
-                                    Привязать
-                                </button>
+                                <button type="submit" class="btn btn-primary">Создать</button>
                             </div>
                         </div>
                         <!-- End Col -->
@@ -1088,84 +959,76 @@
                 </div>
             </form>
             <!-- End Footer -->
-
         </div>
     </div>
 </div>
-<!-- Import Products Modal -->
-<div class="modal fade" id="importProductsModal" tabindex="-1" aria-labelledby="importProductsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="updateTemplate" tabindex="-1" aria-labelledby="updateTemplate" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-header">
-                <h4 class="modal-title" id="importProductsModalLabel">Import products by CSV</h4>
+                <h4 class="modal-title" id="createAKIKeyModalLabel">Изменить шаблон</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- End Header -->
+            <form id="UpdateTemplate_modal">
+                <!-- Body -->
+                <div class="modal-body">
+                    <!-- Form -->
 
-            <!-- Body -->
-            <div class="modal-body">
-                <p><a class="link" href="#">Download a sample CSV template</a> to see an example of the format required.</p>
+                    <div class="d-flex flex-column gap-2">
+                        <?php echo csrf_field(); ?>
+                        <input hidden="" name="id" id="id">
+                        <label>Заголовок шаблона</label>
+                        <input class="form-control" type="text" id="title" name="title" placeholder="Заголовок шаблона">
+                        <label>HTML код шаблона</label>
+                        <textarea rows="6" class="form-control" id="text" type="text" name="text" placeholder="HTML код шаблона"></textarea>
 
-                <!-- Dropzone -->
-                <div id="attachFilesNewProjectLabel" class="js-dropzone dz-dropzone dz-dropzone-card mb-4">
-                    <div class="dz-message">
-                        <img class="avatar avatar-xl avatar-4x3 mb-3" src="/assets_admin/svg/illustrations/oc-browse.svg" alt="Image Description" data-hs-theme-appearance="default">
-                        <img class="avatar avatar-xl avatar-4x3 mb-3" src="/assets_admin/svg/illustrations-light/oc-browse.svg" alt="Image Description" data-hs-theme-appearance="dark">
 
-                        <h5>Drag and drop your file here</h5>
 
-                        <p class="mb-2">or</p>
 
-                        <span class="btn btn-white btn-sm">Browse files</span>
+
+
+
+
+
+
+
+
+
                     </div>
-                </div>
-                <!-- End Dropzone -->
 
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="overwriteCurrentProductsCheckbox">
-                    <label class="form-check-label" for="overwriteCurrentProductsCheckbox">
-                        Overwrite any current products that have the same handle. Existing values will be used for any missing columns. <a href="#">Learn more</a>
-                    </label>
-                </div>
-                <!-- End Form Check -->
-            </div>
-            <!-- End Body -->
 
-            <!-- Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" class="btn btn-primary">Upload and continue</button>
-            </div>
+                    <!-- End Form -->
+                </div>
+                <!-- End Body -->
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div class="row align-items-sm-center flex-grow-1 mx-n2">
+                        <div class="col-sm mb-2 mb-sm-0">
+
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-sm-auto">
+                            <div class="d-flex gap-3">
+                                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
+                                    Закрыть
+                                </button>
+                                <button type="submit" class="btn btn-primary">Создать</button>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+                    </div>
+                    <!-- End Row -->
+                </div>
+            </form>
             <!-- End Footer -->
         </div>
     </div>
 </div>
-<div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true"
-     style="top: 20px; right: 20px; z-index: 1000;">
-    <div class="toast-header">
-        <div class="d-flex align-items-center flex-grow-1">
-
-            <div class="flex-grow-1 ms-3">
-                <h5 id="StatusToast" class="mb-0"></h5>
-            </div>
-            <div class="text-end">
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
-    <div class="toast-body" id="MessageToast">
-
-    </div>
-</div>
-<!-- End Import Products Modal -->
-
-
-<!-- Create New API Key Modal -->
-
-<!-- End Create New API Key Modal -->
-<!-- End Product Filter Modal -->
 <!-- ========== END SECONDARY CONTENTS ========== -->
 
 <!-- JS Global Compulsory  -->
@@ -1177,110 +1040,17 @@
 <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js"></script>
 <script src="/assets_admin/vendor/hs-form-search/dist/hs-form-search.min.js"></script>
 
-<script src="/assets_admin/vendor/clipboard/dist/clipboard.min.js"></script>
 <script src="/assets_admin/vendor/hs-nav-scroller/dist/hs-nav-scroller.min.js"></script>
-<script src="/assets_admin/vendor/tom-select/dist/js/tom-select.complete.min.js"></script>
-<script src="/assets_admin/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
-<script src="/assets_admin/vendor/datatables.net.extensions/select/select.min.js"></script>
-<script src="/assets_admin/vendor/dropzone/dist/min/dropzone.min.js"></script>
+<script src="/assets_admin/vendor/hs-sticky-block/dist/hs-sticky-block.min.js"></script>
 
 <!-- JS Front -->
 <script src="/assets_admin/js/theme.min.js"></script>
 
 <!-- JS Plugins Init. -->
 <script>
-    $(document).on('ready', function () {
-        // INITIALIZATION OF DATATABLES
-        // =======================================================
-        HSCore.components.HSDatatables.init($('#datatable'), {
-            select: {
-                style: 'multi',
-                selector: 'td:first-child input[type="checkbox"]',
-                classMap: {
-                    checkAll: '#datatableCheckAll',
-                    counter: '#datatableCounter',
-                    counterInfo: '#datatableCounterInfo'
-                }
-            },
-            language: {
-                zeroRecords: `<div class="text-center p-4">
-              <img class="mb-3" src="/assets_admin/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
-              <img class="mb-3" src="/assets_admin/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-            <p class="mb-0">No data to show</p>
-            </div>`
-            }
-        });
-
-        const datatable = HSCore.components.HSDatatables.getItem('datatable')
-
-        $('.js-datatable-filter').on('change', function() {
-            var $this = $(this),
-                elVal = $this.val(),
-                targetColumnIndex = $this.data('target-column-index');
-
-            datatable.column(targetColumnIndex).search(elVal).draw();
-        });
-
-        $('#datatableSearch').on('mouseup', function (e) {
-            var $input = $(this),
-                oldValue = $input.val();
-
-            if (oldValue == "") return;
-
-            setTimeout(function(){
-                var newValue = $input.val();
-
-                if (newValue == ""){
-                    // Gotcha
-                    datatable.search('').draw();
-                }
-            }, 1);
-        });
-
-        $('#toggleColumn_product').change(function (e) {
-            datatable.columns(1).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_type').change(function (e) {
-            datatable.columns(2).visible(e.target.checked)
-        })
-
-        datatable.columns(3).visible(false)
-
-        $('#toggleColumn_vendor').change(function (e) {
-            datatable.columns(3).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_stocks').change(function (e) {
-            datatable.columns(4).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_sku').change(function (e) {
-            datatable.columns(5).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_price').change(function (e) {
-            datatable.columns(6).visible(e.target.checked)
-        })
-
-        datatable.columns(7).visible(false)
-
-        $('#toggleColumn_quantity').change(function (e) {
-            datatable.columns(7).visible(e.target.checked)
-        })
-
-        $('#toggleColumn_variants').change(function (e) {
-            datatable.columns(8).visible(e.target.checked)
-        })
-    });
-</script>
-
-<!-- JS Plugins Init. -->
-<script>
     (function() {
         window.onload = function () {
 
-            HSCore.components.HSClipboard.init('.js-clipboard')
 
             // INITIALIZATION OF NAVBAR VERTICAL ASIDE
             // =======================================================
@@ -1297,20 +1067,24 @@
             HSBsDropdown.init()
 
 
-            // INITIALIZATION OF SELECT
-            // =======================================================
-            HSCore.components.HSTomSelect.init('.js-select')
-
-
             // INITIALIZATION OF NAV SCROLLER
             // =======================================================
             new HsNavScroller('.js-nav-scroller')
 
 
-            // INITIALIZATION OF DROPZONE
+            // INITIALIZATION OF STICKY BLOCKS
             // =======================================================
-            HSCore.components.HSDropzone.init('.js-dropzone')
-
+            new HSStickyBlock('.js-sticky-block', {
+                targetSelector: document.getElementById('header').classList.contains('navbar-fixed') ? '#header' : null
+            })
+            // let quil = HSCore.components.HSQuill.init('.js-quill')
+            // var quill = new Quill('.js-quill', {
+            //     // theme: 'snow'
+            // });
+            // console.log(quil)
+            // setInterval(function () {
+            //
+            // }, 4000)
         }
     })()
 </script>
@@ -1353,132 +1127,98 @@
     })()
 </script>
 <script>
-    let Toast = new bootstrap.Toast(document.querySelector('#liveToast'))
-    let MessageToast = document.querySelector('#MessageToast')
-    let StatusToast = document.querySelector('#StatusToast')
-    const addDomain = document.getElementById('addDomain');
-    const submitAddDomain = document.getElementById('submitAddDomain');
-    addDomain.addEventListener('submit', function (e) {
+    const template_modal = document.getElementById("template_modal");
+    template_modal.addEventListener("submit", function (e) {
         e.preventDefault();
-        submitAddDomain.disabled = true;
-        submitAddDomain.innerHTML = '<span class="spinner-border spinner-border-sm"> </span>Привязываем к cloudflare';
-        const formData = new FormData(addDomain);
+        let formData = new FormData(template_modal);
         $.ajax({
-            url: '<?php echo e(route("backend.admin.domain.add")); ?>',
-            type: 'POST',
+            url: "<?php echo e(route("admin.template.create")); ?>",
+            type: "POST",
             data: formData,
             processData: false,
             contentType: false,
-            success: function (data, status, xhr) {
-                console.log(data)
-                submitAddDomain.disabled = false;
-                submitAddDomain.innerHTML = 'Привязать';
-                StatusToast.innerText = "Успешно";
-                MessageToast.innerText = data.message;
-                Toast.show()
-                const ns_list = data.ns_list;
-                const nsBlock1 = document.getElementById("nsBlock1");
-                const nsBlock2 = document.getElementById('nsBlock2');
-                const nsCode1 = document.getElementById('nsCode1');
-                const nsCode2 = document.getElementById('nsCode2');
-                nsCode1.value = ns_list[0]
-                nsCode2.value = ns_list[1];
-                nsBlock1.classList.remove("d-none");
-                nsBlock2.classList.remove("d-none");
-                submitAddDomain.innerText = "Привязал NS-записи"
-                submitAddDomain.setAttribute('onclick', 'reload_page()' );
+            success: function (data) {
+                $('#createAKIKeyModal').modal('hide');
+                $('#StatusToast').text('Успешно');
+                $('#MessageToast').text('Шаблон успешно создан');
+                var toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show()
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
+            },
+            error: function (data) {
+                $('#createAKIKeyModal').modal('hide');
+                $('#StatusToast').text('Ошибка');
+                $('#MessageToast').text('Произошла ошибка при создании шаблона. Проверьте правильность данных');
+                var toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show()
 
+            }
+        });
+    });
+</script>
+<script>
+    function updateTemplate(id){
+        const updateTemplate = document.getElementById("updateTemplate");
+        const text = document.getElementById("text");
+        const title = document.getElementById("title");
+        const id_el = document.getElementById("id");
+
+        $.ajax({
+            url: "/admin/template/get/"+id,
+            type: "GET",
+
+            success: function (data) {
+                console.log(data)
+                text.value = data.template.text;
+                title.value = data.template.title;
+                id_el.value = data.template.id;
 
             },
             error: function (data) {
-                console.log(data);
-                StatusToast.innerText = "Ошибка";
-                submitAddDomain.disabled = false;
-                submitAddDomain.innerHTML = 'Привязать';
-                try {
-
-                    const errors = data.responseJSON.errors;
-
-                    const errorMessages = Object.values(errors);
-                    errorMessages.forEach((errorMessage) => {
-
-                            errorMessage.forEach((message) => {
-
-                                MessageToast.innerText = message;
-                            });
-                            Toast.show()
-                        }
-                    )
-                } catch (e) {
-                    MessageToast.innerText = data.responseJSON.message;
-                    Toast.show()
-                }
 
 
-
-            },
-
+            }
         });
-    });
-    function reload_page(){
-        location.reload();
     }
 </script>
 <script>
-    function updateStatusCloudFlare(id){
-        const updateStatusBlock = document.getElementById('updateStatusBlock'+id);
-        updateStatusBlock.innerHTML = '<span class="spinner-border spinner-border-sm me-2"> </span>Проверяем статус в cloudflare'
-        const CfStatus = document.getElementById('CfStatus'+id);
-        CfStatus.innerHTML = '<span class="spinner-border spinner-border-sm me-2"> </span>Проверяем статус в cloudflare';
+    const UpdateTemplate_modal = document.getElementById("UpdateTemplate_modal");
+    UpdateTemplate_modal.addEventListener("submit", function (e) {
+        e.preventDefault();
+        let formData = new FormData(UpdateTemplate_modal);
+
         $.ajax({
-            url: '/admin/domain/update/status/'+id,
-            data: {
-                _token: '<?php echo e(csrf_token()); ?>'
-            },
-            type: 'POST',
-            success: function (data, status, xhr) {
-                console.log(data);
-                const dataStatus = data.status;
-                if(dataStatus === 'active') {
-                    CfStatus.innerHTML = '<span class="badge bg-success"></span> Active'
-                }
-                else{
-                    CfStatus.innerHTML = '<span class="bi bi-clock"></span> Pending'
-                }
-                updateStatusBlock.innerHTML = '<i class="bi-arrow-clockwise dropdown-item-icon"></i> Обновить статус Cloudflare'
-
-
+            url: "<?php echo e(route("admin.template.update")); ?>",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $('#updateTemplate').modal('hide');
+                $('#StatusToast').text('Успешно');
+                $('#MessageToast').text('Шаблон успешно изменен');
+                var toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show()
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
             },
             error: function (data) {
-                console.log(data);
-            },
+                $('#updateTemplate').modal('hide');
+                $('#StatusToast').text('Ошибка');
+                $('#MessageToast').text('Произошла ошибка при изменении шаблона. Проверьте правильность данных');
+                var toast = new bootstrap.Toast(document.getElementById('liveToast'))
+                toast.show()
 
-        });
-    }
-
-    function deleteDomain(id){
-        const domainID = document.getElementById('domainID'+id);
-
-        domainID.classList.add("pulse");
-        domainID.classList.add("transition");
-
-        $.ajax({
-            url: '/admin/domain/delete/'+id,
-            data: {
-                _token: '<?php echo e(csrf_token()); ?>'
-            },
-            type: 'POST',
-            success: function (data, status, xhr) {
-                StatusToast.innerText = "Успешно";
-                MessageToast.innerText = data.message;
-                Toast.show()
-                domainID.remove();
             }
-
-        })
-    }
+        });
+    });
 </script>
 <!-- End Style Switcher JS -->
+
+
 </body>
 </html>
-<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/domains.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/templates.blade.php ENDPATH**/ ?>

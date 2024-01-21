@@ -44,7 +44,7 @@ class HeaderData
 
         return $next($request);
     }
-    private function timeElapsedString($date) {
+    public function timeElapsedString($date) {
         $carbonDate = Carbon::parse($date);
         $now = Carbon::now();
         $diff = $now->diffForHumans($carbonDate);

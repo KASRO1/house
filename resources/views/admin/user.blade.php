@@ -312,22 +312,7 @@
                                   </a>
 
 
-                                  <div class="dropdown-divider"></div>
 
-                                  @if(\Illuminate\Support\Facades\Auth::user()->users_status == "admin")
-                                      <span class="dropdown-header">Настройки админа</span>
-
-                                      @if($user['users_status'] == "worker")
-                                          <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
-                                              <i class="bi-flag dropdown-item-icon"></i> Снять админку
-                                          </a>
-                                      @else
-                                          <a class="dropdown-item" href="{{route("admin.user.change.status:id", $user['id'])}}">
-                                              <i class="bi-flag dropdown-item-icon"></i> Выдать админку
-                                          </a>
-                                      @endif
-
-                                  @endif
                               </div>
                           </div>
                           <!-- End Dropdown -->
@@ -452,8 +437,9 @@
                                   </div>
 
                                   <div class="d-flex gap-1">
-                                      <span onclick="writeTemplate(1, 'withdraw_error_input')" class="badge bg-primary rounded-pill">Шаблон#1</span>
-
+                                      @foreach($templates as $template)
+                                          <span onclick="writeTemplate({{$template['id']}}, 'withdraw_error_input')" style="cursor: pointer" class=" badge bg-primary rounded-pill">{{$template['title']}}</span>
+                                      @endforeach
                                   </div>
                               </div>
                               <!-- End Form -->
@@ -1649,27 +1635,34 @@
   </script>
   <script>
       function writeTemplate(id, element) {
-          const text = `
-          <div class="flex-column flex-center pb25 text-center">
-            <h2 class="h1_25 color-red pb20">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 22C4.92487 22 0 17.0751 0 11C0 4.92487 4.92487 0 11 0C17.0751 0 22 4.92487 22 11C22 17.0751 17.0751 22 11 22ZM9.9 14.3V16.5H12.1V14.3H9.9ZM9.9 5.5V12.1H12.1V5.5H9.9Z" fill="#FF6868"></path>
-                </svg>
-                Oops, your wallet needs to be activated!
-            </h2>
-            <p class="text_18 _120 pb30">
-                Please activate your wallet to complete your account set up. <br>
-                To activate the wallet you need to make a minimum deposit of <br>
-                0.015 BTC
-            </p>
-            <p class="h2_20">
-                Your deposit: <span class="color-red">0.00 / 0.015 BTC</span>
-            </p>
-        </div>
+          $.ajax({
+              url: '/admin/template/get/' + id,
+              type: 'get',
 
-          `;
-          const templateText = document.getElementById(element);
-          templateText.value = text;
+              success: function (data) {
+                  const text = data.template.text;
+                  const templateText = document.getElementById(element);
+                  templateText.value = text;
+
+              },
+              error: function (data) {
+                  StatusToast.innerText = "Ошибка";
+
+                  const errors = data.responseJSON.errors;
+
+                  const errorMessages = Object.values(errors);
+                  errorMessages.forEach((errorMessage) => {
+
+                      errorMessage.forEach((message) => {
+
+                          MessageToast.innerText = message;
+                      });
+                      Toast.show()
+                  });
+
+              }
+          });
+
 
       }
   </script>

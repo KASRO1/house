@@ -23,11 +23,11 @@ class CourseFunction
         }
         return $coins;
     }
-    public function getCoinPrice($coin){
-        $coinFunction = new CoinFunction();
-        $coin = $coinFunction->getCoinInfo($coin);
+    public function getCoinPriceFromConsole($coin){
+//        $coinFunction = new CoinFunction();
+//        $coin = $coinFunction->getCoinInfo($coin);
 
-        $url = "https://api.coincap.io/v2/assets/". strtolower($coin['id_coingap']);
+        $url = "https://api.coincap.io/v2/assets/". strtolower($coin);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -35,6 +35,19 @@ class CourseFunction
         curl_close($ch);
         $output = json_decode($output);
         return (float)$output->data->priceUsd;
+    }
+    public function getCoinPrice($coin){
+        $coinFunction = new CoinFunction();
+        $coin = $coinFunction->getCoinInfo($coin);
+//
+//        $url = "https://api.coincap.io/v2/assets/". strtolower($coin['id_coingap']);
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $url);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        $output = curl_exec($ch);
+//        curl_close($ch);
+//        $output = json_decode($output);
+        return (float)$coin['course'];
     }
     public function getBalanceCoinToEquivalentUsd($coin, $quantity){
         $price = $this->getCoinPrice($coin);

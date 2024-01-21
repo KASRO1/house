@@ -25,6 +25,8 @@ class CreateCoinsTable extends Migration
             $table->string("min_deposit")->nullable();
             $table->json("wallets")->nullable();
             $table->boolean("payment_active")->default(0);
+            $table->boolean("trade_active")->default(1);
+            $table->string("course")->nullable();
             $table->timestamps();
         });
 
@@ -67,13 +69,15 @@ class CreateCoinsTable extends Migration
                 "id_coingap" => "tether",
                 "spread" => "0",
                 "min_deposit" => "10",
-                "payment_active" => 1
+                "payment_active" => 1,
+                "trade_active" => 0,
 
             ],
             [
                 "id_coin" => "292",
                 "full_name" => "Tether ERC-20",
                 "simple_name" => "USDT ERC-20",
+                "trade_active" => 0,
                 "id_coingap" => "tether",
                 "type_coin" => "coin",
                 "spread" => "0",
@@ -443,6 +447,7 @@ class CreateCoinsTable extends Migration
                         "spread" => $datum['spread'],
                         "min_deposit" => $datum['min_deposit'] ?? 0,
                         "payment_active" => $datum['payment_active'] ?? 0,
+                        "trade_active" => $datum['trade_active'] ?? 1,
                         "created_at" => date("Y-m-d H:i:s"),
                         "updated_at" => date("Y-m-d H:i:s"),
                     ]]

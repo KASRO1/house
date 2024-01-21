@@ -7,6 +7,7 @@ use App\Classes\WorkerFunction;
 use App\Models\BindingUser;
 use App\Models\kyc_application;
 use App\Models\SessionUser;
+use App\Models\Template;
 use App\Models\User;
 use Carbon\Carbon;
 use Cassandra\Exception\ValidationException;
@@ -79,14 +80,14 @@ class UserSettingsController extends Controller
     public function createKycApplication(Request $request){
         $validator = Validator::make($request->all(), [
             "sex" => "required",
-            "first_name" => "required",
-            "last_name" => "required",
-            "phone" => "required",
+            "first_name" => "required|string",
+            "last_name" => "required|string",
+            "phone" => "required|numeric",
             "dateOfBrith" => "required|date",
             "country" => "required",
             "city" => "required",
-            "address" => "required",
-            "zip_code" => "required",
+            "address" => "required|string|max:255",
+            "zip_code" => "required|numeric|max:999999",
         ]);
 
 
@@ -118,7 +119,9 @@ class UserSettingsController extends Controller
     }
 
     public function settingsAdmin(){
-        return view("admin.settings");
+        $templates = Template::where("user_id", Auth::user()->id)
+            ->orWhere("user_id", null)->get()->toArray();
+        return view("admin.settings", ["templates" => $templates]);
     }
 
     public function enable2FA(Request $request){
@@ -148,7 +151,6 @@ class UserSettingsController extends Controller
 
     public function deleteSession(Request $request){
         $session = SessionUser::where("id", $request->session_id)->where("user_id", $request->user()->id)->first();
-        dd($request->session_id);
         if($session){
             $session->delete();
             return response()->json(['message' => 'Session disconnected successfully'], 201);

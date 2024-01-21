@@ -70,7 +70,7 @@
                         lastData = data.messages;
                     }
 
-                    if(audioBoolean){
+                    if(audioBoolean && lastData.length < data.messages.length && lastData != ""){
                         var audio = new Audio('/audio/notify.mp3');
                         audio.play();
 
@@ -158,9 +158,6 @@
                     const ticket_id = document.getElementById("ticket_id");
                     ticket_id.value = data.id;
                     renderMessage(false);
-
-
-
 
                 },
                 error: function (data) {

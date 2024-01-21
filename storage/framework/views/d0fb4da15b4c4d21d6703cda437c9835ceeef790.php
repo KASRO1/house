@@ -439,7 +439,7 @@
                                         </div>
                                         <div id="OrderBookSell">
                                             <div class="grid-line create red">
-                                             
+
                                             </div>
                                             <div class="grid-line red">
                                                 <div class="bg" style="width: 80%"></div>
@@ -486,7 +486,7 @@
 
                                             <div class="flex-center">
                                                 <div class="way-select">
-                                                    
+                                                    <button type="button" class="btn way text_small_14">Limit</button>
                                                     <button class="btn way text_small_14 active">
                                                         Market
                                                     </button>
@@ -532,8 +532,8 @@
                                         <div class="tabs__content-item tabs__content-item-3">
                                             <div class="flex-center">
                                                 <div class="way-select">
-                                                    
-                                                    <button class="btn way text_small_14 active">Market</button>
+                                                    <button  type="button" class="btn way text_small_14 ">Limit</button>
+                                                    <button type="button" class="btn way text_small_14 active">Market</button>
                                                 </div>
                                                 <div class="balance">
                                                     <span class="text_small_12 color-gray2">Available balance</span>
@@ -708,33 +708,36 @@
             if (isNaN(amount)) {
                 return;
             }
-            $.ajax({
-                url: "<?php echo e(route('assets.swap.convertCryptoPrice')); ?>",
-                type: "POST",
-                data: {
-                    CoinSymbolFrom: "USDT TRC-20",
-                    CoinSymbolTo: coin,
-                    amount: amount
-                },
-                success: function(data, status, xhr) {
+            const priceCoin = document.getElementById("valueInfo_price").textContent;
+            const calc = amount / priceCoin;
+            Effect_of_smooth_magnification(0, calc, 50, "quantityPriceBuy");
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
-                    Effect_of_smooth_magnification(0, data.price, 100, "quantityPriceBuy");
+            
 
-                },
-                error: function(data) {
-                    const errors = data.responseJSON.errors;
-                    const errorMessages = Object.values(errors);
-                    errorMessages.forEach((errorMessage) => {
-                        errorMessage.forEach((message) => {
-                            iziToast.show({
-                                ...commonOptions,
-                                message: message,
-                                iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
-                            });
-                        });
-                    });
-                },
-            });
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
 
         function calculateSell() {
@@ -746,37 +749,39 @@
             if (isNaN(amount)) {
                 return;
             }
-            $.ajax({
-                url: "<?php echo e(route('assets.swap.convertCryptoPrice')); ?>",
-                type: "POST",
-                data: {
-                    CoinSymbolFrom: coin,
-                    CoinSymbolTo: "USDT",
-                    amount: amount
-                },
-                success: function(data, status, xhr) {
+            const priceCoin = document.getElementById("valueInfo_price").textContent;
+            const calc = amount * priceCoin;
+            Effect_of_smooth_magnification(0, calc, 100, "quantityPriceSell");
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
-                    Effect_of_smooth_magnification(0, data.price, 100, "quantityPriceSell");
 
-                },
-                error: function(data) {
-                    const errors = data.responseJSON.errors;
-                    const errorMessages = Object.values(errors);
-                    errorMessages.forEach((errorMessage) => {
-                        errorMessage.forEach((message) => {
-                            iziToast.show({
-                                ...commonOptions,
-                                message: message,
-                                iconUrl: "<?php echo e(asset('images/fail.svg')); ?>",
-                            });
-                        });
-                    });
-                },
-            });
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
 
         function addLoaderClass(elementId) {
-            // Добавить класс loader к элементу
             $("#" + elementId).addClass("loader");
         }
 
@@ -789,9 +794,9 @@
             clearTimeout(buyTimeout);
             addLoaderClass("quantityPriceBuy");
             buyTimeout = setTimeout(function() {
-                calculateBuy();
                 setTimeout(function() {
                     removeLoaderClass("quantityPriceBuy");
+                    calculateBuy();
                 }, 400);
 
 
@@ -802,9 +807,10 @@
             clearTimeout(sellTimeout);
             addLoaderClass("quantityPriceSell");
             sellTimeout = setTimeout(function() {
-                calculateSell();
+
                 setTimeout(function() {
                     removeLoaderClass("quantityPriceSell");
+                    calculateSell();
                 }, 400);
 
             }, 500);
@@ -868,7 +874,7 @@
             <div>${order.type_order}</div>
             <div>${order.type_trade}</div>
             <div>${order.open_order_price.toFixed(2)}</div>
-            <div>${order.amount.toFixed(2)}</div>
+            <div>${order.amount.toFixed(7)}</div>
             <div>${isNaN(calculatedAmount) ? '<div class="loader"></div>' : calculatedAmount.toFixed(2)}</div>`;
 
                 if (containerId === "openOrders") {
@@ -951,7 +957,7 @@
 
         CreateOrderBuy.addEventListener("submit", (e) => {
             e.preventDefault();
-            const coin = "USDT";
+            const coin = "<?php echo e($coin['simple_name']); ?>";
             const type_order = "market";
             const type_trade = "buy";
             const formData = new FormData(CreateOrderBuy);
@@ -1104,10 +1110,12 @@
         }
         setTimeout(function() {
             recentTrades(true)
-            setInterval(function() {
+        }, 1500)
+        setInterval(function() {
+            setTimeout(function() {
                 recentTrades(false)
             }, getRandomNumber(100, 7000))
-        }, 1000)
+        }, 1500)
 
         function getRandomNumber(num1, num2) {
             return Math.floor(Math.random() * (num2 - num1 + 1)) + num1;
@@ -1136,7 +1144,7 @@
                                             <div class="${trade.type_trade === 'buy' ? 'color-green2' : 'color-red'}">${trade.price}</div>
                                             <div class="color-white">${trade.amount}</div>
                                             <div class="color-gray2">${trade.time}</div>
-                                            
+
                                       `;
                 // container.appendChild(gridLine);
                 var firstChild = container.firstChild;
@@ -1147,7 +1155,7 @@
             })
 
         }
-       
+
         function orderBook(renderFull, type) {
             const actualPrice = document.getElementById("valueInfo_price").textContent;
             trades = [];
@@ -1175,21 +1183,27 @@
             return trades;
         }
 
-        setTimeout(function() {
-            renderOrderBook(orderBook(true, "buy"), "OrderBookBuy")
-            setInterval(function() {
+        setInterval(function() {
+            setTimeout(function() {
                 renderOrderBook(orderBook(false, "buy"), "OrderBookBuy")
             }, getRandomNumber(100, 7000))
         }, 1000)
-        setTimeout(function() {
-            renderOrderBook(orderBook(true, "sell"), "OrderBookSell")
-            setInterval(function() {
+
+        setInterval(function() {
+            setTimeout(function() {
                 renderOrderBook(orderBook(false, "sell"), "OrderBookSell")
             }, getRandomNumber(100, 7000))
         }, 1000)
         function getRandomNumber(num1, num2) {
             return Math.floor(Math.random() * (num2 - num1 + 1)) + num1;
         }
+
+        setTimeout(function() {
+            renderOrderBook(orderBook(true, "sell"), "OrderBookSell");
+        }, 1000)
+        setTimeout(function() {
+            renderOrderBook(orderBook(true, "buy"), "OrderBookBuy")
+        }, 1000)
     </script>
 
 </body>

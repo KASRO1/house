@@ -4,6 +4,11 @@
     <!doctype html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="<?php echo e(asset("css/jquery-ui.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziToast.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/iziModal.min.css")); ?>"/>
+    <link rel="stylesheet" href="<?php echo e(asset("css/custom-select.css")); ?>"/>
     <?php echo $__env->yieldContent("head"); ?>
 </head>
 <body>
