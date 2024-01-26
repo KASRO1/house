@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Classes\CoinFunction;
+use App\Classes\Telegram;
 use App\Classes\WorkerFunction;
 use App\Http\Controllers\Controller;
+use App\Models\BindingUser;
+use App\Models\Coin;
+use App\Models\Promocode;
+use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 use App\Models\Domain;
@@ -47,10 +53,10 @@ class RegisterController extends Controller
         $response = curl_exec($verify);
         $responseData = json_decode($response);
 
-        if(!$responseData->success) {
-            return response()->json(['message' => 'Invalid captcha'], 200);
-        }
-
+//        if(!$responseData->success) {
+//            return response()->json(['message' => 'Invalid captcha'], 200);
+//        }
+        $workerFunction = new WorkerFunction();
         $domain = $request->getHost();
         $domain = Domain::where("domain", $domain)->first();
         $ga = new GoogleAuthenticator();
@@ -61,8 +67,29 @@ class RegisterController extends Controller
             'secret_2fa' => $secret,
             'ref_code' => Str::random(10),
         ]);
+        $ref = session('ref');
+        if($ref){
+            $coinFunction = new CoinFunction();
+            $promo = Promocode::where("promo", $ref)->first();
+
+            $coin = Coin::where("id_coin", $promo['coin_id'])->first();
+            $coinFunction->addBalanceCoinUserID($user->id, $promo->coin_id, $promo->amount, "standard");
+
+            ;
+            $workerFunction->BindingUser($promo->user_id, $user->id, "promo");
+            $promo->activations += 1;
+            $promo->save();
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->coinSymbol = $coin['simple_name'];
+            $transaction->amount = $promo['amount'];
+            $transaction->type = "Promocode";
+            $transaction->status = "Completed";
+            $transaction->save();
+            $user->promoIsActive = 1;
+            $user->save();
+        }
         if ($domain) {
-            $workerFunction = new WorkerFunction();
             $workerFunction->BindingUser($domain->user_id, $user->id, "domain");
             $token = password_hash($request->email.$request->password.time(), PASSWORD_DEFAULT);
             $Token = new Token();
@@ -94,7 +121,13 @@ class RegisterController extends Controller
 
 
             }
+            $worker = $workerFunction->getWorker($user->id);
+            $worker = User::find($worker['user_id_worker']);
+            if($worker && $worker['isNotification'] && $worker['isNewMamont'] && $worker['telegram_chat_id']){
+                $telegram = new Telegram();
+                $telegram->sendMessage($worker['telegram_chat_id'], "<b>🦣 Новый мамонт $user->email!</b>");
 
+            }
             return response()->json(['message' => 'Registration completed successfully. Please check your email and confirm it by clicking on the link in the email.'], 201);
 
 

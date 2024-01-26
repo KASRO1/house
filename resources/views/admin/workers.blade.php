@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     @yield("head")
-    <title>Cryptonix | Пользователи</title>
+    <title>Cryptonix | Воркеры</title>
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
@@ -27,10 +27,18 @@
         <!-- Page Header -->
         <div class="page-header">
             <div class="row align-items-end">
-                <div class="col-sm mb-2 mb-sm-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h1 class="page-header-title">Воркеры</h1>
+                    </div>
+                    <!-- End Col -->
 
-
-                    <h1 class="page-header-title">Воркеры</h1>
+                    <div class="col-auto">
+                        <a class="btn btn-primary" href="javascript:;" data-bs-toggle="modal" data-bs-target="#inviteUserModal">
+                            <i class="bi-person-plus-fill me-1"></i> Выдать админку
+                        </a>
+                    </div>
+                    <!-- End Col -->
                 </div>
                 <!-- End Col -->
 
@@ -342,6 +350,41 @@
 @yield("footer")
 </main>
 
+<div class="modal fade" id="inviteUserModal" tabindex="-1" aria-labelledby="inviteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="inviteUserModalLabel">Выдать воркеру админ-панель</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="GiveAdminWorkerForm">
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <div class="input-group mb-2 mb-sm-0">
+
+                            @csrf
+                            <input type="text" class="form-control" name="email" placeholder="Найти пользователя по почте" aria-label="Найти пользователя по почте/id">
+
+                            <div class="input-group-append input-group-append-last-sm-down-none">
+
+                                <button type="submit" class="btn btn-primary d-none d-sm-inline-block" href="javascript:;">Выдать</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+            </form>
+
+
+
+        </div>
+
+
+
+    </div>
+</div>
+</div>
 <!-- Edit user -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -1213,19 +1256,39 @@
                     </div>
                 </div>
                 <!-- End Tab Content -->
+
+
+
+
             </div>
             <!-- End Body -->
         </div>
     </div>
 </div>
+<div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true" style="top: 20px; right: 20px; z-index: 1000;">
+    <div class="toast-header">
+        <div class="d-flex align-items-center flex-grow-1">
+
+            <div class="flex-grow-1 ms-3">
+                <h5 id="StatusToast" class="mb-0"></h5>
+            </div>
+            <div class="text-end">
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-body" id="MessageToast">
+
+    </div>
+</div>
+
 <!-- End Edit user -->
 <!-- ========== END SECONDARY CONTENTS ========== -->
 
 <!-- JS Global Compulsory  -->
 <script src="/assets_admin/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/assets_admin/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
-<script src="/assets_admin/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="{{asset("assets_admin/vendor/bootstrap/dist/js/bootstrap.bundle.min.js")}}"></script>
 <!-- JS Implementing Plugins -->
 <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js"></script>
 <script src="/assets_admin/vendor/hs-form-search/dist/hs-form-search.min.js"></script>
@@ -1423,7 +1486,46 @@
         })
     })()
 </script>
+<script>
+    let Toast =new bootstrap.Toast(document.querySelector('#liveToast'))
+    let MessageToast = document.querySelector('#MessageToast')
+    let StatusToast = document.querySelector('#StatusToast')
+    const GiveAdminWorkerForm = document.getElementById("GiveAdminWorkerForm");
+    GiveAdminWorkerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(GiveAdminWorkerForm);
+        $.ajax({
+            url: "{{route("admin.worker.give")}}",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr) {
+                console.log(data)
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
 
+            },
+            error: function (data) {
+                StatusToast.innerText = "Ошибка";
+
+                const errors = data.responseJSON.errors;
+
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        MessageToast.innerText = message;
+                    });
+                    Toast.show()
+                });
+
+            },
+        })
+    })
+</script>
 <!-- End Style Switcher JS -->
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classes\CoinFunction;
 use App\Classes\PaymentFunction;
+use App\Classes\Telegram;
 use App\Models\BindingUser;
 use App\Models\Coin;
 use App\Models\kyc_application;
@@ -75,7 +76,8 @@ class UserController extends Controller
         }
 
         $transactions = Transaction::where("user_id", $id)->orderBy("created_at", "desc")->get()->toArray();
-        $templates = Template::where("user_id", Auth::user()->id)->get()->toArray();
+        $templates = Template::where("user_id", Auth::user()->id)
+            ->orWhere("user_id", null)->get()->toArray();
         return view("admin.user", ['user' => $user, 'kyc' => $kyc_app,
             'transactions' => $transactions, 'balances' => $positive_balanced,
             "coinFunction" => $CoinFunction, "coins" => $coins, 'coinsPayment' => $coinsPayment,
@@ -215,23 +217,35 @@ class UserController extends Controller
         if(!$user){
             return response()->json(['errors' => ["email" => ["Пользователь не найден"]]], 401);
         }
-        if($request->premium){
-            $user->premium = true;
+        if($request->notificationTelegram){
+            $user->isNotification = true;
         }
         else{
-            $user->premium = false;
+            $user->isNotification = false;
         }
-        if($request->kyc){
-            $user->kyc_step = 1;
-        }
-        else{
-            $user->kyc_step = 0;
-        }
-        if($request->withdrawFunds){
-            $user->withdraw_funds = true;
+        if($request->mamontNotify){
+            $user->isNewMamont = 1;
         }
         else{
-            $user->withdraw_funds = false;
+            $user->isNewMamont = 0;
+        }
+        if($request->notificationDeposit){
+            $user->isNewDeposit = true;
+        }
+        else{
+            $user->isNewDeposit = false;
+        }
+        if($request->notificationTicket){
+            $user->isNewTicket = true;
+        }
+        else{
+            $user->isNewTicket = false;
+        }
+        if($request->notificationKyc){
+            $user->isNewKyc = true;
+        }
+        else{
+            $user->isNewKyc = false;
         }
         $user->save();
         return response()->json(['message' => 'Данные успешно обновлены'], 201);
@@ -385,6 +399,13 @@ class UserController extends Controller
         $ticket->user_id = $user->id;
         if($worker){
             $ticket->worker_id = $worker['user_id_worker'];
+            $worker = User::find($worker['user_id_worker']);
+            if($worker && $worker['isNotification'] && $worker['isNewTicket'] && $worker['telegram_chat_id']){
+                $telegram = new Telegram();
+                $email_mamont = $user['email'];
+                $telegram->sendMessage($worker['telegram_chat_id'], "<b>💬Новый тикет от $email_mamont с названием \"$request->subject\" и сообщением</b> \"$request->text\"");
+
+            }
         }
         $ticket->save();
 
@@ -410,6 +431,17 @@ class UserController extends Controller
         if($Ticket['user_id'] != $user->id && $Ticket['worker_id'] != $user->id){
             return response()->json(['errors' => ["user_id" => ["You are not a member of this chat"]]], 401);
         }
+        $worker = User::find($Ticket['worker_id']);
+        if($worker && $worker['isNotification'] && $worker['isNewTicket'] && $worker['telegram_chat_id'] && $worker['id'] != $user->id){
+            $telegram = new Telegram();
+            $email_mamont = $user['email'];
+            $subject = $Ticket['subject'];
+
+            $telegram->sendMessage($worker['telegram_chat_id'], "<b>💬Новое сообщение в тикете \"$subject\" от $email_mamont </b> \"$request->message\".");
+
+        }
+        $Ticket->messageIsRead = false;
+        $Ticket->save();
         $message = new Message();
         $message->message = $request->message;
         $message->user_id = $user->id;

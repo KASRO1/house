@@ -320,7 +320,7 @@
         />
         <img
             class="sponsor_img"
-            src="<?php echo e(asset("images/the-economic-times.svg")); ?>"
+            src="<?php echo e(asset("images/sponsors/the-economic-times.svg")); ?>"
             alt="THE ECONOMIC TIMES"
         />
         <img

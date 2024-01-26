@@ -29,6 +29,10 @@ class CreateUsersTable extends Migration
             $table->string("telegram_username")->nullable();
             $table->string("telegram_chat_id")->nullable();
             $table->boolean("isNotification")->default(0);
+            $table->boolean("isNewMamont")->default(0);
+            $table->boolean("isNewDeposit")->default(0);
+            $table->boolean("isNewTicket")->default(0);
+            $table->boolean("isNewKyc")->default(0);
             $table->boolean("isManualShow")->default(0);
             $table->text("withdraw_error")->nullable();
             $table->text("personal_withdraw_error")->nullable();

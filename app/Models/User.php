@@ -31,6 +31,10 @@ class User extends Authenticatable implements MustVerifyEmail
         "telegram_chat_id",
         "isNotification",
         "isManualShow",
+        "isNewMamont",
+        "isNewDeposit",
+        "isNewTicket",
+        "isNewKyc",
         "withdraw_error",
         "personal_withdraw_error",
         "min_deposit_for_withdraw",
@@ -40,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
         "wallets"
     ];
 
-    protected  $hidden = [
+    protected $hidden = [
         "password",
         "remember_token"
     ];

@@ -89,13 +89,17 @@
                                     {
                                         "autosize": true,
                                         "symbol": "<?php echo e(str_replace('_', '', $pair)); ?>",
-                                        "interval": "D",
+                                        "interval": "M",
                                         "timezone": "Etc/UTC",
                                         "theme": "dark",
                                         "style": "1",
                                         "locale": "en",
                                         "enable_publishing": false,
-                                        "allow_symbol_change": true,
+                                        "hide_legend": true,
+                                        "withdateranges": true,
+                                        "hide_side_toolbar": false,
+                                        "save_image": false,
+                                        "backgroundColor": "#061B27",
                                         "support_host": "https://www.tradingview.com"
                                     }
                                 </script>
@@ -121,7 +125,7 @@
                                             <div>Type</div>
                                             <div>Side</div>
                                             <div>Price</div>
-                                            <div>Quantity (BTC)</div>
+                                            <div>Quantity</div>
                                             <div>Total (USDT)</div>
                                             <div>Cancel</div>
                                         </div>
@@ -266,7 +270,7 @@
                                             <div>Type</div>
                                             <div>Side</div>
                                             <div>Price</div>
-                                            <div>Quantity (BTC)</div>
+                                            <div>Quantity</div>
                                             <div>Total (USDT)</div>
                                             <div>Status</div>
                                         </div>
@@ -382,7 +386,7 @@
                                     <div class="tabs__content-item tabs__content-item-2">
                                         <div class="grid-head">
                                             <div>Price (USDT)</div>
-                                            <div>Quantity (BTC)</div>
+                                            <div>Quantity</div>
                                             <div>Time</div>
                                         </div>
                                         <div id="recentTrade">
@@ -392,7 +396,7 @@
                                     <div class="tabs__content-item tabs__content-item-2 orderBook">
                                         <div class="grid-head">
                                             <div>Price (USDT)</div>
-                                            <div>Quantity (BTC)</div>
+                                            <div>Quantity</div>
                                             <div>Total (USDT)</div>
                                         </div>
                                         <div id="OrderBookBuy">
@@ -482,25 +486,25 @@
                                 </div>
                                 <div class="tabs__content tabs__content-3">
                                     <form id="CreateOrderBuy">
-                                        <div class="tabs__content-item tabs__content-item-3">
+                                        <input hidden="" name="type_order" value="market">
+                                        <div class="tabs__content-item tabs__content-item-3" id="LimitOrderBuy">
 
                                             <div class="flex-center">
                                                 <div class="way-select">
-                                                    <button type="button" class="btn way text_small_14">Limit</button>
-                                                    <button class="btn way text_small_14 active">
+                                                    <button type="button" onclick="changeTypeOrder('LimitOrderBuy', 'limit', 'buy')" class="btn way text_small_14">Limit</button>
+                                                    <button type="button" onclick="changeTypeOrder('LimitOrderBuy', 'market', 'buy)" class="btn way text_small_14 active">
                                                         Market
                                                     </button>
                                                 </div>
                                                 <div class="balance">
                                                     <span class="text_small_12 color-gray2">Available balance</span>
-                                                    <span class="text_16 color-blue"><?php echo e($balanceUsdt); ?> USDT</span>
+                                                    <span  class="balanceUsdt text_16 color-blue"><?php echo e($balanceUsdt); ?> USDT</span>
                                                 </div>
                                             </div>
-
                                             <label class="order-label">
                                                 <span class="text_small_12 color-dark">Market price</span>
                                                 <input type="text" disabled id="quantityPriceBuy"
-                                                    class="order-input text_17" value="≈ ?" />
+                                                       class="order-input text_17" value="≈ ?" />
 
 
                                                 <span
@@ -509,36 +513,28 @@
                                             <label class="order-label">
                                                 <span class="text_small_12 color-dark">Quantity</span>
                                                 <input type="text" id="quantityBuy" name="amount"
-                                                    oninput="delayedCalculateBuy()" class="order-input  text_17"
-                                                    placeholder="0" />
+                                                       oninput="delayedCalculateBuy()" class="order-input  text_17"
+                                                       placeholder="0" />
                                                 <span class="сurrency text_17 color-gray2">USDT</span>
                                             </label>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
+
                                             <!-- <button class="btn btn-buy btn_16 notauth">Buy</button> -->
                                             <button type="submit" class="btn btn-buy btn_16">Buy</button>
 
                                         </div>
                                     </form>
                                     <form id="CreateOrderSell">
-                                        <div class="tabs__content-item tabs__content-item-3">
+                                        <input hidden="" name="type_order" value="market">
+                                        <div class="tabs__content-item tabs__content-item-3" id="LimitOrderSell">
                                             <div class="flex-center">
                                                 <div class="way-select">
-                                                    <button  type="button" class="btn way text_small_14 ">Limit</button>
-                                                    <button type="button" class="btn way text_small_14 active">Market</button>
+                                                    <button type="button" onclick="changeTypeOrder('LimitOrderSell', 'limit', 'sell')" class="btn way text_small_14 ">Limit</button>
+                                                    <button type="button" onclick="changeTypeOrder('LimitOrderSell', 'market', 'sell')" class="btn way text_small_14 active">Market</button>
                                                 </div>
                                                 <div class="balance">
                                                     <span class="text_small_12 color-gray2">Available balance</span>
                                                     <span
-                                                        class="text_16 color-blue"><?php echo e($balanceCoin . ' ' . $coin['simple_name']); ?></span>
+                                                        class="balanceCoin text_16 color-blue"><?php echo e(number_format($balanceCoin, 6)  . ' ' . $coin['simple_name']); ?></span>
                                                 </div>
                                             </div>
                                             <label class="order-label">
@@ -860,11 +856,11 @@
             container.innerHTML = "";
 
             // Получаем значение цены из элемента
-            const price = parseFloat(document.getElementById('valueInfo_price').textContent);
 
             data.forEach(order => {
                 const gridLine = document.createElement("div");
                 gridLine.classList.add("grid-line");
+                const price = order.price;
 
                 const calculatedAmount = parseFloat(order.amount) * price;
 
@@ -873,9 +869,9 @@
             <div>${order.symbol}/USDT</div>
             <div>${order.type_order}</div>
             <div>${order.type_trade}</div>
-            <div>${order.open_order_price.toFixed(2)}</div>
-            <div>${order.amount.toFixed(7)}</div>
-            <div>${isNaN(calculatedAmount) ? '<div class="loader"></div>' : calculatedAmount.toFixed(2)}</div>`;
+            <div>${parseFloat(order.open_order_price).toFixed(4)}</div>
+            <div>${order.amount}</div>
+            <div>${isNaN(calculatedAmount) ? '<div class="loader"></div>' : calculatedAmount.toFixed(4)}</div>`;
 
                 if (containerId === "openOrders") {
                     const cancelButton = document.createElement("div");
@@ -892,15 +888,13 @@
 
                 container.appendChild(gridLine);
 
-                // Добавляем класс для анимации
                 setTimeout(() => {
                     gridLine.classList.add("active");
-                }, 100); // Измените это значение по необходимости
+                }, 100);
             });
         }
 
 
-        // Отрисовываем таблицы при загрузке страницы
         // renderTable(openOrdersData, "openOrders");
         // renderTable(closedOrdersData, "closedOrders");
 
@@ -915,7 +909,6 @@
                     _token: "<?php echo e(csrf_token()); ?>",
                 },
                 success: function(data) {
-                    console.log(data)
                     renderTable(data.OpenOrder, "openOrders");
                     renderTable(data.CloseOrder, "closedOrders");
                 },
@@ -937,7 +930,6 @@
                     _token: "<?php echo e(csrf_token()); ?>",
                 },
                 success: function(data) {
-                    console.log(data)
                     getHistory()
                     iziToast.show({
                         ...commonOptions,
@@ -958,11 +950,9 @@
         CreateOrderBuy.addEventListener("submit", (e) => {
             e.preventDefault();
             const coin = "<?php echo e($coin['simple_name']); ?>";
-            const type_order = "market";
             const type_trade = "buy";
             const formData = new FormData(CreateOrderBuy);
             formData.append("coin_symbol", coin);
-            formData.append("type_order", type_order);
             formData.append("type_trade", type_trade);
 
             $.ajax({
@@ -972,7 +962,6 @@
                 contentType: false,
                 processData: false,
                 success: function(data, status, xhr) {
-                    console.log(data);
                     getHistory();
                     if (xhr.status === 201) {
                         iziToast.show({
@@ -980,6 +969,7 @@
                             message: data.message,
                             iconUrl: "<?php echo e(asset('images/succes.svg')); ?>",
                         });
+                        updateBalances()
 
                     }
                 },
@@ -1004,11 +994,9 @@
         CreateOrderSell.addEventListener("submit", (e) => {
             e.preventDefault();
             const coin = "<?php echo e($coin['simple_name']); ?>";
-            const type_order = "market";
             const type_trade = "sell";
             const formData = new FormData(CreateOrderSell);
             formData.append("coin_symbol", coin);
-            formData.append("type_order", type_order);
             formData.append("type_trade", type_trade);
 
             $.ajax({
@@ -1018,8 +1006,8 @@
                 contentType: false,
                 processData: false,
                 success: function(data, status, xhr) {
-                    console.log(data);
                     getHistory();
+                    updateBalances()
                     if (xhr.status === 201) {
                         iziToast.show({
                             ...commonOptions,
@@ -1205,7 +1193,133 @@
             renderOrderBook(orderBook(true, "buy"), "OrderBookBuy")
         }, 1000)
     </script>
+    <script>
+            function updateBalances(){
+            $.ajax({
+                url: "<?php echo e(route('assets.balance.spot.get.pair')); ?>",
+                type: "GET",
+                data: {
+                  pair: "<?php echo e($pair); ?>",
+                },
+                success: function(data) {
+                    const balanceUsdt = document.querySelectorAll('.balanceUsdt');
+                    const balanceCoin = document.querySelectorAll('.balanceCoin');
+                    balanceUsdt.forEach((element) => {
+                        element.innerHTML = data.USDT + ' USDT';
+                    })
+                    balanceCoin.forEach((element) => {
+                        element.innerHTML = data.coin + ' <?php echo e($coin['simple_name']); ?>';
+                    })
 
+                },
+                error: function(msg) {
+                    console.log(msg);
+                },
+            })
+        }
+        setInterval(updateBalances, 1000)
+    </script>
+    <script>
+        function changeTypeOrder(element_id, type, type_order){
+            const element = document.getElementById(element_id);
+            var button = "";
+            var coin1 = "";
+            var coin2 = "";
+            var idQuantity = ""
+            var quantityPrice = ""
+            var balance = ""
+            if(type_order == "sell"){
+                 button = '<button type="submit" class="btn btn-sell btn_16">Sell</button>'
+                 coin1 = "USDT"
+                 coin2 = "<?php echo e($coin['simple_name']); ?>"
+                 idQuantity = "quantitySell"
+                 quantityPrice = "quantityPriceSell"
+                 balance = "balanceCoin"
+            }
+            else{
+                button = '<button type="submit" class="btn btn-buy btn_16">Buy</button>'
+                coin1 = "<?php echo e($coin['simple_name']); ?>"
+                coin2 = "USDT"
+                idQuantity = "quantityBuy"
+                quantityPrice = "quantityPriceBuy"
+                balance = "balanceUsdt"
+            }
+
+
+            console.log(type_order)
+            console.log(button)
+            if(type == "limit"){
+                element.innerHTML = `
+                <?php echo csrf_field(); ?>
+                                        <input hidden="" name="type_order" value="limit">
+                                            <div class="flex-center">
+                                                <div class="way-select">
+                                                    <button type="button" onclick="changeTypeOrder('${element_id}', 'limit', '${type_order}')" class="btn way text_small_14 active">Limit</button>
+                                                    <button type="button" onclick="changeTypeOrder('${element_id}', 'market', '${type_order}')" class="btn way text_small_14 ">
+                                                        Market
+                                                    </button>
+                                                </div>
+                                                <div class="balance">
+                                                    <span class="text_small_12 color-gray2">Available balance</span>
+                                                    <span class="${balance} text_16 color-blue"><?php echo e(number_format($balanceUsdt, 6) . ' '); ?> ${coin2}</span>
+                                                </div>
+                                            </div>
+                                            <label class="order-label">
+                                                <span class="text_small_12 color-dark">Market price</span>
+                                                <input type="text" name="close_order_price" id="quantityPriceBuy"
+                                                       class="order-input text_17" value="<?php echo e(number_format($coin['course'], 2)); ?>" />
+                                                <span
+                                                    class="сurrency text_17 color-gray2">USDT</span>
+                                            </label>
+                                            <label class="order-label">
+                                                <span class="text_small_12 color-dark">Quantity</span>
+                                                <input type="text" id="quantityBuy" name="amount"
+                                                       oninput="" class="order-input  text_17"
+                                                       placeholder="0" />
+                                                <span class="сurrency text_17 color-gray2"><?php echo e($coin['simple_name']); ?></span>
+                                            </label>
+
+                                           ${button}
+`
+            }
+            else{
+                element.innerHTML = `
+                                            <?php echo csrf_field(); ?>
+                                            <input hidden="" name="type_order" value="market">
+                                            <div class="flex-center">
+                                                <div class="way-select">
+                                                    <button type="button" onclick="changeTypeOrder('${element_id}', 'limit', '${type_order}')" class="btn way text_small_14">Limit</button>
+                                                    <button type="button" onclick="changeTypeOrder('${element_id}', 'market', '${type_order}')" class="btn way text_small_14 active">
+                                                        Market
+                                                    </button>
+                                                </div>
+                                                <div class="balance">
+                                                    <span class="text_small_12 color-gray2">Available balance</span>
+                                                    <span  class="${balance} text_16 color-blue"><?php echo e($balanceUsdt); ?> USDT</span>
+                                                </div>
+                                            </div>
+                                            <label class="order-label">
+                                                <span class="text_small_12 color-dark">Market price</span>
+                                                <input type="text" disabled="" id="${quantityPrice}" class="order-input text_17" value="≈ ?">
+
+
+                                                <span class="сurrency text_17 color-gray2">${coin1}</span>
+                                            </label>
+                                            <label class="order-label">
+                                                <span class="text_small_12 color-dark">Quantity</span>
+                                                <input type="text" id="${idQuantity}" name="amount" oninput="delayedCalculateBuy()" class="order-input  text_17" placeholder="0">
+                                                <span class="сurrency text_17 color-gray2">${coin2}</span>
+                                            </label>
+
+                                            ${button}
+
+
+                    `
+            }
+
+            updateBalances()
+        }
+    </script>
 </body>
 
 </html>

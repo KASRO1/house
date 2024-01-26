@@ -79,8 +79,10 @@
                                 Forgot password?
                             </a>
                         </div>
+                        <div id="h-captcha_reload">
                         <div  id="h-captcha" class="h-captcha" data-theme="dark" data-sitekey="<?php echo e(env("HCAPTCHA_SITEKEY")); ?>"></div>
-                        <input
+                        </div>
+                            <input
                             class="submit btn btn_16 color-white"
                             type="submit"
                             value="Log in"
@@ -163,19 +165,10 @@
 <script type="text/javascript">
 
     function rerenderCaptcha() {
+        const hcaptcha_reloader = document.getElementById("h-captcha_reload");
+        hcaptcha_reloader.innerHTML = '<div  id="h-captcha" class="h-captcha" data-theme="dark" data-sitekey="<?php echo e(env("HCAPTCHA_SITEKEY")); ?>"></div>';
         var captchaContainer = document.getElementById('h-captcha');
-
-        while (captchaContainer.firstChild) {
-            captchaContainer.removeChild(captchaContainer.firstChild);
-        }
-
-        var newCaptchaElement = document.createElement('div');
-        newCaptchaElement.className = 'h-captcha';
-        newCaptchaElement.setAttribute('data-sitekey', '<?php echo e(env("HCAPTCHA_SITEKEY")); ?>');
-
-        captchaContainer.appendChild(newCaptchaElement);
-
-        hcaptcha.render('h-captcha');
+        hcaptcha.render(captchaContainer);
     }
 </script>
 </body>

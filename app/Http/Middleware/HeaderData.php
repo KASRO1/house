@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\BindingUser;
 use App\Models\kyc_application;
 use App\Models\News;
+use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
 use Closure;
@@ -39,8 +40,11 @@ class HeaderData
             $users[$key]['user']['time'] = $this->timeElapsedString($users[$key]['user']['last_online']);
         }
 
+        $tickets = Ticket::where("worker_id", $request->user()->id)->where("status", "open")->where("messageIsRead", false)->get()->toArray();
+        $newMessage = count($tickets) > 0;
         View::share('UsersNotify', $users);
         View::share('NewsNotify', $news);
+        View::share('NewMessage', $newMessage);
 
         return $next($request);
     }

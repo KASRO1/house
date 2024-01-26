@@ -65,12 +65,12 @@ class CourseFunction
         $price1 = $this->getCoinPrice($coin_full_name1);
         $price2 = $this->getCoinPrice($coin_full_name2);
         $total = ($price1 / $price2) * $amount;
-        return number_format($total, 2, '.', '');
+        return number_format($total, 7, '.', '');
     }
     public function getAssetsCoin($pair) {
         $coin = str_replace('_', '', $pair);
-        $coin = strtolower($coin);
-        $url = "https://testnet.binancefuture.com/fapi/v1/ticker/24hr?symbol=".urlencode($coin);
+        $coin = strtoupper($coin);
+        $url = "https://api.binance.com/api/v3/ticker/24hr?symbol=".urlencode($coin);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

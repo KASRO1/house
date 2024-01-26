@@ -130,13 +130,13 @@
                                             <span><?php echo e($coin['simple_name']); ?></span>
                                         </div>
                                         <div class="flex-column gap10">
-                                            <span class="text_16"><?php echo e($coin['balance']); ?></span>
+                                            <span class="text_16"><?php echo e(number_format($coin['balance'], 2)); ?></span>
                                             <span class="text_small_12 color-gray2">
                                           (≈ <?php echo e($coin['balanceUSD']); ?> USD)
                                         </span>
                                         </div>
                                         <div class="flex-column gap10">
-                                            <span class="text_16"><?php echo e($coin['balanceSpot']); ?></span>
+                                            <span class="text_16"><?php echo e(number_format($coin['balanceSpot'], 2)); ?></span>
                                             <span class="text_small_12 color-gray2">
                                           (≈ <?php echo e($coin['balanceUSDspot']); ?> USD)
                                         </span>
@@ -148,7 +148,7 @@
                                         </span>
                                         </div>
                                         <div class="flex-column gap10">
-                                            <span class="text_16"><?php echo e($coin['totalBalance']); ?></span>
+                                            <span class="text_16"><?php echo e(number_format($coin['totalBalance'], 2)); ?></span>
                                             <span class="text_small_12 color-gray2">
                                           (≈ <?php echo e($coin['totalBalanceUSD']); ?> USD)
                                         </span>
@@ -210,7 +210,7 @@
                                     class="btn btn_start_2"
                                     data-izimodal-open="#stacking"
                                 >
-                                    Stacking
+                                    Staking
                                 </button>
                             </div>
                             <h2 class="h2_20 pb25 pt40">Locked Staking</h2>

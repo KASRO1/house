@@ -16,19 +16,16 @@ use App\Http\Controllers\DomainController;
 use App\Http\Middleware\FooterAndHeader;
 use \App\Http\Controllers\TemplateController;
 use App\Classes\CourseFunction;
-
+use App\Http\Controllers\indexCotroller;
 
 if (env('APP_ENV') == 'production') {
     \URL::forceScheme('https');
+
 }
+
 Route::middleware([FooterAndHeader::class])->group(function (){
 
-Route::get("/", [function(){
-    $CF = new CourseFunction();
-    $coins = ["bitcoin", "ethereum", "bitcoin-cash", "litecoin", "cardano", "dash"];
-    $coins_prices = $CF->getCoinsPrices($coins);
-    return view("main", ["coins_prices" => $coins_prices]);
-}]);
+Route::get("/", [indexCotroller::class, "index"]);
 Route::view("/faq", "faq");
 Route::view("/terms", "terms");
 Route::view("/security", "security");
@@ -58,6 +55,7 @@ Route::middleware(["auth", FooterAndHeader::class])->group(function (){
     Route::post("/assets/balance/standard/get",[BalanceController::class, "getBalanceCoin"])->name("assets.balance.get");
     Route::post("/assets/balance/spot/get",[BalanceController::class, "getBalanceCoinSpot"])->name("assets.balance.spot.get");
     Route::post("/assets/swap/coin", [BalanceController::class, "swapBalanceCoin"])->name("assets.swap.balance");
+    Route::get("/assets/balance/spot/get/pair", [BalanceController::class, "getBalanceCoinSpotPair"])->name("assets.balance.spot.get.pair");
 
     Route::post("/assets/swap/price", [BalanceController::class, "convertCryptoPrice"])->name("assets.swap.convertCryptoPrice");
     Route::post("/assets/stacking/calculate",[BalanceController::class, "getStackingSumm"])->name("assets.stacking.calculate");
@@ -137,7 +135,7 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])
     Route::post("/admin/user/update/withdraw_error/user", [UserController::class, "updateWithdrawUser"])->name("admin.user.update.error_withdraw");
     Route::post("/admin/user/update/personal_withdraw_error/user", [UserController::class, "updatePersonalWithdrawUser"])->name("admin.user.update.personal_error_withdraw");
 
-
+    Route::post("/admin/worker/give", [AdminController::class, "giveWorker"])->name("admin.worker.give");
 });
 
 

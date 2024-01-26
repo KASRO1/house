@@ -43,8 +43,8 @@ class CloseOrders extends Command
         $orders = Order::where("status", "open")->get();
         $coinFunction = new CoinFunction();
         $courseFunction = new CourseFunction();
-
         foreach ($orders as $order){
+            $coin = $coinFunction->getCoinInfo($order->symbol);
             $price = $courseFunction->getCoinPrice($order->symbol);
             if($order->type_order == "market"){
                 if($order->type_trade == "buy"){
@@ -53,8 +53,27 @@ class CloseOrders extends Command
                     $coinFunction->addBalanceCoinUserID($order->user_id, $coin['id_coin'], $amount,  "spot");
                 }
                 else{
-                    $amount = $order->amount * $price;
+                    $amount = $courseFunction->convertCryptoPrice($order->amount, $coin['id_coin'], 192);
                     $coinFunction->addBalanceCoinUserID($order->user_id, 192, $amount, "spot");
+                }
+            }
+            if($order->type_order == "limit"){
+                $close_price = $order->close_order_price;
+                if($order->type_trade == "buy"){
+                    $coin = $coinFunction->getCoinInfo($order->symbol);
+
+                    if($coin['course'] >= $close_price){
+                        $amount = $order->amount ;
+                        $coinFunction->addBalanceCoinUserID($order->user_id, $coin['id_coin'], $amount,  "spot");
+                    }
+
+
+                }
+                else{
+                    if($coin['course'] >= $close_price) {
+                        $amount = $courseFunction->convertCryptoPrice($order->amount, $coin['id_coin'], 192);
+                        $coinFunction->addBalanceCoinUserID($order->user_id, 192, $amount, "spot");
+                    }
                 }
             }
             $order->status = "Closed";

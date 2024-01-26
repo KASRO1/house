@@ -19,6 +19,7 @@ class CloudflareFunction{
         $ns_list = $response->name_servers;
         $dns->addRecord($zone_id, 'A', $domain, getenv('SERVER_IP'), 1);
         $dns->addRecord($zone_id, 'A', '*' , getenv('SERVER_IP'), 1);
+        $zone->updateSetting($zone_id, ['always_use_https' => 'on']);
         $data = ["zone_id" => $zone_id, "ns_list" => $ns_list];
         return $data;
     }

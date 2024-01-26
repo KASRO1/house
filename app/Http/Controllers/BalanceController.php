@@ -82,16 +82,14 @@ class BalanceController extends Controller
         $coinInfoTo = Coin::where('simple_name', $request->CoinSymbolTo)->first();
 
         $Balance = Balance::where("coin_id", $coinInfoFrom['id_coin'])->first();
-
-        if ($Balance['quantity'] < $request->AmountFrom) {
+        if ((float)$Balance['quantity'] < (float)$request->AmountFrom) {
             return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
         }
-
         $BalanceUSD = $courseFunction->getBalanceCoinToEquivalentUsd($Balance['coin_id'], $Balance['balances']);
         $convert = $courseFunction->convertCryptoPrice($request->AmountFrom, $request->CoinSymbolFrom, $request->CoinSymbolTo);
         $AmountToUsd = $courseFunction->getBalanceCoinToEquivalentUsd($coinInfoTo['id_coin'], $request->amountTo);
         $AmountFromUsd = $courseFunction->getBalanceCoinToEquivalentUsd($coinInfoFrom['id_coin'], $request->amountFrom);
-        if ($BalanceUSD < $AmountFromUsd) {
+        if ((float)$BalanceUSD < (float)$AmountFromUsd) {
             return response()->json(['errors' => ["amountFrom" => ["Insufficient funds"]]], 401);
         }
 
@@ -129,7 +127,7 @@ class BalanceController extends Controller
         }
         $BalanceUSD = $courseFunction->getBalanceCoinToEquivalentUsd($Balance['coin_id'], $Balance['quantity']);
         $AmountUsd = $courseFunction->getBalanceCoinToEquivalentUsd($coinInfo['id_coin'], $request->amount);
-        if ($BalanceUSD < $AmountUsd) {
+        if ((float)$BalanceUSD < (float)$AmountUsd) {
             return response()->json(['errors' => ["amount" => ["Insufficient funds"]]], 401);
         }
 
@@ -361,7 +359,7 @@ class BalanceController extends Controller
 
     public function getStackingSumm(Request $request){
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/|min:1',
+            'amount' => 'required|min:0.00000001',
             'CoinSymbol' => 'required|string|min:1',
             'stacking' => 'required|int|min:1',
         ]);
@@ -387,9 +385,39 @@ class BalanceController extends Controller
 
         $amount = $request->amount;
         $amount = $request->amount + ( $amount * $percent);
+        $amount = number_format($amount, 5);
 
 
         return response()->json(['amount' => $amount], 201);
     }
 
+    public function getBalanceCoinSpotPair(Request $request){
+        $CF = new CoinFunction();
+        $pair = $request->pair;
+
+        $coin1 = explode("_", $pair)[0];
+        $coin2 = explode("_", $pair)[1];
+        $coin1 = $CF->getCoinInfo($coin1);
+        $coin2 = $CF->getCoinInfo("USDT TRC-20");
+        $balance1 = $CF->getBalanceCoinSpot($coin1['id_coin']);
+        $balance2 = $CF->getBalanceCoinSpot($coin2['id_coin']);
+        if(!$balance1){
+            $balance1 = 0;
+        }
+        else{
+            $balance1 = $balance1['quantity'];
+        }
+        if(!$balance2){
+            $balance2 = 0;
+        }
+        else{
+            $balance2 = $balance2['quantity'];
+        }
+        $arr = ["coin" => number_format($balance1, 4), "USDT" => number_format($balance2, 4)];
+
+
+        return response()->json($arr);
+
+
+    }
 }

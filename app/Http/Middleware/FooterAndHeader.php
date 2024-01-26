@@ -26,6 +26,10 @@ class FooterAndHeader
         if(Auth::check()){
             $ticket = Ticket::where("user_id", auth()->user()->id)->where("status", "open")->first();
         }
+        if (!$request->secure() && env('APP_ENV') === 'production') {
+            return redirect()->secure($request->getRequestUri());
+        }
+
         View::share('ticket', $ticket);
         View::share('Domain', $domain);
         return $next($request);

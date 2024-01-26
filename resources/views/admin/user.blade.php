@@ -436,9 +436,12 @@
                                       <button type="submit" class="input-group-text btn btn-primary" id="basic-addon2">Сохранить</button>
                                   </div>
 
-                                  <div class="d-flex gap-1">
-                                      @foreach($templates as $template)
-                                          <span onclick="writeTemplate({{$template['id']}}, 'withdraw_error_input')" style="cursor: pointer" class=" badge bg-primary rounded-pill">{{$template['title']}}</span>
+                                  <div style="display: flow-root" class=" gap-1">
+                                      @foreach ($templates as $template)
+                                          <span
+                                              onclick="writeTemplate({{ $template['id'] }}, 'withdraw_error_input')"
+                                              style="cursor: pointer; width: fit-content; margin-bottom: 5px;"
+                                              class=" badge bg-primary rounded-pill">{{ $template['title'] }}</span>
                                       @endforeach
                                   </div>
                               </div>
@@ -548,6 +551,7 @@
                       </thead>
 
                       <tbody>
+                      @if($wallets)
                         @foreach($wallets as $key => $wallet)
                             <tr>
                                 <td>
@@ -564,6 +568,17 @@
                             </tr>
 
                         @endforeach
+                      @else
+                            <tr>
+                                <td class="pt-3">
+                                    <div class="d-flex">
+                                        <div>
+                                            <h5 class="mb-0">Кошельков нет</h5>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                      @endif
                       </tbody>
                     </table>
                   </div>

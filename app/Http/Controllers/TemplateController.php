@@ -45,10 +45,8 @@ class TemplateController extends Controller
     }
     public function get($id)
     {
-        $template = Template::where("id", $id)
-            ->where("user_id", Auth::user()->id)
-            ->orWhere("user_id", null)
-            ->first();
+
+        $template = Template::where("id", $id)->first();
         if(!$template){
             return response()->json(['errors' => ["template" => ["Template not found"]]], 401);
         }

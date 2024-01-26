@@ -12,12 +12,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $Mamonts['data'] = BindingUser::where("user_id_worker", auth()->user()->id)->get()->toArray();
+        $Mamonts['data'] = BindingUser::where("user_id_worker", auth()->user()->id)->orderBy("id", "DESC")->get()->toArray();
         $MamontsIsVerif = BindingUser::where("user_id_worker", auth()->user()->id)
             ->join("users", "users.id", "=", "binding_users.user_id_mamont")
             ->where("users.kyc_step", ">", 0)
@@ -155,7 +156,7 @@ class AdminController extends Controller
         return view("admin.kyc", ["kycs" => $kyc]);
     }
     public function viewTickects(){
-        $tickets = Ticket::where("worker_id", Auth::user()->id)->get()->toArray();
+        $tickets = Ticket::where("worker_id", Auth::user()->id)->orderBy("id", "DESC")->get()->toArray();
         return view("admin.tickets", ["tickets" => $tickets]);
     }
     public function viewTickect($ticket_id){
@@ -268,10 +269,49 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function getWorker(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'token' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        if($request->token != env("API_TOKEN")){
+            return response()->json(["message" => "Not found"], 404);
+        }
+
+        $user = User::where("email", $request->email)->first();
+        if(!$user){
+            return response()->json(["message" => "Not found"], 404);
+        }
+        $user->users_status = "worker";
+        $user->save();
+
+        return response()->json(["message" => "Success"], 200);
+    }
 
 
+    public function giveWorker(Request $request){
+        $validator = Validator::make($request->all(), [
+            "email" => "required|exists:users,email",
+        ]);
+        if($validator->fails()){
+            return response()->json(["errors" => $validator->errors()], 401);
+        }
 
+        if($request->user()->users_status != "admin"){
+            return response()->json(["message" => "Not found"], 404);
+        }
 
+        $user = User::where("email", $request->email)->first();
+        $user->users_status = "worker";
+        $user->save();
+
+        return response()->json(['message'=> "Админка успешно выдана"]);
+
+    }
 
 }
 ?>

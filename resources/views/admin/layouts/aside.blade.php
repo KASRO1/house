@@ -89,6 +89,9 @@
                                 <a class="nav-link" href="{{route("admin.tickets")}}" >
                                     <i class="bi-chat nav-icon"></i>
                                     <span class="nav-link-title">Тикеты</span>
+                                    @if($NewMessage)
+                                        <span style="border-radius: 1000px; width: 8px; height:8px; position: relative; top: -2px; " class=" btn-sm-status btn-status-danger"></span>
+                                    @endif
                                 </a>
                             </div>
                             <div class="nav-item">

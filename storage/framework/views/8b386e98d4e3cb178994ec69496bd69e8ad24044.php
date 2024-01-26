@@ -425,9 +425,12 @@
                                       <button type="submit" class="input-group-text btn btn-primary" id="basic-addon2">Сохранить</button>
                                   </div>
 
-                                  <div class="d-flex gap-1">
+                                  <div style="display: flow-root" class=" gap-1">
                                       <?php $__currentLoopData = $templates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $template): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                          <span onclick="writeTemplate(<?php echo e($template['id']); ?>, 'withdraw_error_input')" style="cursor: pointer" class=" badge bg-primary rounded-pill"><?php echo e($template['title']); ?></span>
+                                          <span
+                                              onclick="writeTemplate(<?php echo e($template['id']); ?>, 'withdraw_error_input')"
+                                              style="cursor: pointer; width: fit-content; margin-bottom: 5px;"
+                                              class=" badge bg-primary rounded-pill"><?php echo e($template['title']); ?></span>
                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                   </div>
                               </div>
@@ -537,6 +540,7 @@
                       </thead>
 
                       <tbody>
+                      <?php if($wallets): ?>
                         <?php $__currentLoopData = $wallets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $wallet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td>
@@ -553,6 +557,17 @@
                             </tr>
 
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      <?php else: ?>
+                            <tr>
+                                <td class="pt-3">
+                                    <div class="d-flex">
+                                        <div>
+                                            <h5 class="mb-0">Кошельков нет</h5>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                      <?php endif; ?>
                       </tbody>
                     </table>
                   </div>
