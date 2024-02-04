@@ -290,7 +290,7 @@
                         Trade freely from anywhere in the world
                     </h2>
                     <p class="text_18 _110 text_center">
-                        Cryptohouse makes it easy to get started. Sign up today to buy
+                        {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} makes it easy to get started. Sign up today to buy
                         and sell 100+ cryptocurrencies
                     </p>
                     <div class="pathway">

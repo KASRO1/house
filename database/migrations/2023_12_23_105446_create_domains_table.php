@@ -24,6 +24,7 @@ class CreateDomainsTable extends Migration
             $table->string('stmp_host');
             $table->string("stmp_email");
             $table->string("stmp_password");
+            $table->text("faq")->nullable();
             $table->string("status")->default("pending");
             $table->timestamps();
         });

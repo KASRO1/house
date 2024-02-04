@@ -4,10 +4,10 @@
             <div class="footer-logo">
                 <a href="/">
                     <img src="{{asset("images/logo.svg")}}" alt=""/>
-                    {{$Domain['title'] ?? "CRYPTOHOUSE"}}
+                    {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}
                 </a>
                 <div class="copyright text_small_12">
-                    © 2023. All rights reserved by Cryptohouse
+                    © 2023. All rights reserved by {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}
                 </div>
             </div>
             <div class="footer-links">

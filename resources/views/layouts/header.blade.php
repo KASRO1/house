@@ -4,7 +4,7 @@
             <a class="header-link" href="/">
                 <img class="header-img" src="{{asset('images/logo.svg')}}" alt=""/>
 
-                {{$Domain['title'] ?? "CRYPTOHOUSE"}}
+                {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}
             </a>
             <nav class="navbar">
                 <ul class="nav-list">

@@ -21,7 +21,7 @@
                 <h2>2FA and backup code</h2>
                 <p>
                     Enabling two-factor authentication (2FA) increases the security of
-                    your Cryptohouse Account, as well as coins/tokens stored on It.
+                    your {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} Account, as well as coins/tokens stored on It.
                     This method of account protection is called two-factor protection,
                     because it is the second security barrier after the password to
                     log in to the account. This really increases your security,
@@ -30,7 +30,7 @@
                     an attacker can reset your password through your e-mail address
                     that you specified during registration, if it was hacked. However,
                     even if the attacker has a username and password from your
-                    Cryptohouse account.
+                    {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} account.
                 </p>
                 <h2>Password</h2>
                 <p>

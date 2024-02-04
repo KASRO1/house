@@ -20,17 +20,17 @@
                 <h1 class="h2_40 mb40 pt20">Privacy policy</h1>
                 <h2>General</h2>
                 <p>
-                    Cryptohouse Financial Company and its affiliates (hereinafter,
-                    'Cryptohouse Financial Company', 'Cryptohouse', 'we', 'us' or
+                    {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} Financial Company and its affiliates (hereinafter,
+                    '{{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} Financial Company', '{{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}', 'we', 'us' or
                     'our') are committed to protecting and respecting your privacy.
                     This Privacy Policy (together with our Terms of Use) governs our
                     collection, processing and use of your Personal Information. We
                     define 'Personal Information' as information which identifies you
                     personally, e.g. your name, address, e-mail address, trades etc.
                 </p>
-                <h2>Who is Cryptohouse</h2>
+                <h2>Who is {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}</h2>
                 <p>
-                    Cryptohouse Australia’s largest fully regulated and licensed
+                    {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} Australia’s largest fully regulated and licensed
                     AML/CTF compliant AUSTRAC registered Dual Gateway Exchange
                     Platform. Buy, sell, send, receive and trade cryptocurrencies.
                 </p>
@@ -109,12 +109,12 @@
                     to legal restrictions. Any third party which receives or has
                     access to Personal Information shall be required by us to protect
                     such Personal Information and to use it only to carry out the
-                    services they are performing for you or for Cryptohouse, unless
+                    services they are performing for you or for {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}, unless
                     otherwise required or permitted by law. Such a third party, except
                     for regulatory authorities, would be contractually bound to adhere
-                    to the same security and confidentiality policies as Cryptohouse
-                    and assume the same responsibilities as Cryptohouse. The
-                    legitimate exercise of any of your rights with Cryptohouse will
+                    to the same security and confidentiality policies as {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}
+                    and assume the same responsibilities as {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}. The
+                    legitimate exercise of any of your rights with {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} will
                     also be notified to be applied by any such third parties having
                     been given access to your Personal Information. We will ensure
                     that any such third party is aware of our obligations under this
@@ -138,7 +138,7 @@
                     charge for providing you additional copies of your Personal
                     Information to cover administrative costs. You may also request
                     the deletion or destruction of both the Account and Personal
-                    Information by sending an email to our e-mail. Cryptohouse will
+                    Information by sending an email to our e-mail. {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} will
                     action your request immediately, except, where this is not
                     consistent with its legal and regulatory obligations.You may also
                     ask us to transfer your Personal Information to another controller
@@ -165,7 +165,7 @@
                     We have implemented technical and organizational security measures
                     to ensure the confidentiality of your Personal Information and to
                     protect your Personal Information from loss, misuse, alteration or
-                    destruction. Only authorized personnel of Cryptohouse have access
+                    destruction. Only authorized personnel of {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} have access
                     to your Personal Information, and these personnel are required to
                     treat the information as confidential. Where you have consented
                     to, or we are obliged to pass on Personal Information to third
@@ -197,7 +197,7 @@
                 <h2>Retention of Personal Information</h2>
                 <p>
                     Your information is held within our servers. Access to this
-                    information is provided to employees of Cryptohouse whose office
+                    information is provided to employees of {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} whose office
                     may be inside and/or outside of the European Union all our
                     employees adhere to the principles of data security and processes
                     as those within the European Union. We will hold your Personal
@@ -247,7 +247,7 @@
                     Our Site policies, content, information, promotions, disclosures,
                     disclaimers and features may be revised, modified, updated, and/or
                     supplemented at any time and without prior notice at the sole and
-                    absolute discretion of Cryptohouse. If we change this Privacy
+                    absolute discretion of {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}. If we change this Privacy
                     Policy, will take steps to notify all users by a notice on our
                     Site and will post the amended Privacy Policy on the Site. If we
                     consider that your rights may be affected by any such changes, we
@@ -256,11 +256,11 @@
                 </p>
                 <h2>Fraud, Phishing and Email scams disclaimer</h2>
                 <p>
-                    Please be notified that Cryptohouse is not in any partnership with
+                    Please be notified that {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} is not in any partnership with
                     entities who represent themselves as customer support agents,
                     providing customer support services via phone and/or social media
                     and promise to help solve your issues for money. Remember -
-                    customer support is provided only via the Cryptohouse website and
+                    customer support is provided only via the {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} website and
                     is always provided free of charge.
                 </p>
                 <h2>Contact Us</h2>

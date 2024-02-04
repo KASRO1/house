@@ -50,7 +50,7 @@
                             <button id="accordion-button-1" aria-expanded="false">
                                 <div class="accordion-start">
                       <span class="accordion-title">
-                        Is it safe to use Cryptohouse exchange?
+                        Is it safe to use {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} exchange?
                       </span>
                                 </div>
                                 <img
@@ -268,7 +268,7 @@
                                     Download the Google Authenticator app from Play Market or
                                     AppStore. Go to your account and select the 2FA section.
                                     Scan the QR code in the downloaded app or enter the number
-                                    manually. After the “Cryptohouse” tab appears in the
+                                    manually. After the “{{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}” tab appears in the
                                     application, enter the authentication code in a special
                                     field. You're all set, you've enabled two-factor
                                     authentication!

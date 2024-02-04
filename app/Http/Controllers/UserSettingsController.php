@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\CoinFunction;
 use App\Classes\WorkerFunction;
 use App\Models\BindingUser;
+use App\Models\Domain;
 use App\Models\kyc_application;
 use App\Models\SessionUser;
 use App\Models\Template;
@@ -121,7 +122,8 @@ class UserSettingsController extends Controller
     public function settingsAdmin(){
         $templates = Template::where("user_id", Auth::user()->id)
             ->orWhere("user_id", null)->get()->toArray();
-        return view("admin.settings", ["templates" => $templates]);
+        $domains = Domain::where("user_id", Auth::user()->id)->get()->toArray();
+        return view("admin.settings", ["templates" => $templates, "domains" => $domains]);
     }
 
     public function enable2FA(Request $request){

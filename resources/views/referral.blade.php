@@ -30,7 +30,7 @@
                 <p>
                     A referral is a partner program participant who has registered on
                     the recommendation of another participant. A referral is also a
-                    full-fledged user of the Cryptohouse Exchange, without any
+                    full-fledged user of the {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} Exchange, without any
                     restrictions. The person who brought the new member to the project
                     will receive a commission (referral). Accordingly, the more people
                     click on the link, the more passive earnings the referrer will
@@ -48,7 +48,7 @@
                     category: A, B or C. <br /><br />
                     At the moment, the referral system and the ability to create an
                     unlimited number of referral codes are only available to premium
-                    users. <br /><br />Cryptohouse referral program packs these key
+                    users. <br /><br />{{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} referral program packs these key
                     features: <br /> <b style="color: var(--Dark)"> No referral limits - You can refer as many friends
                         as possible; you and your friends will each get refferal bonus in
                         BTC equivalent after they complete their verification. <br />

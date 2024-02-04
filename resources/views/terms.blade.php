@@ -108,14 +108,14 @@
                     your particular requirements or to be relied upon in making (or
                     refraining from making) any specific investment or other decision.
                     Such content shall not constitute any form of advice or
-                    recommendation by Cryptohouse. Furthermore, there may be
-                    additional risks that Cryptohouse have not foreseen or named in
+                    recommendation by {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}}. Furthermore, there may be
+                    additional risks that {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} have not foreseen or named in
                     this Terms of Use. <br />
-                    <br />2.6 Cryptohouse does not provide any investment advice in
+                    <br />2.6 {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} does not provide any investment advice in
                     connection with the services contemplated by these Terms of Use.
                     We only provide information on the price, range, volatility of
                     cryptocurrencies. Any decisions to buy or sell cryptocurrencies
-                    are made on your decision solely. Cryptohouse will not be liable
+                    are made on your decision solely. {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} will not be liable
                     for any loss you might face. <br />
                     <br />2.7 If you are unsure about any specific investment or other
                     decision, you should obtain appropriate expert independent advice
@@ -153,7 +153,7 @@
                 </p>
                 <h2>4. IDENTITY VERIFICATION</h2>
                 <p>
-                    4.1 Cryptohouse implements and maintains the highest standards of
+                    4.1 {{$Domain ? $Domain['title'] :  "CRYPTOHOUSE"}} implements and maintains the highest standards of
                     Know Your Customer (“KYC”) processes and controls as part of our
                     commitment to combating fraud and assisting in the prevention of
                     money laundering and terrorist financing. While our industry is

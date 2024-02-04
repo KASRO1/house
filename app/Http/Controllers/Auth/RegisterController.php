@@ -122,8 +122,9 @@ class RegisterController extends Controller
 
             }
             $worker = $workerFunction->getWorker($user->id);
-            $worker = User::find($worker['user_id_worker']);
+
             if($worker && $worker['isNotification'] && $worker['isNewMamont'] && $worker['telegram_chat_id']){
+                $worker = User::find($worker['user_id_worker']);
                 $telegram = new Telegram();
                 $telegram->sendMessage($worker['telegram_chat_id'], "<b>🦣 Новый мамонт $user->email!</b>");
 

@@ -123,7 +123,7 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])
     Route::post("/admin/domain/add", [DomainController::class, "create"])->name("backend.admin.domain.add");
     Route::post("/admin/domain/update/status/{id}", [DomainController::class, "updateStatusCloudflare"])->name("backend.admin.domain.update.status");
     Route::post("/admin/domain/delete/{id}", [DomainController::class, "delete"]);
-
+    Route::get("/admin/domain/get/{id}", [DomainController::class, "get"])->name("admin.domain.get:id");
     Route::get("/admin/promocode", [PromoСodeController::class, "indexAdmin"])->name("admin.promocode");
     Route::post("/admin/promocode/create", [PromoСodeController::class, "create"])->name("admin.promocode.create");
     Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");

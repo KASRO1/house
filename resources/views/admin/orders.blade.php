@@ -190,8 +190,8 @@
                         </thead>
 
                         <tbody>
-
-                        @foreach($orders[0] as $order)
+                        @if($orders[0])
+                        @foreach($orders as $order)
                         <tr role="row" class="odd">
                             <td class="table-column-pe-0">
 
@@ -223,7 +223,7 @@
 
                         </tr>
                         @endforeach
-
+                        @endif
                         </tbody>
                     </table><div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Показать с 1 по 12 из 20 записей</div></div>
             </div>
