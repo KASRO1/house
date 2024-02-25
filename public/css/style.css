@@ -657,7 +657,61 @@ button[name="selectPair"] img{
     right: -45px !important;
     border: solid 1px #fff;
 }
+.wallets__container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 15px;
 
+}
+.wallet_img{
+    padding: 21px;
+    max-width: 75px;
+    background: rgba(29, 50, 62, 1);
+    border-radius:100% ;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+}
+.wallet_img img{
+    width: 32px;
+    height: 32px;
+
+}
+.wallet h3{
+    font-size: 16px;
+    color: white;
+    white-space: nowrap;
+
+}
+.wallet label{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center; justify-content: center;
+    text-align: center;
+}
+.wallet.active{
+    background: rgba(52, 73, 85, 1);
+}
+.wallet{
+    transition: ease-in-out 0.2s ;
+    display: flex;
+    padding: 12px 13px;
+    justify-content: center;
+    align-items: center;
+    max-width: 116px;
+    text-align: center;
+    border-radius: 8px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wallet:hover{
+    cursor: pointer;
+    background-color: rgba(52, 73, 85, 1);
+}
 .modal-content {
     position: relative;
     display: flex;

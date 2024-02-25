@@ -140,7 +140,7 @@
 
                             </td>
                             <td class="table-column-ps-0">
-                                <a class="d-flex align-items-center" href="./ecommerce-product-details.html">
+                                <a class="d-flex align-items-center"  data-bs-target="#settings_domain" data-bs-toggle="modal" href="" onclick="domain_data(<?php echo e($domain['id']); ?>)">
 
 
 
@@ -920,85 +920,54 @@
 <!-- End Welcome Message Modal -->
 
 <!-- Export Products Modal -->
-<div class="modal fade" id="exportProductsModal" tabindex="-1" aria-labelledby="exportProductsModalLabel" aria-hidden="true">
+<div class="modal fade" id="settings_domain" tabindex="-1" aria-labelledby="exportProductsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
+        <form id="settings_domain_form" class="modal-content">
+            <?php echo csrf_field(); ?>
+            <input name="id" id="id_domain" hidden="">
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-header">
-                <h4 class="modal-title" id="exportProductsModalLabel">Export products</h4>
+                <h4 class="modal-title" id="exportProductsModalLabel">Настройки домена</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <!-- End Header -->
 
-            <!-- Body -->
             <div class="modal-body">
-                <p>This CSV file can update all product information. To update just inventory quantites use the <a class="link" href="#">CSV file for inventory.</a></p>
 
                 <div class="mb-4">
-                    <label class="form-label">Export</label>
+                    <label class="form-label">Дрейнер</label>
 
                     <div class="d-grid gap-2">
-                        <!-- Form Check -->
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio1" checked>
+                            <input class="form-check-input" value="enable" type="radio" name="drainer" id="exportProductsRadio1" checked>
                             <label class="form-check-label" for="exportProductsRadio1">
-                                Current page
+                                Включить
                             </label>
                         </div>
-                        <!-- End Form Check -->
 
-                        <!-- Form Check -->
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio2">
+                            <input class="form-check-input" value="disable" type="radio" name="drainer" id="exportProductsRadio2">
                             <label class="form-check-label" for="exportProductsRadio2">
-                                All products
+                                Выключить
                             </label>
                         </div>
-                        <!-- End Form Check -->
 
-                        <!-- Form Check -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exportProductsRadio" id="exportProductsRadio3">
-                            <label class="form-check-label" for="exportProductsRadio3">
-                                Selected: 20 products
-                            </label>
-                        </div>
-                        <!-- End Form Check -->
+
                     </div>
                 </div>
 
-                <label class="form-label">Export as</label>
-
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exportProductsAsRadio" id="exportProductsAsRadio1" checked>
-                    <label class="form-check-label" for="exportProductsAsRadio1">
-                        CSV for Excel, Numbers, or other spreadsheet programs
-                    </label>
-                </div>
-                <!-- End Form Check -->
-
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exportProductsAsRadio" id="exportProductsAsRadio2">
-                    <label class="form-check-label" for="exportProductsAsRadio2">
-                        Plain CSV file
-                    </label>
-                </div>
-                <!-- End Form Check -->
+                <label class="form-label">Заголовок</label>
+                <input id="title" name="title" class="form-control" placeholder="">
             </div>
-            <!-- End Body -->
 
-            <!-- Footer -->
             <div class="modal-footer gap-3">
-                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" class="btn btn-primary">Export products</button>
+                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Закрыть</button>
+                <button type="submit"  class="btn btn-primary">Сохранить</button>
             </div>
-            <!-- End Footer -->
         </div>
+        </form>
     </div>
 </div>
-<!-- End Export Products Modal -->
 <div class="modal fade" id="addDomainModal" tabindex="-1" aria-labelledby="addDomainModalLabel" role="dialog"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1089,56 +1058,6 @@
             </form>
             <!-- End Footer -->
 
-        </div>
-    </div>
-</div>
-<!-- Import Products Modal -->
-<div class="modal fade" id="importProductsModal" tabindex="-1" aria-labelledby="importProductsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header">
-                <h4 class="modal-title" id="importProductsModalLabel">Import products by CSV</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- End Header -->
-
-            <!-- Body -->
-            <div class="modal-body">
-                <p><a class="link" href="#">Download a sample CSV template</a> to see an example of the format required.</p>
-
-                <!-- Dropzone -->
-                <div id="attachFilesNewProjectLabel" class="js-dropzone dz-dropzone dz-dropzone-card mb-4">
-                    <div class="dz-message">
-                        <img class="avatar avatar-xl avatar-4x3 mb-3" src="/assets_admin/svg/illustrations/oc-browse.svg" alt="Image Description" data-hs-theme-appearance="default">
-                        <img class="avatar avatar-xl avatar-4x3 mb-3" src="/assets_admin/svg/illustrations-light/oc-browse.svg" alt="Image Description" data-hs-theme-appearance="dark">
-
-                        <h5>Drag and drop your file here</h5>
-
-                        <p class="mb-2">or</p>
-
-                        <span class="btn btn-white btn-sm">Browse files</span>
-                    </div>
-                </div>
-                <!-- End Dropzone -->
-
-                <!-- Form Check -->
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="overwriteCurrentProductsCheckbox">
-                    <label class="form-check-label" for="overwriteCurrentProductsCheckbox">
-                        Overwrite any current products that have the same handle. Existing values will be used for any missing columns. <a href="#">Learn more</a>
-                    </label>
-                </div>
-                <!-- End Form Check -->
-            </div>
-            <!-- End Body -->
-
-            <!-- Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <button type="button" class="btn btn-primary">Upload and continue</button>
-            </div>
-            <!-- End Footer -->
         </div>
     </div>
 </div>
@@ -1477,6 +1396,65 @@
 
         })
     }
+
+</script>
+<script>
+    function domain_data(id_domain){
+        $.ajax({
+            url: '/admin/domain/get/'+id_domain,
+            data: {
+                _token: '<?php echo e(csrf_token()); ?>'
+            },
+            type: 'GET',
+            success: function (data, status, xhr) {
+                console.log(data);
+
+                const title = data.title;
+                const drainer = data.drainer;
+                const id = data.id;
+                const id_domain = document.getElementById('id_domain');
+                id_domain.value = id;
+                const title_input = document.getElementById('title');
+                title_input.value = title;
+                const drainer_input = document.getElementById('exportProductsRadio1');
+                const drainer_input2 = document.getElementById('exportProductsRadio2');
+                if(drainer){
+                    drainer_input.checked = true;
+                }
+                else{
+                    drainer_input2.checked = true;
+                }
+            }
+
+
+        })
+
+    }
+    const settings_domain_form = document.getElementById('settings_domain_form');
+    settings_domain_form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(settings_domain_form);
+        $.ajax({
+            url: '<?php echo e(route("admin.domain.update.data")); ?>',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr) {
+                console.log(data);
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+            },
+            error: function (data) {
+                console.log(data);
+                StatusToast.innerText = "Ошибка";
+                MessageToast.innerText = data.responseJSON.message;
+                Toast.show()
+            },
+
+        });
+    });
 </script>
 <!-- End Style Switcher JS -->
 </body>

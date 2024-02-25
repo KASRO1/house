@@ -43,11 +43,11 @@ class UserRegisteredNotification extends Notification
      */
     public function toMail($notifiable)
     {
-
-        return (new MailMessage)
-            ->subject('Welcome to our application!')
-            ->from('jopik2424@gmail.com', 'Your Name') // Установите адрес отправителя
-            ->view('email.confirm-registation', ['user' => $notifiable, 'token' => $this->token]);
+        return false;
+//        return (new MailMessage)
+//            ->subject('Welcome to our application!')
+//            ->from('jopik2424@gmail.com', 'Your Name') // Установите адрес отправителя
+//            ->view('email.confirm-registation', ['user' => $notifiable, 'token' => $this->token]);
     }
 
     /**

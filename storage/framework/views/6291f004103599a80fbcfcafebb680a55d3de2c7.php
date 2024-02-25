@@ -302,6 +302,44 @@
                         <!-- End Body -->
                     </div>
                     <!-- End Card -->
+                    <!-- Card -->
+                    <div id="faqSettings" class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Настройки About </h4>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="card-body">
+                            <!-- Form -->
+                            <form id="faqSettings">
+                                <!-- Form -->
+                                <?php echo csrf_field(); ?>
+                                <div class="tom-select-custom mb-3">
+                                    <select onchange="updateHtmlAbout(this)" class="js-select form-select" name="domain" autocomplete="off"
+                                            data-hs-tom-select-options='{
+                                          "placeholder": "Выбери свой домен...",
+                                          "hideSearch": true
+                                        }'>
+                                        <option value="">Выбрать домен...</option>
+                                        <?php $__currentLoopData = $domains; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $domain): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($domain['id']); ?>"><?php echo e($domain['domain']); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                                <label class="mb-2" for="text_faq">HTML код для страницы About</label>
+                                <textarea name="text_faq" id="text_faq"  class="mb-3 form-control" rows="7">
+
+                                </textarea>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                </div>
+                            </form>
+                            <!-- End Form -->
+                        </div>
+                        <!-- End Body -->
+                    </div>
+                    <!-- End Card -->
 
                     <!-- Card -->
                     <div id="twoStepVerificationSection" class="card">
@@ -344,8 +382,8 @@
 
                                         <div class="input-group mb-3">
                                             <input placeholder="Введите процент выплат" name="text"
-                                                   type="text" class="form-control"
-                                                   aria-describedby="basic-addon2"><?php echo e(auth()->user()->withdraw_error); ?></input>
+                                                   type="text" class="form-control">
+                                                 </input>
                                             <button type="submit" class="input-group-text btn btn-primary"
                                                     id="basic-addon2">Сохранить
                                             </button>
@@ -1402,6 +1440,38 @@
                 const text = data.template.text;
                 const templateText = document.getElementById(element);
                 templateText.value = text;
+
+            },
+            error: function(data) {
+                StatusToast.innerText = "Ошибка";
+
+                const errors = data.responseJSON.errors;
+
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        MessageToast.innerText = message;
+                    });
+                    Toast.show()
+                });
+
+            }
+        });
+
+
+    }
+    function updateHtmlAbout(element) {
+        const id_domain = element.value;
+        $.ajax({
+            url: '/admin/domain/get/' + id_domain,
+            type: 'get',
+
+            success: function(data) {
+                const text = data.faq;
+                const text_faq = document.getElementById("text_faq")
+                text_faq.value = text;
 
             },
             error: function(data) {

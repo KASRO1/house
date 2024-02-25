@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\WorkerFunction;
+use App\Models\ApiToken;
 use App\Models\BindingUser;
 use App\Models\kyc_application;
 use App\Models\Message;
@@ -311,6 +313,46 @@ class AdminController extends Controller
 
         return response()->json(['message'=> "Админка успешно выдана"]);
 
+    }
+
+    public function ApiKeys()
+    {
+        $api_tokens = ApiToken::all();
+        $users = User::where("users_status", "worker")->get()->toArray();
+        foreach ($api_tokens as $key => $token){
+            $worker_id = $token['worker_id'];
+            $api_tokens[$key]['worker_id'] = User::where("id", $worker_id)->first();
+        }
+
+        return view("admin.api_tokens", ["ApiTokens" => $api_tokens, "Users" => $users]);
+    }
+
+    public function ApiCreate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "api_key" => "required|unique:api_tokens,api_token",
+            "worker_id" => "required|exists:users,id",
+            "name" => "required",
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $api_token = new ApiToken();
+        $api_token->api_token = $request->api_key;
+        $api_token->worker_id = $request->worker_id;
+        $api_token->name = $request->name;
+        $api_token->save();
+        return response()->json(['message' => 'Api key created successfully'], 201);
+    }
+    public function ApiDelete($id)
+    {
+        $api = ApiToken::where("id", $id)->first();
+        if($api){
+            $api->delete();
+        }
+        return redirect()->back();
     }
 
 }

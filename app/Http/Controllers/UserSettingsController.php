@@ -42,10 +42,10 @@ class UserSettingsController extends Controller
 
         $kyc = kyc_application::where("user_id", $user->id)->first();
         $ga = new GoogleAuthenticator();
-//        $ga_qrCode = $ga->getUrl($user->email,$_SERVER['HTTP_HOST'], $user['secret_2fa']);
+        $ga_qrCode = $ga->getUrl($user->email,$_SERVER['HTTP_HOST'], $user['secret_2fa']);
         $sessions = SessionUser::where("user_id", $user->id)->get();
 
-        return view("account", ["user" => $user,"kyc" => $kyc, "qr_ga" => "sasd", "sessions" => $sessions]);
+        return view("account", ["user" => $user,"kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions]);
     }
 
     public function changePassword(Request $request): \Illuminate\Http\JsonResponse

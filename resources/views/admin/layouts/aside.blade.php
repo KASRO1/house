@@ -60,6 +60,14 @@
                             @endif
                             @if(auth()->user()->users_status === "admin")
                                 <div class="nav-item">
+                                    <a class="nav-link " href="{{route("admin.api")}}"  aria-controls="navbarVerticalMenuPagesUsersMenu">
+                                        <i class="bi-people nav-icon"></i>
+                                        <span class="nav-link-title">API</span>
+                                    </a>
+                                </div>
+                            @endif
+                            @if(auth()->user()->users_status === "admin")
+                                <div class="nav-item">
                                     <a class="nav-link " href="{{route("admin.news")}}"  aria-controls="navbarVerticalMenuPagesUsersMenu">
                                         <i class="bi-bell nav-icon"></i>
                                         <span class="nav-link-title">Новости</span>

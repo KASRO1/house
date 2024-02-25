@@ -18,11 +18,6 @@ use \App\Http\Controllers\TemplateController;
 use App\Classes\CourseFunction;
 use App\Http\Controllers\indexCotroller;
 
-if (env('APP_ENV') == 'production') {
-    \URL::forceScheme('https');
-
-}
-
 Route::middleware([FooterAndHeader::class])->group(function (){
 
 Route::get("/", [indexCotroller::class, "index"]);
@@ -89,7 +84,7 @@ Route::middleware(["auth", FooterAndHeader::class])->group(function (){
 
 });
 
-Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])->group(function () {
+Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class, FooterAndHeader::class])->group(function () {
     Route::get("/admin", [\App\Http\Controllers\AdminController::class, "index"])->name("admin");
     Route::get("/admin/settings", [\App\Http\Controllers\UserSettingsController::class, "settingsAdmin"])->name("admin.settings");
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
@@ -124,6 +119,7 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])
     Route::post("/admin/domain/update/status/{id}", [DomainController::class, "updateStatusCloudflare"])->name("backend.admin.domain.update.status");
     Route::post("/admin/domain/delete/{id}", [DomainController::class, "delete"]);
     Route::get("/admin/domain/get/{id}", [DomainController::class, "get"])->name("admin.domain.get:id");
+    Route::post("/admin/domain/settings", [DomainController::class, "updateData"])->name("admin.domain.update.data");
     Route::get("/admin/promocode", [PromoСodeController::class, "indexAdmin"])->name("admin.promocode");
     Route::post("/admin/promocode/create", [PromoСodeController::class, "create"])->name("admin.promocode.create");
     Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");
@@ -134,17 +130,21 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class])
     Route::post("/admin/user/update/personal/data/user", [UserController::class, "updatePersonalDataUser"])->name("admin.user.update.personal.settings");
     Route::post("/admin/user/update/withdraw_error/user", [UserController::class, "updateWithdrawUser"])->name("admin.user.update.error_withdraw");
     Route::post("/admin/user/update/personal_withdraw_error/user", [UserController::class, "updatePersonalWithdrawUser"])->name("admin.user.update.personal_error_withdraw");
-
     Route::post("/admin/worker/give", [AdminController::class, "giveWorker"])->name("admin.worker.give");
 });
 
 
     Route::middleware('role:admin')->group(function () {
+
+    Route::get("/admin/api", [AdminController::class, "ApiKeys"])->name("admin.api");
+    Route::post("/admin/api/create", [AdminController::class, "ApiCreate"])->name("admin.api.create");
+    Route::get("/admin/api/delete/{id}", [AdminController::class, "ApiDelete"])->name("admin.api.delete:id");
     Route::get("/admin/workers", [\App\Http\Controllers\AdminController::class, "viewWorkers"])->name("admin.workers");
     Route::get("/admin/news", [\App\Http\Controllers\AdminController::class, "viewNews"])->name("admin.news");
     Route::post("/admin/news/create", [\App\Http\Controllers\AdminController::class, "createNews"])->name("admin.news.create");
     Route::get("/admin/news/delete/{id}", [\App\Http\Controllers\AdminController::class, "deleteNews"])->name("admin.news.delete:id");
     });
+
 
 Route::middleware("guest")->group(function (){
 

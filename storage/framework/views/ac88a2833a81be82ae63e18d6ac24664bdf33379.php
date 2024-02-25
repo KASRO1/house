@@ -4,11 +4,12 @@
             <div class="footer-logo">
                 <a href="/">
                     <img src="<?php echo e(asset("images/logo.svg")); ?>" alt=""/>
-                    <?php echo e($Domain['title'] ?? "CRYPTOHOUSE"); ?>
+                    <?php echo e($Domain ? $Domain['title'] :  "CRYPTOHOUSE"); ?>
 
                 </a>
                 <div class="copyright text_small_12">
-                    © 2023. All rights reserved by Cryptohouse
+                    © 2023. All rights reserved by <?php echo e($Domain ? $Domain['title'] :  "CRYPTOHOUSE"); ?>
+
                 </div>
             </div>
             <div class="footer-links">

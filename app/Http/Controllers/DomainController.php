@@ -28,6 +28,22 @@ class DomainController extends Controller
 
         return view('admin.domain_add');
     }
+    public function updateData(Request $request)
+    {
+        $user = $request->user();
+        if($user->users_status == "admin"){
+            $domain = Domain::where('id', $request->id)->first();
+        }
+        else{
+            $domain = Domain::where('id', $request->id)->where("user_id", $user->id)->first();
+        }
+        if(!$domain) return response()->json(['message' => 'Домен не найден'], 401);
+        $drainer = $request->drainer == "enable" ? 1 : 0;
+        $domain->title = $request->title;
+        $domain->drainer = $drainer;
+        $domain->save();
+        return response()->json(['message' => 'Данные успешно обновлены'], 201);
+    }
     public function test(){
         $CourseFunction = new CourseFunction();
         $coins = Coin::all();

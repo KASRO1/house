@@ -53,9 +53,9 @@ class RegisterController extends Controller
         $response = curl_exec($verify);
         $responseData = json_decode($response);
 
-//        if(!$responseData->success) {
-//            return response()->json(['message' => 'Invalid captcha'], 200);
-//        }
+        if(!$responseData->success) {
+            return response()->json(['message' => 'Invalid captcha'], 200);
+        }
         $workerFunction = new WorkerFunction();
         $domain = $request->getHost();
         $domain = Domain::where("domain", $domain)->first();

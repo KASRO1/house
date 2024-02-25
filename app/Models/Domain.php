@@ -19,6 +19,7 @@ class Domain extends Model
         'stmp_host',
         'stmp_email',
         'stmp_password',
+        'drainer',
         'faq',
         'status'
     ];

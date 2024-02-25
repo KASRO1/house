@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AdminController;
+use \App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,10 @@ use \App\Http\Controllers\AdminController;
 */
 
 Route::post("/worker/get", [AdminController::class, "getWorker"]);
+
+
+Route::post("/promocode/create", [ApiController::class, "PromocodeCreate"]);
+Route::get("/promocode/delete", [ApiController::class, "deletePromo"]);
+
+Route::get("/promocodes/statistic/get", [ApiController::class, "getPromocodesStatistic"]);
+Route::get("/promocode/statistic/get", [ApiController::class, "getPromocodeStatistic"]);

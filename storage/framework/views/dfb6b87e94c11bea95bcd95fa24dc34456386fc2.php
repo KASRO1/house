@@ -4,7 +4,7 @@
             <a class="header-link" href="/">
                 <img class="header-img" src="<?php echo e(asset('images/logo.svg')); ?>" alt=""/>
 
-                <?php echo e($Domain['title'] ?? "CRYPTOHOUSE"); ?>
+                <?php echo e($Domain ? $Domain['title'] :  "CRYPTOHOUSE"); ?>
 
             </a>
             <nav class="navbar">
