@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use http\Env\Url;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,7 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        $this->app['request']->server->set('HTTPS','on');
-//        URL::forceScheme('https');
+        if (env('APP_ENV') == 'production') {
+            $this->app['request']->server->set('HTTPS', 'on');
+            URL::forceScheme('https');
+        }
+
     }
 }

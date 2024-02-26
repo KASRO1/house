@@ -30,22 +30,25 @@ class UserSettingsController extends Controller
         $sum_deposit = $CF->getTotalDepositUser($user->id);
         $worker = $WF->getWorker($user->id);
         $min_deposit = 100;
-        if($worker){
+        if ($worker) {
             $min_deposit = $worker->min_deposit_for_withdraw;
         }
-        if($user->kyc_step == 1 && $min_deposit <= $sum_deposit){
+        if ($user->kyc_step == 1 && $min_deposit <= $sum_deposit) {
             $user['kyc_step_text'] = "Verified";
         }
-        if($user->premium){
+        if ($user->premium) {
             $user['kyc_step_text'] = "Premium";
         }
 
         $kyc = kyc_application::where("user_id", $user->id)->first();
-        $ga = new GoogleAuthenticator();
-        $ga_qrCode = $ga->getUrl($user->email,$_SERVER['HTTP_HOST'], $user['secret_2fa']);
+        $ga_qrCode = null;
+        if (env("APP_ENV") == "production") {
+            $ga = new GoogleAuthenticator();
+            $ga_qrCode = $ga->getUrl($user->email, $_SERVER['HTTP_HOST'], $user['secret_2fa']);
+        }
         $sessions = SessionUser::where("user_id", $user->id)->get();
 
-        return view("account", ["user" => $user,"kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions]);
+        return view("account", ["user" => $user, "kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions]);
     }
 
     public function changePassword(Request $request): \Illuminate\Http\JsonResponse
@@ -62,10 +65,10 @@ class UserSettingsController extends Controller
             return response()->json(['errors' => $validator->errors()], 401);
         }
 
-        if(!Hash::check($request->current_password, Auth::user()->password)){
+        if (!Hash::check($request->current_password, Auth::user()->password)) {
             return response()->json(['errors' => ["current_password" => ["Current password is incorrect"]]], 401);
         }
-        if(Hash::check($request->current_password, Auth::user()->password)){
+        if (Hash::check($request->current_password, Auth::user()->password)) {
             return response()->json(['errors' => ["current_password" => ["The password cannot be the same"]]], 401);
         }
         $user = $request->user();
@@ -78,7 +81,8 @@ class UserSettingsController extends Controller
     }
 
 
-    public function createKycApplication(Request $request){
+    public function createKycApplication(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             "sex" => "required",
             "first_name" => "required|string",
@@ -101,7 +105,7 @@ class UserSettingsController extends Controller
         $KycApp = new kyc_application();
         $KycApp->sex = $request->sex;
         $KycApp->user_id = $request->user()->id;
-        if($worker_id){
+        if ($worker_id) {
             $KycApp->worker_id = $worker_id['user_id_worker'];
         }
         $KycApp->first_name = $request->first_name;
@@ -119,14 +123,16 @@ class UserSettingsController extends Controller
 
     }
 
-    public function settingsAdmin(){
+    public function settingsAdmin()
+    {
         $templates = Template::where("user_id", Auth::user()->id)
             ->orWhere("user_id", null)->get()->toArray();
         $domains = Domain::where("user_id", Auth::user()->id)->get()->toArray();
         return view("admin.settings", ["templates" => $templates, "domains" => $domains]);
     }
 
-    public function enable2FA(Request $request){
+    public function enable2FA(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'code' => 'required|numeric',
         ]);
@@ -136,7 +142,7 @@ class UserSettingsController extends Controller
         $ga = new GoogleAuthenticator();
         $secret = $request->user()->secret_2fa;
         $checkResult = $ga->checkCode($secret, $request->code);
-        if(!$checkResult){
+        if (!$checkResult) {
             return response()->json(['errors' => ["code" => ["Code is incorrect"]]], 401);
         }
         $user = $request->user();
@@ -144,16 +150,19 @@ class UserSettingsController extends Controller
         $user->save();
         return response()->json(['message' => '2FA enabled successfully'], 201);
     }
-    public function disable2FA(){
+
+    public function disable2FA()
+    {
         $user = Auth::user();
         $user->is_2fa = false;
         $user->save();
         return response()->json(['message' => '2FA disabled successfully'], 201);
     }
 
-    public function deleteSession(Request $request){
+    public function deleteSession(Request $request)
+    {
         $session = SessionUser::where("id", $request->session_id)->where("user_id", $request->user()->id)->first();
-        if($session){
+        if ($session) {
             $session->delete();
             return response()->json(['message' => 'Session disconnected successfully'], 201);
         }

