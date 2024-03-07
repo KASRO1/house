@@ -38,7 +38,38 @@ class CloudflareFunction{
             throw $e;
         }
     }
+    function get_zoneid($domain)
+    {
+        $key = new APIKey(getenv('CLOUDFLARE_EMAIL'), getenv('CLOUDFLARE_API'));
+        $adapter = new Guzzle($key);
+        $zone = new Zones($adapter);
 
+        try {
+            $response = $zone->getZoneID($domain);
+            return $response;
+
+        } catch (EndpointException $e) {
+            return false;
+        }
+    }
+    function get_ns_list($domain)
+    {
+
+        $key = new APIKey(getenv('CLOUDFLARE_EMAIL'), getenv('CLOUDFLARE_API'));
+        $adapter = new Guzzle($key);
+        $zone = new Zones($adapter);
+
+        try {
+            $response = $zone->getZoneID($domain);
+            $zone_id = $response;
+            $response = $zone->getZoneByID($zone_id);
+            $ns_list = $response->result->name_servers;
+            return $ns_list;
+
+        } catch (EndpointException $e) {
+            return false;
+        }
+    }
 
     function delete_domain_cloudflare($domain): bool
     {

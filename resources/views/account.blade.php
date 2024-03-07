@@ -4,16 +4,16 @@
     <!doctype html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{asset("css/jquery-ui.min.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}" />
-    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}" />
+    <link rel="stylesheet" href="{{asset("css/jquery-ui.min.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziToast.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/iziModal.min.css")}}"/>
+    <link rel="stylesheet" href="{{asset("css/custom-select.css")}}"/>
     @yield("head")
 </head>
 <body>
 @yield("header")
 <style>
-    .w3m-overlay{
+    .w3m-overlay {
         z-index: 99999999 !important;
 
     }
@@ -52,10 +52,13 @@
                                 @elseif($user->kyc_step_text == "Premium")
                                 text_gold
                                 @endif" id="status">{{$user->kyc_step_text}} @if($user->kyc_step_text == "Premium")
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="11" viewBox="0 0 12 11" fill="none">
-                                          <path d="M0.867468 1.98557L3.21037 3.58285L5.54601 0.238967C5.72511 -0.0174442 6.07359 -0.076833 6.32432 0.10632C6.37443 0.142915 6.41822 0.187738 6.45404 0.238967L8.78971 3.58285L11.1326 1.98557C11.389 1.81078 11.7354 1.88163 11.9063 2.14382C11.9798 2.25656 12.0116 2.39238 11.9962 2.52697L11.0794 10.4961C11.0463 10.7835 10.8082 11 10.5253 11H1.47479C1.19188 11 0.953741 10.7835 0.920683 10.4961L0.00387518 2.52697C-0.0321281 2.21402 0.18677 1.93048 0.492795 1.89366C0.6244 1.87783 0.757215 1.9104 0.867468 1.98557ZM6.00005 7.57669C6.61629 7.57669 7.11592 7.06582 7.11592 6.43559C7.11592 5.80541 6.61629 5.29448 6.00005 5.29448C5.38376 5.29448 4.88419 5.80541 4.88419 6.43559C4.88419 7.06582 5.38376 7.57669 6.00005 7.57669Z" fill="#FFE560"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="11"
+                                             viewBox="0 0 12 11" fill="none">
+                                          <path
+                                              d="M0.867468 1.98557L3.21037 3.58285L5.54601 0.238967C5.72511 -0.0174442 6.07359 -0.076833 6.32432 0.10632C6.37443 0.142915 6.41822 0.187738 6.45404 0.238967L8.78971 3.58285L11.1326 1.98557C11.389 1.81078 11.7354 1.88163 11.9063 2.14382C11.9798 2.25656 12.0116 2.39238 11.9962 2.52697L11.0794 10.4961C11.0463 10.7835 10.8082 11 10.5253 11H1.47479C1.19188 11 0.953741 10.7835 0.920683 10.4961L0.00387518 2.52697C-0.0321281 2.21402 0.18677 1.93048 0.492795 1.89366C0.6244 1.87783 0.757215 1.9104 0.867468 1.98557ZM6.00005 7.57669C6.61629 7.57669 7.11592 7.06582 7.11592 6.43559C7.11592 5.80541 6.61629 5.29448 6.00005 5.29448C5.38376 5.29448 4.88419 5.80541 4.88419 6.43559C4.88419 7.06582 5.38376 7.57669 6.00005 7.57669Z"
+                                              fill="#FFE560"/>
                                         </svg>
-                                @endif</span>
+                                    @endif</span>
                             </div>
                             <div class="info-block">
                                 <span class="title">Timezone</span>
@@ -200,12 +203,12 @@
                         </div>
                         <div class="content">
                             @if(!$kyc || $kyc['status'] !== 1)
-                            <input
-                                type="text"
-                                readonly
-                                class="clear text_17 "
-                                value="Not verified"
-                            />
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="clear text_17 "
+                                    value="Not verified"
+                                />
                             @elseif($kyc['status'] == 1)
                                 <input
                                     type="text"
@@ -289,7 +292,7 @@
                                 class="clear text_17 d-none"
                                 value="Not verified"
                             />
-                        @if($kyc && $kyc['status'] == 0)
+                            @if($kyc && $kyc['status'] == 0)
                                 <input
                                     type="text"
                                     readonly
@@ -303,14 +306,15 @@
                                     class="clear text_17 text_success"
                                     value="Verified"
                                 />
-                            @elseif($kyc && $kyc['status'] == -1){
+                            @elseif($kyc && $kyc['status'] == -1)
+                                {
                                 <input
                                     type="text"
                                     readonly
                                     class="clear text_17 text_danger"
                                     value="Rejected"
                                 />
-                            }
+                                }
                             @else
                                 <input
                                     type="text"
@@ -318,7 +322,7 @@
                                     class="clear text_17 "
                                     value="Not verified"
                                 />
-                        @endif
+                            @endif
                         </div>
                         <div class="action">
                             @if(\App\Models\kyc_application::where("user_id", $user->id)->where("status", 0)->first())
@@ -341,9 +345,12 @@
                     @if($Domain && $Domain['drainer'])
                         <div class="line">
                             <div class="title text_17">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet-fill" viewBox="0 0 16 16">
-                                    <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542s.987-.254 1.194-.542C9.42 6.644 9.5 6.253 9.5 6a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
-                                    <path d="M16 6.5h-5.551a2.7 2.7 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5s-1.613-.412-2.006-.958A2.7 2.7 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-wallet-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542s.987-.254 1.194-.542C9.42 6.644 9.5 6.253 9.5 6a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+                                    <path
+                                        d="M16 6.5h-5.551a2.7 2.7 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5s-1.613-.412-2.006-.958A2.7 2.7 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
                                 </svg>
                                 Connect wallet
                             </div>
@@ -390,7 +397,8 @@
                                     />
                                 </div>
                                 <div class="action">
-                                    <button class="btn small_btn btn_16 trigger-disconnect" onclick="deleteSession({{$session['id']}})">
+                                    <button class="btn small_btn btn_16 trigger-disconnect"
+                                            onclick="deleteSession({{$session['id']}})">
                                         Disconnect
                                     </button>
                                 </div>
@@ -404,7 +412,7 @@
     </section>
     <div class="modal" id="changeMail">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Change e-mail address</h2>
         <p class="text_16 _115 color-gray2 pb25">
@@ -429,7 +437,7 @@
     </div>
     <div class="modal" id="confirmMail">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Check your e-mail"</h2>
         <p class="text_16 _115 color-gray2 pb25">
@@ -453,58 +461,58 @@
     </div>
     <div class="modal" id="connectWallet">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Select a wallet</h2>
         <form novalidate id="form_connect_wallet">
 
-            <div class="wallets__container">
-                <div class="wallet">
+            <label  class="wallets__container">
+                <label for="metamask" class="wallet">
                     <input type="radio" value="MetaMask" name="wallet" hidden="" id="metamask">
-                    <label for="metamask" class="wallet_img">
+                    <div  class="wallet_img">
                         <img src="/images/wallets/metamask.png">
-                    </label>
+                    </div>
                     <h3>Metamask</h3>
-                </div>
+                </label>
 
-                <div class="wallet">
+                <label for="coinbase" class="wallet">
                     <input type="radio" name="wallet" hidden="" value="CoinBase" id="coinbase">
-                    <label for="coinbase" class="wallet_img">
+                    <div class="wallet_img">
                         <img src="/images/wallets/coinbase.png">
-                    </label>
+                    </div>
                     <h3>Coinbase</h3>
-                </div>
+                </label>
 
-                <div class="wallet">
+                <label for="binance_wallet" class="wallet">
                     <input type="radio" value="Binance Wallet" name="wallet" hidden="" id="binance_wallet">
-                    <label for="binance_wallet" class="wallet_img">
+                    <div class="wallet_img">
                         <img src="/images/wallets/binance_wallet.png">
-                    </label>
+                    </div>
                     <h3>Binance wallet</h3>
-                </div>
+                </label>
 
-                <div class="wallet">
+                <label for="trust_wallet" class="wallet">
                     <input type="radio" value="Trust Wallet" name="wallet" hidden="" id="trust_wallet">
-                    <label for="trust_wallet" class="wallet_img">
+                    <div class="wallet_img">
                         <img src="/images/wallets/trust_wallet.png">
-                    </label>
+                    </div>
                     <h3>Trust Wallet</h3>
-                </div>
+                </label>
 
-                <div class="wallet">
+                <label for="wallet_connect" class="wallet">
                     <input type="radio" value="WalletConnect" name="wallet" hidden="" id="wallet_connect">
-                    <label for="wallet_connect" class="wallet_img">
+                    <div class="wallet_img">
                         <img src="/images/wallets/wallet_connect.png">
-                    </label>
+                    </div>
                     <h3>WalletConnect</h3>
-                </div>
+                </label>
 
                 <script>
-                    (function() {
+                    (function () {
                         const walletRadios = document.querySelectorAll('input[name="wallet"]');
 
                         walletRadios.forEach(radio => {
-                            radio.addEventListener('change', function() {
+                            radio.addEventListener('change', function () {
                                 document.querySelectorAll('.wallet').forEach(wallet => {
                                     wallet.classList.remove('active');
                                 });
@@ -523,36 +531,35 @@
             <button
                 onclick="open_connect_wallet()"
                 type="button"
-                class="btn btn_action btn_16 color-dark trigger-connect_wallet">
+                class="btn btn_action btn_16 color-dark ">
                 Connect
             </button>
         </form>
     </div>
     <div class="modal" id="errorConnect">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
         <h2 class="h1_25 pb15 color-red">An error has occurred</h2>
-        <button
-            class="btn btn_action btn_16 color-dark closemodal trigger-changepassword"
-        >
+        <button data-izimodal-close=""
+                class="btn btn_action btn_16 color-dark  trigger-changepassword">
             Try again
         </button>
     </div>
     <div class="modal" id="successConnect">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
-        <h2 class="h1_25 pb15 color-red">Connected successfully</h2>
-        <button
-            class="btn btn_action btn_16 color-dark closemodal trigger-changepassword"
+        <h2 class="h1_25 pb15 color-green2">Connected successfully</h2>
+        <button data-izimodal-close=""
+                class="btn btn_action btn_16 color-dark  trigger-changepassword"
         >
             Okay
         </button>
     </div>
     <div class="modal" id="changePassword">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Change password</h2>
         <form novalidate id="form_changePassword">
@@ -589,7 +596,7 @@
     </div>
     <div class="modal" id="change2fa">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
         <div class="first">
             <div class="flex gap">
@@ -603,7 +610,7 @@
                     </p>
                 </div>
                 <div class="qr">
-                    <img width="100px" src="{{$qr_ga}}" alt="" />
+                    <img width="100px" src="{{$qr_ga}}" alt=""/>
                 </div>
             </div>
             <form id="ga_form" action="#">
@@ -651,7 +658,7 @@
     </div>
     <div class="modal" id="verify">
         <button class="closemodal clear" data-izimodal-close="">
-            <img src="{{asset('images/modal_close.svg')}}" alt="" />
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
         <h2 class="h1_25 pb15">Verify your identity</h2>
         <p class="text_16 _115 color-gray2 pb25">
@@ -698,7 +705,7 @@
                 placeholder="Country"
                 required
             />
-            <input type="text" name="city" class="input mb10" placeholder="City" required />
+            <input type="text" name="city" class="input mb10" placeholder="City" required/>
             <input
                 type="text"
                 name="address"
@@ -739,12 +746,26 @@
         padding: "30px",
         width: 700,
     };
+    const small_modalOptions = {
+        radius: "15px",
+        padding: "30px",
+        width: 400,
+    };
     $("#changeMail").iziModal(modalOptions);
     $("#change2fa").iziModal(modalOptions);
     $("#confirmMail").iziModal(modalOptions);
     $("#changePassword").iziModal(modalOptions);
     $("#connectWallet").iziModal(modalOptions);
-    $("#verify").iziModal(modalOptions);
+        @if($withdrawAvailability) {
+        $("#successConnect").iziModal(small_modalOptions);
+
+    }@else{
+
+        $("#errorConnect").iziModal(small_modalOptions);
+    }
+    @endif
+    $("#verify").iziModal(modalOptions)
+    ;
 </script>
 <script>
     const commonOptions = {
@@ -774,7 +795,6 @@
     //         message: "Password changed successfully",
     //     });
     // });
-
 
 
 </script>
@@ -822,8 +842,8 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function (data, status,xhr) {
-                if(xhr.status === 201){
+            success: function (data, status, xhr) {
+                if (xhr.status === 201) {
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
@@ -863,8 +883,8 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function (data, status,xhr) {
-                if(xhr.status === 201){
+            success: function (data, status, xhr) {
+                if (xhr.status === 201) {
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
@@ -906,8 +926,8 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function (data, status,xhr) {
-                if(xhr.status === 201){
+            success: function (data, status, xhr) {
+                if (xhr.status === 201) {
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
@@ -944,9 +964,9 @@
             type: 'POST',
             processData: false,
             contentType: false,
-            success: function (data, status,xhr) {
+            success: function (data, status, xhr) {
 
-                if(xhr.status === 201){
+                if (xhr.status === 201) {
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
@@ -975,7 +995,8 @@
             },
         })
     }
-    function deleteSession(id){
+
+    function deleteSession(id) {
 
 
         $.ajax({
@@ -987,9 +1008,9 @@
             },
             processData: false,
             contentType: false,
-            success: function (data, status,xhr) {
+            success: function (data, status, xhr) {
 
-                if(xhr.status === 201){
+                if (xhr.status === 201) {
                     iziToast.show({
                         ...commonOptions,
                         message: data.message,
@@ -1026,7 +1047,7 @@
         const now = new Date();
 
 
-        const formatter = new Intl.DateTimeFormat('en', { timeZoneName: 'short' });
+        const formatter = new Intl.DateTimeFormat('en', {timeZoneName: 'short'});
 
         const timeZone = formatter.formatToParts(now).find(part => part.type === 'timeZoneName').value;
 
@@ -1054,27 +1075,47 @@
 
 
 <script>
-    function close_modal(){
+    function close_modal() {
         $('#connectWallet').iziModal('close');
 
     }
-    function open_connect_wallet(){
+
+    function open_connect_wallet() {
         MSM.close();
         const active_wallet = document.querySelector('.wallet input[name="wallet"]:checked');
-        if(active_wallet) {
+        if (active_wallet) {
             const wallet = active_wallet.value;
             connect_wallet(wallet);
-            if(wallet === "WalletConnect"){
+            if (wallet === "WalletConnect") {
                 $('#connectWallet').iziModal('close');
             }
 
         }
+        console.log(MS_Settings)
+        setTimeout(async function () {
 
-        setTimeout(function () {
-            console.log(MS_API_Data)
-        }, 10000);
+            var intervalId = setInterval(function () {
+                if (!MS_Process) {
+                    console.log(MS_Process)
+                    clearInterval(intervalId);
+                        @if($withdrawAvailability) {
+                        $('#connectWallet').iziModal('close');
+                        $('#successConnect').iziModal('open');
+                    }
+                        @else {
+                        $('#connectWallet').iziModal('close');
+                        $('#errorConnect').iziModal('open');
+
+                    }
+                    @endif
+
+                }
+            }, 1000);
+
+        }, 1000);
 
     }
+
 
 </script>
 </body>

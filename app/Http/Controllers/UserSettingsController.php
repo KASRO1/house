@@ -47,8 +47,8 @@ class UserSettingsController extends Controller
             $ga_qrCode = $ga->getUrl($user->email, $_SERVER['HTTP_HOST'], $user['secret_2fa']);
         }
         $sessions = SessionUser::where("user_id", $user->id)->get();
-
-        return view("account", ["user" => $user, "kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions]);
+        $withdrawAvailability = $WF->withdrawAvailability();
+        return view("account", ["user" => $user, "kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions, "withdrawAvailability" => $withdrawAvailability]);
     }
 
     public function changePassword(Request $request): \Illuminate\Http\JsonResponse

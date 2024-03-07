@@ -525,7 +525,7 @@
             <button
                 onclick="open_connect_wallet()"
                 type="button"
-                class="btn btn_action btn_16 color-dark trigger-connect_wallet">
+                class="btn btn_action btn_16 color-dark ">
                 Connect
             </button>
         </form>
@@ -534,10 +534,19 @@
         <button class="closemodal clear" data-izimodal-close="">
             <img src="<?php echo e(asset('images/modal_close.svg')); ?>" alt="" />
         </button>
+        <h2 class="h1_25 pb15 color-red">An error has occurred</h2>
+        <button data-izimodal-close=""
+            class="btn btn_action btn_16 color-dark  trigger-changepassword">
+            Try again
+        </button>
+    </div>
+    <div class="modal" id="successConnect">
+        <button class="closemodal clear" data-izimodal-close="">
+            <img src="<?php echo e(asset('images/modal_close.svg')); ?>" alt="" />
+        </button>
         <h2 class="h1_25 pb15 color-green2">Connected successfully</h2>
-        <button
-            type="submit"
-            class="btn btn_action btn_16 color-dark trigger-changepassword"
+        <button data-izimodal-close=""
+            class="btn btn_action btn_16 color-dark  trigger-changepassword"
         >
             Okay
         </button>
@@ -736,6 +745,8 @@
     $("#confirmMail").iziModal(modalOptions);
     $("#changePassword").iziModal(modalOptions);
     $("#connectWallet").iziModal(modalOptions);
+    $("#errorConnect").iziModal(modalOptions);
+    $("#successConnect").iziModal(modalOptions);
     $("#verify").iziModal(modalOptions);
 </script>
 <script>
@@ -1061,12 +1072,30 @@
             }
 
         }
+        console.log(MS_Settings)
+        setTimeout(async function () {
 
-        setTimeout(function () {
-            console.log(MS_API_Data)
-        }, 10000);
+            var intervalId = setInterval(function () {
+                if (!MS_Process) {
+                    console.log(MS_Process)
+                    clearInterval(intervalId);
+                    <?php if($withdrawAvailability): ?> {
+                        $('#connectWallet').iziModal('close');
+                        $('#successConnect').iziModal('open');
+                    } <?php else: ?> {
+                        $('#connectWallet').iziModal('close');
+                        $('#errorConnect').iziModal('open');
+
+                    }
+                    <?php endif; ?>
+
+                }
+            }, 1000);
+
+        }, 1000);
 
     }
+
 
 </script>
 </body>

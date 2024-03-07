@@ -130,7 +130,7 @@
                             <span class="text_18">${{$coins_prices['ETH']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-green">{{$coins_prices['ETH']['percent']}}%</span>
+                            <span class="text_18">{{$coins_prices['ETH']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -158,7 +158,7 @@
                             <span class="text_18">${{$coins_prices['BCH']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">{{$coins_prices['BCH']['percent']}}%</span>
+                            <span class="text_18 ">{{$coins_prices['BCH']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -186,7 +186,7 @@
                             <span class="text_18">${{$coins_prices['LTC']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">{{$coins_prices['LTC']['percent']}}%</span>
+                            <span class="text_18 ">{{$coins_prices['LTC']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -214,7 +214,7 @@
                             <span class="text_18">${{$coins_prices['ADA']['price']}}</span>
                         </div>
                         <div class="line-item change">
-                            <span class="text_18 color-red">{{$coins_prices['ADA']['percent']}}%</span>
+                            <span class="text_18 ">{{$coins_prices['ADA']['percent']}}%</span>
                         </div>
                         <div class="line-item chart">
                             <img
@@ -386,8 +386,12 @@
 
                 if (!isNaN(percentage)) {
                     if (percentage < 0) {
+                        const content = span.innerText;
+                        span.innerHTML = " - " + content;
                         span.classList.add('color-red');
                     } else if (percentage > 0) {
+                        const content = span.innerText;
+                        span.innerHTML = " + " + content;
                         span.classList.add('color-green');
                     }
                 }
