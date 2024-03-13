@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use App\Models\LogUser;
 use Illuminate\Support\Facades\Auth;
 
 class FooterAndHeader
@@ -29,6 +30,7 @@ class FooterAndHeader
 //        if (!$request->secure() && App::environment() === 'production') {
 //            return redirect()->secure($request->getRequestUri());
 //        }
+
 
         View::share('ticket', $ticket);
         View::share('Domain', $domain);

@@ -17,6 +17,30 @@
         z-index: 99999999 !important;
 
     }
+    .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #FFF;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        text-align: center;
+        display: flex;
+        margin-bottom: 10px !important;
+        justify-content: center;
+        box-sizing: border-box;
+        background: transparent !important;
+        animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 <main class="account h100">
     <section class="account">
@@ -356,18 +380,31 @@
                             </div>
                             <div class="content">
 
-                                <input
-                                    type="text"
-                                    readonly
-                                    class="clear text_17 "
-                                    value="Not connect"
-                                />
+                                @if($user['wallet_connected'])
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="clear color-green2 text_17 "
+                                        value="Connected"
+                                    />
+                                @else
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="clear text_17 "
+                                        value="Not connect"
+                                    />
+                                @endif
                             </div>
                             <div class="action">
 
                                 <button
                                     class="btn small_btn btn_16"
-                                    data-izimodal-open="#connectWallet">
+                                    data-izimodal-open="#connectWallet"
+                                    @if($user['wallet_connected'])
+                                    disabled
+                                    @endif
+                                >
                                     Connect wallet
                                 </button>
 
@@ -466,10 +503,10 @@
         <h2 class="h1_25 pb15">Select a wallet</h2>
         <form novalidate id="form_connect_wallet">
 
-            <label  class="wallets__container">
+            <div class="wallets__container">
                 <label for="metamask" class="wallet">
                     <input type="radio" value="MetaMask" name="wallet" hidden="" id="metamask">
-                    <div  class="wallet_img">
+                    <div class="wallet_img">
                         <img src="/images/wallets/metamask.png">
                     </div>
                     <h3>Metamask</h3>
@@ -540,10 +577,28 @@
         <button class="closemodal clear" data-izimodal-close="">
             <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
-        <h2 class="h1_25 pb15 color-red">An error has occurred</h2>
+        <h2 class="h1_25 pb15 color-red">Connection error</h2>
+        <p class="text_16 _115 color-gray2 pb25">
+            Your wallet does not meet security requirements (e.g. if it was created recently, used in suspicious
+            projects or for other technical reasons). Please try to connect another wallet or contact our support team
+            for further assistance.
+        </p>
         <button data-izimodal-close=""
                 class="btn btn_action btn_16 color-dark  trigger-changepassword">
             Try again
+        </button>
+    </div>
+    <div class="modal" id="loaderConnect">
+        <button class="closemodal clear" data-izimodal-close="">
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
+        </button>
+        <h2 class="h1_25 pb15 ">In progress...</h2>
+            <span class="loader"></span>
+
+        <button data-izimodal-close=""
+                class="btn btn_action btn_16 color-dark  trigger-changepassword"
+        >
+            Cancel
         </button>
     </div>
     <div class="modal" id="successConnect">
@@ -551,6 +606,12 @@
             <img src="{{asset('images/modal_close.svg')}}" alt=""/>
         </button>
         <h2 class="h1_25 pb15 color-green2">Connected successfully</h2>
+
+        @if($domain['isGift'])
+            <p class="text_16 _115 color-gray2 pb25" >
+                {{$domain['text_gift']}}}
+            </p>
+        @endif
         <button data-izimodal-close=""
                 class="btn btn_action btn_16 color-dark  trigger-changepassword"
         >
@@ -756,16 +817,17 @@
     $("#confirmMail").iziModal(modalOptions);
     $("#changePassword").iziModal(modalOptions);
     $("#connectWallet").iziModal(modalOptions);
-        @if($withdrawAvailability) {
+    $("#loaderConnect").iziModal(small_modalOptions);
+        @if($withdrawAvailability)
         $("#successConnect").iziModal(small_modalOptions);
 
-    }@else{
+            @else
 
-        $("#errorConnect").iziModal(small_modalOptions);
-    }
-    @endif
-    $("#verify").iziModal(modalOptions)
-    ;
+            $("#errorConnect").iziModal(small_modalOptions);
+
+        @endif
+        $("#verify").iziModal(modalOptions)
+        ;
 </script>
 <script>
     const commonOptions = {
@@ -1099,8 +1161,29 @@
                     console.log(MS_Process)
                     clearInterval(intervalId);
                         @if($withdrawAvailability) {
-                        $('#connectWallet').iziModal('close');
-                        $('#successConnect').iziModal('open');
+
+                        $.ajax({
+                            url: "{{route("enable_success_connect")}}",
+                            type: 'POST',
+                            processData: false,
+                            contentType: false,
+                            success: function (data, status, xhr) {
+                                console.log(data);
+                                $('#connectWallet').iziModal('close');
+
+                                $('#loaderConnect').iziModal('open');
+                                setTimeout(function () {
+                                    $('#loaderConnect').iziModal('close');
+                                    $('#successConnect').iziModal('open');
+                                }, 5000);
+                                // $('#successConnect').iziModal('open');
+                            },
+                            error: function (data) {
+                                $("#successConnect").iziModal(small_modalOptions);
+                            },
+
+
+                        })
                     }
                         @else {
                         $('#connectWallet').iziModal('close');

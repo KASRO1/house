@@ -387,7 +387,7 @@
                 if (!isNaN(percentage)) {
                     if (percentage < 0) {
                         const content = span.innerText;
-                        span.innerHTML = " - " + content;
+                        span.innerHTML =  content;
                         span.classList.add('color-red');
                     } else if (percentage > 0) {
                         const content = span.innerText;

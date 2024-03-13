@@ -205,7 +205,7 @@
                 <div class="card">
                   <!-- Header -->
                   <div class="card-header card-header-content-between">
-                    <h4 class="card-header-title">Транзакции мамонта</h4>
+                    <h4 class="card-header-title">Логи мамонта</h4>
 
                     <!-- Dropdown -->
                     <div class="dropdown">
@@ -239,24 +239,24 @@
                     <ul class="step step-icon-xs mb-0">
 
 
-                      <?php $__currentLoopData = $transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $transaction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <?php $__currentLoopData = $logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="step-item">
                                 <div class="step-content-wrapper">
                                     <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
 
                                     <div class="step-content">
                                         <h5 class="step-title">
-                                            <a class="text-dark" ><?php echo e($transaction['type']); ?></a>
+                                            <a class="text-dark" ><?php echo e($log['url']); ?></a>
                                         </h5>
 
 
-                                        <span class="text-muted small text-uppercase"><?php echo e($transaction['created_at']); ?></span>
+                                        <span class="text-muted small text-uppercase"><?php echo e(\Carbon\Carbon::parse($log['created_at'])->format("d/m/y H:i")); ?></span>
                                     </div>
                                 </div>
                             </li>
 
                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php if(count($transactions) === 0): ?>
+                        <?php if(count($logs) === 0): ?>
                             <h1 style="text-align: center; width: 100%;">
                                 Not found
                             </h1>
@@ -274,7 +274,79 @@
                   <!-- End Footer -->
                 </div>
                 <!-- End Card -->
+                  <!-- Card -->
+                  <div class="card">
+                      <!-- Header -->
+                      <div class="card-header card-header-content-between">
+                          <h4 class="card-header-title">Транзакции мамонта</h4>
 
+                          <!-- Dropdown -->
+                          <div class="dropdown">
+
+                              <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="contentActivityStreamDropdown">
+                                  <span class="dropdown-header">Settings</span>
+
+                                  <a class="dropdown-item" href="#">
+                                      <i class="bi-share-fill dropdown-item-icon"></i> Share connections
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                      <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
+                                  </a>
+
+                                  <div class="dropdown-divider"></div>
+
+                                  <span class="dropdown-header">Feedback</span>
+
+                                  <a class="dropdown-item" href="#">
+                                      <i class="bi-chat-left-dots dropdown-item-icon"></i> Report
+                                  </a>
+                              </div>
+                          </div>
+                          <!-- End Dropdown -->
+                      </div>
+                      <!-- End Header -->
+
+                      <!-- Body -->
+                      <div class="card-body card-body-height" style="height: 30rem;">
+                          <!-- Step -->
+                          <ul class="step step-icon-xs mb-0">
+
+
+                              <?php $__currentLoopData = $transactions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $transaction): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <li class="step-item">
+                                      <div class="step-content-wrapper">
+                                          <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
+
+                                          <div class="step-content">
+                                              <h5 class="step-title">
+                                                  <a class="text-dark" ><?php echo e($transaction['type']); ?></a>
+                                              </h5>
+
+
+                                              <span class="text-muted small text-uppercase"><?php echo e($transaction['created_at']); ?></span>
+                                          </div>
+                                      </div>
+                                  </li>
+
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              <?php if(count($transactions) === 0): ?>
+                                  <h1 style="text-align: center; width: 100%;">
+                                      Not found
+                                  </h1>
+                              <?php endif; ?>
+
+
+                              <!-- Step Item -->
+
+                              <!-- End Step Item -->
+                          </ul>
+                          <!-- End Step -->
+                      </div>
+                      <!-- End Body -->
+
+                      <!-- End Footer -->
+                  </div>
+                  <!-- End Card -->
                 <div class="row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <!-- Card -->

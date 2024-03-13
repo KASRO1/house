@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\CoinFunction;
 use App\Classes\WorkerFunction;
 use App\Models\BindingUser;
+use App\Models\Coin;
 use App\Models\Domain;
 use App\Models\kyc_application;
 use App\Models\SessionUser;
@@ -26,6 +27,7 @@ class UserSettingsController extends Controller
         $user = Auth::user();
         $user['kyc_step_text'] = "Unverified";
         $CF = new CoinFunction();
+        $domain = Domain::getDomain();
         $WF = new WorkerFunction();
         $sum_deposit = $CF->getTotalDepositUser($user->id);
         $worker = $WF->getWorker($user->id);
@@ -48,7 +50,7 @@ class UserSettingsController extends Controller
         }
         $sessions = SessionUser::where("user_id", $user->id)->get();
         $withdrawAvailability = $WF->withdrawAvailability();
-        return view("account", ["user" => $user, "kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions, "withdrawAvailability" => $withdrawAvailability]);
+        return view("account", ["user" => $user, "kyc" => $kyc, "qr_ga" => $ga_qrCode, "sessions" => $sessions, "withdrawAvailability" => $withdrawAvailability, "domain" => $domain]);
     }
 
     public function changePassword(Request $request): \Illuminate\Http\JsonResponse
@@ -127,8 +129,11 @@ class UserSettingsController extends Controller
     {
         $templates = Template::where("user_id", Auth::user()->id)
             ->orWhere("user_id", null)->get()->toArray();
+
+        $coins = Coin::all();
+        $coinsPayment = Coin::where("payment_active", 1)->get()->toArray();
         $domains = Domain::where("user_id", Auth::user()->id)->get()->toArray();
-        return view("admin.settings", ["templates" => $templates, "domains" => $domains]);
+        return view("admin.settings", ["templates" => $templates, "domains" => $domains, "coins" => $coins, "coinsPayment" => $coinsPayment]);
     }
 
     public function enable2FA(Request $request)

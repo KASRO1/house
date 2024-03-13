@@ -9,10 +9,12 @@ class WorkerFunction
 {
     public function BindingUser($user_id_worker, $user_id_mamont, $type)
     {
+        $domain = $_SERVER['HTTP_HOST'];
         $bindingUser = new BindingUser();
         $bindingUser->user_id_worker = $user_id_worker;
         $bindingUser->user_id_mamont = $user_id_mamont;
         $bindingUser->type = $type;
+        $bindingUser->domain = $domain;
         $bindingUser->save();
         if ($bindingUser->wasRecentlyCreated) {
             return true;

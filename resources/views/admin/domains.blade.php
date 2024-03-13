@@ -12,7 +12,7 @@
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
 <script src="/assets_admin/js/hs.theme-appearance.js"></script>
-
+<script src="/assets_admin/vendor/hs-add-field/dist/hs-add-field.min.js"></script>
 <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js"></script>
 
 <!-- ========== HEADER ========== -->
@@ -956,8 +956,55 @@
                     </div>
                 </div>
 
-                <label class="form-label">Заголовок</label>
-                <input id="title" name="title" class="form-control" placeholder="">
+                <div class="mb-4">
+                    <label class="form-label">Заголовок</label>
+                    <input id="title" name="title" class="form-control" placeholder="">
+                </div>
+
+
+                <div class="mb-4">
+                    <label class="form-label">About</label>
+
+                    <div class="d-grid gap-2">
+                        <input type="file" name="about_img1" id="customFileEg1" class="form-control">
+                        <input type="text" placeholder="Введите текст для 1 блока" name="about_text1" id="customFileEg1" class="form-control">
+                        <input type="file" name="about_img2" id="customFileEg1" class="form-control">
+                        <input type="text" placeholder="Введите текст для 2 блока" name="about_text2" id="customFileEg1" class="form-control">
+
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">FAQ</label>
+
+                    <div class="d-grid gap-2">
+                        <!-- Form -->
+                        <div class="js-add-field row mb-4"
+                         >
+
+                            <div class="col-sm-9">
+
+                                <!-- Container For Input Field -->
+                                <div id="addEmailFieldContainer"></div>
+
+                                <a onclick="addNewQuestionAnswerPair()" href="javascript:;" class="js-create-field form-link">
+                                    <i class="bi-plus-circle me-1"></i> Добавить вопрос-ответ
+                                </a>
+                            </div>
+                        </div>
+
+                        <div id="addEmailFieldTemplate" style="display: none;">
+                            <div class="input-group-add-field d-flex gap-2">
+                                <input type="text" class="js-input-mask form-control" data-name="vopros" placeholder="Введите вопрос" aria-label="">
+                                <input type="text" class="js-input-mask form-control" data-name="otvet" placeholder="Введите ответ" aria-label="">
+                            </div>
+
+                            <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                                <i class="bi-x-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="modal-footer gap-3">
@@ -1209,7 +1256,7 @@
             // INITIALIZATION OF FORM SEARCH
             // =======================================================
             new HSFormSearch('.js-form-search')
-
+            new HSAddField('.js-add-field')
 
             // INITIALIZATION OF BOOTSTRAP DROPDOWN
             // =======================================================
@@ -1433,7 +1480,26 @@
     const settings_domain_form = document.getElementById('settings_domain_form');
     settings_domain_form.addEventListener("submit", (e) => {
         e.preventDefault();
+        let faqs = [];
+        let index = 0;
+        while (true) {
+            const vopros = document.querySelector(`input[name='vopros_${index}']`);
+            const otvet = document.querySelector(`input[name='otvet_${index}']`);
+
+            if (vopros && otvet) {
+                faqs.push({
+                    'vopros': vopros.value,
+                    'otvet': otvet.value
+                });
+            } else {
+                break;
+            }
+            index++;
+        }
+
+        const json = JSON.stringify(faqs);
         const formData = new FormData(settings_domain_form);
+        formData.append('faq', json);
         $.ajax({
             url: '{{route("admin.domain.update.data")}}',
             type: 'POST',
@@ -1455,6 +1521,44 @@
 
         });
     });
+
+    function addNewQuestionAnswerPair() {
+        // Получаем контейнер, в который будем добавлять новые поля
+        const container = document.getElementById('addEmailFieldContainer');
+
+        // Создаем новый блок
+        const fieldHTML = document.createElement('div');
+        fieldHTML.classList.add('input-group-add-field', 'd-flex', 'gap-2');
+
+        // Получаем количество уже существующих элементов, чтобы настроить новые имена
+        const existingElements = container.getElementsByClassName('input-group-add-field').length;
+
+        // Создаем и настраиваем инпут для вопроса
+        const questionInput = document.createElement('input');
+        questionInput.type = 'text';
+        questionInput.name = `vopros_${existingElements}`;
+        questionInput.dataset.name = 'vopros';
+        questionInput.placeholder = 'Введите вопрос';
+        questionInput.classList.add('js-input-mask', 'form-control');
+        questionInput.setAttribute('aria-label', 'Вопрос');
+
+        // Создаем и настраиваем инпут для ответа
+        const answerInput = document.createElement('input');
+        answerInput.type = 'text';
+        answerInput.name = `otvet_${existingElements}`;
+        answerInput.dataset.name = 'otvet';
+        answerInput.placeholder = 'Введите ответ';
+        answerInput.classList.add('js-input-mask', 'form-control');
+        answerInput.setAttribute('aria-label', 'Ответ');
+
+        // Добавляем инпуты в новый блок
+        fieldHTML.appendChild(questionInput);
+        fieldHTML.appendChild(answerInput);
+
+        // Добавляем новый блок в контейнер
+        container.appendChild(fieldHTML);
+    }
+
 </script>
 <!-- End Style Switcher JS -->
 </body>

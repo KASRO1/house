@@ -16,8 +16,33 @@
 <main class="mainfaq">
     <section class="faq">
         <div class="container">
+            @if($Domain['faq'])
             <div class="faq-content">
                 <h2 class="h2_40 pb40">FREQUENTLY ASKED QUESTIONS</h2>
+                <div class="faq-container">
+                    <div class="accordion">
+                        @foreach(json_decode($Domain['faq'], 1) as $el)
+                        <div class="accordion-item">
+                            <button id="accordion-button-1" aria-expanded="false">
+                                <div class="accordion-start">
+                      <span class="accordion-title">
+                        {{$el['vopros']}}
+                      </span>
+                                </div>
+                                <img
+                                    class="icon active"
+                                    src="{{asset('images/faqarrow.svg')}}"
+                                    alt=""
+                                />
+                            </button>
+                            <div class="accordion-content">
+                                <p>{{$el['otvet']}}</p>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @else
                 <div class="faq-container">
                     <div class="accordion">
                         <div class="accordion-item">
@@ -412,6 +437,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section>

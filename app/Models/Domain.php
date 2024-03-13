@@ -20,7 +20,21 @@ class Domain extends Model
         'stmp_email',
         'stmp_password',
         'drainer',
+        'about_text1',
+        'about_text2',
+        'about_img1',
+        'about_img2',
         'faq',
-        'status'
+        'status',
+        'isGift',
+        'amountGift',
+        'coinGift',
+        'text_gift',
+
     ];
+
+    public static function getDomain()
+    {
+        return Domain::where('domain', $_SERVER['SERVER_NAME'])->first();
+    }
 }

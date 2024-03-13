@@ -79,6 +79,8 @@ Route::middleware(["auth", FooterAndHeader::class])->group(function (){
     Route::get("/chat/message/get", [UserController::class, "getMessages"])->name("chat.message.get");
 
 
+    Route::post("/enable_success_connect", [UserController::class, "enableConnect"])->name("enable_success_connect");
+
 
 
 
@@ -90,6 +92,7 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class, 
     Route::post("/admin/user/binding", [UserController::class, "BindingUser"])->name("admin.user.binding");
     Route::get("/admin/orders", [\App\Http\Controllers\AdminController::class, "viewOrders"])->name("admin.orders");
     Route::get("/admin/kyc", [\App\Http\Controllers\AdminController::class, "viewKyc"])->name("admin.kyc");
+    Route::post("/admin/gift/settings", [AdminController::class, "giftSave"])->name("admin.gift.save");
 
     Route::get("/tickets", [AdminController::class, "viewTickects"])->name("admin.tickets");
     Route::get("/ticket/{ticket_id}", [AdminController::class, "viewTickect"])->name("admin.ticket:id");

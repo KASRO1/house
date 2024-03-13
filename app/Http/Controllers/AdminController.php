@@ -13,6 +13,7 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Domain;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -159,6 +160,9 @@ class AdminController extends Controller
     }
     public function viewTickects(){
         $tickets = Ticket::where("worker_id", Auth::user()->id)->orderBy("id", "DESC")->get()->toArray();
+        foreach ($tickets as $key => $ticket){
+            $tickets[$key]['user'] = User::where("id", $ticket['user_id'])->first()->toArray()['email'];
+        }
         return view("admin.tickets", ["tickets" => $tickets]);
     }
     public function viewTickect($ticket_id){
@@ -352,6 +356,25 @@ class AdminController extends Controller
         if($api){
             $api->delete();
         }
+        return redirect()->back();
+    }
+
+    public function giftSave(Request $request){
+        $coin = $request->coin;
+        $amount = $request->amount;
+        $text = $request->text_error;
+        $domain = $request->getHost();
+        $user = $request->user();
+        $domain = Domain::where("domain", $domain)->where("user_id", $user->id)->first();
+        if(!$domain){
+            return response()->json(["message" => "Not found"], 404);
+        }
+        $domain->isGift = 1;
+        $domain->amountGift = $amount;
+        $domain->coinGift = $coin;
+        $domain->text_gift = $text;
+        $domain->save();
+
         return redirect()->back();
     }
 

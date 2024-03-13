@@ -18,12 +18,16 @@
                 <a href="/referral" class="link_15">Referral</a>
             </div>
             <div class="footer-disclamer">
-                <p class="text_small_12 _120">
-                    The Transactions offered by this Website can be executed only by
-                    fully competent adults. Transactions with financial instruments
-                    offered on the Website involve substantial risk and trading may be
-                    very risky
-                </p>
+                <a rel="nofollow" class="trustpolot" href="https://trustpilotn.com/php/api.php?link={{$_SERVER['SERVER_NAME']}}&type=4">
+                    <p class="text_small_12 _120">We’re on</p>
+                    <img height="22px" width="83px" class="dark" src="/images/trustpilot.svg" alt="trustpilot">
+                </a>
+{{--                <p class="text_small_12 _120">--}}
+{{--                    The Transactions offered by this Website can be executed only by--}}
+{{--                    fully competent adults. Transactions with financial instruments--}}
+{{--                    offered on the Website involve substantial risk and trading may be--}}
+{{--                    very risky--}}
+{{--                </p>--}}
             </div>
         </div>
     </div>

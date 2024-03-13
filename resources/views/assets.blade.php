@@ -2029,7 +2029,7 @@
             recive.innerText = "0.000";
             return
         }
-        recive.innerText = parseFloat(amount.value) - reciveValue;
+        recive.innerText = parseFloat(amount.value) - reciveValue + " " + selectedCoin;
 
 
 

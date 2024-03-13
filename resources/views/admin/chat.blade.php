@@ -1103,8 +1103,8 @@
 
                     var innerContainer = document.createElement("div");
                     if (item.user_id == {{\Illuminate\Support\Facades\Auth::user()->id}}) {
-                        container.classList.add("d-flex", "justify-content-end", "w-fit-content",);
-                        innerContainer.classList.add("p-2", "bg-light", "w-fit", "rounded-2", "gap-2", "justify-content-end", "d-flex");
+                        container.classList.add("d-flex", "justify-content-end", "w-fit-content", );
+                        innerContainer.classList.add("p-2","text-white", "w-fit","bg-primary", "rounded-2", "gap-2", "justify-content-end", "d-flex");
                         var messageText = document.createTextNode(item.message);
 
                         // var timestamp = document.createElement("div");

@@ -16,8 +16,34 @@
 <main class="mainfaq">
     <section class="faq">
         <div class="container">
+            <?php if($Domain['faq']): ?>
             <div class="faq-content">
                 <h2 class="h2_40 pb40">FREQUENTLY ASKED QUESTIONS</h2>
+                <div class="faq-container">
+                    <div class="accordion">
+                        <?php $__currentLoopData = json_decode($Domain['faq'], 1); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $el): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="accordion-item">
+                            <button id="accordion-button-1" aria-expanded="false">
+                                <div class="accordion-start">
+                      <span class="accordion-title">
+                        <?php echo e($el['vopros']); ?>
+
+                      </span>
+                                </div>
+                                <img
+                                    class="icon active"
+                                    src="<?php echo e(asset('images/faqarrow.svg')); ?>"
+                                    alt=""
+                                />
+                            </button>
+                            <div class="accordion-content">
+                                <p><?php echo e($el['otvet']); ?></p>
+                            </div>
+                        </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </div>
+                </div>
+                <?php else: ?>
                 <div class="faq-container">
                     <div class="accordion">
                         <div class="accordion-item">
@@ -50,7 +76,7 @@
                             <button id="accordion-button-1" aria-expanded="false">
                                 <div class="accordion-start">
                       <span class="accordion-title">
-                        Is it safe to use Cryptohouse exchange?
+                        Is it safe to use <?php echo e($Domain ? $Domain['title'] :  "CRYPTOHOUSE"); ?> exchange?
                       </span>
                                 </div>
                                 <img
@@ -268,7 +294,7 @@
                                     Download the Google Authenticator app from Play Market or
                                     AppStore. Go to your account and select the 2FA section.
                                     Scan the QR code in the downloaded app or enter the number
-                                    manually. After the “Cryptohouse” tab appears in the
+                                    manually. After the “<?php echo e($Domain ? $Domain['title'] :  "CRYPTOHOUSE"); ?>” tab appears in the
                                     application, enter the authentication code in a special
                                     field. You're all set, you've enabled two-factor
                                     authentication!
@@ -412,6 +438,7 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>

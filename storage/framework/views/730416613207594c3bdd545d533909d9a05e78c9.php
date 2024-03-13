@@ -237,7 +237,7 @@
                                 <td><?php echo e(\Carbon\Carbon::parse($ticket['created_at'])->format("d/m/y H:i")); ?></td>
                                 <td>
                                     <a class="text-body"
-                                       href="<?php echo e(route("admin.user:id", $ticket['user_id'])); ?>"><?php echo e($ticket['user_id']); ?></a>
+                                       href="<?php echo e(route("admin.user:id", $ticket['user_id'])); ?>"><?php echo e($ticket['user']); ?></a>
                                 </td>
                                 <td>
                                     <?php if($ticket['status'] == "open"): ?>

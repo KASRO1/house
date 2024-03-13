@@ -284,7 +284,7 @@
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-header">
-                <h4 class="modal-title" id="addDomainModalLabel">Привязать домен</h4>
+                <h4 class="modal-title" id="addDomainModalLabel">Заявка  </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- End Header -->

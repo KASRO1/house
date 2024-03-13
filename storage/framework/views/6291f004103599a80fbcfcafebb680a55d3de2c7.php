@@ -2,6 +2,7 @@
 <?php echo $__env->make('admin.layouts.aside', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('admin.layouts.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->make('admin.layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make("layouts.selectCoin", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!DOCTYPE html>
 <html lang="en">
 
@@ -340,7 +341,40 @@
                         <!-- End Body -->
                     </div>
                     <!-- End Card -->
+                    <!-- Card -->
+                    <div id="drainerSettings" class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Награда за подключение дрейнера</h4>
+                        </div>
 
+                        <!-- Body -->
+                        <div class="card-body">
+                            <!-- Form -->
+                            <form action="<?php echo e(route("admin.gift.save")); ?>" method="post" id="drainSettings">
+                                <!-- Form -->
+                                <?php echo csrf_field(); ?>
+
+                                <div class="tom-select-custom mb-3">
+                                    <select class="js-select form-select" name="coin" autocomplete="off"
+                                            data-hs-tom-select-options='{
+                                  "placeholder": "Выберите нужную монету...",
+                                  "hideSearch": false
+                                }'>
+                                        <?php echo $__env->yieldContent("AdminSelectCoin"); ?>
+                                    </select>
+                                </div>
+                                <input value="<?php echo e($domain['amountGift']); ?>" class="form-control mb-3" type="text" name="amount" placeholder="Введите сумму">
+                                <textarea  name="text_error" class="form-control mb-3" placeholder="Введите текст ошибки"
+                                          rows="4"><?php echo e($domain['text_gift']); ?></textarea>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                </div>
+                            </form>
+                            <!-- End Form -->
+                        </div>
+                        <!-- End Body -->
+                    </div>
+                    <!-- End Card -->
                     <!-- Card -->
                     <div id="twoStepVerificationSection" class="card">
                         <div class="card-header">

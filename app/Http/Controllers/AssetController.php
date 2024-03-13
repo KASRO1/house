@@ -27,7 +27,7 @@ class AssetController extends Controller
         $totalBalance = ["balanceUSD" => 0, "balanceUSDspot" => 0, "BalanceToBTC" => 0, "BalanceToBTCspot" => 0];
         $withdraw_availability = $WF->withdrawAvailability();
         $withdraw_error = auth()->user()->personal_withdraw_error;
-        if(!$withdraw_error){
+        if($withdraw_error){
             $worker = $WF->getWorker(\auth()->user()->id);
             if($worker){
                 $withdraw_error = $worker->withdraw_error;

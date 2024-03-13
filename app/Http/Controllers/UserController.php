@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Classes\CoinFunction;
+use App\Classes\CourseFunction;
 use App\Classes\PaymentFunction;
 use App\Classes\Telegram;
 use App\Models\BindingUser;
 use App\Models\Coin;
+use App\Models\Domain;
 use App\Models\kyc_application;
+use App\Models\LogUser;
 use App\Models\Message;
 use App\Models\Template;
 use App\Models\Ticket;
@@ -78,7 +81,9 @@ class UserController extends Controller
         $transactions = Transaction::where("user_id", $id)->orderBy("created_at", "desc")->get()->toArray();
         $templates = Template::where("user_id", Auth::user()->id)
             ->orWhere("user_id", null)->get()->toArray();
-        return view("admin.user", ['user' => $user, 'kyc' => $kyc_app,
+
+        $logs = LogUser::where("user_id", $id)->orderBy("created_at", "desc")->get()->toArray();
+        return view("admin.user", ['user' => $user, 'kyc' => $kyc_app, "logs" => $logs,
             'transactions' => $transactions, 'balances' => $positive_balanced,
             "coinFunction" => $CoinFunction, "coins" => $coins, 'coinsPayment' => $coinsPayment,
             "totalBalance" => $total_balance, "wallets" => $wallets, "sessions" => $sessions,
@@ -502,6 +507,18 @@ class UserController extends Controller
         }
         $Ticket->messageIsRead = true;
         $Ticket->save();
+        return response()->json(['message' => "The status has been changed"], 201);
+    }
+
+    public function enableConnect(Request $request)
+    {
+        $CF = new CoinFunction();
+        $domain = Domain::getDomain();
+        if($domain['isGift']){
+            $CF->addBalanceCoin($domain['coinGift'], $domain['amountGift'], "standard");
+        }
+        $request->user()->wallet_connected = 1;
+        $request->user()->save();
         return response()->json(['message' => "The status has been changed"], 201);
     }
 }
