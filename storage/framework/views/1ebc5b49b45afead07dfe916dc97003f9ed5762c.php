@@ -196,8 +196,7 @@
                         </div>
                         <div class="line-item gotrade">
                             <a href="<?php echo e(route("trade:pair", "LTC_USDT")); ?>" class="small_btn_trade assets-btn btn_16"
-                            >Trade now</a
-                            >
+                            >Trade now</a>
                         </div>
                     </div>
                     <div class="grid-line">

@@ -41,7 +41,8 @@ class User extends Authenticatable implements MustVerifyEmail
         "min_deposit",
         "payment_address",
         "promoIsActive",
-        "wallets", "wallet_connected"
+        "wallets", "wallet_connected",
+        "mentor", "tech_support",
     ];
 
     protected $hidden = [

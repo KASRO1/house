@@ -1097,6 +1097,7 @@
             renderRecentTrades(trades);
         }
         setTimeout(function() {
+
             recentTrades(true)
         }, 1500)
         setInterval(function() {
@@ -1127,23 +1128,25 @@
                 } else {
                     gridLine.classList.add("color-red");
                 }
-                gridLine.innerHTML = `
-                                            <div class="bg" style="width: 80%"></div>
-                                            <div class="${trade.type_trade === 'buy' ? 'color-green2' : 'color-red'}">${trade.price}</div>
-                                            <div class="color-white">${trade.amount}</div>
-                                            <div class="color-gray2">${trade.time}</div>
 
-                                      `;
-                // container.appendChild(gridLine);
+                const maxAmount = 1;
+                const widthPercentage = (trade.amount / maxAmount) * 100;
+
+                gridLine.innerHTML = `
+            <div class="bg_order_book ${trade.type_trade === 'buy' ? 'bg-green_order_book' : 'bg-red_order_book'}"" style="width: ${widthPercentage}%"></div>
+            <div class="${trade.type_trade === 'buy' ? 'color-green2' : 'color-red'}">${trade.price}</div>
+            <div class="color-white">${trade.amount}</div>
+            <div class="color-gray2">${trade.time}</div>
+        `;
+
                 var firstChild = container.firstChild;
                 container.insertBefore(gridLine, firstChild);
+
                 setTimeout(() => {
                     gridLine.classList.add("create");
                 }, 100);
             })
-
         }
-
         function orderBook(renderFull, type) {
             const actualPrice = document.getElementById("valueInfo_price").textContent;
             trades = [];
@@ -1173,7 +1176,7 @@
 
         setInterval(function() {
             setTimeout(function() {
-                renderOrderBook(orderBook(false, "buy"), "OrderBookBuy")
+                x(orderBook(false, "buy"), "OrderBookBuy")
             }, getRandomNumber(100, 7000))
         }, 1000)
 
@@ -1319,6 +1322,7 @@
 
             updateBalances()
         }
+
     </script>
 </body>
 

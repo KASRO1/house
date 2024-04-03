@@ -327,6 +327,7 @@
                         <th>Последний онлайн</th>
                         <th>Дата регистрации</th>
                         <th>Общий баланс</th>
+                        <th>Домен</th>
                     </tr>
                     </thead>
 
@@ -360,6 +361,7 @@
                             <td><?php echo e($mamont['mamontProfileInfo']['last_online']); ?></td>
                             <td><?php echo e(\Carbon\Carbon::parse($mamont['mamontProfileInfo']['created_at'])->format("Y-m-d H:i")); ?></td>
                             <td><?php echo e($mamont['mamontProfileInfo']['balance']); ?> $</td>
+                            <td><?php echo e($mamont['domain']); ?></td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

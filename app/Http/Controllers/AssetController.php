@@ -59,7 +59,6 @@ class AssetController extends Controller
         $user->balance = $totalBalance['balanceUSD'];
         $user->save();
 
-
         return view("assets", ["coins" => $coins, "Assets" => $assets,
             "totalBalance" => $totalBalance, "transactions" => $transactions,
             "stakingOrders" => $stakingOrders, "coinsPayment" => $coinsPayment,

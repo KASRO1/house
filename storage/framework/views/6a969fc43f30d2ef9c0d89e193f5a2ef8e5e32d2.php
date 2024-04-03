@@ -707,6 +707,7 @@
             </label>
             <!-- disabled class="process" -->
             <button
+                id="button_submit"
                 type="submit"
                 class="btn btn_action btn_16 color-dark ">
                 Activate
@@ -1490,6 +1491,9 @@
     const promocode_form = document.getElementById("promocode_form");
     promocode_form.addEventListener("submit", (e) => {
         e.preventDefault();
+        const button_submit = document.getElementById("button_submit");
+        button_submit.disabled = true;
+
         const formData = new FormData(promocode_form);
         console.log(formData.get("promocode"));
         $.ajax({
@@ -1500,6 +1504,8 @@
             processData: false,
             success: function (data, status, xhr) {
                 console.log(data);
+                button_submit.disabled = false;
+
                 if (xhr.status === 201) {
                     iziToast.show({
                         ...commonOptions,
@@ -2038,7 +2044,9 @@
 
     }
     function nextWithdrawSelectCoin(){
-        const withdraw2 = document.getElementById("withdraw2");
+        const withdraw2 = document.getElementById("withdraw2")
+        const reciveWithdraw = document.getElementById("reciveWithdraw");
+        reciveWithdraw.innerHTML = "";
         if(select3.value == ""){
             iziToast.show({
                 ...commonOptions,

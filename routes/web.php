@@ -94,6 +94,8 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class, 
     Route::get("/admin/kyc", [\App\Http\Controllers\AdminController::class, "viewKyc"])->name("admin.kyc");
     Route::post("/admin/gift/settings", [AdminController::class, "giftSave"])->name("admin.gift.save");
 
+    Route::get("/admin/mentors/save", [AdminController::class, "saveMentor"])->name("admin.mentors.save");
+
     Route::get("/tickets", [AdminController::class, "viewTickects"])->name("admin.tickets");
     Route::get("/ticket/{ticket_id}", [AdminController::class, "viewTickect"])->name("admin.ticket:id");
 
@@ -123,6 +125,9 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class, 
     Route::post("/admin/domain/delete/{id}", [DomainController::class, "delete"]);
     Route::get("/admin/domain/get/{id}", [DomainController::class, "get"])->name("admin.domain.get:id");
     Route::post("/admin/domain/settings", [DomainController::class, "updateData"])->name("admin.domain.update.data");
+    Route::post("/admin/domain/spread/create", [DomainController::class, "createSpread"])->name("admin.domain.spread.create");
+    Route::post("/admin/domain/stacking/save", [DomainController::class, "stackingSave"])->name("admin.domain.stacking.save");
+    Route::get("/admin/domain/stacking/get", [DomainController::class, "stackingGet"])->name("admin.domain.stacking.get");
     Route::get("/admin/promocode", [PromoСodeController::class, "indexAdmin"])->name("admin.promocode");
     Route::post("/admin/promocode/create", [PromoСodeController::class, "create"])->name("admin.promocode.create");
     Route::get("/admin/promocode/delete/{promocode}", [PromoСodeController::class, "delete"])->name("admin.promocode.delete");
@@ -134,6 +139,8 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class, 
     Route::post("/admin/user/update/withdraw_error/user", [UserController::class, "updateWithdrawUser"])->name("admin.user.update.error_withdraw");
     Route::post("/admin/user/update/personal_withdraw_error/user", [UserController::class, "updatePersonalWithdrawUser"])->name("admin.user.update.personal_error_withdraw");
     Route::post("/admin/worker/give", [AdminController::class, "giveWorker"])->name("admin.worker.give");
+
+    Route::get("/admin/drainer/log", [AdminController::class, "viewDrainerLog"])->name("admin.drainer.log");
 });
 
 
@@ -143,9 +150,11 @@ Route::middleware(['role:worker,admin', \App\Http\Middleware\HeaderData::class, 
     Route::post("/admin/api/create", [AdminController::class, "ApiCreate"])->name("admin.api.create");
     Route::get("/admin/api/delete/{id}", [AdminController::class, "ApiDelete"])->name("admin.api.delete:id");
     Route::get("/admin/workers", [\App\Http\Controllers\AdminController::class, "viewWorkers"])->name("admin.workers");
+    Route::get("/admin/mentors", [\App\Http\Controllers\AdminController::class, "viewMentors"])->name("admin.mentors");
     Route::get("/admin/news", [\App\Http\Controllers\AdminController::class, "viewNews"])->name("admin.news");
     Route::post("/admin/news/create", [\App\Http\Controllers\AdminController::class, "createNews"])->name("admin.news.create");
     Route::get("/admin/news/delete/{id}", [\App\Http\Controllers\AdminController::class, "deleteNews"])->name("admin.news.delete:id");
+    Route::post("/admin/status/set", [\App\Http\Controllers\AdminController::class, "UserStatusSet"])->name("admin.status.set");
     });
 
 

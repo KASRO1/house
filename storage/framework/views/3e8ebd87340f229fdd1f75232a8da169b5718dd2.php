@@ -21,11 +21,11 @@
 
         <tr>
             <td >
-                <h1 style="color: #FFFFFF; font-family: 'Roboto', sans-serif; font-size: 18px; text-align: center;font-weight: 400; line-height: 28px; margin: 0; padding: 0;">Click the button to confirm password reset</h1>
+                <h1 style="color: #FFFFFF; font-family: 'Roboto', sans-serif; font-size: 18px; text-align: center;font-weight: 400; line-height: 28px; margin: 0; padding: 0;">Click the button to confirm your account registration</h1>
 
                 <div style="padding-top: 10px;text-align: center; display: flex; width: 400px; margin: auto;">
                     <a href="<?php echo e(route('register.email.confirm', ['token' => $token])); ?>" style="margin-bottom: 10px;color: black;width: 100%;height: 34px;align-items: center;background-color: #C4E9FC;padding: 15px; display: flex;
-                justify-content: center;border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; margin: 0; padding: 0;">
+                justify-content: center;text-decoration: none;border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; margin: 0; padding: 0;">
                     Confirm</a>
                    </div>
                    <p style="color: #606E76;font-family: 'Roboto', sans-serif; font-size: 13px; text-align: center;font-weight: 400; line-height: 28px; margin: 0; padding: 0;">If you didn't register the account, please ignore this message</p>

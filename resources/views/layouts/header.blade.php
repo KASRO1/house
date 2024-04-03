@@ -18,7 +18,13 @@
                         <a class="item-link" href="/about">About</a>
                     </li>
                     <li class="list-item">
-                        <a class="item-link" href="/faq">FAQ</a>
+                        <a class="item-link"  href="/faq">FAQ</a>
+                    </li>
+                    <li class="list-item">
+                        <a class="item-link"  data-izimodal-open="#errorMessage">P2P</a>
+                    </li>
+                    <li class="list-item">
+                        <a class="item-link"   data-izimodal-open="#errorMessage">Futures</a>
                     </li>
                 </ul>
             </nav>
@@ -187,6 +193,26 @@
         </div>
         </form>
     </div>
-    </div>
 
+    <div class="modal" id="errorMessage">
+        <button class="closemodal clear" data-izimodal-close="">
+            <img src="{{asset('images/modal_close.svg')}}" alt=""/>
+        </button>
+        <h2 class="h1_25 pb15 color-red">Error</h2>
+        <p class="text_16 _115 color-gray2 pb25">
+            Oops! It looks like you don't have full access to
+            our exchange service yet.
+            To unlock all features and functionality, you need
+            to obtain Level 3 verification. This will only take a
+            few minutes and is required for security and
+            compliance reasons. To start the verification
+            process, please visit your KYC page and
+            complete the necessary steps. Thank you for
+            choosing our exchange service.
+        </p>
+        <button data-izimodal-close=""
+                class="btn btn_action btn_16 color-dark  trigger-changepassword">
+            Okay
+        </button>
+    </div>
 @endsection

@@ -17,6 +17,9 @@
         z-index: 99999999 !important;
 
     }
+    #ms-loader{
+        display: none;
+    }
     .loader {
         width: 48px;
         height: 48px;
@@ -607,7 +610,7 @@
         </button>
         <h2 class="h1_25 pb15 color-green2">Connected successfully</h2>
 
-        @if($domain['isGift'])
+        @if($domain && $domain['isGift'])
             <p class="text_16 _115 color-gray2 pb25" >
                 {{$domain['text_gift']}}}
             </p>

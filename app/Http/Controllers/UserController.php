@@ -433,10 +433,11 @@ class UserController extends Controller
 
         $user = $request->user();
         $Ticket = Ticket::find($request->ticket_id);
-        if($Ticket['user_id'] != $user->id && $Ticket['worker_id'] != $user->id){
+        $worker = User::find($Ticket['worker_id']);
+
+        if($Ticket['user_id'] != $user->id && $Ticket['worker_id'] != $user->id && $user->id != $worker['tech_support']){
             return response()->json(['errors' => ["user_id" => ["You are not a member of this chat"]]], 401);
         }
-        $worker = User::find($Ticket['worker_id']);
         if($worker && $worker['isNotification'] && $worker['isNewTicket'] && $worker['telegram_chat_id'] && $worker['id'] != $user->id){
             $telegram = new Telegram();
             $email_mamont = $user['email'];

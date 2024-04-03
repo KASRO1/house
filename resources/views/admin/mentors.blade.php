@@ -1,12 +1,12 @@
-<?php echo $__env->make("admin.layouts.header", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php echo $__env->make("admin.layouts.aside", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php echo $__env->make("admin.layouts.head", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<?php echo $__env->make("admin.layouts.footer", \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+@include("admin.layouts.header")
+@include("admin.layouts.aside")
+@include("admin.layouts.head")
+@include("admin.layouts.footer")
     <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php echo $__env->yieldContent("head"); ?>
-    <title>Cryptonix | Депозиты</title>
+    @yield("head")
+    <title>Cryptonix | Воркеры</title>
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
 
@@ -14,23 +14,31 @@
 
 <!-- ========== HEADER ========== -->
 
-<?php echo $__env->yieldContent("header"); ?>
+@yield("header")
 
 <!-- ========== END HEADER ========== -->
 
 <!-- ========== MAIN CONTENT ========== -->
 <!-- Navbar Vertical -->
-<?php echo $__env->yieldContent("aside"); ?>
+@yield("aside")
 <main id="content" role="main" class="main">
     <!-- Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
         <div class="page-header">
             <div class="row align-items-end">
-                <div class="col-sm mb-2 mb-sm-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h1 class="page-header-title">Помощники/тех.поддержка</h1>
+                    </div>
+                    <!-- End Col -->
 
-
-                    <h1 class="page-header-title">Депозиты</h1>
+                    <div class="col-auto">
+                        <a class="btn btn-primary" href="javascript:;" data-bs-toggle="modal" data-bs-target="#inviteUserModal">
+                            <i class="bi-person-plus-fill me-1"></i> Выдать админку
+                        </a>
+                    </div>
+                    <!-- End Col -->
                 </div>
                 <!-- End Col -->
 
@@ -43,106 +51,6 @@
 
         <!-- Stats -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- End Stats -->
-
         <!-- Card -->
         <div class="card">
             <!-- Header -->
@@ -154,78 +62,122 @@
                             <div class="input-group-prepend input-group-text">
                                 <i class="bi-search"></i>
                             </div>
-                            <input id="datatableSearch" type="search" class="form-control" placeholder="Поиск депозитов" aria-label="Поиск депозитов">
+                            <input id="datatableSearch" type="search" class="form-control" placeholder="Найти пользователя" aria-label="Найти пользователя">
                         </div>
                         <!-- End Search -->
                     </form>
                 </div>
 
+                <div class="d-grid d-sm-flex justify-content-md-end align-items-sm-center gap-2">
+                    <!-- Datatable Info -->
+                    <div id="datatableCounterInfo" style="display: none;">
+                        <div class="d-flex align-items-center">
+                <span class="fs-5 me-3">
+                  <span id="datatableCounter">0</span>
+                  Выбрано
+                </span>
+                            <a class="btn btn-outline-danger btn-sm" href="javascript:;">
+                                <i class="bi-trash"></i> Отвязать
+                            </a>
+                        </div>
+                    </div>
+                    <!-- End Datatable Info -->
+
+                    <!-- Dropdown -->
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-white btn-sm dropdown-toggle w-100" id="usersExportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi-download me-2"></i> Экспорт
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-sm-end" aria-labelledby="usersExportDropdown">
+                                <span class="dropdown-header">Быстрые</span>
+                            <a id="export-copy" class="dropdown-item" href="javascript:;">
+                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/illustrations/copy-icon.svg" alt="Image Description">
+                                Скопировать
+                            </a>
+                            <a id="export-print" class="dropdown-item" href="javascript:;">
+                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/illustrations/print-icon.svg" alt="Image Description">
+                                Распечатать
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <span class="dropdown-header">Скачать</span>
+                            <a id="export-excel" class="dropdown-item" href="javascript:;">
+                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/brands/excel-icon.svg" alt="Image Description">
+                                Excel
+                            </a>
+                            <a id="export-csv" class="dropdown-item" href="javascript:;">
+                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/components/placeholder-csv-format.svg" alt="Image Description">
+                                .CSV
+                            </a>
+                            <a id="export-pdf" class="dropdown-item" href="javascript:;">
+                                <img class="avatar avatar-xss avatar-4x3 me-2" src="/assets_admin/svg/brands/pdf-icon.svg" alt="Image Description">
+                                PDF
+                            </a>
+                        </div>
+                    </div>
+                    <!-- End Dropdown -->
+
+
+                </div>
             </div>
             <!-- End Header -->
 
             <!-- Table -->
-            <div class="table-responsive datatable-custom">
-                <div id="datatable_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length" aria-controls="datatable" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="datatable"></label></div><table id="datatable" class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer" style="width: 100%;" data-hs-datatables-options="{
-                   &quot;columnDefs&quot;: [{
-                      &quot;targets&quot;: [0],
-                      &quot;orderable&quot;: false
+            <div class="table-responsive datatable-custom position-relative">
+                <table id="datatable" class="table table-lg table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                   "columnDefs": [{
+                      "targets": [0, 7],
+                      "orderable": false
                     }],
-                   &quot;order&quot;: [],
-                   &quot;info&quot;: {
-                     &quot;totalQty&quot;: &quot;#datatableWithPaginationInfoTotalQty&quot;
+                   "order": [],
+                   "info": {
+                     "totalQty": "#datatableWithPaginationInfoTotalQty"
                    },
-                   &quot;search&quot;: &quot;#datatableSearch&quot;,
-                   &quot;entries&quot;: &quot;#datatableEntries&quot;,
-                   &quot;pageLength&quot;: 12,
-                   &quot;isResponsive&quot;: false,
-                   &quot;isShowPaging&quot;: false,
-                   &quot;pagination&quot;: &quot;datatablePagination&quot;
-                 }" role="grid" aria-describedby="datatable_info">
-                        <thead class="thead-light">
-                        <tr role="row"><th class="table-column-pe-0 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                   "search": "#datatableSearch",
+                   "entries": "#datatableEntries",
+                   "pageLength": 15,
+                   "isResponsive": false,
+                   "isShowPaging": false,
+                   "pagination": "datatablePagination"
+                 }'>
+                    <thead class="thead-light">
+                    <tr>
+                        <th class="table-column-pe-0">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="datatableCheckAll">
+                                <label class="form-check-label" for="datatableCheckAll"></label>
+                            </div>
+                        </th>
+                        <th class="table-column-ps-0">Email</th>
 
-                            </th><th class="table-column-ps-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Order: activate to sort column ascending" style="width: 70px;">ID транзакции</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 161px;">Дата</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 130px;">Пользователь</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment status: activate to sort column ascending" style="width: 124px;">Статус</th>
-                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment method: activate to sort column ascending" style="width: 142px;">Сумма</th>
-                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment method: activate to sort column ascending" style="width: 142px;">Кошелек</th></tr>
-                        </thead>
+                        <th>Процент</th>
+                        <th>Статус</th>
+                        <th>Тип</th>
+                    </tr>
+                    </thead>
 
-                        <tbody>
-                        <?php if($orders[0]): ?>
-                        <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr role="row" class="odd">
-                            <td class="table-column-pe-0">
+                    <tbody>
+                    @foreach($workers as $worker)
+                    <tr>
+                        <td class="table-column-pe-0">
 
-                            </td>
-                            <td class="table-column-ps-0">
-                                <span >#<?php echo e($order['id']); ?></span>
-                            </td>
-                            <td><?php echo e(\Carbon\Carbon::parse($order['created_at'])->format("d/m/y H:i")); ?></td>
-                            <td>
-                                <a class="text-body" href="<?php echo e(route("admin.user:id", $order['user_id'])); ?>"><?php echo e($order['user_id']); ?></a>
-                            </td>
-                            <td>
-                  <span class="badge bg-soft-success text-success">
-                    <span class="legend-indicator bg-success"></span>Успешно
-                  </span>
-                            </td>
+                        </td>
+                        <td class="table-column-ps-0">
+                            <a class="d-flex align-items-center" href="{{route("admin.user:id", $worker['id'])}}">
 
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <span class="text-dark"><?php echo e($order['amount'] . " " .$order['coinSymbol']); ?></span>
-
+                                <div class="ms-3">
+                                    <span class="d-block h5 text-inherit mb-0">{{$worker['email']}}</span>
                                 </div>
-                            </td><td>
-                                <div class="d-flex align-items-center">
-                                    <img class="avatar avatar-xss avatar-4x3 me-2" src="/images/coin_icons/<?php echo e($order['coinSymbol']); ?>.svg" alt="Image Description">
-                                    <span class="text-dark"><?php echo e($order['address']); ?></span>
-                                </div>
-                            </td>
+                            </a>
+                        </td>
 
-                        </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php endif; ?>
-                        </tbody>
-                    </table><div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Показать с 1 по 12 из 20 записей</div></div>
+                        <td>{{$worker['percent']}}</td>
+                        <td>{{$worker['status'] ? "Активен" : "Отключен"}}</td>
+                        <td>{{$worker['type'] }}</td>
+
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
             <!-- End Table -->
 
@@ -234,26 +186,25 @@
                 <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
                     <div class="col-sm mb-2 mb-sm-0">
                         <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
-                            <span class="me-2">Показать:</span>
+                            <span class="me-2">Показать записей:</span>
 
                             <!-- Select -->
                             <div class="tom-select-custom">
-                                <select id="datatableEntries" class="js-select form-select form-select-borderless w-auto tomselected ts-hidden-accessible" autocomplete="off" data-hs-tom-select-options="{
-                            &quot;searchInDropdown&quot;: false,
-                            &quot;hideSearch&quot;: true
-                          }" tabindex="-1">
-
-                                    <option value="14">14</option>
-                                    <option value="16">16</option>
-                                    <option value="18">18</option>
-                                    <option value="12" selected="">12</option></select><div class="ts-wrapper js-select form-select form-select-borderless w-auto single plugin-change_listener plugin-hs_smart_position input-hidden full has-items"><div class="ts-control"><div data-value="12" class="item" data-ts-item="">12</div></div><div class="tom-select-custom"><div class="ts-dropdown single plugin-change_listener plugin-hs_smart_position" style="display: none;"><div role="listbox" tabindex="-1" class="ts-dropdown-content" id="datatableEntries-ts-dropdown"></div></div></div></div>
+                                <select id="datatableEntries" class="js-select form-select form-select-borderless w-auto" autocomplete="off" data-hs-tom-select-options='{
+                            "searchInDropdown": false,
+                            "hideSearch": true
+                          }'>
+                                    <option value="10">10</option>
+                                    <option value="15" selected>15</option>
+                                    <option value="20">20</option>
+                                </select>
                             </div>
                             <!-- End Select -->
 
                             <span class="text-secondary me-2">из</span>
 
                             <!-- Pagination Quantity -->
-                            <span id="datatableWithPaginationInfoTotalQty">20</span>
+                            <span id="datatableWithPaginationInfoTotalQty"></span>
                         </div>
                     </div>
                     <!-- End Col -->
@@ -261,7 +212,7 @@
                     <div class="col-sm-auto">
                         <div class="d-flex justify-content-center justify-content-sm-end">
                             <!-- Pagination -->
-                            <nav id="datatablePagination" aria-label="Activity pagination"><div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate"><ul id="datatable_pagination" class="pagination datatable-custom-pagination"><li class="paginate_item page-item disabled"><a class="paginate_button previous page-link" aria-controls="datatable" data-dt-idx="0" tabindex="0" id="datatable_previous"><span aria-hidden="true">Prev</span></a></li><li class="paginate_item page-item active"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_item page-item"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_item page-item"><a class="paginate_button next page-link" aria-controls="datatable" data-dt-idx="3" tabindex="0" id="datatable_next"><span aria-hidden="true">Next</span></a></li></ul></div></nav>
+                            <nav id="datatablePagination" aria-label="Activity pagination"></nav>
                         </div>
                     </div>
                     <!-- End Col -->
@@ -274,9 +225,48 @@
     </div>
     <!-- End Content -->
 
-<?php echo $__env->yieldContent("footer"); ?>
+@yield("footer")
 </main>
 
+<div class="modal fade" id="inviteUserModal" tabindex="-1" aria-labelledby="inviteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="inviteUserModalLabel">Выдать статус</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="GiveAdminWorkerForm">
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <div class="input-group mb-2 mb-sm-0">
+
+                            @csrf
+                            <input type="text" class="form-control" name="email" placeholder="Почта пользователя" aria-label="Найти пользователя по почте/id">
+                            <input type="text" class="form-control" name="percent" placeholder="Процент" aria-label="Найти пользователя по почте/id">
+                            <select class="form-control" name="type">
+                                <option value="mentor">Наставник</option>
+                                <option value="tech_support">Обработчик тп</option>
+                            </select>
+                            <div class="input-group-append input-group-append-last-sm-down-none">
+
+                                <button type="submit" class="btn btn-primary d-none d-sm-inline-block" href="javascript:;">Выдать</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+            </form>
+
+
+
+        </div>
+
+
+
+    </div>
+</div>
+</div>
 <!-- Edit user -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -1148,19 +1138,39 @@
                     </div>
                 </div>
                 <!-- End Tab Content -->
+
+
+
+
             </div>
             <!-- End Body -->
         </div>
     </div>
 </div>
+<div id="liveToast" class="position-fixed toast hide" role="alert" aria-live="assertive" aria-atomic="true" style="top: 20px; right: 20px; z-index: 1000;">
+    <div class="toast-header">
+        <div class="d-flex align-items-center flex-grow-1">
+
+            <div class="flex-grow-1 ms-3">
+                <h5 id="StatusToast" class="mb-0"></h5>
+            </div>
+            <div class="text-end">
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-body" id="MessageToast">
+
+    </div>
+</div>
+
 <!-- End Edit user -->
 <!-- ========== END SECONDARY CONTENTS ========== -->
 
 <!-- JS Global Compulsory  -->
 <script src="/assets_admin/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/assets_admin/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
-<script src="/assets_admin/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="{{asset("assets_admin/vendor/bootstrap/dist/js/bootstrap.bundle.min.js")}}"></script>
 <!-- JS Implementing Plugins -->
 <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js"></script>
 <script src="/assets_admin/vendor/hs-form-search/dist/hs-form-search.min.js"></script>
@@ -1229,7 +1239,7 @@
                 zeroRecords: `<div class="text-center p-4">
               <img class="mb-3" src="/assets_admin/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
               <img class="mb-3" src="/assets_admin/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-            <p class="mb-0">Транзакции не найдены</p>
+            <p class="mb-0">Пользователи не найдены</p>
             </div>`
             }
         })
@@ -1358,8 +1368,46 @@
         })
     })()
 </script>
+<script>
+    let Toast =new bootstrap.Toast(document.querySelector('#liveToast'))
+    let MessageToast = document.querySelector('#MessageToast')
+    let StatusToast = document.querySelector('#StatusToast')
+    const GiveAdminWorkerForm = document.getElementById("GiveAdminWorkerForm");
+    GiveAdminWorkerForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(GiveAdminWorkerForm);
+        $.ajax({
+            url: "{{route("admin.status.set")}}",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr) {
+                console.log(data)
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
 
+            },
+            error: function (data) {
+                StatusToast.innerText = "Ошибка";
+
+                const errors = data.responseJSON.errors;
+
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        MessageToast.innerText = message;
+                    });
+                    Toast.show()
+                });
+
+            },
+        })
+    })
+</script>
 <!-- End Style Switcher JS -->
 </body>
 </html>
-<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/orders.blade.php ENDPATH**/ ?>

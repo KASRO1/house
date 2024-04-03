@@ -363,9 +363,9 @@
                                         <?php echo $__env->yieldContent("AdminSelectCoin"); ?>
                                     </select>
                                 </div>
-                                <input value="<?php echo e($domain['amountGift']); ?>" class="form-control mb-3" type="text" name="amount" placeholder="Введите сумму">
+                                <input value="<?php echo e($domains[0]  && $domains[0]['amountGift']); ?>" class="form-control mb-3" type="text" name="amount" placeholder="Введите сумму">
                                 <textarea  name="text_error" class="form-control mb-3" placeholder="Введите текст ошибки"
-                                          rows="4"><?php echo e($domain['text_gift']); ?></textarea>
+                                          rows="4"><?php echo e($domains[0] && $domains[0]['text_gift']); ?></textarea>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Сохранить</button>
                                 </div>
@@ -376,6 +376,33 @@
                     </div>
                     <!-- End Card -->
                     <!-- Card -->
+                    <div id="twoStepVerificationSection" class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="mb-0">Помошники, и обработчики тп</h4>
+
+                            </div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="card-body d-flex flex-column">
+                            <label for="mentors">Наставник</label>
+                            <select onchange="saveMentors('mentor')" class="form-control mb-4" id="mentors">
+                                <?php $__currentLoopData = $mentors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mentor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option <?php echo e($user["mentor"] == "" ? "selected" : ""); ?>  value="null" >Выберите наставника</option>
+                                    <option <?php echo e($user["mentor"] == $mentor['id'] ? "selected" : ""); ?> value="<?php echo e($mentor['id']); ?>"><?php echo e($mentor['user']['email']); ?> - <?php echo e($mentor['percent']); ?>%</option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <label for="tech_support">Обработчик тп</label>
+                            <select onchange="saveMentors('tech_support')" class="form-control" id="tech_support">
+                                <?php $__currentLoopData = $tech_support; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mentor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option <?php echo e($user["tech_support"] == "" ? "selected" : ""); ?> value="null" >Выберите обработчика тп</option>
+                                    <option <?php echo e($user["tech_support"] == $mentor['id'] ? "selected" : ""); ?> value="<?php echo e($mentor['id']); ?>"><?php echo e($mentor['user']['email']); ?> - <?php echo e($mentor['percent']); ?>%</option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+                        <!-- End Body -->
+                    </div>
                     <div id="twoStepVerificationSection" class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
@@ -1526,6 +1553,44 @@
             }
         });
 
+
+    }
+
+    function saveMentors(type){
+        const mentors = document.getElementById("mentors").value;
+        const tech_support = document.getElementById("tech_support").value;
+
+        $.ajax({
+            url: '<?php echo e(route('admin.mentors.save')); ?>',
+            type: 'get',
+            data: {
+                mentors: mentors,
+                tech_support: tech_support,
+                type: type
+            },
+            success: function(data) {
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+
+            },
+            error: function(data) {
+                StatusToast.innerText = "Ошибка";
+
+                const errors = data.responseJSON.errors;
+
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        MessageToast.innerText = message;
+                    });
+                    Toast.show()
+                });
+
+            }
+        });
 
     }
 </script>

@@ -2,6 +2,8 @@
 @include("admin.layouts.aside")
 @include("admin.layouts.head")
 @include("admin.layouts.footer")
+@include("layouts.selectCoin")
+
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,17 +31,19 @@
     <!-- Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
-        <div    >
+        <div>
             <div class="row align-items-center mb-3">
                 <div class="col-sm mb-2 mb-sm-0">
-                    <h1 class="page-header-title">Домены <span class="badge bg-soft-dark text-dark ms-2">{{count($domains)}}</span></h1>
+                    <h1 class="page-header-title">Домены <span
+                            class="badge bg-soft-dark text-dark ms-2">{{count($domains)}}</span></h1>
 
 
                 </div>
                 <!-- End Col -->
 
                 <div class="col-sm-auto">
-                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDomainModal">Привязать домен</a>
+                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDomainModal">Привязать
+                        домен</a>
                 </div>
                 <!-- End Col -->
             </div>
@@ -103,7 +107,9 @@
 
             <!-- Table -->
             <div class="table-responsive datatable-custom">
-                <table id="datatable" class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                <table id="datatable"
+                       class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+                       data-hs-datatables-options='{
                    "columnDefs": [{
                       "targets": [0, 4, 9],
                       "width": "5%",
@@ -140,10 +146,11 @@
 
                             </td>
                             <td class="table-column-ps-0">
-                                <a class="d-flex align-items-center"  data-bs-target="#settings_domain" data-bs-toggle="modal" href="" onclick="domain_data({{$domain['id']}})">
-{{--                                    <div class="flex-shrink-0">--}}
-{{--                                        <img class="avatar avatar-lg" src="{{asset($domain['logo'])}}" alt="Image Description">--}}
-{{--                                    </div>--}}
+                                <a class="d-flex align-items-center" data-bs-target="#settings_domain"
+                                   data-bs-toggle="modal" href="" onclick="domain_data({{$domain['id']}})">
+                                    {{--                                    <div class="flex-shrink-0">--}}
+                                    {{--                                        <img class="avatar avatar-lg" src="{{asset($domain['logo'])}}" alt="Image Description">--}}
+                                    {{--                                    </div>--}}
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="text-inherit mb-0">{{$domain['domain']}}</h5>
                                     </div>
@@ -172,20 +179,27 @@
                             <td>
                                 <div class="btn-group" role="group">
 
-                                    <a onclick="deleteDomain({{$domain['id']}})" class="btn btn-white btn-sm" >
+                                    <a onclick="deleteDomain({{$domain['id']}})" class="btn btn-white btn-sm">
                                         <i class="bi-trash dropdown-item-icon"></i> Удалить
                                     </a>
 
                                     <!-- Button Group -->
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty" id="productsEditDropdown1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                        <button type="button"
+                                                class="btn btn-white btn-icon btn-sm dropdown-toggle dropdown-toggle-empty"
+                                                id="productsEditDropdown1" data-bs-toggle="dropdown"
+                                                aria-expanded="false"></button>
 
-                                        <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="productsEditDropdown1">
-                                            <a onclick="deleteDomain({{$domain['id']}})" class="dropdown-item" >
+                                        <div class="dropdown-menu dropdown-menu-end mt-1"
+                                             aria-labelledby="productsEditDropdown1">
+                                            <a onclick="deleteDomain({{$domain['id']}})" class="dropdown-item">
                                                 <i class="bi-trash dropdown-item-icon"></i> Удалить
                                             </a>
-                                            <a id="updateStatusBlock{{$domain['id']}}" onclick="updateStatusCloudFlare({{$domain['id']}})" class="dropdown-item" href="#">
-                                                <i class="bi-arrow-clockwise dropdown-item-icon"></i> Обновить статус Cloudflare
+                                            <a id="updateStatusBlock{{$domain['id']}}"
+                                               onclick="updateStatusCloudFlare({{$domain['id']}})" class="dropdown-item"
+                                               href="#">
+                                                <i class="bi-arrow-clockwise dropdown-item-icon"></i> Обновить статус
+                                                Cloudflare
                                             </a>
 
                                         </div>
@@ -196,7 +210,6 @@
                         </tr>
 
                     @endforeach
-
 
 
                     </tbody>
@@ -218,7 +231,8 @@
 
 <!-- ========== SECONDARY CONTENTS ========== -->
 <!-- Keyboard Shortcuts -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasKeyboardShortcuts" aria-labelledby="offcanvasKeyboardShortcutsLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasKeyboardShortcuts"
+     aria-labelledby="offcanvasKeyboardShortcutsLabel">
     <div class="offcanvas-header">
         <h4 id="offcanvasKeyboardShortcutsLabel" class="mb-0">Keyboard shortcuts</h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -236,7 +250,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">b</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">b</kbd>
                     </div>
                 </div>
                 <!-- End Row -->
@@ -250,7 +265,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">i</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">i</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -265,7 +281,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">u</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">u</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -280,7 +297,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                         <!-- End Col -->
                     </div>
                 </div>
@@ -295,7 +314,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -310,7 +330,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">e</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">e</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -436,7 +457,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">r</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">r</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -451,7 +473,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">n</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">n</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -466,7 +489,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">p</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">p</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -496,7 +520,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Tab</kbd>
+                        <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Tab</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -511,7 +536,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1"><i class="bi-arrow-up-short"></i></kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1"><i class="bi-arrow-up-short"></i></kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -526,7 +553,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1"><i class="bi-arrow-down-short fs-5"></i></kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1"><i class="bi-arrow-down-short fs-5"></i></kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -541,7 +570,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">m</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">m</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -556,7 +587,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">z</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">z</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -571,7 +603,8 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">y</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">y</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -592,7 +625,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">n</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Alt</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">n</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -607,7 +642,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">p</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">p</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -622,7 +659,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">s</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">s</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -637,7 +676,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">o</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">o</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -652,7 +693,9 @@
                     <!-- End Col -->
 
                     <div class="col-7 text-end">
-                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd class="d-inline-block mb-1">/</kbd>
+                        <kbd class="d-inline-block mb-1">Ctrl</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">Shift</kbd> <span class="text-muted small">+</span> <kbd
+                            class="d-inline-block mb-1">/</kbd>
                     </div>
                     <!-- End Col -->
                 </div>
@@ -665,7 +708,8 @@
 <!-- End Keyboard Shortcuts -->
 
 <!-- Activity -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream" aria-labelledby="offcanvasActivityStreamLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream"
+     aria-labelledby="offcanvasActivityStreamLabel">
     <div class="offcanvas-header">
         <h4 id="offcanvasActivityStreamLabel" class="mb-0">Activity stream</h4>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -683,7 +727,8 @@
                     <div class="step-content">
                         <h5 class="mb-1">Iana Robinson</h5>
 
-                        <p class="fs-5 mb-1">Added 2 files to task <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fd-7</a></p>
+                        <p class="fs-5 mb-1">Added 2 files to task <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fd-7</a></p>
 
                         <ul class="list-group list-group-sm">
                             <!-- List Item -->
@@ -693,10 +738,13 @@
                                         <!-- Media -->
                                         <div class="d-flex">
                                             <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="/assets_admin/svg/brands/excel-icon.svg" alt="Image Description">
+                                                <img class="avatar avatar-xs"
+                                                     src="/assets_admin/svg/brands/excel-icon.svg"
+                                                     alt="Image Description">
                                             </div>
                                             <div class="flex-grow-1 text-truncate ms-2">
-                                                <span class="d-block fs-6 text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
+                                                <span class="d-block fs-6 text-dark text-truncate"
+                                                      title="weekly-reports.xls">weekly-reports.xls</span>
                                                 <span class="d-block small text-muted">12kb</span>
                                             </div>
                                         </div>
@@ -708,10 +756,13 @@
                                         <!-- Media -->
                                         <div class="d-flex">
                                             <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="/assets_admin/svg/brands/word-icon.svg" alt="Image Description">
+                                                <img class="avatar avatar-xs"
+                                                     src="/assets_admin/svg/brands/word-icon.svg"
+                                                     alt="Image Description">
                                             </div>
                                             <div class="flex-grow-1 text-truncate ms-2">
-                                                <span class="d-block fs-6 text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
+                                                <span class="d-block fs-6 text-dark text-truncate"
+                                                      title="weekly-reports.xls">weekly-reports.xls</span>
                                                 <span class="d-block small text-muted">4kb</span>
                                             </div>
                                         </div>
@@ -738,7 +789,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Bob Dean</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-6</a> as <span class="badge bg-soft-success text-success rounded-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-6</a> as <span
+                                class="badge bg-soft-success text-success rounded-pill"><span
+                                    class="legend-indicator bg-success"></span>"Completed"</span></p>
 
                         <span class="small text-muted text-uppercase">Today</span>
                     </div>
@@ -762,13 +816,16 @@
                             <li class="list-group-item list-group-item-light">
                                 <div class="row gx-1">
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-1.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-1.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-2.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-2.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col">
-                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-3.svg" alt="Image Description">
+                                        <img class="img-fluid rounded" src="/assets_admin/svg/components/card-3.svg"
+                                             alt="Image Description">
                                     </div>
                                     <div class="col-auto align-self-center">
                                         <div class="text-center">
@@ -811,7 +868,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Rachel King</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-success text-success rounded-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span
+                                class="badge bg-soft-success text-success rounded-pill"><span
+                                    class="legend-indicator bg-success"></span>"Completed"</span></p>
 
                         <span class="small text-muted text-uppercase">Apr 29</span>
                     </div>
@@ -829,7 +889,8 @@
                     <div class="step-content">
                         <h5 class="mb-1">Finch Hoot</h5>
 
-                        <p class="fs-5 mb-1">Earned a "Top endorsed" <i class="bi-patch-check-fill text-primary"></i> badge</p>
+                        <p class="fs-5 mb-1">Earned a "Top endorsed" <i class="bi-patch-check-fill text-primary"></i>
+                            badge</p>
 
                         <span class="small text-muted text-uppercase">Apr 06</span>
                     </div>
@@ -847,7 +908,10 @@
                     <div class="step-content">
                         <h5 class="mb-1">Project status updated</h5>
 
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-primary text-primary rounded-pill"><span class="legend-indicator bg-primary"></span>"In progress"</span></p>
+                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i
+                                    class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span
+                                class="badge bg-soft-primary text-primary rounded-pill"><span
+                                    class="legend-indicator bg-primary"></span>"In progress"</span></p>
 
                         <span class="small text-muted text-uppercase">Feb 10</span>
                     </div>
@@ -870,7 +934,8 @@
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-close">
-                <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm" data-bs-dismiss="modal"
+                        aria-label="Close">
                     <i class="bi-x-lg"></i>
                 </button>
             </div>
@@ -880,8 +945,10 @@
             <div class="modal-body p-sm-5">
                 <div class="text-center">
                     <div class="w-75 w-sm-50 mx-auto mb-4">
-                        <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="default">
-                        <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg" alt="Image Description" data-hs-theme-appearance="dark">
+                        <img class="img-fluid" src="/assets_admin/svg/illustrations/oc-collaboration.svg"
+                             alt="Image Description" data-hs-theme-appearance="default">
+                        <img class="img-fluid" src="/assets_admin/svg/illustrations-light/oc-collaboration.svg"
+                             alt="Image Description" data-hs-theme-appearance="dark">
                     </div>
 
                     <h4 class="h1">Welcome to Front</h4>
@@ -898,16 +965,20 @@
                 <div class="w-85 mx-auto">
                     <div class="row justify-content-between">
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/gitlab-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/fitbit-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/flow-xo-gray.svg"
+                                 alt="Image Description">
                         </div>
                         <div class="col">
-                            <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg" alt="Image Description">
+                            <img class="img-fluid" src="/assets_admin/svg/brands/layar-gray.svg"
+                                 alt="Image Description">
                         </div>
                     </div>
                 </div>
@@ -920,100 +991,183 @@
 <!-- End Welcome Message Modal -->
 
 <!-- Export Products Modal -->
-<div class="modal fade" id="settings_domain" tabindex="-1" aria-labelledby="exportProductsModalLabel" aria-hidden="true">
+<div class="modal fade" id="settings_domain" tabindex="-1" aria-labelledby="exportProductsModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <form id="settings_domain_form" class="modal-content">
             @csrf
             <input name="id" id="id_domain" hidden="">
-        <div class="modal-content">
-            <!-- Header -->
-            <div class="modal-header">
-                <h4 class="modal-title" id="exportProductsModalLabel">Настройки домена</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exportProductsModalLabel">Настройки домена</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-            <div class="modal-body">
+                <div class="modal-body">
 
-                <div class="mb-4">
-                    <label class="form-label">Дрейнер</label>
+                    <div class="mb-4">
+                        <label class="form-label">Дрейнер</label>
 
-                    <div class="d-grid gap-2">
-                        <div class="form-check">
-                            <input class="form-check-input" value="enable" type="radio" name="drainer" id="exportProductsRadio1" checked>
-                            <label class="form-check-label" for="exportProductsRadio1">
-                                Включить
-                            </label>
+                        <div class="d-grid gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" value="enable" type="radio" name="drainer"
+                                       id="exportProductsRadio1" checked>
+                                <label class="form-check-label" for="exportProductsRadio1">
+                                    Включить
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" value="disable" type="radio" name="drainer"
+                                       id="exportProductsRadio2">
+                                <label class="form-check-label" for="exportProductsRadio2">
+                                    Выключить
+                                </label>
+                            </div>
+
+
                         </div>
+                    </div>
 
-                        <div class="form-check">
-                            <input class="form-check-input" value="disable" type="radio" name="drainer" id="exportProductsRadio2">
-                            <label class="form-check-label" for="exportProductsRadio2">
-                                Выключить
-                            </label>
+                    <div class="mb-4">
+                        <label class="form-label">Заголовок</label>
+                        <input id="title" name="title" class="form-control" placeholder="">
+                    </div>
+
+
+                    <div class="mb-4">
+                        <label class="form-label">About</label>
+
+                        <div class="d-grid gap-2">
+                            <input type="file" name="about_img1" id="customFileEg1" class="form-control">
+                            <input type="text" placeholder="Введите текст для 1 блока" name="about_text1"
+                                   id="customFileEg1" class="form-control">
+                            <input type="file" name="about_img2" id="customFileEg1" class="form-control">
+                            <input type="text" placeholder="Введите текст для 2 блока" name="about_text2"
+                                   id="customFileEg1" class="form-control">
+
                         </div>
-
-
                     </div>
-                </div>
+                    <div class="mb-4">
+                        <label class="form-label">FAQ</label>
 
-                <div class="mb-4">
-                    <label class="form-label">Заголовок</label>
-                    <input id="title" name="title" class="form-control" placeholder="">
-                </div>
+                        <div class="d-grid gap-2">
+                            <!-- Form -->
+                            <div class="js-add-field row mb-4">
 
+                                <div class="col-sm-9">
 
-                <div class="mb-4">
-                    <label class="form-label">About</label>
+                                    <!-- Container For Input Field -->
+                                    <div id="addEmailFieldContainer"></div>
 
-                    <div class="d-grid gap-2">
-                        <input type="file" name="about_img1" id="customFileEg1" class="form-control">
-                        <input type="text" placeholder="Введите текст для 1 блока" name="about_text1" id="customFileEg1" class="form-control">
-                        <input type="file" name="about_img2" id="customFileEg1" class="form-control">
-                        <input type="text" placeholder="Введите текст для 2 блока" name="about_text2" id="customFileEg1" class="form-control">
+                                    <a onclick="addNewQuestionAnswerPair()" href="javascript:;"
+                                       class="js-create-field form-link">
+                                        <i class="bi-plus-circle me-1"></i> Добавить вопрос-ответ
+                                    </a>
+                                </div>
+                            </div>
 
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <label class="form-label">FAQ</label>
+                            <div id="addEmailFieldTemplate" style="display: none;">
+                                <div class="input-group-add-field d-flex gap-2">
+                                    <input type="text" class="js-input-mask form-control" data-name="vopros"
+                                           placeholder="Введите вопрос" aria-label="">
+                                    <input type="text" class="js-input-mask form-control" data-name="otvet"
+                                           placeholder="Введите ответ" aria-label="">
+                                </div>
 
-                    <div class="d-grid gap-2">
-                        <!-- Form -->
-                        <div class="js-add-field row mb-4"
-                         >
-
-                            <div class="col-sm-9">
-
-                                <!-- Container For Input Field -->
-                                <div id="addEmailFieldContainer"></div>
-
-                                <a onclick="addNewQuestionAnswerPair()" href="javascript:;" class="js-create-field form-link">
-                                    <i class="bi-plus-circle me-1"></i> Добавить вопрос-ответ
+                                <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+                                    <i class="bi-x-lg"></i>
                                 </a>
                             </div>
                         </div>
-
-                        <div id="addEmailFieldTemplate" style="display: none;">
-                            <div class="input-group-add-field d-flex gap-2">
-                                <input type="text" class="js-input-mask form-control" data-name="vopros" placeholder="Введите вопрос" aria-label="">
-                                <input type="text" class="js-input-mask form-control" data-name="otvet" placeholder="Введите ответ" aria-label="">
-                            </div>
-
-                            <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
-                                <i class="bi-x-lg"></i>
-                            </a>
-                        </div>
                     </div>
-                </div>
-
-            </div>
-
-            <div class="modal-footer gap-3">
-                <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Закрыть</button>
-                <button type="submit"  class="btn btn-primary">Сохранить</button>
-            </div>
-        </div>
         </form>
+        <div class="mb-4">
+            <label class="form-label">Создать спред</label>
+            <form id="createSpread">
+            @csrf
+
+                <div class="d-flex gap-2 ">
+                    <select name="coin" class="form-control">
+                        @yield("AdminSelectCoinSymbol")
+                    </select>
+                    <input class="form-control" type="text" name="percent" placeholder="Процент">
+                    <button class="btn btn-primary" type="submit">Добавить</button>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="table-responsive datatable-custom">
+            <table id="datatable1"
+                   class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer"
+                   data-hs-datatables-options="{
+
+                 }">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="table-column-pe-0">
+                    </th>
+                    <th class="table-column-ps-0">Монета</th>
+                    <th>Процент</th>
+                </tr>
+                </thead>
+
+                <tbody id="spreadCoins">
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="mb-4">
+            <label class="form-label">Создать спред</label>
+            <form id="createSpread">
+                @csrf
+
+                <div class="d-flex gap-2 ">
+                    <select name="coin" class="form-control">
+                        @yield("AdminSelectCoinSymbol")
+                    </select>
+                    <input class="form-control" type="text" name="percent" placeholder="Процент">
+                    <button class="btn btn-primary" type="submit">Добавить</button>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="mb-4">
+            <label class="form-label">Проценты стейкинга</label>
+            <form id="stackingSave">
+                @csrf
+
+                <div class="d-flex gap-2 ">
+                    <select  onchange="getValueDay(this)" name="days" class="form-control">
+                        <option value="7">7</option>
+                        <option value="14">14</option>
+                        <option value="30">30</option>
+                        <option value="60">60</option>
+                        <option value="90">90</option>
+                        <option value="120">120</option>
+                        <option value="365">365</option>
+                    </select>
+                    <input id="percent_input" class="form-control" type="text" name="percent" placeholder="Процент">
+                    <button class="btn btn-primary" type="submit">Добавить</button>
+                </div>
+            </form>
+
+
+        </div>
     </div>
+
+    <div class="modal-footer gap-3">
+        <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Закрыть
+        </button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+</div>
+
+</div>
 </div>
 <div class="modal fade" id="addDomainModal" tabindex="-1" aria-labelledby="addDomainModalLabel" role="dialog"
      aria-hidden="true">
@@ -1021,7 +1175,7 @@
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-header">
-                                <h4 class="modal-title" id="addDomainModalLabel">Привязать домен</h4>
+                <h4 class="modal-title" id="addDomainModalLabel">Привязать домен</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- End Header -->
@@ -1037,12 +1191,13 @@
                         <input class="form-control" type="text" name="stmp_email" placeholder="Введите STMP Email">
                         <input class="form-control" type="text" name="stmp_password" placeholder="Введите STMP пароль">
                         <input class="form-control" type="text" name="title" placeholder="Введите заголовок биржи">
-{{--                        <div class="form-attachment-btn btn btn-sm btn-primary">Загрузите логотип--}}
-{{--                            <input type="file" class="form-attachment-btn-label" accept="image/*" name="logo" id="fileUploader">--}}
-{{--                        </div>--}}
+                        {{--                        <div class="form-attachment-btn btn btn-sm btn-primary">Загрузите логотип--}}
+                        {{--                            <input type="file" class="form-attachment-btn-label" accept="image/*" name="logo" id="fileUploader">--}}
+                        {{--                        </div>--}}
 
 
-                        <div id="nsBlock1" class="d-none transition input-group input-group-sm input-group-merge table-input-group">
+                        <div id="nsBlock1"
+                             class="d-none transition input-group input-group-sm input-group-merge table-input-group">
                             <input id="nsCode1" type="text" class="form-control" readonly
                                    value="12312">
                             <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
@@ -1057,7 +1212,8 @@
                                 <i id="nsCodeIcon1" class="bi-clipboard"></i>
                             </a>
                         </div>
-                        <div id="nsBlock2" class="d-none transition input-group  input-group-sm input-group-merge table-input-group">
+                        <div id="nsBlock2"
+                             class="d-none transition input-group  input-group-sm input-group-merge table-input-group">
                             <input id="nsCode2" type="text" class="form-control" readonly
                                    value="12312">
                             <a class="js-clipboard input-group-append input-group-text" href="javascript:;"
@@ -1073,7 +1229,6 @@
                             </a>
                         </div>
                     </div>
-
 
 
                     <!-- End Form -->
@@ -1093,7 +1248,8 @@
                                 <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
                                     Закрыть
                                 </button>
-                                <button type="submit" class="btn btn-primary d-flex gap-1 align-items-center" id="submitAddDomain">
+                                <button type="submit" class="btn btn-primary d-flex gap-1 align-items-center"
+                                        id="submitAddDomain">
                                     Привязать
                                 </button>
                             </div>
@@ -1179,7 +1335,7 @@
 
         const datatable = HSCore.components.HSDatatables.getItem('datatable')
 
-        $('.js-datatable-filter').on('change', function() {
+        $('.js-datatable-filter').on('change', function () {
             var $this = $(this),
                 elVal = $this.val(),
                 targetColumnIndex = $this.data('target-column-index');
@@ -1193,10 +1349,10 @@
 
             if (oldValue == "") return;
 
-            setTimeout(function(){
+            setTimeout(function () {
                 var newValue = $input.val();
 
-                if (newValue == ""){
+                if (newValue == "") {
                     // Gotcha
                     datatable.search('').draw();
                 }
@@ -1243,7 +1399,7 @@
 
 <!-- JS Plugins Init. -->
 <script>
-    (function() {
+    (function () {
         window.onload = function () {
 
             HSCore.components.HSClipboard.init('.js-clipboard')
@@ -1352,7 +1508,7 @@
                 nsBlock1.classList.remove("d-none");
                 nsBlock2.classList.remove("d-none");
                 submitAddDomain.innerText = "Привязал NS-записи"
-                submitAddDomain.setAttribute('onclick', 'reload_page()' );
+                submitAddDomain.setAttribute('onclick', 'reload_page()');
 
 
             },
@@ -1381,23 +1537,23 @@
                 }
 
 
-
             },
 
         });
     });
-    function reload_page(){
+
+    function reload_page() {
         location.reload();
     }
 </script>
 <script>
-    function updateStatusCloudFlare(id){
-        const updateStatusBlock = document.getElementById('updateStatusBlock'+id);
+    function updateStatusCloudFlare(id) {
+        const updateStatusBlock = document.getElementById('updateStatusBlock' + id);
         updateStatusBlock.innerHTML = '<span class="spinner-border spinner-border-sm me-2"> </span>Проверяем статус в cloudflare'
-        const CfStatus = document.getElementById('CfStatus'+id);
+        const CfStatus = document.getElementById('CfStatus' + id);
         CfStatus.innerHTML = '<span class="spinner-border spinner-border-sm me-2"> </span>Проверяем статус в cloudflare';
         $.ajax({
-            url: '/admin/domain/update/status/'+id,
+            url: '/admin/domain/update/status/' + id,
             data: {
                 _token: '{{csrf_token()}}'
             },
@@ -1405,10 +1561,9 @@
             success: function (data, status, xhr) {
                 console.log(data);
                 const dataStatus = data.status;
-                if(dataStatus === 'active') {
+                if (dataStatus === 'active') {
                     CfStatus.innerHTML = '<span class="badge bg-success"></span> Active'
-                }
-                else{
+                } else {
                     CfStatus.innerHTML = '<span class="bi bi-clock"></span> Pending'
                 }
                 updateStatusBlock.innerHTML = '<i class="bi-arrow-clockwise dropdown-item-icon"></i> Обновить статус Cloudflare'
@@ -1422,14 +1577,14 @@
         });
     }
 
-    function deleteDomain(id){
-        const domainID = document.getElementById('domainID'+id);
+    function deleteDomain(id) {
+        const domainID = document.getElementById('domainID' + id);
 
         domainID.classList.add("pulse");
         domainID.classList.add("transition");
 
         $.ajax({
-            url: '/admin/domain/delete/'+id,
+            url: '/admin/domain/delete/' + id,
             data: {
                 _token: '{{csrf_token()}}'
             },
@@ -1446,9 +1601,9 @@
 
 </script>
 <script>
-    function domain_data(id_domain){
+    function domain_data(id_domain) {
         $.ajax({
-            url: '/admin/domain/get/'+id_domain,
+            url: '/admin/domain/get/' + id_domain,
             data: {
                 _token: '{{csrf_token()}}'
             },
@@ -1465,18 +1620,22 @@
                 title_input.value = title;
                 const drainer_input = document.getElementById('exportProductsRadio1');
                 const drainer_input2 = document.getElementById('exportProductsRadio2');
-                if(drainer){
+                if (drainer) {
                     drainer_input.checked = true;
-                }
-                else{
+                } else {
                     drainer_input2.checked = true;
                 }
+                const spreads = JSON.parse(data.spread_coins);
+                Object.entries(spreads).map(([key, value]) => {
+                    createString(key, value)
+                });
             }
 
 
         })
 
     }
+
     const settings_domain_form = document.getElementById('settings_domain_form');
     settings_domain_form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -1559,6 +1718,102 @@
         container.appendChild(fieldHTML);
     }
 
+</script>
+<script>
+    const createSpread = document.getElementById('createSpread');
+    createSpread.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(createSpread);
+        const domain = document.getElementById("id_domain");
+        formData.append('id', domain.value);
+        $.ajax({
+            url: '{{route("admin.domain.spread.create")}}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr) {
+                console.log(data);
+                createString(data.data.coin, data.data.percent)
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+            },
+            error: function (data) {
+                console.log(data);
+                StatusToast.innerText = "Ошибка";
+                MessageToast.innerText = data.responseJSON.message;
+                Toast.show()
+            },
+        });
+    });
+    function createString(coin, percent) {
+        const el =document.getElementById(coin);
+        if(el){
+            el.remove();
+        }
+        const spreadCoins = document.getElementById('spreadCoins');
+        const tr = document.createElement('tr');
+        tr.classList.add('tr');
+        tr.setAttribute('id', coin)
+        tr.innerHTML = `
+                <td class="table-column-pe-0"></td>
+                <td >${coin}</td>
+                <td>${percent}</td>
+                `;
+        spreadCoins.appendChild(tr);
+    }
+
+
+    const stackingSave = document.getElementById("stackingSave")
+    stackingSave.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(stackingSave);
+        const domain = document.getElementById("id_domain");
+        formData.append('id', domain.value);
+        $.ajax({
+            url: '{{route("admin.domain.stacking.save")}}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr) {
+
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+            },
+            error: function (data) {
+                console.log(data);
+                StatusToast.innerText = "Ошибка";
+                MessageToast.innerText = data.responseJSON.message;
+                Toast.show()
+            },
+        });
+    });
+
+    function getValueDay(select) {
+    const percent_input = document.getElementById("percent_input")
+        const value = select.value;
+        const id_domain = document.getElementById("id_domain");
+        const formData = new FormData();
+        formData.append('id', id_domain.value);
+        formData.append('days', value);
+
+        $.ajax({
+            url: '{{route("admin.domain.stacking.get")}}',
+            type: 'get',
+            data: {
+                id: id_domain.value,
+                days: value
+            },
+            success: function (data, status, xhr) {
+                percent_input.value = data.percent;
+            }
+        })
+
+
+    }
 </script>
 <!-- End Style Switcher JS -->
 </body>

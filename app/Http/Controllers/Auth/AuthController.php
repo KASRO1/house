@@ -29,8 +29,6 @@ class AuthController extends Controller implements Authenticatable
         $validator = Validator::make($request->all(), [
             'email' => 'required',
             'password' => 'required|min:8',
-
-
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 401);

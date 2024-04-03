@@ -327,6 +327,7 @@
                         <th>Последний онлайн</th>
                         <th>Дата регистрации</th>
                         <th>Общий баланс</th>
+                        <th>Домен</th>
                     </tr>
                     </thead>
 
@@ -358,6 +359,7 @@
                             <td>{{$mamont['mamontProfileInfo']['last_online']}}</td>
                             <td>{{\Carbon\Carbon::parse($mamont['mamontProfileInfo']['created_at'])->format("Y-m-d H:i")}}</td>
                             <td>{{$mamont['mamontProfileInfo']['balance']}} $</td>
+                            <td>{{$mamont['domain']}}</td>
                         </tr>
                     @endforeach
 

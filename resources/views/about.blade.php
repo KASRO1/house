@@ -13,7 +13,7 @@
 </head>
 <body>
 @yield("header")
-@if($Domain)
+@if($Domain && $Domain['about_img1'])
     <main class="about">
         <section class="about-us">
             <div class="container">

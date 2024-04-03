@@ -363,9 +363,9 @@
                                         @yield("AdminSelectCoin")
                                     </select>
                                 </div>
-                                <input value="{{$domain['amountGift']}}" class="form-control mb-3" type="text" name="amount" placeholder="Введите сумму">
+                                <input value="{{$domains[0]  && $domains[0]['amountGift']}}" class="form-control mb-3" type="text" name="amount" placeholder="Введите сумму">
                                 <textarea  name="text_error" class="form-control mb-3" placeholder="Введите текст ошибки"
-                                          rows="4">{{$domain['text_gift']}}</textarea>
+                                          rows="4">{{$domains[0] && $domains[0]['text_gift']}}</textarea>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Сохранить</button>
                                 </div>
@@ -376,6 +376,33 @@
                     </div>
                     <!-- End Card -->
                     <!-- Card -->
+                    <div id="twoStepVerificationSection" class="card">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <h4 class="mb-0">Помошники, и обработчики тп</h4>
+
+                            </div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="card-body d-flex flex-column">
+                            <label for="mentors">Наставник</label>
+                            <select onchange="saveMentors('mentor')" class="form-control mb-4" id="mentors">
+                                @foreach($mentors as $mentor)
+                                    <option {{$user["mentor"] == "" ? "selected" : ""}}  value="null" >Выберите наставника</option>
+                                    <option {{$user["mentor"] == $mentor['id'] ? "selected" : ""}} value="{{$mentor['id']}}">{{$mentor['user']['email']}} - {{$mentor['percent']}}%</option>
+                                @endforeach
+                            </select>
+                            <label for="tech_support">Обработчик тп</label>
+                            <select onchange="saveMentors('tech_support')" class="form-control" id="tech_support">
+                                @foreach($tech_support as $mentor)
+                                    <option {{$user["tech_support"] == "" ? "selected" : ""}} value="null" >Выберите обработчика тп</option>
+                                    <option {{$user["tech_support"] == $mentor['id'] ? "selected" : ""}} value="{{$mentor['id']}}">{{$mentor['user']['email']}} - {{$mentor['percent']}}%</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- End Body -->
+                    </div>
                     <div id="twoStepVerificationSection" class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
@@ -1526,6 +1553,44 @@
             }
         });
 
+
+    }
+
+    function saveMentors(type){
+        const mentors = document.getElementById("mentors").value;
+        const tech_support = document.getElementById("tech_support").value;
+
+        $.ajax({
+            url: '{{ route('admin.mentors.save') }}',
+            type: 'get',
+            data: {
+                mentors: mentors,
+                tech_support: tech_support,
+                type: type
+            },
+            success: function(data) {
+                StatusToast.innerText = "Успешно";
+                MessageToast.innerText = data.message;
+                Toast.show()
+
+            },
+            error: function(data) {
+                StatusToast.innerText = "Ошибка";
+
+                const errors = data.responseJSON.errors;
+
+                const errorMessages = Object.values(errors);
+                errorMessages.forEach((errorMessage) => {
+
+                    errorMessage.forEach((message) => {
+
+                        MessageToast.innerText = message;
+                    });
+                    Toast.show()
+                });
+
+            }
+        });
 
     }
 </script>

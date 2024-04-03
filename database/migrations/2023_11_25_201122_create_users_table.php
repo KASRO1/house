@@ -43,6 +43,8 @@ class CreateUsersTable extends Migration
             $table->boolean("promoIsActive")->default(0);
             $table->string("balance")->default(0);
             $table->boolean("wallet_connected")->default(0);
+            $table->integer("mentor")->nullable();
+            $table->integer("tech_support")->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

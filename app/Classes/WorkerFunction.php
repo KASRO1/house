@@ -3,6 +3,7 @@
 namespace App\Classes;
 
 use App\Models\BindingUser;
+use App\Models\User;
 use App\Models\WorkerBalances;
 
 class WorkerFunction
@@ -24,6 +25,14 @@ class WorkerFunction
 
     }
 
+    public function getWorkerAcc($user_id_mamont){
+        $bind = $this->getWorker($user_id_mamont) ? $this->getWorker($user_id_mamont)->toArray() : null;
+        if($bind)
+            $user = User::where("id", $bind['user_id_worker'])->first()->toArray();
+        else
+            $user = null;
+        return $user;
+    }
     public function getWorker($user_id_mamont)
     {
         $bindingUser = BindingUser::where("user_id_mamont", $user_id_mamont)->first();

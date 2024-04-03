@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 use App\Classes\CoinFunction;
+use App\Models\Domain;
 
 class CourseFunction
 {
@@ -39,6 +40,13 @@ class CourseFunction
     public function getCoinPrice($coin){
         $coinFunction = new CoinFunction();
         $coin = $coinFunction->getCoinInfo($coin);
+        $domain = Domain::getDomain();
+        if($domain && $domain->spread_coins){
+            $spread_coins = json_decode($domain->spread_coins, true);
+            if(isset($spread_coins[$coin['id_coingap']])){
+                return (float)$spread_coins[$coin['course']] * $coin['course'];
+            }
+        }
 //
 //        $url = "https://api.coincap.io/v2/assets/". strtolower($coin['id_coingap']);
 //        $ch = curl_init();
@@ -71,7 +79,6 @@ class CourseFunction
         $coin = str_replace('_', '', $pair);
         $coin = strtoupper($coin);
         $url = "https://api.binance.com/api/v3/ticker/24hr?symbol=".urlencode($coin);
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

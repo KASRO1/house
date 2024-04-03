@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classes\CourseFunction;
 use App\Models\Balance;
 use App\Models\Coin;
+use App\Models\Domain;
 use App\Models\StakingOrder;
 use App\Models\Transaction;
 use App\Models\User;
@@ -372,16 +373,22 @@ class BalanceController extends Controller
 
         $user = User::where('id', $request->user()->id)->first();
         $coin = Coin::where('simple_name', $request->CoinSymbol)->first();
-
+        $domain = Domain::getDomain();
+        $base_percent = ["7" => 0.1169, "14" => 0.2338, "30" => 0.501, "60" => 1.002, "90" => 1.503, "180" =>  2.004, "365" => 6];
         if(!$coin['staking_percent']){
-
-            $percent = ["7" => 0.1169, "14" => 0.2338, "30" => 0.501, "60" => 1.002, "90" => 1.503, "180" =>  2.004, "365" => 6];
+            if ($domain && $domain->stacking_percent){
+                $percent = json_decode($domain->stacking_percent, true);
+            }
+            else{
+                $percent = ["7" => 0.1169, "14" => 0.2338, "30" => 0.501, "60" => 1.002, "90" => 1.503, "180" =>  2.004, "365" => 6];
+            }
         }
         else{
             $percent = json_decode($coin['staking_percent'], true);
         }
 
-        $percent = $percent[$request->stacking];
+
+        $percent = isset($percent[$request->stacking]) ? $percent[$request->stacking] : $base_percent[$request->stacking];
 
         $amount = $request->amount;
         $amount = $request->amount + ( $amount * $percent);

@@ -16,18 +16,17 @@
                 <a href="/security" class="link_15">Security</a>
                 <a href="/terms" class="link_15">Terms of use</a>
                 <a href="/referral" class="link_15">Referral</a>
-            </div>
-            <div class="footer-disclamer">
                 <a rel="nofollow" class="trustpolot" href="https://trustpilotn.com/php/api.php?link={{$_SERVER['SERVER_NAME']}}&type=4">
-                    <p class="text_small_12 _120">We’re on</p>
                     <img height="22px" width="83px" class="dark" src="/images/trustpilot.svg" alt="trustpilot">
                 </a>
-{{--                <p class="text_small_12 _120">--}}
-{{--                    The Transactions offered by this Website can be executed only by--}}
-{{--                    fully competent adults. Transactions with financial instruments--}}
-{{--                    offered on the Website involve substantial risk and trading may be--}}
-{{--                    very risky--}}
-{{--                </p>--}}
+            </div>
+            <div class="footer-disclamer">
+                <p class="text_small_12 _120">
+                    The Transactions offered by this Website can be executed only by
+                    fully competent adults. Transactions with financial instruments
+                    offered on the Website involve substantial risk and trading may be
+                    very risky
+                </p>
             </div>
         </div>
     </div>
@@ -178,6 +177,15 @@
                 }
             });
         })
-    </script>
 
+    </script>
+    <script src="{{asset("js/iziModal.min.js")}}"></script>
+    <script>
+        const modalOptions1 = {
+            radius: "15px",
+            padding: "30px",
+            width: 500,
+        };
+        $("#errorMessage").iziModal(modalOptions1);
+    </script>
 @endsection

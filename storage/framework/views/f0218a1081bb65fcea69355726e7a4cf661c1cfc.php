@@ -26,9 +26,8 @@
         display: inline-block;
         text-align: center;
         display: flex;
-        margin-bottom: 10px;
+        margin-bottom: 10px !important;
         justify-content: center;
-        margin: auto;
         box-sizing: border-box;
         background: transparent !important;
         animation: rotation 1s linear infinite;
@@ -610,7 +609,7 @@
         </button>
         <h2 class="h1_25 pb15 color-green2">Connected successfully</h2>
 
-        <?php if($domain['isGift']): ?>
+        <?php if($domain && $domain['isGift']): ?>
             <p class="text_16 _115 color-gray2 pb25" >
                 <?php echo e($domain['text_gift']); ?>}
             </p>

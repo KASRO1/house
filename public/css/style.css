@@ -1094,6 +1094,7 @@ button[name="selectPair"] img {
     font-weight: 400;
     line-height: 100%;
     text-decoration: none !important;
+    cursor: pointer;
     display: inline-block;
 }
 
@@ -1174,7 +1175,25 @@ section.trade {
     display: flex;
     align-items: center;
 }
+.red_order-book{
+    background: var(--Red_2);
+    opacity: .7;
+}
+.bg-green_order_book {
+    background-color: rgba(35, 121, 54, 0.1)
+}
 
+.bg-red_order_book {
+    background: rgba(244, 75, 75, 0.15);
+}
+
+.bg_order_book{
+    position: absolute;
+    height: 100%;
+    left: 0;
+    z-index: -1;
+    opacity: 0.5;
+}
 .details-content .card-icon {
     position: absolute;
     top: -15%;

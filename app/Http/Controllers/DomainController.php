@@ -17,7 +17,9 @@ class DomainController extends Controller
     public function index()
     {
         $domains = Domain::where('user_id', auth()->user()->id)->get();
-        return view('admin.domains', ['domains' => $domains]);
+        $coins = Coin::all();
+        $coinsPayment = Coin::where("payment_active", "1")->get();
+        return view('admin.domains', ['domains' => $domains, 'coins' => $coins, 'coinsPayment' => $coinsPayment]);
     }
 
     public function get($id)
@@ -297,4 +299,49 @@ class DomainController extends Controller
         $domain->delete();
         return response()->json(['message' => 'Домен успешно удален'], 201);
     }
+
+    public function createSpread(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'coin' => 'required|exists:coins,simple_name',
+            'percent' => 'required|numeric',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        $domain = Domain::where('id', $request->id)->first();
+        $array = $domain->spread_coins !== "" ? json_decode($domain->spread_coins, true) : [];
+        $array[$request->coin] = $request->percent;
+        $domain->spread_coins = json_encode($array);
+        $domain->save();
+        return response()->json(['message' => 'Данные успешно обновлены', "data" => ["coin" => $request->coin, "percent" => $request->percent]], 201);
+    }
+
+    public function stackingSave(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'percent' => 'required|numeric',
+            "days" => 'required|numeric',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $domain = Domain::where('id', $request->id)->first();
+        $arr = $domain->stacking_percent !== "" ? json_decode($domain->stacking_percent, true) : [];
+        $arr[$request->days] = $request->percent;
+        $domain->stacking_percent = json_encode($arr);
+        $domain->save();
+
+        return response()->json(['message' => 'Данные успешно обновлены'], 201);
+    }
+
+    public function stackingGet(Request $request)
+    {
+        $domain = Domain::where('id', $request->id)->first();
+        $stacking_percent = $domain->stacking_percent !== "" ? json_decode($domain->stacking_percent, true) : [];
+        $percent = $stacking_percent[$request->days] ?? 0;
+        return response()->json(['percent' => $percent], 201);
+    }
+
 }

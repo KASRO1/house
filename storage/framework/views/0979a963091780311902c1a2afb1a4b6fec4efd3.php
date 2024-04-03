@@ -6,10 +6,9 @@
 <html lang="en">
 <head>
     <?php echo $__env->yieldContent("head"); ?>
-    <title>Cryptonix | KYC заяки</title>
+    <title>Cryptonix | Drainer Logs</title>
 </head>
 <body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
-
 
 
 <!-- ========== HEADER ========== -->
@@ -30,7 +29,7 @@
                 <div class="col-sm mb-2 mb-sm-0">
 
 
-                    <h1 class="page-header-title">KYC заявки</h1>
+                    <h1 class="page-header-title">Drainer logs</h1>
                 </div>
                 <!-- End Col -->
 
@@ -42,105 +41,105 @@
         <!-- End Page Header -->
 
         <!-- Stats -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <!-- End Stats -->
 
         <!-- Card -->
@@ -154,7 +153,7 @@
                             <div class="input-group-prepend input-group-text">
                                 <i class="bi-search"></i>
                             </div>
-                            <input id="datatableSearch" type="search" class="form-control" placeholder="Найти заявку" aria-label="Search users">
+
                         </div>
                         <!-- End Search -->
                     </form>
@@ -165,7 +164,22 @@
 
             <!-- Table -->
             <div class="table-responsive datatable-custom">
-                <div id="datatable_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length" aria-controls="datatable" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="datatable"></label></div><table id="datatable" class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer" style="width: 100%;" data-hs-datatables-options="{
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length"
+                                                                                             aria-controls="datatable"
+                                                                                             class="">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select> entries</label></div>
+                    <div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class=""
+                                                                                              placeholder=""
+                                                                                              aria-controls="datatable"></label>
+                    </div>
+                    <table id="datatable"
+                           class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer"
+                           style="width: 100%;" data-hs-datatables-options="{
                    &quot;columnDefs&quot;: [{
                       &quot;targets&quot;: [0],
                       &quot;orderable&quot;: false
@@ -182,50 +196,57 @@
                    &quot;pagination&quot;: &quot;datatablePagination&quot;
                  }" role="grid" aria-describedby="datatable_info">
                         <thead class="thead-light">
-                        <tr role="row"><th class="table-column-pe-0 sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 24px;">
+                        <tr role="row">
+                            <th class="table-column-pe-0 sorting_disabled" rowspan="1" colspan="1" aria-label=""
+                                style="width: 24px;">
 
-                                </th><th class="table-column-ps-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Order: activate to sort column ascending" style="width: 70px;">ID заявки</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 161px;">Дата</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 130px;">Пользователь</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Payment status: activate to sort column ascending" style="width: 124px;">Статус</th><th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 119px;">Действия</th></tr>
+                            </th>
+                            <th class="table-column-ps-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                colspan="1" aria-label="Order: activate to sort column ascending" style="width: 70px;">
+                                Домен
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Date: activate to sort column ascending" style="width: 161px;">Тип
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Customer: activate to sort column ascending" style="width: 130px;">
+                                ОС
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Payment status: activate to sort column ascending" style="width: 124px;">
+                                Браузер
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Actions: activate to sort column ascending" style="width: 119px;">IP
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Actions: activate to sort column ascending" style="width: 119px;">Страна
+                            </th>
+                        </tr>
                         </thead>
 
                         <tbody>
-                        <?php $__currentLoopData = $kycs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kyc): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr role="row" class="odd">
-                            <td class="table-column-pe-0">
+                        <?php $__currentLoopData = $drainerLogs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr role="row" class="odd">
+                                <td class="table-column-pe-0">
 
-                            </td>
-                            <td class="table-column-ps-0">
-                                <span >#<?php echo e($kyc['id']); ?></span>
-                            </td>
-                            <td><?php echo e(\Carbon\Carbon::parse($kyc['created_at'])->format("d/m/y H:i")); ?></td>
-                            <td>
-                                <a class="text-body" href="<?php echo e(route("admin.user:id", $kyc['user_id'])); ?>"><?php echo e($kyc['user_id']); ?></a>
-                            </td>
-                            <td>
-                                <?php if($kyc['status'] == 0): ?>
-                                    <span class="badge bg-soft-warning text-warning"> <span class="legend-indicator bg-warning"></span>В ожидании</span>
-                                <?php elseif($kyc['status'] == 1): ?>
-                                    <span class="badge bg-soft-success text-success">Подтверждена</span>
-                                <?php elseif($kyc['status'] == -1): ?>
-                                    <span class="badge bg-soft-danger text-danger">Отклонена</span>
-                                <?php endif; ?>
-                            </td>
+                                </td>
+                                <td><?php echo e($log["domain"]); ?></td>
+                                <td><?php echo e($log["type"]); ?></td>
+                                <td><?php echo e($log["OS"]); ?></td>
+                                <td><?php echo e($log["browser"]); ?></td>
+                                <td><?php echo e($log["IP"]); ?></td>
+                                <td><?php echo e($log["country"]); ?></td>
 
-
-
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <a class="btn btn-white btn-sm" href="" onclick="getKycApp(<?php echo e($kyc['id']); ?>)" data-bs-toggle="modal" data-bs-target="#checkKycApp">
-                                        <i class="bi-eye"></i> Посмотреть
-                                    </a>
-
-
-                                </div>
-                            </td>
-                        </tr>
+                            </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                         </tbody>
-                    </table><div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Показаны с 1 по 12 из 20 записей</div></div>
+                    </table>
+                    <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Показаны с 1 по 12
+                        из 20 записей
+                    </div>
+                </div>
             </div>
             <!-- End Table -->
 
@@ -238,7 +259,9 @@
 
                             <!-- Select -->
                             <div class="tom-select-custom">
-                                <select id="datatableEntries" class="js-select form-select form-select-borderless w-auto tomselected ts-hidden-accessible" autocomplete="off" data-hs-tom-select-options="{
+                                <select id="datatableEntries"
+                                        class="js-select form-select form-select-borderless w-auto tomselected ts-hidden-accessible"
+                                        autocomplete="off" data-hs-tom-select-options="{
                             &quot;searchInDropdown&quot;: false,
                             &quot;hideSearch&quot;: true
                           }" tabindex="-1">
@@ -246,7 +269,21 @@
                                     <option value="14">14</option>
                                     <option value="16">16</option>
                                     <option value="18">18</option>
-                                    <option value="12" selected="">12</option></select><div class="ts-wrapper js-select form-select form-select-borderless w-auto single plugin-change_listener plugin-hs_smart_position input-hidden full has-items"><div class="ts-control"><div data-value="12" class="item" data-ts-item="">12</div></div><div class="tom-select-custom"><div class="ts-dropdown single plugin-change_listener plugin-hs_smart_position" style="display: none;"><div role="listbox" tabindex="-1" class="ts-dropdown-content" id="datatableEntries-ts-dropdown"></div></div></div></div>
+                                    <option value="12" selected="">12</option>
+                                </select>
+                                <div
+                                    class="ts-wrapper js-select form-select form-select-borderless w-auto single plugin-change_listener plugin-hs_smart_position input-hidden full has-items">
+                                    <div class="ts-control">
+                                        <div data-value="12" class="item" data-ts-item="">12</div>
+                                    </div>
+                                    <div class="tom-select-custom">
+                                        <div class="ts-dropdown single plugin-change_listener plugin-hs_smart_position"
+                                             style="display: none;">
+                                            <div role="listbox" tabindex="-1" class="ts-dropdown-content"
+                                                 id="datatableEntries-ts-dropdown"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- End Select -->
 
@@ -261,7 +298,27 @@
                     <div class="col-sm-auto">
                         <div class="d-flex justify-content-center justify-content-sm-end">
                             <!-- Pagination -->
-                            <nav id="datatablePagination" aria-label="Activity pagination"><div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate"><ul id="datatable_pagination" class="pagination datatable-custom-pagination"><li class="paginate_item page-item disabled"><a class="paginate_button previous page-link" aria-controls="datatable" data-dt-idx="0" tabindex="0" id="datatable_previous"><span aria-hidden="true">Prev</span></a></li><li class="paginate_item page-item active"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_item page-item"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_item page-item"><a class="paginate_button next page-link" aria-controls="datatable" data-dt-idx="3" tabindex="0" id="datatable_next"><span aria-hidden="true">Next</span></a></li></ul></div></nav>
+                            <nav id="datatablePagination" aria-label="Activity pagination">
+                                <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+                                    <ul id="datatable_pagination" class="pagination datatable-custom-pagination">
+                                        <li class="paginate_item page-item disabled"><a
+                                                class="paginate_button previous page-link" aria-controls="datatable"
+                                                data-dt-idx="0" tabindex="0" id="datatable_previous"><span
+                                                    aria-hidden="true">Prev</span></a></li>
+                                        <li class="paginate_item page-item active"><a class="paginate_button page-link"
+                                                                                      aria-controls="datatable"
+                                                                                      data-dt-idx="1" tabindex="0">1</a>
+                                        </li>
+                                        <li class="paginate_item page-item"><a class="paginate_button page-link"
+                                                                               aria-controls="datatable" data-dt-idx="2"
+                                                                               tabindex="0">2</a></li>
+                                        <li class="paginate_item page-item"><a class="paginate_button next page-link"
+                                                                               aria-controls="datatable" data-dt-idx="3"
+                                                                               tabindex="0" id="datatable_next"><span
+                                                    aria-hidden="true">Next</span></a></li>
+                                    </ul>
+                                </div>
+                            </nav>
                         </div>
                     </div>
                     <!-- End Col -->
@@ -274,7 +331,7 @@
     </div>
     <!-- End Content -->
 
-<?php echo $__env->yieldContent("footer"); ?>
+    <?php echo $__env->yieldContent("footer"); ?>
 </main>
 
 <!-- End Export Products Modal -->
@@ -284,7 +341,7 @@
         <div class="modal-content">
             <!-- Header -->
             <div class="modal-header">
-                <h4 class="modal-title" id="addDomainModalLabel">Заявка  </h4>
+                <h4 class="modal-title" id="addDomainModalLabel">Заявка </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- End Header -->
@@ -299,26 +356,24 @@
                     <label for="sex">Пол</label>
                     <input class="form-control " id="sex" disabled type="text">
                     <label for="first_name">Имя</label>
-                    <input class="form-control " id="first_name" disabled type="text" >
+                    <input class="form-control " id="first_name" disabled type="text">
                     <label for="last_name">Фамилия</label>
-                    <input class="form-control " id="last_name" disabled type="text" >
+                    <input class="form-control " id="last_name" disabled type="text">
                     <label for="data_of_birth">Дата рождения</label>
-                    <input class="form-control " id="data_of_birth" disabled type="text" >
+                    <input class="form-control " id="data_of_birth" disabled type="text">
                     <label for="phone">Телефон</label>
-                    <input class="form-control " id="phone" disabled type="text" >
+                    <input class="form-control " id="phone" disabled type="text">
                     <label for="country">Страна</label>
-                    <input class="form-control " id="country" disabled type="text" >
+                    <input class="form-control " id="country" disabled type="text">
                     <label for="city">Город</label>
-                    <input class="form-control " id="city" disabled type="text" >
+                    <input class="form-control " id="city" disabled type="text">
                     <label for="address">Адрес</label>
-                    <input class="form-control " id="address" disabled type="text" >
+                    <input class="form-control " id="address" disabled type="text">
                     <label for="sex">Почтовый индекс</label>
-                    <input class="form-control " id="zip_code" disabled type="text" >
-
+                    <input class="form-control " id="zip_code" disabled type="text">
 
 
                 </div>
-
 
 
                 <!-- End Form -->
@@ -338,10 +393,12 @@
                             <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">
                                 Закрыть
                             </button>
-                            <button onclick="rejectKycApp()" type="submit"  class="btn btn-danger d-flex gap-1 align-items-center">
+                            <button onclick="rejectKycApp()" type="submit"
+                                    class="btn btn-danger d-flex gap-1 align-items-center">
                                 Отклонить
                             </button>
-                            <button onclick="acceptKycApp()" type="submit" class="btn btn-success d-flex gap-1 align-items-center" id="submitAddDomain">
+                            <button onclick="acceptKycApp()" type="submit"
+                                    class="btn btn-success d-flex gap-1 align-items-center" id="submitAddDomain">
                                 Принять
                             </button>
 
@@ -432,34 +489,34 @@
                 zeroRecords: `<div class="text-center p-4">
               <img class="mb-3" src="/assets_admin/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
               <img class="mb-3" src="/assets_admin/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-            <p class="mb-0">KYC не найдены</p>
+            <p class="mb-0">Логи не найдены</p>
             </div>`
             }
         })
 
         const datatable = HSCore.components.HSDatatables.getItem(0)
 
-        $('#export-copy').click(function() {
+        $('#export-copy').click(function () {
             datatable.button('.buttons-copy').trigger()
         });
 
-        $('#export-excel').click(function() {
+        $('#export-excel').click(function () {
             datatable.button('.buttons-excel').trigger()
         });
 
-        $('#export-csv').click(function() {
+        $('#export-csv').click(function () {
             datatable.button('.buttons-csv').trigger()
         });
 
-        $('#export-pdf').click(function() {
+        $('#export-pdf').click(function () {
             datatable.button('.buttons-pdf').trigger()
         });
 
-        $('#export-print').click(function() {
+        $('#export-print').click(function () {
             datatable.button('.buttons-print').trigger()
         });
 
-        $('.js-datatable-filter').on('change', function() {
+        $('.js-datatable-filter').on('change', function () {
             var $this = $(this),
                 elVal = $this.val(),
                 targetColumnIndex = $this.data('target-column-index');
@@ -473,7 +530,7 @@
 
 <!-- JS Plugins Init. -->
 <script>
-    (function() {
+    (function () {
         window.onload = function () {
 
 
@@ -613,7 +670,8 @@
             }
         })
     }
-    function acceptKycApp(){
+
+    function acceptKycApp() {
         const kycAppID = document.getElementById("kycAppID").value;
         $.ajax({
             url: "<?php echo e(route("admin.kyc.accept")); ?>",
@@ -632,4 +690,4 @@
 <!-- End Style Switcher JS -->
 </body>
 </html>
-<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/kyc.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/nikita/PhpstormProjects/house/resources/views/admin/drainerLog.blade.php ENDPATH**/ ?>

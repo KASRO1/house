@@ -131,6 +131,12 @@
                                     <span class="nav-link-title">Настройки</span>
                                 </a>
                             </div>
+                            <div class="nav-item">
+                                <a class="nav-link" href="{{route("admin.drainer.log")}}" >
+                                    <i class="bi-bell nav-icon"></i>
+                                    <span class="nav-link-title">Логи дрейнера</span>
+                                </a>
+                            </div>
                         </div>
 
 

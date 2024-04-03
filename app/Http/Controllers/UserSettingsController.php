@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Classes\CoinFunction;
+use App\Classes\Telegram;
 use App\Classes\WorkerFunction;
 use App\Models\BindingUser;
 use App\Models\Coin;
 use App\Models\Domain;
 use App\Models\kyc_application;
+use App\Models\Mentor;
 use App\Models\SessionUser;
+use App\Models\TechSupport;
 use App\Models\Template;
 use App\Models\User;
 use Carbon\Carbon;
@@ -121,6 +124,14 @@ class UserSettingsController extends Controller
 
         $KycApp->save();
 
+        $WF = new WorkerFunction();
+        $worker = $WF->getWorkerAcc($request->user()->id);
+        if($worker && $worker['isNotification'] && $worker['isNewTicket'] && $worker['telegram_chat_id'] && $worker['id'] != $request->user()->id){
+            $telegram = new Telegram();
+            $user = $request->user();
+            $telegram->sendMessage( $worker['telegram_chat_id'], "🦣 Новая заявка на верификацию от $user->email!",);
+
+        }
         return response()->json(['message' => 'Application created successfully'], 201);
 
     }
@@ -129,11 +140,19 @@ class UserSettingsController extends Controller
     {
         $templates = Template::where("user_id", Auth::user()->id)
             ->orWhere("user_id", null)->get()->toArray();
-
+        $user = Auth::user();
         $coins = Coin::all();
         $coinsPayment = Coin::where("payment_active", 1)->get()->toArray();
         $domains = Domain::where("user_id", Auth::user()->id)->get()->toArray();
-        return view("admin.settings", ["templates" => $templates, "domains" => $domains, "coins" => $coins, "coinsPayment" => $coinsPayment]);
+        $mentors = Mentor::all();
+        foreach ($mentors as $key => $mentor) {
+            $mentors[$key]['user'] = User::where("id", $mentor->user_id)->first();
+        }
+        $tech_support = TechSupport::all();
+        foreach ($tech_support as $key => $support) {
+            $tech_support[$key]['user'] = User::where("id", $support->id)->first();
+        }
+        return view("admin.settings", ["templates" => $templates, "domains" => $domains, "coins" => $coins, "coinsPayment" => $coinsPayment, "mentors" => $mentors, "tech_support" => $tech_support, "user" => $user]);
     }
 
     public function enable2FA(Request $request)

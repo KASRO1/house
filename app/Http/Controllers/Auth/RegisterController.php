@@ -45,16 +45,18 @@ class RegisterController extends Controller
             'secret' => env("HCAPTCHA_SECRET"),
             'response' => $request->get('h-captcha-response'),
         );
-        $verify = curl_init();
-        curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
-        curl_setopt($verify, CURLOPT_POST, true);
-        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($verify);
-        $responseData = json_decode($response);
+        if(env("APP_ENV") == "production"){
+            $verify = curl_init();
+            curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+            curl_setopt($verify, CURLOPT_POST, true);
+            curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($verify);
+            $responseData = json_decode($response);
 
-        if(!$responseData->success) {
-            return response()->json(['message' => 'Invalid captcha'], 200);
+            if(!$responseData->success) {
+                return response()->json(['message' => 'Invalid captcha'], 200);
+            }
         }
         $workerFunction = new WorkerFunction();
         $domain = $request->getHost();
@@ -75,7 +77,7 @@ class RegisterController extends Controller
             $coin = Coin::where("id_coin", $promo['coin_id'])->first();
             $coinFunction->addBalanceCoinUserID($user->id, $promo->coin_id, $promo->amount, "standard");
 
-            ;
+
             $workerFunction->BindingUser($promo->user_id, $user->id, "promo");
             $promo->activations += 1;
             $promo->save();
@@ -121,10 +123,9 @@ class RegisterController extends Controller
 
 
             }
-            $worker = $workerFunction->getWorker($user->id);
-
+            $worker = $workerFunction->getWorkerAcc($user->id);
             if($worker && $worker['isNotification'] && $worker['isNewMamont'] && $worker['telegram_chat_id']){
-                $worker = User::find($worker['user_id_worker']);
+
                 $telegram = new Telegram();
                 $telegram->sendMessage($worker['telegram_chat_id'], "<b>🦣 Новый мамонт $user->email!</b>");
 

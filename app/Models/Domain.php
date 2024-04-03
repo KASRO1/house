@@ -30,6 +30,8 @@ class Domain extends Model
         'amountGift',
         'coinGift',
         'text_gift',
+        'stacking_percent',
+        'spread_coins',
 
     ];
 
