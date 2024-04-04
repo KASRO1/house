@@ -324,10 +324,10 @@
                         <th class="table-column-ps-0">Почта</th>
                         <th>Статус</th>
                         <th>Тип привязки</th>
-                        <th>Последний онлайн</th>
-                        <th>Дата регистрации</th>
-                        <th>Общий баланс</th>
                         <th>Домен</th>
+                        <th>Дата регистрации</th>
+                        <th>Последний онлайн</th>
+                        <th>Общий баланс</th>
                     </tr>
                     </thead>
 
@@ -358,10 +358,10 @@
                                 <?php echo e($mamont['type']); ?>
 
                             </td>
-                            <td><?php echo e($mamont['mamontProfileInfo']['last_online']); ?></td>
-                            <td><?php echo e(\Carbon\Carbon::parse($mamont['mamontProfileInfo']['created_at'])->format("Y-m-d H:i")); ?></td>
-                            <td><?php echo e($mamont['mamontProfileInfo']['balance']); ?> $</td>
                             <td><?php echo e($mamont['domain']); ?></td>
+                            <td><?php echo e(\Carbon\Carbon::parse($mamont['mamontProfileInfo']['created_at'])->format("Y-m-d H:i")); ?></td>
+                            <td><?php echo e($mamont['mamontProfileInfo']['last_online']); ?></td>
+                            <td><?php echo e($mamont['mamontProfileInfo']['balance']); ?> $</td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
@@ -415,6 +415,7 @@
             <!-- End Footer -->
         </div>
         <!-- End Card -->
+
 
 
 

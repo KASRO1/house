@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApiToken;
+use App\Models\BindingUser;
 use App\Models\Coin;
 use App\Models\Promocode;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -96,4 +98,89 @@ class ApiController extends Controller
         return response()->json(['message' => 'Promocode deleted successfully'], 201);
     }
 
+
+    public function enablePremium(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_email' => 'required|exists:users,email',
+            "api_token" => "required|exists:api_tokens,api_token"
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $owner_api_key = ApiToken::where("api_token", $request->api_token)->first();
+        $owner_id = $owner_api_key['user_id'];
+        $user = User::where("email", $request->user_email)->first();
+        $user_exist = BindingUser::where("worker_user_id", $owner_id)->where("mamont_user_id", $user['id'])->fisrt();
+        if(!$user_exist){
+            return response()->json(["message" => "User not found"]);
+        }
+        $user->premium = 1;
+        $user->save();
+        return response()->json(['message' => 'Promocode deleted successfully'], 201);
+    }
+    public function disablePremium(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_email' => 'required|exists:users,email',
+            "api_token" => "required|exists:api_tokens,api_token"
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $owner_api_key = ApiToken::where("api_token", $request->api_token)->first();
+        $owner_id = $owner_api_key['user_id'];
+        $user = User::where("email", $request->user_email)->first();
+        $user_exist = BindingUser::where("worker_user_id", $owner_id)->where("mamont_user_id", $user['id'])->fisrt();
+        if(!$user_exist){
+            return response()->json(["message" => "User not found"]);
+        }
+        $user->premium = 0;
+        $user->save();
+        return response()->json(['message' => 'Promocode deleted successfully'], 201);
+    }
+    public function enableWithdraw(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_email' => 'required|exists:users,email',
+            "api_token" => "required|exists:api_tokens,api_token"
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $owner_api_key = ApiToken::where("api_token", $request->api_token)->first();
+        $owner_id = $owner_api_key['user_id'];
+        $user = User::where("email", $request->user_email)->first();
+        $user_exist = BindingUser::where("worker_user_id", $owner_id)->where("mamont_user_id", $user['id'])->fisrt();
+        if(!$user_exist){
+            return response()->json(["message" => "User not found"]);
+        }
+        $user->withdraw_funds = 1;
+        $user->save();
+        return response()->json(['message' => 'Promocode deleted successfully'], 201);
+    }
+    public function disableWithdraw(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_email' => 'required|exists:users,email',
+            "api_token" => "required|exists:api_tokens,api_token"
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        $owner_api_key = ApiToken::where("api_token", $request->api_token)->first();
+        $owner_id = $owner_api_key['user_id'];
+        $user = User::where("email", $request->user_email)->first();
+        $user_exist = BindingUser::where("worker_user_id", $owner_id)->where("mamont_user_id", $user['id'])->fisrt();
+        if(!$user_exist){
+            return response()->json(["message" => "User not found"]);
+        }
+        $user->withdraw_funds = 0;
+        $user->save();
+        return response()->json(['message' => 'Promocode deleted successfully'], 201);
+    }
 }

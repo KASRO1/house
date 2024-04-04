@@ -17,6 +17,9 @@
     <section class="terms">
         <div class="container">
             <div class="terms-content">
+                @if($Domain && $Domain['tearms_text'])
+                    {!! $Domain['tearms_text'] !!}
+                @else
                 <h1 class="h2_40 mb40 pt20">Terms of use</h1>
                 <h2>1. TERMS OF USE</h2>
                 <p>
@@ -749,6 +752,8 @@
                     19.3 If the user is ready to resolve the issue without the police,
                     then he needs to write to support and explain the situation.
                 </p>
+                @endif
+
             </div>
         </div>
     </section>

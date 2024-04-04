@@ -26,13 +26,14 @@ class CreateDomainsTable extends Migration
             $table->string("stmp_password");
             $table->boolean("drainer");
             $table->text("faq")->nullable();
+            $table->text("tearms_text")->nullable();
+
             $table->string("isGift")->default(0);
             $table->string("about_text1")->nullable();
             $table->string("about_text2")->nullable();
             $table->string("about_img1")->nullable();
             $table->string("about_img2")->nullable();
             $table->string("status")->nullable();
-
             $table->string("amountGift")->nullable();
             $table->string("coinGift")->nullable();
             $table->text("text_gift")->nullable();

@@ -43,7 +43,7 @@ class AssetController extends Controller
             $totalBalance['balanceUSDspot'] += $asset['balanceUSDspot'];
         }
         $price_btc = $CourseFunction->getCoinPrice('BTC');
-        if($totalBalance['balanceUSD'] !== 0){
+        if($totalBalance['balanceUSD'] !== 0.0 && $totalBalance['balanceUSD'] !== 0){
             $totalBalance['BalanceToBTC'] = number_format($totalBalance['balanceUSD'] / $price_btc, 2, '.', '');
 
         }

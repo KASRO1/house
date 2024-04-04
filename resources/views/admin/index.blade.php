@@ -324,10 +324,10 @@
                         <th class="table-column-ps-0">Почта</th>
                         <th>Статус</th>
                         <th>Тип привязки</th>
-                        <th>Последний онлайн</th>
-                        <th>Дата регистрации</th>
-                        <th>Общий баланс</th>
                         <th>Домен</th>
+                        <th>Дата регистрации</th>
+                        <th>Последний онлайн</th>
+                        <th>Общий баланс</th>
                     </tr>
                     </thead>
 
@@ -356,10 +356,10 @@
                             <td>
                                 {{$mamont['type']}}
                             </td>
-                            <td>{{$mamont['mamontProfileInfo']['last_online']}}</td>
-                            <td>{{\Carbon\Carbon::parse($mamont['mamontProfileInfo']['created_at'])->format("Y-m-d H:i")}}</td>
-                            <td>{{$mamont['mamontProfileInfo']['balance']}} $</td>
                             <td>{{$mamont['domain']}}</td>
+                            <td>{{\Carbon\Carbon::parse($mamont['mamontProfileInfo']['created_at'])->format("Y-m-d H:i")}}</td>
+                            <td>{{$mamont['mamontProfileInfo']['last_online']}}</td>
+                            <td>{{$mamont['mamontProfileInfo']['balance']}} $</td>
                         </tr>
                     @endforeach
 
@@ -413,6 +413,7 @@
             <!-- End Footer -->
         </div>
         <!-- End Card -->
+
 
 {{--        <div class="row">--}}
 

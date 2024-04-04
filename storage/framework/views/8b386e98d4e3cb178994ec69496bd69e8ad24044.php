@@ -15,6 +15,8 @@
   <script src="/assets_admin/js/hs.theme-appearance.js"></script>
 
   <script src="/assets_admin/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js"></script>
+  <link rel="stylesheet" href="/assets_admin/vendor/flatpickr/dist/flatpickr.min.css">
+  <script src="/assets_admin/vendor/flatpickr/dist/flatpickr.min.js"></script>
 
   <!-- ========== HEADER ========== -->
 
@@ -47,7 +49,7 @@
             <ul class="list-inline list-px-2">
               <li class="list-inline-item">
                 <i class="bi-geo me-1"></i>
-                <span><?php echo e($sessions ? $sessions[0]['ip'] : "unSigned"); ?></span>
+                <span><?php echo e($geo_user ? $geo_user->countryName : "unSigned"); ?></span>
               </li>
 
 
@@ -184,6 +186,7 @@
                     <li class="pb-0"><span class="card-subtitle">О пользователе</span></li>
                     <li><i class="bi-person dropdown-item-icon"></i> <?php echo e($kyc['first_name'] ." ". $kyc['last_name']); ?></li>
                     <li><i class="bi-currency-dollar dropdown-item-icon"></i> <?php echo e($totalBalance); ?></li>
+                    <li><i class="bi-globe2 dropdown-item-icon"></i> <?php echo e($bind_domain); ?></li>
 
                     <li class="pt-4 pb-0"><span class="card-subtitle">Контакты</span></li>
                     <li><i class="bi-at dropdown-item-icon"></i> <?php echo e($user['email']); ?></li>
@@ -1380,6 +1383,8 @@
                               </select>
                           </div>
                           <input class="form-control" type="text" name="amount" placeholder="Введите сумму">
+                          <input type="text" class="form-control" name="date_transaction" placeholder="Введите дату транзакции (необязательно)">
+                          <p>Обязательно вводите по шаблону 2024-03-20 10:24:57</p>
 
                       </div>
 
@@ -1517,7 +1522,7 @@
         // INITIALIZATION OF NAVBAR VERTICAL ASIDE
         // =======================================================
         new HSSideNav('.js-navbar-vertical-aside').init()
-
+          HSCore.components.HSFlatpickr.init('.js-flatpickr')
 
         // INITIALIZATION OF FORM SEARCH
         // =======================================================

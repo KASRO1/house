@@ -56,6 +56,9 @@ class UserController extends Controller
     public function show($id){
 
         $CoinFunction = new CoinFunction();
+        $WF = new WorkerFunction();
+        $bind_string = $WF->getWorker($id);
+        $bind_domain = $bind_string['domain'];
         $user = User::find($id);
         $kyc_app = kyc_application::where("user_id", $id)->where("status", 1)->first();
         $positive_balanced = $CoinFunction->getPositiveBalancesUserLimit5($id);
@@ -64,6 +67,15 @@ class UserController extends Controller
         $total_balance = $CoinFunction->getTotalBalanceUser($id);
         $wallets = json_decode($user['wallets'], true);
         $sessions = SessionUser::where("user_id", $id)->get()->toArray();
+        if($sessions){
+            $ip_user = $sessions[0]['ip'];
+            $geo = \Location::get($ip_user);
+        }
+        else{
+            $geo = null;
+        }
+
+
 
 
         if(!$kyc_app){
@@ -87,7 +99,7 @@ class UserController extends Controller
             'transactions' => $transactions, 'balances' => $positive_balanced,
             "coinFunction" => $CoinFunction, "coins" => $coins, 'coinsPayment' => $coinsPayment,
             "totalBalance" => $total_balance, "wallets" => $wallets, "sessions" => $sessions,
-            "templates" => $templates]);
+            "templates" => $templates, "bind_domain" => $bind_domain, "geo_user" => $geo]);
     }
 
     public function auth($id){
@@ -156,6 +168,9 @@ class UserController extends Controller
         $Transaction->coinSymbol = $coin['simple_name'];
         $Transaction->amount = $request->amount;
         $Transaction->type = $request->type_deposit;
+        if($request->date_transaction !== ""){
+            $Transaction->created_at = $request->date_transaction;
+        }
         $Transaction->status = "Completed";
         $Transaction->save();
         return response()->json(['message' => 'Баланс успешно пополнен'], 201);

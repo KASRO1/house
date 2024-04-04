@@ -1186,7 +1186,9 @@ section.trade {
 .bg-red_order_book {
     background: rgba(244, 75, 75, 0.15);
 }
-
+#connectWallet{
+    overflow: hidden;
+}
 .bg_order_book{
     position: absolute;
     height: 100%;

